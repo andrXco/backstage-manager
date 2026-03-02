@@ -15,5 +15,11 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+        try (var conn = com.example.ax0006.db.H2.getConnection()) {
+            System.out.println("Conectado a H2: " + conn.getMetaData().getURL());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

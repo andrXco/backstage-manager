@@ -40,3 +40,8 @@ build/
 
 ### Intellij ###
 .idea/
+
+### databases ###
+data/
+*.mv.db
+*.trace.db
