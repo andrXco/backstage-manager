@@ -2,7 +2,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.kotlin
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -37,11 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### Intellij ###
-.idea/
-
-### databases ###
-data/
-*.mv.db
-*.trace.db
