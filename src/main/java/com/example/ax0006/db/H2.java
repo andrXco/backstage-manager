@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.h2.tools.Server;
 
 public class H2 {
     private static final String URL = "jdbc:h2:./data/eventosdb;AUTO_SERVER=TRUE";
@@ -127,7 +128,7 @@ public class H2 {
                     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
                 )
             """);
-
+            org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
             System.out.println("Base de datos inicializada correctamente");
 
         } catch (SQLException e) {

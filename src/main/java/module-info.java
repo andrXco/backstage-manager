@@ -3,6 +3,7 @@ module org.example.pruebafismsd {
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
+    requires com.h2database;
 
     opens org.example.pruebafismsd to javafx.fxml;
 
