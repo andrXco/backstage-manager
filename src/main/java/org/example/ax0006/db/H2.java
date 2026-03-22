@@ -1,4 +1,4 @@
-package com.example.ax0006.db;
+package org.example.ax0006.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -133,12 +133,13 @@ public class H2 {
 
             /*
             PARA QUE HAGAN EL INGRESO BASE DE DATOS H2:
-            JDBC URL: jdbc:h2:./data/conciertosdb
+            JDBC URL: jdbc:h2:./data/eventosdb
             User: sa
-            Password:vacío
+            Password: vacío
            */
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+

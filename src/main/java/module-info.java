@@ -1,19 +1,18 @@
-module org.example.pruebafismsd {
+module org.example.gestorconciertos {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
     requires com.h2database;
 
-    opens org.example.pruebafismsd to javafx.fxml;
+    opens org.example.ax0006 to javafx.fxml;
 
-    //todos los paquetes que hay
-    exports org.example.pruebafismsd.Entity;
-    exports org.example.pruebafismsd.Repository;
-    exports org.example.pruebafismsd.Service;
-    exports org.example.pruebafismsd.Controller;
-    //fin de los paquetes que hay
+    exports org.example.ax0006.Entity;
+    exports org.example.ax0006.Repository;
+    exports org.example.ax0006.Service;
+    exports org.example.ax0006.Controller;
+    exports org.example.ax0006.db;
 
-    opens org.example.pruebafismsd.Controller to javafx.fxml;
-    opens org.example.pruebafismsd.Entity to javafx.fxml;
+    opens org.example.ax0006.Controller to javafx.fxml;
+    opens org.example.ax0006.Entity to javafx.fxml;
 }

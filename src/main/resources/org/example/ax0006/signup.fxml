@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pruebafismsd.Controller.SignUpControler">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ax0006.Controller.SignUpControler">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="475.0" layoutY="220.0" prefHeight="159.0" prefWidth="257.0">
          <children>
@@ -50,3 +50,4 @@
       <Button fx:id="fid_login" layoutX="575.0" layoutY="555.0" mnemonicParsing="false" onAction="#On_login" text="Login" />
    </children>
 </AnchorPane>
+

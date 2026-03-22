@@ -6,10 +6,10 @@
 
 
 
-package org.example.pruebafismsd.Repository;
+package org.example.ax0006.Repository;
 
-import com.example.ax0006.db.H2;
-import org.example.pruebafismsd.Entity.Usuario;
+import org.example.ax0006.db.H2;
+import org.example.ax0006.Entity.Usuario;
 
 import java.sql.*;
 
@@ -65,3 +65,4 @@ public class UsuarioRepository {
         return null;
     }
 }
+

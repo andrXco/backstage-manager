@@ -3,10 +3,10 @@
  */
 
 
-package org.example.pruebafismsd.Service;
+package org.example.ax0006.Service;
 
-import org.example.pruebafismsd.Entity.Usuario;
-import org.example.pruebafismsd.Repository.UsuarioRepository;
+import org.example.ax0006.Entity.Usuario;
+import org.example.ax0006.Repository.UsuarioRepository;
 
 public class AutenticacionService {
 
@@ -45,3 +45,4 @@ public class AutenticacionService {
         return u.getContrasena().equals(contrasena);
     }
 }
+

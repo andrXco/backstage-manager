@@ -4,7 +4,7 @@
 
 
 
-package org.example.pruebafismsd.Controller;
+package org.example.ax0006.Controller;
 
 
 
@@ -16,8 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.pruebafismsd.Entity.Usuario;
-import org.example.pruebafismsd.Repository.UsuarioRepository;
+import org.example.ax0006.Entity.Usuario;
+import org.example.ax0006.Repository.UsuarioRepository;
 
 import java.io.IOException;
 
@@ -126,7 +126,7 @@ public class SignUpControler {
         System.out.println("Login: Iniciando sesion");
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/example/pruebafismsd/login.fxml")
+                getClass().getResource("/org/example/ax0006/login.fxml")
         );
 
         Scene scene = new Scene(loader.load());
@@ -136,3 +136,4 @@ public class SignUpControler {
     }
 
 }
+

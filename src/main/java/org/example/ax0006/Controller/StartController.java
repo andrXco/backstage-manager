@@ -3,9 +3,9 @@
 */
 
 
-package org.example.pruebafismsd.Controller;
+package org.example.ax0006.Controller;
 
-import com.example.ax0006.db.H2;
+import org.example.ax0006.db.H2;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ public class StartController extends Application {
     public void start(Stage stage) throws IOException {
         H2.inicializarDB(); //se llama funcion para inicializar la base de datos
 
-        FXMLLoader fxmlLoader = new FXMLLoader(StartController.class.getResource("/org/example/pruebafismsd/login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartController.class.getResource("/org/example/ax0006/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
         stage.setTitle("GESTOR DE CONCIERTOS.");
         stage.setScene(scene);
@@ -29,3 +29,4 @@ public class StartController extends Application {
         launch();
     }
 }
+

@@ -4,7 +4,7 @@
 
 
 
-package org.example.pruebafismsd.Entity;
+package org.example.ax0006.Entity;
 
 public class Usuario {
 
@@ -39,3 +39,4 @@ public class Usuario {
         this.nombre = nombre;
     }
 }
+
