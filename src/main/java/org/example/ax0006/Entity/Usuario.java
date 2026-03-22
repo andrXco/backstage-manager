@@ -10,19 +10,14 @@ public class Usuario {
 
     private String nombre;
     private String contrasena;
+    private String email;
 
-
-    /*///////////////////////////////////
-    Constructor
-     *//////////////////////////////////
-    public Usuario(String nombre, String contrasena) {
+    public Usuario(String nombre, String contrasena, String email) {
         this.nombre = nombre;
         this.contrasena = contrasena;
+        this.email = email;
     }
 
-    /*///////////////////////////////////
-    Getters y Setters
-     *//////////////////////////////////
     public String getContrasena() {
         return contrasena;
     }
@@ -37,6 +32,14 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

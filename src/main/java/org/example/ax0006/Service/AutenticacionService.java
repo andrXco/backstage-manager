@@ -26,19 +26,19 @@ public class AutenticacionService {
     }
 
     // SIGN UP
-    public boolean register(String nombre, String contrasena) {
+    public boolean register(String nombre, String contrasena,  String gmail) {
         if (UsuarioRepo.buscarPorNombre(nombre) != null) {
             System.out.println("Usuario ya existe");
             return false;
         }
-        Usuario nuevo = new Usuario(nombre, contrasena);
+        Usuario nuevo = new Usuario(nombre, contrasena, gmail);
         UsuarioRepo.guardar(nuevo);
 
         return true;
     }
 
     // LOGIN
-    public boolean login(String nombre, String contrasena) {
+    public boolean login(String nombre, String contrasena, String gmail) {
 
         Usuario u = UsuarioRepo.buscarPorNombre(nombre);
         if (u == null) return false;

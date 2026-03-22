@@ -36,3 +36,13 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+
+### Intellij ###
+.idea/
+
+
+### databases ###
+data/
+*.mv.db
+*.trace.db

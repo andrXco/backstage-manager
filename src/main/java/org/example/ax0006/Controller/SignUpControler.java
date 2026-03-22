@@ -1,5 +1,6 @@
 /*
  * MARTIN SANMIGUEL
+ * ANDRES CORTES
  */
 
 
@@ -22,6 +23,9 @@ import org.example.ax0006.Repository.UsuarioRepository;
 import java.io.IOException;
 
 public class SignUpControler {
+
+    @FXML
+    private TextField fid_correo;
 
     @FXML
     private TextField fid_Usuario;
@@ -98,26 +102,53 @@ public class SignUpControler {
     @FXML
     void On_crear_usuario(ActionEvent event) {
 
-        if(mostrando && mostrandoConfirmation){
+        if (mostrando && mostrandoConfirmation) {
             togglePassword();
             togglePasswordConfirmation();
         }
 
-        if(UsuarioRepository.getInstance().buscarPorNombre(fid_Usuario.getText()) != null){
-            System.out.println("El Usuario Existe, porfavor intente nuevamente");
+        String correo = fid_correo.getText();
+        String usuario = fid_Usuario.getText();
+        String contrasena = fid_Contrasena.getText();
+        String confirmacion = fid_ContrasenaConfirmation.getText();
+
+        if (correo == null || correo.isEmpty()) {
+            System.out.println("Ingrese un correo");
+            return;
         }
 
-        else if(fid_ContrasenaConfirmation.getText() != "" && fid_ContrasenaConfirmation.getText().equals(fid_Contrasena.getText())){
-            System.out.println("Usuario Creado Correctamente! porfavor utilice el login");
-            UsuarioRepository.getInstance().guardar(new Usuario(fid_Usuario.getText(), fid_Contrasena.getText()));
+        if (!correo.contains("@")) {
+            System.out.println("El correo debe contener una @");
+            return;
+        }
 
+        if (usuario == null || usuario.isEmpty()) {
+            System.out.println("Ingrese un nombre de usuario");
+            return;
         }
-        else {
-            System.out.println("Ingrese una contraseña porfavor o ");
-            System.out.print("Verifique que las contraseñas son iguales");
-            System.out.println(fid_Contrasena.getText());
-            System.out.println(fid_ContrasenaConfirmation.getText());
+
+        if (UsuarioRepository.getInstance().buscarPorNombre(usuario) != null) {
+            System.out.println("El usuario ya existe, por favor intente nuevamente");
+            return;
         }
+
+        if (contrasena == null || contrasena.isEmpty()) {
+            System.out.println("Ingrese una contraseña");
+            return;
+        }
+
+        if (confirmacion == null || confirmacion.isEmpty()) {
+            System.out.println("Confirme la contraseña");
+            return;
+        }
+
+        if (!confirmacion.equals(contrasena)) {
+            System.out.println("Verifique que las contraseñas sean iguales");
+            return;
+        }
+
+        System.out.println("Usuario creado correctamente. Por favor utilice el login");
+        UsuarioRepository.getInstance().guardar(new Usuario(usuario, contrasena, correo));
     }
 
     @FXML

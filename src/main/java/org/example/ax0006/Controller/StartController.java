@@ -20,7 +20,7 @@ public class StartController extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartController.class.getResource("/org/example/ax0006/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
-        stage.setTitle("GESTOR DE CONCIERTOS.");
+        stage.setTitle("BACKSTAGE-MANAGER.");
         stage.setScene(scene);
         stage.show();
     }
