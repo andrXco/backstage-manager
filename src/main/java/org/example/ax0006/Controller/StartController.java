@@ -5,8 +5,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.ax0006.Repository.usuarioRepository;
-import org.example.ax0006.Service.autenticacionService;
+import org.example.ax0006.Manager.ContextManager;
+import org.example.ax0006.Manager.SesionManager;
+import org.example.ax0006.Repository.UsuarioRepository;
+import org.example.ax0006.Service.AutenticacionService;
+import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.db.H2;
 
 import java.io.IOException;
@@ -15,7 +18,7 @@ import java.io.IOException;
 // PAGINA: http://localhost:8082
 // URL: jdbc:h2:./data/eventosdb
 
-public class startController extends Application {
+public class StartController extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,30 +28,29 @@ public class startController extends Application {
         h2.inicializarDB();
 
         // REPOSITORIOS
-        usuarioRepository usuarioRepo = new usuarioRepository(h2);
+        UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
 
         // SERVICIOS
-        autenticacionService authService = new autenticacionService(usuarioRepo);
+        AutenticacionService autenService = new AutenticacionService(usuarioRepo);
 
-        // SE CARGA LA PRIMERA VISTA
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/example/ax0006/login.fxml")
-        );
-
-        // SE CARGA EL CONTROLADOR DE LOGIN
-        loginController controller = new loginController(usuarioRepo);
-
-        loader.setController(controller);
-
-        Scene scene = new Scene(loader.load());
-        stage.setTitle("BACKSTAGE-MANAGER");
-        stage.setScene(scene);
+        // MANAGERS
+        SesionManager sesion = new SesionManager();
+        ContextManager context = new ContextManager(autenService, sesion);
+        SceneManager sceneManager = new SceneManager(stage, context);
 
         /*METODO PARA QUE EL PROGRAMA MUERA CUANDO SE CIERRA LA VENTANA*/
         stage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0); // asegura cerrar H2 también
         });
+
+        /*SE REALIZA DE ESTA MANERA PARA QUE EL PROGRAMA NO MUERA EN CASO DE UNA EXCEPCION*/
+        try {
+            /*CAMBIA DE ESCENA AL LOGIN*/
+            sceneManager.showLogin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         stage.show();
     }

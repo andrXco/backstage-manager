@@ -1,0 +1,26 @@
+package org.example.ax0006.Manager;
+
+import org.example.ax0006.Entity.Usuario;
+
+/*ESTA CLASE CONTIENE LA INFORMACION DE LA SESION
+* POR AHORA ESTA CONTIENE EL USUARIO QUE ACTUALMENTE ESTA LOGEADO A LA APLICACION */
+public class SesionManager {
+
+    /*ATRIBUTO*/
+    private Usuario usuarioActual;
+
+    /*METODO PARA OBTENER EL USUARIO ACTUALMENTE LOGEADO EN EL PROGRAMA, SI NADIE SE HA LOGEADO PUES ESTE ESTA EN NULL*/
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    /*METODO PARA SETTEAR EL USUARIO ACTUAL, ESTE SE USA EN EL LOGIN*/
+    public void setUsuarioActual(Usuario usuarioActual) {
+        this.usuarioActual = usuarioActual;
+    }
+
+    /*METODO PARA PONER EL USUARIO ACTUAL EN NULL PARA SIMBOLIZAR QUE SE CERRO LA SESION*/
+    public void cerrarSesion() {
+        this.usuarioActual = null;
+    }
+}

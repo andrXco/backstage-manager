@@ -6,13 +6,13 @@
 
 package org.example.ax0006.Entity;
 
-public class usuario {
+public class Usuario {
 
     private String nombre;
     private String contrasena;
     private String email;
 
-    public usuario(String nombre, String contrasena, String email) {
+    public Usuario(String nombre, String contrasena, String email) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.email = email;
