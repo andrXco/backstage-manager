@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU:">
-         <font>
-            <Font name="System Italic" size="30.0" />
-         </font>
-      </Text>
-      <Button fx:id="fid_bt_volver" layoutX="1101.0" layoutY="734.0" mnemonicParsing="false" onAction="#On_btvolver" text="Volver" />
-      <Text fx:id="fid_Bienvenido" layoutX="22.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido ">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Text>
-   </children>
-</Pane>
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <!-- BARRA SUPERIOR -->
+   <top>
+      <HBox prefHeight="70.0" spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+         <HBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestor de conciertos" />
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Label fx:id="fid_Bienvenido" style="-fx-font-size: 14px; -fx-text-fill: #555;" text="Usuario" />
+            <Button fx:id="fid_bt_perfil" onAction="#On_perfil" style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-background-radius: 8;" text="Perfil" />
+         </HBox>
+      </HBox>
+   </top>
+   <!-- SIDEBAR -->
+   <left>
+      <VBox prefHeight="730.0" prefWidth="220.0" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 2, 0);">
+         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="MENÚ" />
+         <Separator />
+         <Button fx:id="fid_bt_extra1" text="BOTON EXTRA" />
+         <Button fx:id="fid_bt_extra2" text="BOTON EXTRA" />
+         <Button fx:id="fid_bt_extra3" text="BOTON EXTRA" />
+         <Button fx:id="fid_bt_extra4" text="BOTON EXTRA" />
+         <Button fx:id="fid_bt_extra5" text="BOTON EXTRA" />
+         <Separator />
+         <Button fx:id="fid_bt_admin" onAction="#On_admin" prefWidth="180" style="-fx-background-color: #ffcccc; -fx-text-fill: #c0392b; -fx-background-radius: 8;" text="Administrar Usuarios" />
+         <Separator />
+         <Button fx:id="fid_bt_volver" onAction="#On_btvolver" prefWidth="180" style="-fx-background-color: pink; -fx-text-fill: #7f8c8d; -fx-background-radius: 8;" text="Cerrar Sesión" />
+      </VBox>
+   </left>
+   <!-- CONTENIDO CENTRAL -->
+   <center>
+      <AnchorPane fx:id="fid_contenido" prefHeight="730.0" prefWidth="775.0" style="-fx-background-color: #f4f6f8;" />
+   </center>
+</BorderPane>
+

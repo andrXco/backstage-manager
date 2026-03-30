@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+
+    <top>
+        <HBox prefHeight="70.0" spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+            <HBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestor de conciertos" />
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label fx:id="fid_Bienvenido" style="-fx-font-size: 14px; -fx-text-fill: #555;" text="Usuario" />
+                <Button fx:id="fid_bt_perfil" style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-background-radius: 8;" text="Perfil" />
+            </HBox>
+        </HBox>
+    </top>
+
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: #f4f6f8;">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Administración de Usuarios" />
+            <Separator />
+            <TableView fx:id="tablaUsuarios" prefHeight="550.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
+                    <TableColumn fx:id="colGmail" text="Correo" prefWidth="300"/>
+                    <TableColumn fx:id="colRol" text="Rol" prefWidth="150"/>
+                    <TableColumn fx:id="colNombreRol" text="Nombre Rol" prefWidth="150"/>
+                    <TableColumn fx:id="colAccion" text="Cambiar Rol" prefWidth="200"/>
+                </columns>
+            </TableView>
+            <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text=" Volver al Menú " />
+        </VBox>
+    </center>
+
+</BorderPane>

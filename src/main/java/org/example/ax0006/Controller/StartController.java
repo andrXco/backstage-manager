@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
+import org.example.ax0006.Repository.RolRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.Service.AutenticacionService;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.db.H2;
-
+import org.example.ax0006.Repository.RolRepository;
+import org.example.ax0006.Service.RolService;
 import java.io.IOException;
 
 //ver base de datos:
@@ -29,13 +31,15 @@ public class StartController extends Application {
 
         // REPOSITORIOS
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
+        RolRepository rolRepo = new RolRepository(h2);
 
         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo);
+        RolService rolService = new RolService(rolRepo, usuarioRepo);
 
         // MANAGERS
         SesionManager sesion = new SesionManager();
-        ContextManager context = new ContextManager(autenService, sesion);
+        ContextManager context = new ContextManager(autenService,rolService, sesion, h2);
         SceneManager sceneManager = new SceneManager(stage, context);
 
         /*METODO PARA QUE EL PROGRAMA MUERA CUANDO SE CIERRA LA VENTANA*/

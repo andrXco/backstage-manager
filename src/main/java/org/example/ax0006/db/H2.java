@@ -129,6 +129,12 @@ public class H2 {
                     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
                 )
             """);
+            //Crear roles con el idRol para eso toca mergear tablas para colocar los roles dentro de rol con los ids.
+            stmt.execute("""
+               MERGE INTO Rol (idRol, rol) KEY(idRol)
+                  VALUES (1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff')
+                """);
+
             org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
             System.out.println("Base de datos inicializada correctamente");
 

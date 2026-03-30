@@ -7,15 +7,21 @@
 package org.example.ax0006.Entity;
 
 public class Usuario {
-
+    private int idUsuario;
     private String nombre;
     private String contrasena;
-    private String email;
+    private String gmail;
+    private int idRol;
 
-    public Usuario(String nombre, String contrasena, String email) {
+    public Usuario() {
+    }
+
+    public Usuario(int idUsuario, String nombre, String contrasena, String email, int idRol) {
+        this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.contrasena = contrasena;
-        this.email = email;
+        this.gmail = gmail;
+        this.idRol = idRol;
     }
 
     public String getContrasena() {
@@ -34,12 +40,28 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getGmail() {
+        return gmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
 

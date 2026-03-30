@@ -1,6 +1,8 @@
 package org.example.ax0006.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
@@ -22,7 +24,7 @@ public class MenuController {
     }
 
     @FXML
-    private Text fid_Bienvenido;
+    private Label fid_Bienvenido;
 
     /*METODO CAMBIA EL BIENVENIDO POR EL BIENVENIDO CON EL NOMBRE DEL USUARIO*/
     public void setNombreBienvenido(){
@@ -45,6 +47,17 @@ public class MenuController {
         if (sesion.getUsuarioActual() != null) {
             fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
         }
+    }
+
+    //boton de administracion de usuarios para asignacion de roles.
+    @FXML
+    void On_admin(ActionEvent event) throws IOException {
+        sceneManager.showAdminUsuarios();
+    }
+
+    @FXML
+    void On_perfil(ActionEvent event) {
+        System.out.println("Perfil presionado");
     }
 
 }

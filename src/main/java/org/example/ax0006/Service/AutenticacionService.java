@@ -21,7 +21,13 @@ public class AutenticacionService {
             return false;
         }
 
-        Usuario nuevo = new Usuario(nombre, contrasena, gmail);
+        Usuario nuevo = new Usuario();
+        nuevo.setNombre(nombre);
+        nuevo.setContrasena(contrasena);
+        nuevo.setGmail(gmail);
+
+        nuevo.setIdRol(0);
+
         usuarioRepo.guardar(nuevo);
 
         return true;

@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 import org.example.ax0006.Controller.LoginController;
 import org.example.ax0006.Controller.MenuController;
 import org.example.ax0006.Controller.SignUpController;
+import org.example.ax0006.Controller.AdminUsuariosController;
+import org.example.ax0006.Repository.UsuarioRepository;
 
 import java.io.IOException;
 
@@ -41,6 +43,15 @@ public class SceneManager {
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
     }
 
+    //metodo para mostrar pantalla de administracion de usuarios.
+    public void showAdminUsuarios() throws IOException {
+        AdminUsuariosController controller = new AdminUsuariosController(
+                context.getSesion(), context.getRolService(), this
+        );
+        loadScene("/org/example/ax0006/adminUsuarios.fxml", controller);
+    }
+
+
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {
 
@@ -53,4 +64,6 @@ public class SceneManager {
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }
+
+
 }
