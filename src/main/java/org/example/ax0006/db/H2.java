@@ -75,14 +75,30 @@ public class H2 {
                     nombre VARCHAR(255)
                 )
             """);
-
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS Inventario(
+                    idInventario INT AUTO_INCREMENT PRIMARY KEY,
+                )
+            """);
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS ObjetoInventario (
-                    idInventario INT AUTO_INCREMENT PRIMARY KEY,
+                    PRIMARY KEY (idInventario, idInventario),
+                    idInventario INT,
+                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
                     idTipoObjeto INT,
                     FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto)
                 )
             """);
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS InventarioHorario (
+                    PRIMARY KEY (idInventario, idHorario),
+                    idInventario INT,
+                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
+                    idHorario INT,
+                    FOREIGN KEY (idHorario) REFERENCES Horario(idHorario)
+                )
+            """);
+
 
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Concierto (

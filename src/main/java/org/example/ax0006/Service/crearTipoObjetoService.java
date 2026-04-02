@@ -11,11 +11,6 @@ public class crearTipoObjetoService {
     }
 
     public boolean crearTipoObjeto(String nombre) {
-        if (tipoObjetoRepository.buscarPorNombreTipoObjeto(nombre) != null) {
-            System.out.println("el objeto ya existe");
-            return false;
-        }
-
         TipoObjeto tipoObjeto = new TipoObjeto(nombre);
         tipoObjetoRepository.guardarTipoObjeto(tipoObjeto);
         return true;

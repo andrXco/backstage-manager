@@ -5,8 +5,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.ax0006.Repository.TipoObjetoRepository;
-import org.example.ax0006.Repository.usuarioRepository;
+import org.example.ax0006.Repository.*;
+import org.example.ax0006.Service.InventarioService;
 import org.example.ax0006.Service.autenticacionService;
 import org.example.ax0006.Service.crearTipoObjetoService;
 import org.example.ax0006.db.H2;
@@ -29,10 +29,14 @@ public class startController extends Application {
         // REPOSITORIOS
         usuarioRepository usuarioRepo = new usuarioRepository(h2);
         TipoObjetoRepository tipoObjetoRepository = new TipoObjetoRepository(h2);
+        InventarioRepository inventarioRepository = new InventarioRepository(h2);
+        InventarioHorarioRepository inventarioHorarioRepository = new InventarioHorarioRepository(h2);
+        InventarioObjetoRepository inventarioObjetoRepository = new InventarioObjetoRepository(h2);
 
         // SERVICIOS
         autenticacionService authService = new autenticacionService(usuarioRepo);
         crearTipoObjetoService authService1 = new crearTipoObjetoService(tipoObjetoRepository);
+        InventarioService authService2 = new InventarioService(inventarioRepository);
 
         // SE CARGA LA PRIMERA VISTA
         FXMLLoader loader = new FXMLLoader(
