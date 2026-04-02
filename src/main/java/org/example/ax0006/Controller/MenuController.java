@@ -9,8 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Manager.SesionManager;
+import org.example.ax0006.Service.ConciertoService;
+import org.example.ax0006.Entity.Horario;
+import org.example.ax0006.Entity.Concierto;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 public class MenuController {
 
@@ -18,10 +24,15 @@ public class MenuController {
     private SceneManager sceneManager;
     private SesionManager sesion;
 
+    //BORRAR
+    private ConciertoService conciertoService;
+
     /*CONSTRUCTOR*/
-    public MenuController(SceneManager sceneManager, SesionManager sesion){
+    public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService){
+        System.out.println("Hola");
         this.sceneManager = sceneManager;
         this.sesion = sesion;
+        this.conciertoService = conciertoService;
     }
 
     @FXML
@@ -68,6 +79,36 @@ public class MenuController {
             alert.setContentText("Ocurrió un problema al cargar la vista.");
             alert.showAndWait();
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private Button fid_bt_CrearConcierto;
+
+    @FXML
+    void On_CrearConcierto(ActionEvent event){
+        LocalDate fechaconcierto = LocalDate.of(2026,6,25);
+        LocalTime horaConcierto = LocalTime.of(12, 0, 0);
+        Horario horarioConcierto = new Horario();
+        horarioConcierto.setFecha(fechaconcierto);
+        horarioConcierto.setHoraFin(horaConcierto);
+        horarioConcierto.setHoraInicio(horaConcierto);
+        Concierto concierto = new Concierto();
+        concierto.setHorario(horarioConcierto);
+        concierto.setArtista(sesion.getUsuarioActual());
+        concierto.setAforo(100);
+        concierto.setProgramado(false);
+        conciertoService.crearConcierto(concierto);
+    }
+
+    @FXML
+    private Button fid_bt_ConsultarConciertos;
+
+    @FXML
+    void On_ConsultarConciertos(ActionEvent event){
+        List<Concierto> Conciertos = conciertoService.obtenerConciertos();
+        for(Concierto c : Conciertos){
+            System.out.println(c.getArtista().getNombre());
         }
     }
 }

@@ -7,13 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
-import org.example.ax0006.Repository.RolRepository;
-import org.example.ax0006.Repository.UsuarioRepository;
+import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.AutenticacionService;
 import org.example.ax0006.Manager.SceneManager;
+import org.example.ax0006.Service.ConciertoService;
 import org.example.ax0006.Service.ProfileService;
 import org.example.ax0006.db.H2;
-import org.example.ax0006.Repository.RolRepository;
 import org.example.ax0006.Service.RolService;
 import java.io.IOException;
 
@@ -34,11 +33,14 @@ public class StartController extends Application {
         // REPOSITORIOS
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         RolRepository rolRepo = new RolRepository(h2);
+        HorarioRepository horarioRepo = new HorarioRepository(h2);
+        ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
 
         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
+        ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo);
 
         // MANAGERS
         SesionManager sesion = new SesionManager();
@@ -46,12 +48,14 @@ public class StartController extends Application {
                 h2,
                 usuarioRepo,
                 rolRepo,
+                horarioRepo,
+                conciertoRepo,
                 autenService,
                 profileService,
                 rolService,
+                conciertoService,
                 sesion
         );
-        context.getH2().inicializarDB();
 
         SceneManager sceneManager = new SceneManager(stage, context);
 

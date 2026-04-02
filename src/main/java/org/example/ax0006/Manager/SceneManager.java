@@ -36,7 +36,7 @@ public class SceneManager {
 
     /*METOOD PARA MOSTRAR EL MENU*/
     public void showMenu() throws IOException{
-        MenuController menuControl = new MenuController(this, context.getSesion());
+        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService());
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
     }
 
