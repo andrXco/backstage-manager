@@ -64,7 +64,7 @@ public class SceneManager {
                 context.getSesion(),
                 context.getProfileService()
         );
-        loadScene("/org/example/ax0006/editProfile.fxml", editProfileController);
+        loadScene("/org/example/ax0006/editprofile.fxml", editProfileController);
     }
 
 
