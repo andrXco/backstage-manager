@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="800.0" prefWidth="1200.0"
+            style="-fx-background-color: #f4f6f8;">
+
+    <!-- TOP -->
+    <top>
+        <HBox spacing="650.0"
+              style="-fx-background-color: white; -fx-padding: 15;">
+            <children>
+                <Label text="Conciertos Programados"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+                <Button fx:id="fid_bt_volver"
+                        text="Volver"
+                        onAction="#On_volver"
+                        prefWidth="100"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;">
+                    <HBox.margin>
+                        <Insets right="100.0"/>
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <AnchorPane>
+            <children>
+
+                <TableView fx:id="tablaConciertos"
+                           layoutX="20.0"
+                           layoutY="20.0"
+                           prefWidth="1160.0"
+                           prefHeight="720.0">
+
+                    <columns>
+
+                        <TableColumn fx:id="colArtista"
+                                     text="Artista"
+                                     prefWidth="200.0"/>
+
+                        <TableColumn fx:id="colFecha"
+                                     text="Fecha"
+                                     prefWidth="150.0"/>
+
+                        <TableColumn fx:id="colHoraInicio"
+                                     text="Hora Inicio"
+                                     prefWidth="150.0"/>
+
+                        <TableColumn fx:id="colHoraFin"
+                                     text="Hora Fin"
+                                     prefWidth="150.0"/>
+
+                        <TableColumn fx:id="colAforo"
+                                     text="Aforo"
+                                     prefWidth="120.0"/>
+
+                        <TableColumn fx:id="colAccion"
+                                     text="Cancelar"
+                                     prefWidth="200.0"/>
+
+                    </columns>
+
+                </TableView>
+
+            </children>
+        </AnchorPane>
+    </center>
+
+</BorderPane>
