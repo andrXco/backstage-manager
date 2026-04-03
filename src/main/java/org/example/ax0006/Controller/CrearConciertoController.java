@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 
 public class CrearConciertoController {
+    /*En esta pantalla se crean los concietos, pero queda pendendiente el analisis financiero y la implementacion mas compleja del horario*/
 
     private SesionManager sesion;
     private ConciertoService conciertoService;
@@ -39,6 +40,7 @@ public class CrearConciertoController {
     private TextField fid_aforo;
 
     @FXML
+    /*Metodo en donde se crea el concierto, obteiendo los datos de los campos*/
     void On_crearConcierto(ActionEvent event) {
 
         try {
@@ -66,23 +68,26 @@ public class CrearConciertoController {
             concierto.setArtista(sesion.getUsuarioActual());
             concierto.setProgramado(false); // importante
 
+            /*Genera la pantalla de exito*/
             conciertoService.crearConcierto(concierto);
 
             exitoConcierto();
 
         } catch (Exception e) {
             e.printStackTrace();
+            /*Genera la pantalla de error*/
             alertaConcierto("llene todos los campos con los formatos requeridos");
         }
     }
 
     @FXML
+    /*Boton para volver al menu*/
     void On_volver(ActionEvent event) throws IOException {
         sceneManager.showMenu();
     }
 
 
-    /*METODO PARA HACER QUE SALGA UNA VENTANA DE ERROR, CUANDO HAY ALGUN ERROR EN EL SIGN UP*/
+    /*Metodo para mostrar una alerta cuando se llenan mal los datos*/
     void alertaConcierto(String CausaError){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al crear el concierto");
@@ -92,7 +97,7 @@ public class CrearConciertoController {
         alert.showAndWait(); // Esto abre el POP UP
     }
 
-    /*METODO PARA HACER QUE SALGA UNA VENTANA DE EXIITO, CUANDO SE CREA LA CUENTA CORRECTAMENTE*/
+    /*METODO PARA HACER QUE SALGA UNA VENTANA DE EXIITO, CUANDO SE CREA el concierto CORRECTAMENTE*/
     void exitoConcierto (){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("El concierto fue creado");

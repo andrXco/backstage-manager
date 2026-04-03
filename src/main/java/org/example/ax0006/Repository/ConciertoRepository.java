@@ -17,6 +17,7 @@ public class ConciertoRepository {
         this.h2 = h2;
     }
 
+    /*Metodo para guardar en la base de datos el concierto y su id de horario*/
     public int guardar(Concierto c, int idHorario) {
 
         String sql = """
@@ -47,6 +48,7 @@ public class ConciertoRepository {
         return idConciertoGenerado;
     }
 
+    /*Obtiene conciertos de la base de datos y los guarda como objetos, ademas tambien trae el objeto del artista y el objeto de su horario*/
     public List<Concierto> obtenerConciertos() {
 
         List<Concierto> lista = new ArrayList<>();
@@ -102,6 +104,7 @@ public class ConciertoRepository {
         return lista;
     }
 
+    /*No se utiliza pero se deja una implementacion parcial porque puede ser relevante en un futuro*/
     public List<Concierto> buscarPorArtista(String nombreArtista) {
 
         List<Concierto> lista = new ArrayList<>();
@@ -157,6 +160,7 @@ public class ConciertoRepository {
         return lista;
     }
 
+    /*Genera la relacion RolConciertoArtista*/
     public void guardarRelacionArtista(int idUsuario, int idConcierto, int idRol) {
 
         String sql = """
@@ -178,6 +182,7 @@ public class ConciertoRepository {
         }
     }
 
+    /*Cambia el atributo de Programado de false a true*/
     public void aprobarConcierto(int id) {
 
         String sql = "UPDATE Concierto SET programado = TRUE WHERE idConcierto = ?";
@@ -193,6 +198,7 @@ public class ConciertoRepository {
         }
     }
 
+    /*Elimina un concierto de la base de datos*/
     public void eliminarConcierto(int idConcierto) {
 
         try (Connection conn = h2.getConnection()) {

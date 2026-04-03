@@ -14,6 +14,7 @@ public class HorarioRepository {
         this.h2 = h2;
     }
 
+    /*Guarda un horario en la base de datos*/
     public int guardar(Horario h) {
         String sql = "INSERT INTO Horario (fecha, horaInc, horaFin) VALUES (?, ?, ?)";
 
@@ -38,6 +39,7 @@ public class HorarioRepository {
         return -1;
     }
 
+    /*Elimina un horario de su base de datos*/
     public void eliminarHorario(int idHorario) {
 
         try (Connection conn = h2.getConnection()) {

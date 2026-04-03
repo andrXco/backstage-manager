@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ConciertosProgramadosController {
+    /*pantalla en donde se ven los conciertos programados, ademas se pueden cancelar ahi mismo*/
 
     private SesionManager sesion;
     private ConciertoService conciertoService;
@@ -48,7 +49,7 @@ public class ConciertosProgramadosController {
     @FXML
     private TableColumn<Concierto, Void> colAccion;
 
-    // BOTÓN VOLVER
+    /*Es un boton para volver al menu*/
     @FXML
     void On_volver(ActionEvent event) {
         try {
@@ -58,6 +59,7 @@ public class ConciertosProgramadosController {
         }
     }
 
+    /*Hace que se actualize y se genere la tabla*/
     @FXML
     public void initialize() {
 
@@ -81,6 +83,7 @@ public class ConciertosProgramadosController {
     }
 
 
+    /*Se agrega un boton para cancelar los conciertos programados*/
     private void agregarBotonCancelar() {
 
         colAccion.setCellFactory(param -> new TableCell<>() {
@@ -100,6 +103,7 @@ public class ConciertosProgramadosController {
                 });
             }
 
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -108,6 +112,7 @@ public class ConciertosProgramadosController {
         });
     }
 
+    /*Carga los datos de los conciertos para que sean cargados en la tabla*/
     private void cargarConciertos() {
         List<Concierto> lista = conciertoService.obtenerConciertos();
 

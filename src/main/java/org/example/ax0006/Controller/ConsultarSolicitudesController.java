@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ConsultarSolicitudesController {
+    /*En esta pantalla se consultan los conciertos a programar, ademas se puede aceptar o rechazar la solicitud*/
 
     private SesionManager sesion;
     private ConciertoService conciertoService;

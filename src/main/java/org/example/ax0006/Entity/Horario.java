@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Horario {
+    /*Implementacion basica de horario, puede cambiar*/
     private int idHorario;
     private LocalDate fecha;
     private LocalTime horaInicio;
@@ -17,6 +18,7 @@ public class Horario {
         this.horaFin = horaFin;
     }
 
+    /*GETTERS Y SETTERS*/
     public int getIdHorario() {
         return idHorario;
     }
