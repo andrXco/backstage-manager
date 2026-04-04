@@ -13,9 +13,10 @@ public class StaffService {
     private final UsuarioRepository usuarioRepository;
     private final AsignacionStaffRepository asignacionStaffRepository;
 
-    public StaffService(H2 h2) {
-        this.usuarioRepository = new UsuarioRepository(h2);
-        this.asignacionStaffRepository = new AsignacionStaffRepository(h2);
+    //Correcion de recibir repositorios ya creados.
+    public StaffService(UsuarioRepository usuarioRepository, AsignacionStaffRepository asignacionStaffRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.asignacionStaffRepository = asignacionStaffRepository;
     }
 
     public boolean crearEmpleado(String nombre, String contrasena, String gmail) {
