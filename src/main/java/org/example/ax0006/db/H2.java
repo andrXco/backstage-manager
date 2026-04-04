@@ -30,9 +30,7 @@ public class H2 {
                 idUsuario INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(255) NOT NULL,
                 gmail VARCHAR(255),
-                contrasena VARCHAR(255),
-                idRol INT,
-            
+                contrasena VARCHAR(255),           
                 telefono VARCHAR(10),
                 direccion VARCHAR(255),
                 contactoEmergenciaNombre VARCHAR(255),

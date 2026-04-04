@@ -123,7 +123,6 @@ public class EditProfileController {
         Usuario actualizado = new Usuario();
         actualizado.setIdUsuario(usuarioSesion.getIdUsuario());
         actualizado.setContrasena(usuarioSesion.getContrasena());
-        actualizado.setIdRol(usuarioSesion.getIdRol());
 
         actualizado.setNombre(ii_Nombre.getText());
         actualizado.setGmail(ii_Correo.getText());

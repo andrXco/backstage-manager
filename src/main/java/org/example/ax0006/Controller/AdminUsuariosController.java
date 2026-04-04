@@ -50,8 +50,6 @@ public class AdminUsuariosController {
     @FXML
     private TableColumn<Usuario, String> colGmail;
 
-    @FXML
-    private TableColumn<Usuario, String> colRol;
 
     @FXML
     private TableColumn<Usuario, String> colNombreRol;
@@ -72,7 +70,6 @@ public class AdminUsuariosController {
         }
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colGmail.setCellValueFactory(new PropertyValueFactory<>("gmail"));
-        colRol.setCellValueFactory(new PropertyValueFactory<>("idRol"));
 
         colNombreRol.setCellValueFactory(cellData -> {
             int idRol = cellData.getValue().getIdRol();
