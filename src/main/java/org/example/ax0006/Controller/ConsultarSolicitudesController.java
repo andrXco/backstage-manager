@@ -33,8 +33,6 @@ public class ConsultarSolicitudesController {
     @FXML
     private TableView<Concierto> tablaConciertos;
 
-    @FXML
-    private TableColumn<Concierto, String> colArtista;
 
     @FXML
     private TableColumn<Concierto, String> colFecha;
@@ -65,14 +63,6 @@ public class ConsultarSolicitudesController {
     //se crea la tabla
     @FXML
     public void initialize() {
-
-        colArtista.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getArtista() != null
-                                ? data.getValue().getArtista().getNombre()
-                                : ""
-                )
-        );
 
         colFecha.setCellValueFactory(data ->
                 new SimpleStringProperty(

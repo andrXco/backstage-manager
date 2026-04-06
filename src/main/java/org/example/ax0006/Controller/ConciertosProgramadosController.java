@@ -28,11 +28,11 @@ public class ConciertosProgramadosController {
         this.sceneManager = sceneManager;
     }
 
+
     @FXML
     private TableView<Concierto> tablaConciertos;
 
-    @FXML
-    private TableColumn<Concierto, String> colArtista;
+
 
     @FXML
     private TableColumn<Concierto, String> colFecha;
@@ -66,13 +66,6 @@ public class ConciertosProgramadosController {
     @FXML
     public void initialize() {
 
-        colArtista.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getArtista() != null
-                                ? data.getValue().getArtista().getNombre()
-                                : ""
-                )
-        );
 
         colFecha.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getHorario().getFecha().toString()));
@@ -99,7 +92,6 @@ public class ConciertosProgramadosController {
     private void agregarBotonCancelar() {
 
         colAccion.setCellFactory(param -> new TableCell<>() {
-
             private final Button btnCancelar = new Button("Cancelar");
 
             {

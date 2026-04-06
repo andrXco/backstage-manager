@@ -59,7 +59,7 @@ public class ConciertoRepository {
                h.idHorario, h.fecha, h.horaInc, h.horaFin
         FROM Concierto c
         JOIN Horario h ON c.idHorario = h.idHorario
-        WHERE c.programado = TRUE
+    
     """;
 
         try (Connection conn = h2.getConnection();

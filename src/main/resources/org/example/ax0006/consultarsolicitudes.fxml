@@ -36,9 +36,6 @@
 
                     <columns>
 
-                        <TableColumn fx:id="colArtista"
-                                     text="Artista"
-                                     prefWidth="200.0"/>
                         <TableColumn fx:id="colNombreConcierto"
                                      text="Nombre Concierto"
                                      prefWidth="200.0"/>
