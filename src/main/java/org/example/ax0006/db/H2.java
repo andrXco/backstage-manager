@@ -70,7 +70,8 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Horario (
                     idHorario INT AUTO_INCREMENT PRIMARY KEY,
-                    fecha DATE NOT NULL,
+                    fechaInc DATE NOT NULL,
+                    fechaFin DATE NOT NULL,
                     horaInc TIME NOT NULL,
                     horaFin TIME NOT NULL
                 )

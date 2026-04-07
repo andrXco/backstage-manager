@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- BARRA SUPERIOR -->
+    <top>
+        <HBox prefHeight="70.0" spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+
+            <children>
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestión de Conciertos" />
+            </children>
+
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO CENTRAL -->
+    <center>
+        <AnchorPane prefHeight="730.0" prefWidth="1200.0">
+
+            <children>
+
+                <VBox alignment="CENTER" layoutX="450.0" layoutY="150.0" spacing="20">
+   <children>
+   
+                       <!-- CREAR -->
+                       <Button fx:id="fid_bt_CrearConcierto" onAction="#On_CrearConcierto" prefWidth="300" style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-background-radius: 8;" text="Crear Solicitud de Concierto" />
+   
+                       <!-- CONSULTAR SOLICITUDES -->
+                       <Button fx:id="fid_bt_ConsultarSolicitudes" onAction="#On_ConsultarConciertos" prefWidth="300" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 8;" text="Consultar Solicitudes" />
+   
+                       <!-- CONSULTAR PROGRAMADOS -->
+                       <Button fx:id="fid_bt_ConsultarProgramados" onAction="#On_ConsultarCProgramado" prefWidth="300" style="-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-background-radius: 8;" text="Conciertos Programados" />
+   
+                       <!-- VOLVER -->
+                       <Button fx:id="fid_bt_volver" onAction="#On_btvolver" prefWidth="300" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;" text="volver al menu" />
+   </children>
+
+                </VBox>
+
+            </children>
+        </AnchorPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- TOP -->
+    <top>
+        <HBox spacing="600" style="-fx-background-color: white; -fx-padding: 15;">
+            <children>
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Crear Concierto" />
+
+                <Button onAction="#On_volver" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Volver" />
+            </children>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 40;">
+
+            <children>
+
+                <!-- FECHA -->
+                <VBox spacing="5">
+   <children>
+                       <Label text="Fecha de Inicio del concierto " />
+                       <DatePicker fx:id="fid_fecha_Inc" prefWidth="250" />
+   </children>
+                </VBox>
+
+                <!-- HORA INICIO -->
+                <VBox spacing="5">
+   <children>
+                       <Label text="Hora de inicio (HH:mm) (formato de 24h)" />
+                       <TextField fx:id="fid_horaInicio" prefWidth="250" promptText="Ej: 18:00" />
+   </children>
+                </VBox>
+            <VBox spacing="5">
+               <children>
+                  <Label text="Fecha de finalizacion del concierto" />
+                  <DatePicker fx:id="fid_fecha_Fin" prefWidth="250" />
+               </children>
+            </VBox>
+
+                <!-- HORA FIN -->
+                <VBox spacing="5">
+   <children>
+                       <Label text="Hora de fin (HH:mm) (formato de 24h)" />
+                       <TextField fx:id="fid_horaFin" prefWidth="250" promptText="Ej: 21:00" />
+   </children>
+                </VBox>
+
+                <!-- AFORO -->
+                <VBox spacing="5">
+   <children>
+                       <Label text="Aforo" />
+                       <TextField fx:id="fid_aforo" prefWidth="250" promptText="Ej: 500" />
+   </children>
+                </VBox>
+
+                <!-- BOTÓN CREAR -->
+                <Button fx:id="fid_bt_crear" onAction="#On_crearConcierto" prefWidth="200" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;" text="Crear Concierto" />
+
+            </children>
+
+        </VBox>
+    </center>
+
+</BorderPane>

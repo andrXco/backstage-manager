@@ -32,7 +32,7 @@ public class StaffController {
         H2 h2 = new H2();
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         AsignacionStaffRepository asignacionRepo = new AsignacionStaffRepository(h2);
-        staffService = new StaffService(usuarioRepo, asignacionRepo);
+        //staffService = new StaffService(usuarioRepo, asignacionRepo);
 
         cargarListaEmpleados();
     }
