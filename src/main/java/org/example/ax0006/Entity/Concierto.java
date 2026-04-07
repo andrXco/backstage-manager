@@ -2,7 +2,7 @@ package org.example.ax0006.Entity;
 
 public class Concierto {
     /*La clase concierto:
-    * Pendiente a implementar: Horario(actualmente es una implementacion basica), contrato, analisis financiero*/
+     * Pendiente a implementar: Horario(actualmente es una implementacion basica), contrato, analisis financiero*/
     private int idConcierto;
     private Horario horario;
     private int aforo;

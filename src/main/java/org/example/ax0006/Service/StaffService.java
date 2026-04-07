@@ -5,18 +5,20 @@ import org.example.ax0006.Repository.AsignacionStaffRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.db.H2;
 import java.util.List;
-
-import java.util.List;
+import org.example.ax0006.Entity.Concierto;
+import org.example.ax0006.Repository.ConciertoRepository;
 import java.util.stream.Collectors;
 
 public class StaffService {
 
     private final UsuarioRepository usuarioRepository;
     private final AsignacionStaffRepository asignacionStaffRepository;
+    private final ConciertoRepository conciertoRepository;
 
     public StaffService(H2 h2) {
         this.usuarioRepository = new UsuarioRepository(h2);
         this.asignacionStaffRepository = new AsignacionStaffRepository(h2);
+        this.conciertoRepository = new ConciertoRepository(h2);
     }
 
     public boolean crearEmpleado(String nombre, String contrasena, String gmail) {
@@ -54,9 +56,14 @@ public class StaffService {
         // TODO: implementar cálculo real
         return 0.0;
     }
-    //Metodod que permite obtener el staff que fue asignado a un concierto.
+    //Metodo que permite obtener el staff que fue asignado a un concierto.
     //Este metodo lo que hace es llamar al REPOSITORY para consultar la informacion en la DB.
     public List<Usuario> obtenerStaffPorConcierto(int idConcierto) {
         return asignacionStaffRepository.obtenerStaffPorConcierto(idConcierto);
+    }
+    //Metodo que permite obtener la lista de conciertos registrados.
+    //Este metodo llama al repository para consultar los conciertos en la base de datos.
+    public List<Concierto> listarConciertos() {
+        return conciertoRepository.obtenerConciertos();
     }
 }
