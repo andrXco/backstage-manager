@@ -81,50 +81,11 @@ public class MenuController {
         }
     }
 
-    @FXML
-    private Button fid_bt_CrearConcierto;
+    @FXML Button fid_Menu_Conciertos;
 
     @FXML
-    void On_CrearConcierto(ActionEvent event) throws IOException {
-        sceneManager.showCrearConcierto();
-
-        /*
-        LocalDate fechaconcierto = LocalDate.of(2026,6,25);
-        LocalTime horaConcierto = LocalTime.of(12, 0, 0);
-        Horario horarioConcierto = new Horario();
-        horarioConcierto.setFecha(fechaconcierto);
-        horarioConcierto.setHoraFin(horaConcierto);
-        horarioConcierto.setHoraInicio(horaConcierto);
-        Concierto concierto = new Concierto();
-        concierto.setHorario(horarioConcierto);
-        concierto.setArtista(sesion.getUsuarioActual());
-        concierto.setAforo(100);
-        concierto.setProgramado(false);
-        conciertoService.crearConcierto(concierto);
-        */
-    }
-
-    @FXML
-    private Button fid_bt_ConsultarConciertos;
-
-    @FXML
-    void On_ConsultarConciertos(ActionEvent event) throws IOException {
-        sceneManager.showConsultarSolicitudes();
-    }
-        /*
-        List<Concierto> Conciertos = conciertoService.obtenerConciertos();
-        for(Concierto c : Conciertos){
-            System.out.println(c.getArtista().getNombre());
-        }
-    }
-
-*/
-    @FXML
-    private Button fid_bt_ConsultarCProgramado;
-
-    @FXML
-    void On_ConsultarCProgramado(ActionEvent event) throws IOException {
-        sceneManager.showConciertosProgramados();
+    void On_Menu_Conciertos(ActionEvent event) throws IOException{
+        sceneManager.showMenuConcierto();
     }
 
 

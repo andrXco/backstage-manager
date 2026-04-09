@@ -8,10 +8,15 @@ import javafx.stage.Stage;
 import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
 import org.example.ax0006.Repository.*;
+import org.example.ax0006.Service.AutenticacionService;
+import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.*;
 import org.example.ax0006.Manager.SceneManager;
+import org.example.ax0006.Service.ConciertoService;
+import org.example.ax0006.Service.ProfileService;
 import org.example.ax0006.db.H2;
 
+import org.example.ax0006.Service.RolService;
 import java.io.IOException;
 
 //ver base de datos:
@@ -56,6 +61,7 @@ public class StartController extends Application {
                 sesion,
                 staffService
         );
+
 
         SceneManager sceneManager = new SceneManager(stage, context);
 

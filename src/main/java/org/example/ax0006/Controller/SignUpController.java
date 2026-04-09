@@ -142,53 +142,36 @@ public class SignUpController {
         String contrasena = fid_Contrasena.getText();
         String confirmacion = fid_ContrasenaConfirmation.getText();
 
-        if (correo == null || correo.isEmpty()) {
-            System.out.println("Ingrese un correo");
-            alertaSignUp("Tiene que ingresar un correo");
+        if (correo == null || correo.isBlank() ||
+                usuario == null || usuario.isBlank() ||
+                contrasena == null || contrasena.isBlank() ||
+                confirmacion == null || confirmacion.isBlank()) {
+
+            alertaSignUp("Debe completar todos los campos.");
             return;
         }
 
         if (!correo.contains("@")) {
-            System.out.println("El correo debe contener una @");
-            alertaSignUp("Tiene que ingresar un correo valido, debe contener un @");
+            alertaSignUp("Tiene que ingresar un correo válido, debe contener un @.");
             return;
         }
 
-        if (usuario == null || usuario.isEmpty()) {
-            System.out.println("Ingrese un nombre de usuario");
-            alertaSignUp("Tiene que ingresar un Nombre de usuario Valido");
+        if (contrasena.length() < 8) {
+            alertaSignUp("La contraseña debe tener al menos 8 caracteres.");
             return;
         }
 
-        if (contrasena == null || contrasena.isEmpty()) {
-            System.out.println("Ingrese una contraseña");
-            alertaSignUp("Tiene que ingresar una contraseña");
+        if (!contrasena.equals(confirmacion)) {
+            alertaSignUp("La confirmación no coincide con la contraseña.");
             return;
         }
 
-        if (confirmacion == null || confirmacion.isEmpty()) {
-            System.out.println("Confirme la contraseña");
-            alertaSignUp("Tiene que ingresar la confirmacion de la contraseña");
+        if (!autenService.signUp(usuario, contrasena, correo)) {
+            alertaSignUp("No se pudo crear el usuario. Intente nuevamente.");
             return;
         }
 
-        if (!confirmacion.equals(contrasena)) {
-            System.out.println("Verifique que las contraseñas sean iguales");
-            alertaSignUp("Las contraseñas ingresadas deben de ser iguales");
-            return;
-        }
-
-        /*ESTE VERIFICA EL USUARIO Y LA CONTRASEÑA CON EL METODO DE SIGN UP DEL SERVICIO DE AUTENTICACION
-        * ADEMAS EN CASO DE QUE ESTE SEA EXITOSO DE UNA LA GUARDA EN LA BASE DE DATOS*/
-        if (autenService.signUp(usuario, contrasena, correo) == false) {
-            System.out.println("Usuario o contraseña invalida");
-            alertaSignUp("por favor intente nuevamente");
-            return;
-        }
-
-        /*MUESTRA EL MENSAJE DE EXITO*/
         exitoSignUp();
-        /*CAMBIA DE ESCENA AL LOGIN*/
         sceneManager.showLogin();
     }
 

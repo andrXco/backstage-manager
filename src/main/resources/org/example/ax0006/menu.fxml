@@ -36,7 +36,7 @@
          <children>
             <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="MENÚ" />
             <Separator />
-            <Button fx:id="fid_bt_extra1" text="BOTON EXTRA" />
+            <Button fx:id="fid_Menu_Conciertos" onAction="#On_Menu_Conciertos" text="Menu Gestion Conciertos" />
             <Button fx:id="fid_bt_extra2" text="BOTON EXTRA" />
             <Button fx:id="fid_bt_extra3" text="BOTON EXTRA" />
             <Button fx:id="fid_bt_extra4" text="BOTON EXTRA" />
@@ -50,11 +50,6 @@
    </left>
    <!-- CONTENIDO CENTRAL -->
    <center>
-      <AnchorPane fx:id="fid_contenido" prefHeight="730.0" prefWidth="775.0" style="-fx-background-color: #f4f6f8;">
-         <children>
-            <Button fx:id="fid_bt_CrearConcierto" layoutX="28.0" layoutY="28.0" mnemonicParsing="false" onAction="#On_CrearConcierto" text="Crear Solicitud de Concierto" />
-            <Button fx:id="fid_bt_ConsultarConciertos" layoutX="14.0" layoutY="86.0" mnemonicParsing="false" onAction="#On_ConsultarConciertos" text="Consultar Solicitudes de Conciertos" />
-            <Button fx:id="fid_bt_ConsultarCProgramado" layoutX="14.0" layoutY="145.0" mnemonicParsing="false" onAction="#On_ConsultarCProgramado" text="Consultar Conciertos Programados" />
-         </children></AnchorPane>
+      <AnchorPane fx:id="fid_contenido" prefHeight="730.0" prefWidth="775.0" style="-fx-background-color: #f4f6f8;" />
    </center>
 </BorderPane>

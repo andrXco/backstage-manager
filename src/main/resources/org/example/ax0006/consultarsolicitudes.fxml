@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="800.0" prefWidth="1200.0"
@@ -39,8 +40,16 @@
                         <TableColumn fx:id="colNombreConcierto"
                                      text="Nombre Concierto"
                                      prefWidth="200.0"/>
-                        <TableColumn fx:id="colFecha"
-                                     text="Fecha"
+
+
+
+                        <!-- NUEVAS COLUMNAS -->
+                        <TableColumn fx:id="colFechaInicio"
+                                     text="Fecha Inicio"
+                                     prefWidth="150.0"/>
+
+                        <TableColumn fx:id="colFechaFin"
+                                     text="Fecha Fin"
                                      prefWidth="150.0"/>
 
                         <TableColumn fx:id="colHoraInicio"

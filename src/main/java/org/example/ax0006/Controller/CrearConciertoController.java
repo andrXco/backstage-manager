@@ -31,7 +31,10 @@ public class CrearConciertoController {
     private TextField fid_nombreConcierto;
 
     @FXML
-    private DatePicker fid_fecha;
+    private DatePicker fid_fecha_Inc;
+
+    @FXML
+    private DatePicker fid_fecha_Fin;
 
     @FXML
     private TextField fid_horaInicio;
@@ -48,14 +51,17 @@ public class CrearConciertoController {
 
         try {
             // Fecha
-            java.time.LocalDate fecha = fid_fecha.getValue();
+            java.time.LocalDate fechaInc = fid_fecha_Inc.getValue();
+            java.time.LocalDate fechaFin = fid_fecha_Fin.getValue(); //CAMBIAR
 
             //nombre del concierto
 
             String nombreConcierto = fid_nombreConcierto.getText();
             // Horas
+            fid_horaInicio.setText(verifcarHora(fid_horaInicio.getText()));
 
             LocalTime horaInicio = LocalTime.parse(fid_horaInicio.getText());
+            fid_horaFin.setText(verifcarHora(fid_horaFin.getText()));
             LocalTime horaFin = LocalTime.parse(fid_horaFin.getText());
 
             // Aforo
@@ -63,7 +69,8 @@ public class CrearConciertoController {
 
             // Horario
             Horario horario = new Horario();
-            horario.setFecha(fecha);
+            horario.setFechaInicio(fechaInc);
+            horario.setFechaFin(fechaFin);
             horario.setHoraInicio(horaInicio);
             horario.setHoraFin(horaFin);
 
@@ -105,11 +112,19 @@ public class CrearConciertoController {
     }
 
     /*METODO PARA HACER QUE SALGA UNA VENTANA DE EXIITO, CUANDO SE CREA el concierto CORRECTAMENTE*/
-    void exitoConcierto (){
+    void exitoConcierto () throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("El concierto fue creado");
         alert.setHeaderText("El la solicitud del concierto fue creada correctamente");
         alert.setContentText("La solicitud sera revisada para que el concierto sea programado");
         alert.showAndWait(); // Esto abre el POP UP
+        sceneManager.showMenuConcierto();
+    }
+
+    String verifcarHora(String hora){
+        if(hora.length() == 4){
+            hora = "0" + hora;
+        }
+        return hora;
     }
 }

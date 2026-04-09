@@ -5,15 +5,17 @@ import java.time.LocalTime;
 public class Horario {
     /*Implementacion basica de horario, puede cambiar*/
     private int idHorario;
-    private LocalDate fecha;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private LocalTime horaInicio;
     private LocalTime horaFin;
 
     public Horario(){}
 
-    public Horario(int idHorario, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) {
+    public Horario(int idHorario, LocalDate fechaInicio, LocalDate fechaFin, LocalTime horaInicio, LocalTime horaFin) {
         this.idHorario = idHorario;
-        this.fecha = fecha;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
     }
@@ -27,12 +29,20 @@ public class Horario {
         this.idHorario = idHorario;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public LocalTime getHoraInicio() {

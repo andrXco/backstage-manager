@@ -62,7 +62,6 @@ public class SceneManager {
         loadScene("/org/example/ax0006/profile.fxml", profileController);
     }
 
-    /*metodo para mostra la pantalla de editar el perfil*/
     public void showEditProfile() throws IOException {
         EditProfileController editProfileController = new EditProfileController(
                 this,
@@ -73,21 +72,33 @@ public class SceneManager {
     }
 
     /*metodo para mostra la pantalla de mostrar los conciertos no programados*/
+    public void showChangePassword() throws IOException {
+        ChangePasswordController changePasswordController = new ChangePasswordController(
+                this,
+                context.getSesion(),
+                context.getProfileService()
+        );
+        loadScene("/org/example/ax0006/changepassword.fxml", changePasswordController);
+    }
+
     public void showConsultarSolicitudes() throws IOException{
         ConsultarSolicitudesController consultarSolicitudesController = new ConsultarSolicitudesController(context.getSesion(), context.getConciertoService(), this);
         loadScene("/org/example/ax0006/consultarsolicitudes.fxml", consultarSolicitudesController);
     }
 
-    /*metodo para mostra la pantalla de crear concierto*/
     public void showCrearConcierto() throws  IOException{
         CrearConciertoController crearConciertoController = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
         loadScene("/org/example/ax0006/crearconcierto.fxml", crearConciertoController);
     }
 
-    /*metodo para mostra la pantalla de ver los conciertos programados*/
     public void showConciertosProgramados() throws  IOException{
         ConciertosProgramadosController conciertosProgramadosController = new ConciertosProgramadosController(context.getSesion(), context.getConciertoService(), this);
         loadScene("/org/example/ax0006/verconciertosprogramados.fxml", conciertosProgramadosController);
+    }
+
+    public void showMenuConcierto() throws IOException{
+        MenuConciertoController menuConciertoController = new MenuConciertoController(this, context.getSesion());
+        loadScene("/org/example/ax0006/menuconcierto.fxml", menuConciertoController);
     }
 
 

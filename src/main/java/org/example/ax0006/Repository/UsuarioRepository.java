@@ -202,5 +202,20 @@ public class UsuarioRepository {
         }
     }
 
+    public boolean actualizarContrasena(int idUsuario, String nuevaContrasena) {
+        String sql = "UPDATE Usuario SET contrasena = ? WHERE idUsuario = ?";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nuevaContrasena);
+            stmt.setInt(2, idUsuario);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

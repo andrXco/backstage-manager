@@ -46,8 +46,12 @@
                         <TableColumn fx:id="colNombreConcierto"
                                      text="Nombre Concierto"
                                      prefWidth="200.0"/>
-                        <TableColumn fx:id="colFecha"
-                                     text="Fecha"
+                        <TableColumn fx:id="colFechaInicio"
+                                     text="Fecha Inicio"
+                                     prefWidth="150.0"/>
+
+                        <TableColumn fx:id="colFechaFin"
+                                     text="Fecha Fin"
                                      prefWidth="150.0"/>
 
                         <TableColumn fx:id="colHoraInicio"

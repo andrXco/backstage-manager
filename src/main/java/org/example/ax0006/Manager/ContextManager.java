@@ -5,6 +5,10 @@ import org.example.ax0006.Repository.HorarioRepository;
 import org.example.ax0006.Repository.RolRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.Service.*;
+import org.example.ax0006.Service.AutenticacionService;
+import org.example.ax0006.Service.ConciertoService;
+import org.example.ax0006.Service.ProfileService;
+import org.example.ax0006.Service.RolService;
 import org.example.ax0006.db.H2;
 
 public class ContextManager {

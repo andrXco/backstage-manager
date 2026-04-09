@@ -34,8 +34,12 @@ public class ConsultarSolicitudesController {
     private TableView<Concierto> tablaConciertos;
 
 
+
     @FXML
-    private TableColumn<Concierto, String> colFecha;
+    private TableColumn<Concierto, String> colFechaInicio;
+
+    @FXML
+    private TableColumn<Concierto, String> colFechaFin;
 
     @FXML
     private TableColumn<Concierto, String> colHoraInicio;
@@ -54,7 +58,7 @@ public class ConsultarSolicitudesController {
 
     @FXML
     void On_volver(ActionEvent event) throws IOException {
-        sceneManager.showMenu();
+        sceneManager.showMenuConcierto();
     }
 
     @FXML
@@ -64,11 +68,12 @@ public class ConsultarSolicitudesController {
     @FXML
     public void initialize() {
 
-        colFecha.setCellValueFactory(data ->
+
+
+        colFechaFin.setCellValueFactory(data ->
                 new SimpleStringProperty(
-                        data.getValue().getHorario().getFecha().toString()
-                )
-        );
+                        data.getValue().getHorario().getFechaFin().toString()
+                ));
 
         colHoraInicio.setCellValueFactory(data ->
                 new SimpleStringProperty(

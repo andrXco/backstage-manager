@@ -16,14 +16,15 @@ public class HorarioRepository {
 
     /*Guarda un horario en la base de datos*/
     public int guardar(Horario h) {
-        String sql = "INSERT INTO Horario (fecha, horaInc, horaFin) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Horario (fechaInc, fechaFin, horaInc, horaFin) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setDate(1, Date.valueOf(h.getFecha()));
-            stmt.setTime(2, Time.valueOf(h.getHoraInicio()));
-            stmt.setTime(3, Time.valueOf(h.getHoraFin()));
+            stmt.setDate(1, Date.valueOf(h.getFechaInicio()));
+            stmt.setDate(2,Date.valueOf(h.getFechaFin()));
+            stmt.setTime(3, Time.valueOf(h.getHoraInicio()));
+            stmt.setTime(4, Time.valueOf(h.getHoraFin()));
 
             stmt.executeUpdate();
 

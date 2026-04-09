@@ -34,8 +34,12 @@ public class ConciertosProgramadosController {
 
 
 
+
     @FXML
-    private TableColumn<Concierto, String> colFecha;
+    private TableColumn<Concierto, String> colFechaInicio;
+
+    @FXML
+    private TableColumn<Concierto, String> colFechaFin;
 
     @FXML
     private TableColumn<Concierto, String> colHoraInicio;
@@ -56,7 +60,7 @@ public class ConciertosProgramadosController {
     @FXML
     void On_volver(ActionEvent event) {
         try {
-            sceneManager.showMenu();
+            sceneManager.showMenuConcierto();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,8 +71,12 @@ public class ConciertosProgramadosController {
     public void initialize() {
 
 
-        colFecha.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getHorario().getFecha().toString()));
+
+        colFechaInicio.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getHorario().getFechaInicio().toString()));
+
+        colFechaFin.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getHorario().getFechaFin().toString()));
 
         colHoraInicio.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getHorario().getHoraInicio().toString()));
@@ -92,6 +100,7 @@ public class ConciertosProgramadosController {
     private void agregarBotonCancelar() {
 
         colAccion.setCellFactory(param -> new TableCell<>() {
+
             private final Button btnCancelar = new Button("Cancelar");
 
             {

@@ -34,6 +34,9 @@ public class ProfileController {
     private Button bt_EditProfile;
 
     @FXML
+    private Button bt_ChangePassword;
+
+    @FXML
     private Label lbl_Correo;
 
     @FXML
@@ -120,6 +123,16 @@ public class ProfileController {
         } catch (IOException e) {
             e.printStackTrace();
             mostrarAlerta("No se pudo abrir la ventana de edición.");
+        }
+    }
+
+    @FXML
+    void On_ChangePassword(ActionEvent event) {
+        try {
+            sceneManager.showChangePassword();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("No se pudo abrir la ventana de cambio de contraseña.");
         }
     }
 }

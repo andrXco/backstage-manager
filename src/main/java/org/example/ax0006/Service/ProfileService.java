@@ -22,4 +22,8 @@ public class ProfileService {
     public void actualizarPerfil(Usuario usuario) {
         usuarioRepository.actualizarPerfil(usuario);
     }
+
+    public boolean cambiarContrasena(int idUsuario, String nuevaContrasena) {
+        return usuarioRepository.actualizarContrasena(idUsuario, nuevaContrasena);
+    }
 }
