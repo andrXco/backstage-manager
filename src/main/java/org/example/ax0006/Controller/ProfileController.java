@@ -91,9 +91,8 @@ public class ProfileController {
         try {
             lbl_Nombre.setText(valorSeguro(usuarioActual.getNombre()));
             lbl_Correo.setText(valorSeguro(usuarioActual.getGmail()));
-            lbl_Rol.setText(usuarioActual.getRol() != null
-                    ? valorSeguro(usuarioActual.getRol().getRol())
-                    : "Sin rol");
+            lbl_Rol.setText(profileService.obtenerRolesDelUsuario(usuarioActual.getIdUsuario()));
+
             lbl_Telefono.setText(valorSeguro(usuarioActual.getTelefono()));
             lbl_Direccion.setText(valorSeguro(usuarioActual.getDireccion()));
             lbl_NombreEmergencia.setText(valorSeguro(usuarioActual.getContactoEmergenciaNombre()));

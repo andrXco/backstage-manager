@@ -30,16 +30,12 @@ public class H2 {
                 idUsuario INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(255) NOT NULL,
                 gmail VARCHAR(255),
-                contrasena VARCHAR(255),
-                idRol INT,
-            
+                contrasena VARCHAR(255),           
                 telefono VARCHAR(10),
                 direccion VARCHAR(255),
                 contactoEmergenciaNombre VARCHAR(255),
                 contactoEmergenciaTelefono VARCHAR(20),
-                contactoEmergenciaRelacion VARCHAR(100),
-            
-                FOREIGN KEY (idRol) REFERENCES Rol(idRol)
+                contactoEmergenciaRelacion VARCHAR(100)
             )
             """);
 
@@ -95,6 +91,7 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Concierto (
                     idConcierto INT AUTO_INCREMENT PRIMARY KEY,
+                    nombreConcierto VARCHAR(255) NOT NULL,
                     idHorario INT,
                     aforo INT NOT NULL,
                     idContrato INT,
@@ -138,8 +135,9 @@ public class H2 {
                 )
             """);
             //Crear roles con el idRol para eso toca mergear tablas para colocar los roles dentro de rol con los ids.
+            //con merge into se evitan duplicados cada vez que se ejecute el programa.
             stmt.execute("""
-               MERGE INTO Rol (idRol, rol) KEY(idRol)
+               MERGE INTO Rol (idRol, rol) KEY(idRol)   
                   VALUES (1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff')
                 """);
 

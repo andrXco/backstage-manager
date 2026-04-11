@@ -26,7 +26,7 @@ public class AutenticacionService {
         nuevo.setContrasena(contrasena);
         nuevo.setGmail(gmail);
 
-        nuevo.setIdRol(1);
+
 
         usuarioRepo.guardar(nuevo);
 

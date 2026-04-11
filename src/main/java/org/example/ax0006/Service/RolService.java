@@ -36,11 +36,6 @@ public class RolService {
     }
 
 
-    public void asignarRol(int idUsuario, int idRol) {
-        usuarioRepo.actualizarRol(idUsuario, idRol);
-    }
-
-
     public String obtenerNombreRol(int idRol) {
         return rolRepo.obtenerNombreRol(idRol);
     }

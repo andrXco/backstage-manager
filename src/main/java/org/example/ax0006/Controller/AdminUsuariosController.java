@@ -1,7 +1,10 @@
 package org.example.ax0006.Controller;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
+import org.example.ax0006.Entity.Concierto;
 import org.example.ax0006.Manager.SceneManager;
+import org.example.ax0006.Service.ConciertoService;
 import org.example.ax0006.Service.RolService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +22,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.example.ax0006.Service.StaffService;
+
 import java.util.List;
 
 public class AdminUsuariosController {
@@ -26,11 +31,15 @@ public class AdminUsuariosController {
     private SesionManager sesion;
     private RolService rolService;
     private SceneManager sceneManager;
+    private ConciertoService conciertoService;
+    private StaffService staffService;
 
-    public AdminUsuariosController(SesionManager sesion, RolService rolService, SceneManager sceneManager) {
+    public AdminUsuariosController(SesionManager sesion, RolService rolService, SceneManager sceneManager,ConciertoService conciertoService, StaffService staffService) {
         this.sesion = sesion;
         this.rolService = rolService;
         this.sceneManager = sceneManager;
+        this.conciertoService = conciertoService;
+        this.staffService = staffService;
     }
 
 
@@ -50,8 +59,9 @@ public class AdminUsuariosController {
     @FXML
     private TableColumn<Usuario, String> colGmail;
 
-    @FXML
-    private TableColumn<Usuario, String> colRol;
+
+
+
 
     @FXML
     private TableColumn<Usuario, String> colNombreRol;
@@ -59,6 +69,8 @@ public class AdminUsuariosController {
     @FXML
     private TableColumn<Usuario, Void> colAccion; //columna para asignar rol
 
+    @FXML
+    private ComboBox<Object> comboConciertoFiltro;
 
 
 
@@ -70,29 +82,93 @@ public class AdminUsuariosController {
         if (sesion.getUsuarioActual() != null) {
             fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
         }
+
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colGmail.setCellValueFactory(new PropertyValueFactory<>("gmail"));
-        colRol.setCellValueFactory(new PropertyValueFactory<>("idRol"));
 
-        colNombreRol.setCellValueFactory(cellData -> {
-            int idRol = cellData.getValue().getIdRol();
-            String nombreRol = idRol == 0 ? "Sin rol" : rolService.obtenerNombreRol(idRol);
-            return new SimpleStringProperty(nombreRol);
+        colNombreRol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(obtenerRolEnConcierto(cellData.getValue()))
+        );
+
+        cargarComboConciertoFiltro();
+        agregarBoton();
+
+        comboConciertoFiltro.setOnAction(e -> actualizarTabla());
+
+        cargarUsuariosSinAsignar();
+
+    }
+
+
+    private void cargarComboConciertoFiltro() {
+        comboConciertoFiltro.getItems().clear();
+        comboConciertoFiltro.getItems().add("Sin asignar");
+        comboConciertoFiltro.getItems().addAll(
+                conciertoService.obtenerConciertosSolos().stream()
+                        .filter(c -> c.isProgramado())
+                        .toList()
+        );
+        comboConciertoFiltro.setValue("Sin asignar");
+
+
+        comboConciertoFiltro.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else if (item instanceof Concierto c)
+                            setText(c.getNombreConcierto());
+                else setText(item.toString());
+            }
         });
 
-        agregarBoton();
-        cargarUsuarios();
+        comboConciertoFiltro.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else if (item instanceof Concierto c)
+                    setText(c.getNombreConcierto());
+                else setText(item.toString());
+            }
+        });
     }
 
-
-    private void cargarUsuarios() {
-        ObservableList<Usuario> lista = FXCollections.observableArrayList(rolService.obtenerUsuarios());
-        tablaUsuarios.setItems(lista);
+    // Decide qué cargar según el filtro seleccionado
+    private void actualizarTabla() {
+        Object seleccionado = comboConciertoFiltro.getValue();
+        if (seleccionado instanceof Concierto c) {
+            cargarUsuariosPorConcierto(c);
+        } else {
+            cargarUsuariosSinAsignar();
+        }
     }
 
+    // Usuarios que NO tienen ninguna asignación en RolConciertoUsuario
+    private void cargarUsuariosSinAsignar() {
+        List<Usuario> todos = rolService.obtenerUsuarios();
+        List<Integer> asignados = staffService.obtenerIdsUsuariosAsignados();
+        List<Usuario> sinAsignar = todos.stream()
+                .filter(u -> !asignados.contains(u.getIdUsuario()))
+                .toList();
+        tablaUsuarios.setItems(FXCollections.observableArrayList(sinAsignar));
+    }
 
+    // Usuarios asignados a un concierto específico
+    private void cargarUsuariosPorConcierto(Concierto concierto) {
+        List<Usuario> usuarios = staffService.obtenerUsuariosPorConcierto(concierto.getIdConcierto());
+        tablaUsuarios.setItems(FXCollections.observableArrayList(usuarios));
+    }
 
-    //Permite agregar al boton de asignar el popup para ver los roles disponbiles a asignar en cada fila de la tabla por usuario.
+    // Obtiene el rol del usuario en el concierto actualmente filtrado
+    private String obtenerRolEnConcierto(Usuario u) {
+        Object seleccionado = comboConciertoFiltro.getValue();
+        if (seleccionado instanceof Concierto c) {
+            return staffService.obtenerNombreRolEnConcierto(u.getIdUsuario(), c.getIdConcierto());
+        }
+        return "Sin asignar";
+    }
+
     private void agregarBoton() {
         colAccion.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Asignar");
@@ -109,55 +185,88 @@ public class AdminUsuariosController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    btn.setDisable(false);//pequeño cambio para que el boton estuviera disponible siempre para asignar mas roles asi ya tenga
                     setGraphic(btn);
                 }
             }
         });
     }
 
-
-    //CARGA LOS ROLES DE LA BD
     private void mostrarPopupRol(Usuario u) {
         List<Rol> roles = rolService.obtenerRolesAsignables();
+        List<Concierto> conciertos = conciertoService.obtenerConciertosSolos();
 
-        // CREA EL POPUP
-        Dialog<Rol> dialog = new Dialog<>();
+        Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Asignar Rol");
-        dialog.setHeaderText("Selecciona un rol para: " + u.getNombre());
-
+        dialog.setHeaderText("Asignar rol a: " + u.getNombre());
 
         ComboBox<Rol> comboRoles = new ComboBox<>();
         comboRoles.getItems().addAll(roles);
         comboRoles.setPromptText("Seleccionar rol");
 
+        ComboBox<Concierto> comboConciertos = new ComboBox<>();
+        comboConciertos.getItems().addAll(conciertos);
+        comboConciertos.setPromptText("Seleccionar concierto");
+
+        // Mostrar nombre legible en el combo de conciertos del popup
+        comboConciertos.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(item.getNombreConcierto());
+            }
+        });
+        comboConciertos.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(item.getNombreConcierto());
+            }
+        });
 
         VBox content = new VBox(10);
-        content.getChildren().addAll(new Label("Rol:"), comboRoles);
+        content.getChildren().addAll(
+                new Label("Rol:"), comboRoles,
+                new Label("Concierto:"), comboConciertos
+        );
         dialog.getDialogPane().setContent(content);
-
 
         ButtonType confirmar = new ButtonType("Confirmar", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(confirmar, cancelar);
 
+        Optional<ButtonType> resultado = dialog.showAndWait();
+        if (resultado.isPresent() && resultado.get() == confirmar) {
+            Rol rolSeleccionado = comboRoles.getValue();
+            Concierto conciertoSeleccionado = comboConciertos.getValue();
 
-        dialog.setResultConverter(bt -> {
-            if (bt == confirmar) return comboRoles.getValue();
-            return null;
-        });
-
-        dialog.showAndWait().ifPresent(rolSeleccionado -> {
-            if (rolSeleccionado != null) {
-                rolService.asignarRol(u.getIdUsuario(), rolSeleccionado.getIdRol());
-                cargarUsuarios(); //actualiza la tabla
+            if (rolSeleccionado == null || conciertoSeleccionado == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campos vacíos");
+                alert.setHeaderText("Selecciona un rol y un concierto");
+                alert.showAndWait();
+                return;
             }
-        });
-    }
 
+            staffService.asignarStaffAConcierto(
+                    u.getIdUsuario(),
+                    conciertoSeleccionado.getIdConcierto(),
+                    rolSeleccionado.getIdRol()
+            );
+            actualizarTabla();
+        }
+    }
 
     @FXML
     void On_volver(ActionEvent event) throws IOException {
         sceneManager.showMenu();
     }
-
 }
+
+
+
+
+
+

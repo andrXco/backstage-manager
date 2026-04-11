@@ -15,6 +15,10 @@ public class ProfileService {
         return usuarioRepository.buscarCompletoPorId(idUsuario);
     }
 
+    public String obtenerRolesDelUsuario(int idUsuario) {
+        return usuarioRepository.obtenerRolesDelUsuario(idUsuario);
+    }
+
     public void actualizarPerfil(Usuario usuario) {
         usuarioRepository.actualizarPerfil(usuario);
     }

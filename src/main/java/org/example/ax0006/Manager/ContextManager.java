@@ -4,6 +4,7 @@ import org.example.ax0006.Repository.ConciertoRepository;
 import org.example.ax0006.Repository.HorarioRepository;
 import org.example.ax0006.Repository.RolRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
+import org.example.ax0006.Service.*;
 import org.example.ax0006.Service.AutenticacionService;
 import org.example.ax0006.Service.ConciertoService;
 import org.example.ax0006.Service.ProfileService;
@@ -22,6 +23,8 @@ public class ContextManager {
     private ConciertoService conciertoService;
     private HorarioRepository horarioRepo;
     private ConciertoRepository conciertoRepo;
+    private StaffService staffService;
+
 
     public ContextManager(
             H2 h2,
@@ -33,7 +36,8 @@ public class ContextManager {
             ProfileService profileService,
             RolService rolService,
             ConciertoService conciertoService,
-            SesionManager sesion
+            SesionManager sesion,
+            StaffService staffService
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -45,6 +49,7 @@ public class ContextManager {
         this.conciertoService = conciertoService;
         this.rolService = rolService;
         this.sesion = sesion;
+        this.staffService = staffService;
     }
 
     public H2 getH2() {
@@ -76,4 +81,6 @@ public class ContextManager {
     }
 
     public ConciertoService getConciertoService() {return conciertoService;}
+
+    public StaffService getStaffService() { return staffService; }
 }

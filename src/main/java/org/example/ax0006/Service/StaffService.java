@@ -1,12 +1,13 @@
 package org.example.ax0006.Service;
 
+import org.example.ax0006.Entity.Concierto;
 import org.example.ax0006.Entity.Usuario;
 import org.example.ax0006.Repository.AsignacionStaffRepository;
+import org.example.ax0006.Repository.ConciertoRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.db.H2;
+
 import java.util.List;
-import org.example.ax0006.Entity.Concierto;
-import org.example.ax0006.Repository.ConciertoRepository;
 import java.util.stream.Collectors;
 
 public class StaffService {
@@ -21,15 +22,26 @@ public class StaffService {
         this.conciertoRepository = new ConciertoRepository(h2);
     }
 
+    // Constructor alternativo para recibir repositorios ya creados
+    public StaffService(UsuarioRepository usuarioRepository,
+                        AsignacionStaffRepository asignacionStaffRepository,
+                        ConciertoRepository conciertoRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.asignacionStaffRepository = asignacionStaffRepository;
+        this.conciertoRepository = conciertoRepository;
+    }
+
     public boolean crearEmpleado(String nombre, String contrasena, String gmail) {
         if (usuarioRepository.buscarPorNombre(nombre) != null) {
             return false;
         }
+
         Usuario nuevo = new Usuario();
         nuevo.setNombre(nombre);
         nuevo.setContrasena(contrasena);
         nuevo.setGmail(gmail);
         nuevo.setIdRol(4); // Staff
+
         usuarioRepository.guardar(nuevo);
         return true;
     }
@@ -53,17 +65,31 @@ public class StaffService {
     }
 
     public double generarNomina(int idConcierto) {
-        // TODO: implementar cálculo real
         return 0.0;
     }
-    //Metodo que permite obtener el staff que fue asignado a un concierto.
-    //Este metodo lo que hace es llamar al REPOSITORY para consultar la informacion en la DB.
+
+    // Método que permite obtener el staff que fue asignado a un concierto
     public List<Usuario> obtenerStaffPorConcierto(int idConcierto) {
         return asignacionStaffRepository.obtenerStaffPorConcierto(idConcierto);
     }
-    //Metodo que permite obtener la lista de conciertos registrados.
-    //Este metodo llama al repository para consultar los conciertos en la base de datos.
+
+    // Método que permite obtener la lista de conciertos registrados
     public List<Concierto> listarConciertos() {
         return conciertoRepository.obtenerConciertos();
+    }
+
+    // Retorna los ids de todos los usuarios que tienen al menos una asignación
+    public List<Integer> obtenerIdsUsuariosAsignados() {
+        return asignacionStaffRepository.obtenerIdsUsuariosAsignados();
+    }
+
+    // Retorna los usuarios asignados a un concierto específico
+    public List<Usuario> obtenerUsuariosPorConcierto(int idConcierto) {
+        return asignacionStaffRepository.obtenerUsuariosPorConcierto(idConcierto);
+    }
+
+    // Retorna el nombre del rol del usuario en un concierto específico
+    public String obtenerNombreRolEnConcierto(int idUsuario, int idConcierto) {
+        return asignacionStaffRepository.obtenerNombreRolEnConcierto(idUsuario, idConcierto);
     }
 }

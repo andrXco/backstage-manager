@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="800.0" prefWidth="1200.0"
+            style="-fx-background-color: #f4f6f8;">
 
     <!-- TOP -->
     <top>
         <HBox spacing="600" style="-fx-background-color: white; -fx-padding: 15;">
             <children>
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Crear Concierto" />
+                <Label text="Crear Concierto"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-                <Button onAction="#On_volver" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Volver" />
+                <Button text="Volver"
+                        onAction="#On_volver"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
             </children>
         </HBox>
     </top>
 
     <!-- CENTER -->
     <center>
-        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 40;">
+        <VBox spacing="20"
+              alignment="CENTER"
+              style="-fx-padding: 40;">
 
             <children>
+
+                <!-- NOMBRE DEL CONCIERTO -->
+                <VBox spacing="5">
+                    <Label text="Nombre del concierto" />
+                    <TextField fx:id="fid_nombreConcierto" promptText="Ej: Rock en vivo" prefWidth="250"/>
+                </VBox>
 
                 <!-- FECHA -->
                 <VBox spacing="5">
@@ -63,7 +76,11 @@
                 </VBox>
 
                 <!-- BOTÓN CREAR -->
-                <Button fx:id="fid_bt_crear" onAction="#On_crearConcierto" prefWidth="200" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;" text="Crear Concierto" />
+                <Button text="Crear Concierto"
+                        fx:id="fid_bt_crear"
+                        onAction="#On_crearConcierto"
+                        prefWidth="200"
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;" />
 
             </children>
 

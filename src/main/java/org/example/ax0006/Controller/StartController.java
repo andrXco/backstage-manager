@@ -9,10 +9,13 @@ import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
 import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.AutenticacionService;
+import org.example.ax0006.Repository.*;
+import org.example.ax0006.Service.*;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Service.ConciertoService;
 import org.example.ax0006.Service.ProfileService;
 import org.example.ax0006.db.H2;
+
 import org.example.ax0006.Service.RolService;
 import java.io.IOException;
 
@@ -35,13 +38,14 @@ public class StartController extends Application {
         RolRepository rolRepo = new RolRepository(h2);
         HorarioRepository horarioRepo = new HorarioRepository(h2);
         ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
+        AsignacionStaffRepository asignacionStaffRepo = new AsignacionStaffRepository(h2);
 
         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo);
-
+        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
         // MANAGERS
         SesionManager sesion = new SesionManager();
         ContextManager context = new ContextManager(
@@ -54,8 +58,10 @@ public class StartController extends Application {
                 profileService,
                 rolService,
                 conciertoService,
-                sesion
+                sesion,
+                staffService
         );
+
 
         SceneManager sceneManager = new SceneManager(stage, context);
 

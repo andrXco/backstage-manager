@@ -43,7 +43,11 @@ public class SceneManager {
     //metodo para mostrar pantalla de administracion de usuarios.
     public void showAdminUsuarios() throws IOException {
         AdminUsuariosController controller = new AdminUsuariosController(
-                context.getSesion(), context.getRolService(), this
+                context.getSesion(),
+                context.getRolService(),
+                this,
+                context.getConciertoService(),
+                context.getStaffService()
         );
         loadScene("/org/example/ax0006/adminUsuarios.fxml", controller);
     }

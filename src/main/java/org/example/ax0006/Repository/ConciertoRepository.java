@@ -21,8 +21,8 @@ public class ConciertoRepository {
     public int guardar(Concierto c, int idHorario) {
 
         String sql = """
-        INSERT INTO Concierto (idHorario, aforo, programado)
-        VALUES (?, ?, ?)
+        INSERT INTO Concierto (nombreConcierto, idHorario, aforo, programado)
+        VALUES (?, ?, ?, ?)
     """;
 
         int idConciertoGenerado = 0;
@@ -30,9 +30,10 @@ public class ConciertoRepository {
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, idHorario);
-            stmt.setInt(2, c.getAforo());
-            stmt.setBoolean(3, c.isProgramado());
+            stmt.setString(1, c.getNombreConcierto());
+            stmt.setInt(2, idHorario);
+            stmt.setInt(3, c.getAforo());
+            stmt.setBoolean(4, c.isProgramado());
 
             stmt.executeUpdate();
 
@@ -48,18 +49,63 @@ public class ConciertoRepository {
         return idConciertoGenerado;
     }
 
+
+
+    // El siguiente metodo para que lo sepan obtiene los conciertos pero directamente desde la tabla para el filtro del dropdown en gestion de usuarios.
+    public List<Concierto> obtenerConciertosSolos() {
+        List<Concierto> lista = new ArrayList<>();
+
+        String sql = """
+        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado,
+               h.idHorario, h.fechaInc,h.fechaFin, h.horaInc, h.horaFin
+        FROM Concierto c
+        JOIN Horario h ON c.idHorario = h.idHorario
+    
+    """;
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Horario h = new Horario();
+                h.setIdHorario(rs.getInt("idHorario"));
+                h.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
+                h.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
+                h.setHoraFin(rs.getTime("horaFin").toLocalTime());
+
+                Concierto c = new Concierto(
+                        rs.getInt("idConcierto"),
+                        rs.getString("nombreConcierto"),
+                        h,
+                        rs.getInt("aforo"),
+                        null,
+                        rs.getBoolean("programado")
+                );
+                lista.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+
+
+
     /*Obtiene conciertos de la base de datos y los guarda como objetos, ademas tambien trae el objeto del artista y el objeto de su horario*/
     public List<Concierto> obtenerConciertos() {
 
         List<Concierto> lista = new ArrayList<>();
 
         String sql = """
-        SELECT c.idConcierto, c.aforo, c.programado,
-               h.idHorario, h.fechaInc, h.fechaFin, h.horaInc, h.horaFin,
+        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado,
+               h.idHorario,h.fechaInc, h.fechaFin, h.horaInc, h.horaFin,
                u.idUsuario, u.nombre
         FROM Concierto c
         JOIN Horario h ON c.idHorario = h.idHorario
-        LEFT JOIN RolConciertoUsuario rcu ON c.idConcierto = rcu.idConcierto
+        LEFT JOIN RolConciertoUsuario rcu ON c.idConcierto = rcu.idConcierto AND rcu.idRol = 3
         LEFT JOIN Usuario u ON rcu.idUsuario = u.idUsuario
     """;
 
@@ -77,7 +123,6 @@ public class ConciertoRepository {
                 h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
                 h.setHoraFin(rs.getTime("horaFin").toLocalTime());
 
-                // Usuario (artista)
                 Usuario artista = null;
 
                 if (rs.getObject("idUsuario") != null) {
@@ -86,9 +131,11 @@ public class ConciertoRepository {
                     artista.setNombre(rs.getString("nombre"));
                 }
 
+
                 // Concierto
                 Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
+                        rs.getString("nombreConcierto"),
                         h,
                         rs.getInt("aforo"),
                         artista,
@@ -146,6 +193,7 @@ public class ConciertoRepository {
                 // Concierto
                 Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
+                        rs.getString("nombreConcierto"),
                         h,
                         rs.getInt("aforo"),
                         u,

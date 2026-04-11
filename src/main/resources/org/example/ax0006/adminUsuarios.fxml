@@ -23,16 +23,19 @@
         <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: #f4f6f8;">
             <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Administración de Usuarios" />
             <Separator />
-            <TableView fx:id="tablaUsuarios" prefHeight="550.0" VBox.vgrow="ALWAYS">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Filtrar por concierto:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="comboConciertoFiltro" prefWidth="300" promptText="Sin asignar"/>
+            </HBox>
+            <TableView fx:id="tablaUsuarios" prefHeight="500.0" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
                     <TableColumn fx:id="colGmail" text="Correo" prefWidth="300"/>
-                    <TableColumn fx:id="colRol" text="Rol" prefWidth="150"/>
-                    <TableColumn fx:id="colNombreRol" text="Nombre Rol" prefWidth="150"/>
-                    <TableColumn fx:id="colAccion" text="Cambiar Rol" prefWidth="200"/>
+                    <TableColumn fx:id="colNombreRol" text="Rol en concierto" prefWidth="200"/>
+                    <TableColumn fx:id="colAccion" text="Asignar" prefWidth="200"/>
                 </columns>
             </TableView>
-            <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text=" Volver al Menú " />
+            <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text="Volver al Menú" />
         </VBox>
     </center>
 

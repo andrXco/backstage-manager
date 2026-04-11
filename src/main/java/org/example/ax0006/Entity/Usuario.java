@@ -7,6 +7,7 @@ public class Usuario {
     private String gmail;
     private int idRol;
 
+
     private String telefono;
     private String direccion;
     private String contactoEmergenciaNombre;
@@ -18,12 +19,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nombre, String contrasena, String email, int idRol) {
+    public Usuario(int idUsuario, String nombre, String contrasena, String email) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.gmail = email;
-        this.idRol = idRol;
     }
 
     public int getIdUsuario() {
@@ -65,6 +65,10 @@ public class Usuario {
     public void setIdRol(int idRol) {
         this.idRol = idRol;
     }
+
+
+
+
 
     public String getTelefono() {
         return telefono;

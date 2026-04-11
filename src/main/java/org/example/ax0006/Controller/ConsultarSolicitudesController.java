@@ -33,8 +33,7 @@ public class ConsultarSolicitudesController {
     @FXML
     private TableView<Concierto> tablaConciertos;
 
-    @FXML
-    private TableColumn<Concierto, String> colArtista;
+
 
     @FXML
     private TableColumn<Concierto, String> colFechaInicio;
@@ -62,20 +61,14 @@ public class ConsultarSolicitudesController {
         sceneManager.showMenuConcierto();
     }
 
+    @FXML
+    private TableColumn<Concierto, String> colNombreConcierto;
+
     //se crea la tabla
     @FXML
     public void initialize() {
 
-        colArtista.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getArtista().getNombre()
-                )
-        );
 
-        colFechaInicio.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getHorario().getFechaInicio().toString()
-                ));
 
         colFechaFin.setCellValueFactory(data ->
                 new SimpleStringProperty(
@@ -98,6 +91,10 @@ public class ConsultarSolicitudesController {
                 new SimpleIntegerProperty(
                         data.getValue().getAforo()
                 ).asObject()
+        );
+
+        colNombreConcierto.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getNombreConcierto())
         );
 
         agregarBotonesAccion();
@@ -144,7 +141,7 @@ public class ConsultarSolicitudesController {
     }
 
     private void cargarConciertos() {
-        List<Concierto> lista = conciertoService.obtenerConciertos();
+        List<Concierto> lista = conciertoService.obtenerConciertosSolos();
 
         List<Concierto> pendientes = lista.stream().filter(c -> !c.isProgramado()).toList();
 

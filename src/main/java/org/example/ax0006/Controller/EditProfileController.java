@@ -94,11 +94,7 @@ public class EditProfileController {
         ii_TelefonoEmergencia.setText(valorSeguro(usuarioCompleto.getContactoEmergenciaTelefono()));
         cb_RelacionEmergencia.setValue(valorSeguro(usuarioCompleto.getContactoEmergenciaRelacion()));
 
-        if (usuarioCompleto.getRol() != null) {
-            lblRol.setText(valorSeguro(usuarioCompleto.getRol().getRol()));
-        } else {
-            lblRol.setText("Sin rol");
-        }
+        lblRol.setText(profileService.obtenerRolesDelUsuario(usuarioCompleto.getIdUsuario()));
     }
 
     @FXML
@@ -123,7 +119,6 @@ public class EditProfileController {
         Usuario actualizado = new Usuario();
         actualizado.setIdUsuario(usuarioSesion.getIdUsuario());
         actualizado.setContrasena(usuarioSesion.getContrasena());
-        actualizado.setIdRol(usuarioSesion.getIdRol());
 
         actualizado.setNombre(ii_Nombre.getText());
         actualizado.setGmail(ii_Correo.getText());

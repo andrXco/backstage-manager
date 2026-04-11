@@ -16,6 +16,7 @@ import java.time.LocalTime;
 
 public class CrearConciertoController {
     /*En esta pantalla se crean los concietos, pero queda pendendiente el analisis financiero y la implementacion mas compleja del horario*/
+
     private SesionManager sesion;
     private ConciertoService conciertoService;
     private SceneManager sceneManager;
@@ -25,6 +26,9 @@ public class CrearConciertoController {
         this.conciertoService = conciertoService;
         this.sceneManager = sceneManager;
     }
+
+    @FXML
+    private TextField fid_nombreConcierto;
 
     @FXML
     private DatePicker fid_fecha_Inc;
@@ -50,8 +54,12 @@ public class CrearConciertoController {
             java.time.LocalDate fechaInc = fid_fecha_Inc.getValue();
             java.time.LocalDate fechaFin = fid_fecha_Fin.getValue(); //CAMBIAR
 
+            //nombre del concierto
+
+            String nombreConcierto = fid_nombreConcierto.getText();
             // Horas
             fid_horaInicio.setText(verifcarHora(fid_horaInicio.getText()));
+
             LocalTime horaInicio = LocalTime.parse(fid_horaInicio.getText());
             fid_horaFin.setText(verifcarHora(fid_horaFin.getText()));
             LocalTime horaFin = LocalTime.parse(fid_horaFin.getText());
@@ -68,6 +76,7 @@ public class CrearConciertoController {
 
             // Concierto
             Concierto concierto = new Concierto();
+            concierto.setNombreConcierto(nombreConcierto);
             concierto.setHorario(horario);
             concierto.setAforo(aforo);
             concierto.setArtista(sesion.getUsuarioActual());
