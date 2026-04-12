@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.Controller.*;
-import org.example.ax0006.Repository.UsuarioRepository;
 
 import java.io.IOException;
 
@@ -25,19 +24,19 @@ public class SceneManager {
     /*METODO PARA MOSTRAR EL LOGIN*/
     public void showLogin() throws IOException {
         LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion());
-        loadScene("/org/example/ax0006/login.fxml", loginController);
+        loadScene("/org/example/ax0006/logiin.fxml", loginController);
     }
 
     /*METODO PARA MOSTRAR EL SIGN UP*/
     public void showSignUp() throws IOException {
         SignUpController signUpControl = new SignUpController(this, context.getAutenService(), context.getSesion());
-        loadScene("/org/example/ax0006/signup.fxml", signUpControl);
+        loadScene("/org/example/ax0006/signuup.fxml", signUpControl);
     }
 
     /*METOOD PARA MOSTRAR EL MENU*/
     public void showMenu() throws IOException{
         MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService());
-        loadScene("/org/example/ax0006/menu.fxml", menuControl);
+        loadScene("/org/example/ax0006/menuu.fxml", menuControl);
     }
 
     //metodo para mostrar pantalla de administracion de usuarios.
