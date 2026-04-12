@@ -20,21 +20,24 @@ public class InventarioObjetoRepository {
         try (Connection conn = h2.getConnection()) {
 
             String sqlConflicto = """
-            SELECT 1
-            FROM ObjetoInventario oi
-            JOIN InventarioHorario ih1 ON oi.idInventario = ih1.idInventario
-            JOIN Horario h1 ON ih1.idHorario = h1.idHorario
-
-            JOIN InventarioHorario ih2 ON ih2.idInventario = ?
-            JOIN Horario h2 ON ih2.idHorario = h2.idHorario
-
-            WHERE oi.idTipoObjeto = ?
-            AND (
-                h1.horaInc < h2.horaFin
-                AND h1.horaFin > h2.horaInc
-                AND h1.fecha = h2.fecha
-            )
-        """;
+                    SELECT 1
+                    FROM ObjetoInventario oi
+                    JOIN InventarioHorario ih1 ON oi.idInventario = ih1.idInventario
+                    JOIN Horario h1 ON ih1.idHorario = h1.idHorario
+                
+                    JOIN InventarioHorario ih2 ON ih2.idInventario = ?
+                    JOIN Horario h2 ON ih2.idHorario = h2.idHorario
+                
+                    WHERE oi.idTipoObjeto = ?
+                    AND (
+                    
+                        h1.fechaInc < h2.fechaFin
+                        AND h1.fechaFin > h2.fechaInc
+                
+                        AND h1.horaInc < h2.horaFin
+                        AND h1.horaFin > h2.horaInc
+                    )
+            """;
 
             PreparedStatement stmtCheck = conn.prepareStatement(sqlConflicto);
             stmtCheck.setInt(1, inventarioId);

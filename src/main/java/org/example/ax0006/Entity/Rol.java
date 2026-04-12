@@ -1,15 +1,13 @@
 package org.example.ax0006.Entity;
 
 public class Rol {
-    String rol;
-    int idRol;
 
-    public String getRol() {
-        return rol;
-    }
+    private int idRol;
+    private String rol;
 
-    public int getIdRol() {
-        return idRol;
+    public Rol(int idRol, String rol) {
+        this.idRol = idRol;
+        this.rol = rol;
     }
 
     public void setRol(String rol) {
@@ -19,4 +17,10 @@ public class Rol {
     public Rol(String rol) {
         this.rol = rol;
     }
+
+    public int getIdRol() { return idRol; }
+    public String getRol() { return rol; }
+
+    @Override
+    public String toString() { return rol; }
 }

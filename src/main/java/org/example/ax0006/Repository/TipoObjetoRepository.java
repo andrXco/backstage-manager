@@ -2,7 +2,7 @@ package org.example.ax0006.Repository;
 
 import org.example.ax0006.Entity.Inventario;
 import org.example.ax0006.Entity.TipoObjeto;
-import org.example.ax0006.Entity.usuario;
+import org.example.ax0006.Entity.Usuario;
 import org.example.ax0006.db.H2;
 
 import java.sql.*;

@@ -1,6 +1,5 @@
 package org.example.ax0006.Service;
 
-import org.example.ax0006.Repository.InventarioHorarioRepository;
 import org.example.ax0006.Repository.InventarioObjetoRepository;
 
 public class InventarioObjetoService {

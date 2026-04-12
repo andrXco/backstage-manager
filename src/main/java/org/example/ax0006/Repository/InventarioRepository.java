@@ -1,5 +1,6 @@
 package org.example.ax0006.Repository;
 
+import org.example.ax0006.Entity.Horario;
 import org.example.ax0006.Entity.Inventario;
 import org.example.ax0006.Entity.Rol;
 import org.example.ax0006.Entity.TipoObjeto;
@@ -81,11 +82,11 @@ public class InventarioRepository {
             if (!hayObjetos) resultado.append("Sin objetos\n");
 
             String sqlHorarios = """
-            SELECT h.fecha, h.horaInc, h.horaFin
-            FROM InventarioHorario ih
-            JOIN Horario h ON ih.idHorario = h.idHorario
-            WHERE ih.idInventario = ?
-        """;
+                SELECT h.fechaInc, h.fechaFin, h.horaInc, h.horaFin
+                FROM InventarioHorario ih
+                JOIN Horario h ON ih.idHorario = h.idHorario
+                WHERE ih.idInventario = ?
+            """;
 
             PreparedStatement stmtHor = conn.prepareStatement(sqlHorarios);
             stmtHor.setInt(1, idInventario);
@@ -96,7 +97,8 @@ public class InventarioRepository {
 
             while (rsHor.next()) {
                 resultado.append("- ")
-                        .append(rsHor.getDate("fecha")).append(" ")
+                        .append(rsHor.getDate("fechaInc")).append(" a ")
+                        .append(rsHor.getDate("fechaFin")).append(" ")
                         .append(rsHor.getTime("horaInc")).append(" - ")
                         .append(rsHor.getTime("horaFin")).append("\n");
                 hayHorarios = true;
@@ -110,5 +112,43 @@ public class InventarioRepository {
         }
 
         return resultado.toString();
+    }
+
+    public int guardarHorario(Horario h) {
+        String sql = "INSERT INTO Horario (fechaInc, fechaFin, horaInc, horaFin) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setDate(1, Date.valueOf(h.getFechaInicio()));
+            stmt.setDate(2, Date.valueOf(h.getFechaFin()));
+            stmt.setTime(3, Time.valueOf(h.getHoraInicio()));
+            stmt.setTime(4, Time.valueOf(h.getHoraFin()));
+
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+    public void vincularInventarioHorario(int idInventario, int idHorario) {
+        String sql = "INSERT INTO InventarioHorario (idInventario, idHorario) VALUES (?, ?)";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idInventario);
+            stmt.setInt(2, idHorario);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

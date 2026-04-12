@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox layoutX="300.0" layoutY="40.0" prefWidth="520.0" spacing="20.0" style="-fx-background-color: white;                  -fx-background-radius: 12;                  -fx-padding: 30;                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 15, 0, 0, 4);">
+
+        <Label style="-fx-font-size: 22px;                       -fx-font-weight: bold;                       -fx-text-fill: #2c3e50;" text="Perfil del Usuario" />
+
+        <Separator />
+
+        <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;                           -fx-text-fill: #7f8c8d;" text="Información General" />
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Nombre" />
+                <Label fx:id="lbl_Nombre" style="-fx-text-fill: #34495e;" text="Juan Pérez" />
+            </VBox>
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Correo" />
+                <Label fx:id="lbl_Correo" style="-fx-text-fill: #34495e;" text="juan@gmail.com" />
+            </VBox>
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Rol" />
+                <Label fx:id="lbl_Rol" style="-fx-text-fill: #34495e;" text="Administrador" />
+            </VBox>
+        </VBox>
+
+        <Separator />
+
+        <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;                           -fx-text-fill: #7f8c8d;" text="Información de Contacto" />
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Teléfono" />
+                <Label fx:id="lbl_Telefono" style="-fx-text-fill: #34495e;" text="+57 300 123 4567" />
+            </VBox>
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Dirección" />
+                <Label fx:id="lbl_Direccion" style="-fx-text-fill: #34495e;" text="Bogotá, Colombia" />
+            </VBox>
+        </VBox>
+
+        <Separator />
+
+        <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;                           -fx-text-fill: #7f8c8d;" text="Contacto de Emergencia" />
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Nombre" />
+                <Label fx:id="lbl_NombreEmergencia" style="-fx-text-fill: #34495e;" text="María Pérez" />
+            </VBox>
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Teléfono" />
+                <Label fx:id="lbl_TelefonoEmergencia" style="-fx-text-fill: #34495e;" text="+57 301 987 6543" />
+            </VBox>
+
+            <VBox spacing="5.0">
+                <Label style="-fx-font-weight: bold;" text="Relación" />
+                <Label fx:id="lbl_RelacionEmergencia" style="-fx-text-fill: #34495e;" text="Madre" />
+            </VBox>
+        </VBox>
+
+        <Separator />
+
+        <HBox spacing="10.0">
+            <Button fx:id="bt_EditProfile" onAction="#On_EditProfile" prefWidth="150.0" style="-fx-background-color: #3498db;                            -fx-text-fill: white;                            -fx-background-radius: 8;                            -fx-font-weight: bold;" text="Editar Perfil" />
+
+            <Button fx:id="bt_ActualizarContrasena" onAction="#On_ChangePassword" prefWidth="190.0" style="-fx-background-color: #27ae60;                            -fx-text-fill: white;                            -fx-background-radius: 8;                            -fx-font-weight: bold;" text="Actualizar Contraseña" />
+
+            <Button fx:id="bt_Cerrar" onAction="#On_Cerrar" prefWidth="120.0" style="-fx-background-color: #bdc3c7;                            -fx-text-fill: #2c3e50;                            -fx-background-radius: 8;" text="Cerrar" />
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="800" prefWidth="1200" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox layoutX="170" layoutY="35" prefHeight="730" prefWidth="860" spacing="22" style="-fx-background-color: #ffffff;                  -fx-background-radius: 18;                  -fx-padding: 28;                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0, 0, 4);">
+
+        <!-- TÍTULO -->
+        <Label style="-fx-font-size: 26px;                       -fx-font-weight: bold;                       -fx-text-fill: #1f2d3d;" text="Editar Perfil" />
+
+        <Label style="-fx-font-size: 13px;                       -fx-text-fill: #6b7280;" text="Actualiza la información general, de contacto y del contacto de emergencia." />
+
+        <Separator />
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <HBox spacing="24">
+
+            <!-- COLUMNA IZQUIERDA -->
+            <VBox prefWidth="404" spacing="18">
+
+                <VBox spacing="12" style="-fx-background-color: #fafbfc;                              -fx-background-radius: 14;                              -fx-border-color: #e5e7eb;                              -fx-border-radius: 14;                              -fx-padding: 18;">
+
+                    <Label style="-fx-font-size: 16px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #2c3e50;" text="Información General" />
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Nombre" />
+                        <TextField fx:id="ii_Nombre" prefHeight="40" promptText="Ingrese el nombre completo" style="-fx-background-color: white;                                           -fx-background-radius: 10;                                           -fx-border-color: #d7dce2;                                           -fx-border-radius: 10;                                           -fx-padding: 0 12 0 12;" text="Juan Pérez" />
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Correo" />
+                        <TextField fx:id="ii_Correo" prefHeight="40" promptText="Ingrese el correo electrónico" style="-fx-background-color: white;                                           -fx-background-radius: 10;                                           -fx-border-color: #d7dce2;                                           -fx-border-radius: 10;                                           -fx-padding: 0 12 0 12;" text="juan@gmail.com" />
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Rol" />
+                        <Label fx:id="lblRol" style="-fx-background-color: #eef2f7;                                       -fx-background-radius: 10;                                       -fx-padding: 10 12 10 12;                                       -fx-text-fill: #34495e;" text="Administrador" />
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="12" style="-fx-background-color: #fafbfc;                              -fx-background-radius: 14;                              -fx-border-color: #e5e7eb;                              -fx-border-radius: 14;                              -fx-padding: 18;">
+
+                    <Label style="-fx-font-size: 16px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #2c3e50;" text="Información de Contacto" />
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Teléfono" />
+                        <TextField fx:id="ii_telefono" prefHeight="40" promptText="Ingrese el número de teléfono" style="-fx-background-color: white;                                           -fx-background-radius: 10;                                           -fx-border-color: #d7dce2;                                           -fx-border-radius: 10;                                           -fx-padding: 0 12 0 12;" text="+57 300 123 4567" />
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Dirección" />
+                        <TextArea fx:id="ii_direccion" prefHeight="110" promptText="Ingrese la dirección" style="-fx-background-color: white;                                          -fx-background-radius: 10;                                          -fx-border-color: #d7dce2;                                          -fx-border-radius: 10;                                          -fx-padding: 8 12 8 12;" text="Bogotá, Colombia" wrapText="true" />
+                    </VBox>
+                </VBox>
+
+            </VBox>
+
+            <!-- COLUMNA DERECHA -->
+            <VBox prefWidth="404" spacing="18">
+
+                <VBox spacing="12" style="-fx-background-color: #fafbfc;                              -fx-background-radius: 14;                              -fx-border-color: #e5e7eb;                              -fx-border-radius: 14;                              -fx-padding: 18;">
+
+                    <Label style="-fx-font-size: 16px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #2c3e50;" text="Contacto de Emergencia" />
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Nombre" />
+                        <TextField fx:id="ii_NombreEmergencia" prefHeight="40" promptText="Ingrese el nombre del contacto" style="-fx-background-color: white;                                           -fx-background-radius: 10;                                           -fx-border-color: #d7dce2;                                           -fx-border-radius: 10;                                           -fx-padding: 0 12 0 12;" text="María Pérez" />
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Teléfono" />
+                        <TextField fx:id="ii_TelefonoEmergencia" prefHeight="40" promptText="Ingrese el teléfono del contacto" style="-fx-background-color: white;                                           -fx-background-radius: 10;                                           -fx-border-color: #d7dce2;                                           -fx-border-radius: 10;                                           -fx-padding: 0 12 0 12;" text="+57 301 987 6543" />
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label style="-fx-font-weight: bold;                                       -fx-text-fill: #2c3e50;" text="Relación" />
+                        <ComboBox fx:id="cb_RelacionEmergencia" prefHeight="40" promptText="Seleccione la relación" style="-fx-background-color: white;                                          -fx-background-radius: 10;                                          -fx-border-color: #d7dce2;                                          -fx-border-radius: 10;" />
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="10" style="-fx-background-color: #f8fafc;                              -fx-background-radius: 14;                              -fx-border-color: #e5e7eb;                              -fx-border-radius: 14;                              -fx-padding: 18;">
+
+                    <Label style="-fx-font-size: 16px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #2c3e50;" text="Acciones" />
+
+                    <Label style="-fx-font-size: 13px;                                   -fx-text-fill: #6b7280;" text="Guarda los cambios o cancela la edición." />
+
+                    <Separator />
+
+                    <HBox spacing="12">
+                        <Button fx:id="bt_Guardar" onAction="#On_Guardar" prefHeight="42" prefWidth="160" style="-fx-background-color: #2563eb;                                        -fx-text-fill: white;                                        -fx-background-radius: 10;                                        -fx-font-weight: bold;" text="Guardar" />
+
+                        <Button fx:id="bt_cancelar" onAction="#On_Cancelar" prefHeight="42" prefWidth="130" style="-fx-background-color: #d1d5db;                                        -fx-text-fill: #374151;                                        -fx-background-radius: 10;                                        -fx-font-weight: bold;" text="Cancelar" />
+                    </HBox>
+                </VBox>
+
+            </VBox>
+
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

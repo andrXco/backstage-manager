@@ -7,14 +7,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.ax0006.Entity.Inventario;
+import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Service.consultarInventarioService;
 
-public class consultarInventarioController {
+import java.io.IOException;
 
+public class consultarInventarioController {
+    private SceneManager sceneManager;
     private consultarInventarioService service;
 
-    public consultarInventarioController(consultarInventarioService service) {
+    public consultarInventarioController(consultarInventarioService service, SceneManager sceneManager) {
         this.service = service;
+        this.sceneManager = sceneManager;
     }
 
     @FXML private TextField ii_idInventario;
@@ -37,23 +41,7 @@ public class consultarInventarioController {
     }
 
     @FXML
-    void on_bt_volver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/ax0006/menu.fxml")
-            );
-
-            menuController controller = new menuController(null, null);
-
-            loader.setController(controller);
-
-            Scene scene = new Scene(loader.load());
-
-            Stage stage = (Stage) bt_volver.getScene().getWindow();
-            stage.setScene(scene);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void on_bt_volver(ActionEvent event) throws IOException {
+        sceneManager.showMenu();
     }
 }

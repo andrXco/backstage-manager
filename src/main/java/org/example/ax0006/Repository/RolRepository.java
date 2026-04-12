@@ -1,27 +1,19 @@
 package org.example.ax0006.Repository;
 
 import org.example.ax0006.Entity.Rol;
-import org.example.ax0006.Entity.TipoObjeto;
 import org.example.ax0006.db.H2;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RolRepository {
     private H2 h2;
-    private List<Rol> roles = new ArrayList<>();
-
-    //CONSTRUCTOR
 
     public RolRepository(H2 h2) {
         this.h2 = h2;
     }
 
-    //INSERTA ROLES A LA BASE SE DATOS CON AYUDA DEL INSERT INTO A Rol:
     public void guardarRol(Rol R) {
         String sql = "INSERT INTO Rol (rol) VALUES (?)";
         try (Connection conn = h2.getConnection();
@@ -49,4 +41,34 @@ public class RolRepository {
         }
         return null;
     }
+
+    public String obtenerNombreRol(int idRol) {
+        String sql = "SELECT rol FROM Rol WHERE idRol = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idRol);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("rol");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Sin rol";
+    }
+
+    public List<Rol> obtenerRoles() {
+        List<Rol> lista = new ArrayList<>();
+        String sql = "SELECT idRol, rol FROM Rol";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                lista.add(new Rol(rs.getInt("idRol"), rs.getString("rol")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+
 }

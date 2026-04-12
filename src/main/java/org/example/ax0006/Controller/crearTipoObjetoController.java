@@ -5,20 +5,25 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Service.crearTipoObjetoService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class crearTipoObjetoController {
 
     public Button bt_crear;
     private crearTipoObjetoService service;
+    private SceneManager sceneManager;
     @FXML
     private Button bt_volver;
 
-    public crearTipoObjetoController(crearTipoObjetoService service) {
+    public crearTipoObjetoController(crearTipoObjetoService service, SceneManager sceneManager) {
         this.service = service;
+        this.sceneManager = sceneManager;
     }
 
     @FXML private TextField ii_nombre;
@@ -40,23 +45,7 @@ public class crearTipoObjetoController {
 
 
     @FXML
-    void on_bt_volver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/ax0006/menu.fxml")
-            );
-
-            menuController controller = new menuController(null, null);
-
-            loader.setController(controller);
-
-            Scene scene = new Scene(loader.load());
-
-            Stage stage = (Stage) bt_volver.getScene().getWindow();
-            stage.setScene(scene);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void on_bt_volver(ActionEvent event) throws IOException {
+        sceneManager.showMenu();
     }
 }

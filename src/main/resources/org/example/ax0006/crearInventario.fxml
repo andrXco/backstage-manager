@@ -19,6 +19,12 @@
 
         <Label fx:id="lbl_msg" layoutX="500.0" layoutY="360.0"/>
 
+        <DatePicker fx:id="dp_fechaInicio" layoutX="450.0" layoutY="200.0"/>
+        <DatePicker fx:id="dp_fechaFin" layoutX="650.0" layoutY="200.0"/>
+
+        <TextField fx:id="tf_horaInicio" layoutX="450.0" layoutY="250.0" promptText="HH:mm"/>
+        <TextField fx:id="tf_horaFin" layoutX="650.0" layoutY="250.0" promptText="HH:mm"/>
+
         <Button fx:id="bt_volver"
                 layoutX="1100.0" layoutY="740.0"
                 text="Volver"

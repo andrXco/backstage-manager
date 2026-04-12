@@ -7,33 +7,31 @@
 
 package org.example.ax0006.Controller;
 
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.example.ax0006.Entity.usuario;
-import org.example.ax0006.Repository.usuarioRepository;
+import org.example.ax0006.Manager.SceneManager;
+import org.example.ax0006.Manager.SesionManager;
+import org.example.ax0006.Service.AutenticacionService;
 
 import java.io.IOException;
 
-public class signUpControler {
+public class SignUpController {
 
-    //Atributos
-    private usuarioRepository usuarioRepo;
+    /*ATRIBUTOS*/
+    private SceneManager sceneManager;
+    private AutenticacionService autenService;
+    private SesionManager sesion;
 
     /*CONSTRUCTOR DE LA CLASE*/
-    public signUpControler(usuarioRepository usuarioRepo) {
-        this.usuarioRepo = usuarioRepo;
+    public SignUpController(SceneManager sceneManager, AutenticacionService autenService, SesionManager sesion) {
+        this.sceneManager = sceneManager;
+        this.autenService = autenService;
+        this.sesion = sesion;
     }
-
-    //SE TIENE QUE INSTANCIAR DE MANERA MANUAL, Y NO DE LA FORMA AUTOMATICA DEL JAVA FX
 
     @FXML
     private TextField fid_correo;
@@ -132,7 +130,7 @@ public class signUpControler {
     }
 
     @FXML
-    void On_crear_usuario(ActionEvent event) {
+    void On_crear_usuario(ActionEvent event) throws IOException {
 
         if (mostrando && mostrandoConfirmation) {
             togglePassword();
@@ -144,71 +142,44 @@ public class signUpControler {
         String contrasena = fid_Contrasena.getText();
         String confirmacion = fid_ContrasenaConfirmation.getText();
 
-        if (correo == null || correo.isEmpty()) {
-            System.out.println("Ingrese un correo");
-            alertaSignUp("Tiene que ingresar un correo");
+        if (correo == null || correo.isBlank() ||
+                usuario == null || usuario.isBlank() ||
+                contrasena == null || contrasena.isBlank() ||
+                confirmacion == null || confirmacion.isBlank()) {
+
+            alertaSignUp("Debe completar todos los campos.");
             return;
         }
 
         if (!correo.contains("@")) {
-            System.out.println("El correo debe contener una @");
-            alertaSignUp("Tiene que ingresar un correo valido, debe contener un @");
+            alertaSignUp("Tiene que ingresar un correo válido, debe contener un @.");
             return;
         }
 
-        if (usuario == null || usuario.isEmpty()) {
-            System.out.println("Ingrese un nombre de usuario");
-            alertaSignUp("Tiene que ingresar un Nombre de usuario Valido");
+        if (contrasena.length() < 8) {
+            alertaSignUp("La contraseña debe tener al menos 8 caracteres.");
             return;
         }
 
-        if (usuarioRepo.buscarPorNombre(usuario) != null) {
-            System.out.println("El usuario ya existe, por favor intente nuevamente");
-            alertaSignUp("El Usuario ya existe, Tiene que ingresar un Nombre de usuario Valido");
+        if (!contrasena.equals(confirmacion)) {
+            alertaSignUp("La confirmación no coincide con la contraseña.");
             return;
         }
 
-        if (contrasena == null || contrasena.isEmpty()) {
-            System.out.println("Ingrese una contraseña");
-            alertaSignUp("Tiene que ingresar una contraseña");
+        if (!autenService.signUp(usuario, contrasena, correo)) {
+            alertaSignUp("No se pudo crear el usuario. Intente nuevamente.");
             return;
         }
 
-        if (confirmacion == null || confirmacion.isEmpty()) {
-            System.out.println("Confirme la contraseña");
-            alertaSignUp("Tiene que ingresar la confirmacion de la contraseña");
-            return;
-        }
-
-        if (!confirmacion.equals(contrasena)) {
-            System.out.println("Verifique que las contraseñas sean iguales");
-            alertaSignUp("Las contraseñas ingresadas deben de ser iguales");
-            return;
-        }
-
-        System.out.println("Usuario creado correctamente. Por favor utilice el login");
         exitoSignUp();
-        usuarioRepo.guardar(new usuario(usuario, contrasena, correo));
+        sceneManager.showLogin();
     }
 
+    /*SOLO SE CAMBIA DE ESCENA AL LOGIN*/
     @FXML
     void On_login(ActionEvent event) throws IOException {
-
         System.out.println("Login: Iniciando sesion");
-
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/example/ax0006/login.fxml")
-        );
-
-        loginController loginControl = new loginController(usuarioRepo);
-
-        loader.setController(loginControl);
-
-        Scene scene = new Scene(loader.load());
-
-
-        Stage stage = (Stage) fid_sign_up.getScene().getWindow();
-        stage.setScene(scene);
+        sceneManager.showLogin();
     }
 
 }

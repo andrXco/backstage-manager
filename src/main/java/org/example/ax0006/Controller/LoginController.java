@@ -9,18 +9,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.ax0006.Entity.usuario;
-import org.example.ax0006.Repository.usuarioRepository;
+import org.example.ax0006.Entity.Usuario;
+import org.example.ax0006.Manager.SceneManager;
+import org.example.ax0006.Manager.SesionManager;
+import org.example.ax0006.Service.AutenticacionService;
 
 import java.io.IOException;
 
-public class loginController {
+public class LoginController {
 
-    private usuarioRepository usuarioRepo;
+    /*ATRIBUTOS*/
+    private SceneManager sceneManager;
+    private AutenticacionService autenService;
+    private SesionManager sesion;
 
     /*CONSTRUCTOR DE LA CLASE*/
-    public loginController(usuarioRepository usuarioRepo) {
-        this.usuarioRepo = usuarioRepo;
+    public LoginController(SceneManager sceneManager, AutenticacionService autenService, SesionManager sesion) {
+        this.sceneManager = sceneManager;
+        this.autenService = autenService;
+        this.sesion = sesion;
     }
 
     @FXML
@@ -73,18 +80,7 @@ public class loginController {
     @FXML
     /*METODO PARA PODER IR A LA PANTALLA DE SIGN UP*/
     void On_sign_up(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/example/ax0006/signup.fxml")
-        );
-
-        signUpControler signUpControl = new signUpControler(usuarioRepo);
-
-        loader.setController(signUpControl);
-
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage) fid_sign_up.getScene().getWindow();
-        stage.setScene(scene);
+        sceneManager.showSignUp();
     }
 
     @FXML
@@ -94,37 +90,27 @@ public class loginController {
             togglePassword();
         }
 
-        usuario usuarioLogin = usuarioRepo.buscarPorNombre(fid_Usuario.getText());
+        //ATRAVEZ DEL SERVICIO DE AUTENTICACION OBTENEMOS EL USUARIO QUE SE VA A LOGEAR
+        Usuario usuarioLogin = autenService.login(fid_Usuario.getText(), fid_Contrasena.getText());
 
+        /*MENSAJES DE ERROR*/
         if (usuarioLogin == null) {
             System.out.println("Usuario no existe");
             AlertaLogin("Error El usuario o contraseña incorrectos");
             return;
         }
 
+        /*MENSAJES DE ERROR*/
         if (!usuarioLogin.getContrasena().equals(fid_Contrasena.getText())) {
             System.out.println("Contraseña incorrecta");
             AlertaLogin("Error El usuario o contraseña incorrectos");
             return;
         }
 
-        System.out.println("Usuario Logueado");
-        System.out.println("Bienvenido " + usuarioLogin.getNombre());
+        /*SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION*/
+        sesion.setUsuarioActual(usuarioLogin);
+        /*EN CASO DE UN LOGEO EXITOSO CAMBIAMOS A LA VENTANA DE MENU*/
+        sceneManager.showMenu();
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/example/ax0006/menu.fxml")
-        );
-
-        menuController menuControl = new menuController(usuarioRepo, usuarioLogin);
-
-        loader.setController(menuControl);
-
-        Scene scene = new Scene(loader.load());
-
-        /*METODO QUE CAMBIA EL BIENVENIDO POR "BIENVENIDO NOMBRE DEL USUARIO", EN LA SIGUIENTE PANTALLA*/
-        menuControl.setNombreBienvenido();
-
-        Stage stage = (Stage) fid_login.getScene().getWindow();
-        stage.setScene(scene);
     }
 }

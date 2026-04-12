@@ -2,55 +2,58 @@ package org.example.ax0006.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import org.example.ax0006.Entity.Horario;
 import org.example.ax0006.Service.InventarioService;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import org.example.ax0006.Manager.SceneManager;
+
+import java.io.IOException;
+import java.time.LocalTime;
 
 public class crearInventarioController {
 
-    public Button bt_crear;
-    private InventarioService service;
-    @FXML
-    private Button bt_volver;
-
-    public crearInventarioController(InventarioService service) {
-        this.service = service;
-    }
-
+    @FXML private DatePicker dp_fechaInicio;
+    @FXML private DatePicker dp_fechaFin;
+    @FXML private TextField tf_horaInicio;
+    @FXML private TextField tf_horaFin;
     @FXML private Label lbl_msg;
+
+    private InventarioService service;
+    private SceneManager sceneManager;
+
+    public crearInventarioController(InventarioService service, SceneManager sceneManager) {
+        this.service = service;
+        this.sceneManager = sceneManager;
+    }
 
     @FXML
     void on_bt_crear(ActionEvent event) {
-        int id = service.crearInventario();
 
-        if (id != -1) {
-            lbl_msg.setText("Inventario creado con ID: " + id);
-        } else {
-            lbl_msg.setText("Error al crear inventario");
+        try {
+            // 🔹 Crear objeto Horario con los datos del formulario
+            Horario horario = new Horario();
+            horario.setFechaInicio(dp_fechaInicio.getValue());
+            horario.setFechaFin(dp_fechaFin.getValue());
+            horario.setHoraInicio(LocalTime.parse(tf_horaInicio.getText()));
+            horario.setHoraFin(LocalTime.parse(tf_horaFin.getText()));
+
+            // 🔹 Llamar al nuevo método del service
+            int id = service.crearInventario(horario);
+
+            if (id != -1) {
+                lbl_msg.setText("Inventario creado con horario. ID: " + id);
+            } else {
+                lbl_msg.setText("Error al crear inventario");
+            }
+
+        } catch (Exception e) {
+            lbl_msg.setText("Datos inválidos. Verifica fechas y horas (HH:mm)");
+            e.printStackTrace();
         }
     }
 
     @FXML
-    void on_bt_volver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/ax0006/menu.fxml")
-            );
-
-            menuController controller = new menuController(null, null);
-
-            loader.setController(controller);
-
-            Scene scene = new Scene(loader.load());
-
-            Stage stage = (Stage) bt_volver.getScene().getWindow();
-            stage.setScene(scene);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void on_bt_volver(ActionEvent event) throws IOException {
+        sceneManager.showMenu();
     }
 }

@@ -26,14 +26,17 @@ public class H2 {
             """);
 
             stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Usuario (
-                    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR(255) NOT NULL,
-                    gmail VARCHAR(255),
-                    contrasena VARCHAR(255),
-                    idRol INT,
-                    FOREIGN KEY (idRol) REFERENCES Rol(idRol)
-                )
+                    CREATE TABLE IF NOT EXISTS Usuario (
+                idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(255) NOT NULL,
+                gmail VARCHAR(255),
+                contrasena VARCHAR(255),           
+                telefono VARCHAR(10),
+                direccion VARCHAR(255),
+                contactoEmergenciaNombre VARCHAR(255),
+                contactoEmergenciaTelefono VARCHAR(20),
+                contactoEmergenciaRelacion VARCHAR(100)
+            )
             """);
 
             stmt.execute("""
@@ -63,7 +66,8 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Horario (
                     idHorario INT AUTO_INCREMENT PRIMARY KEY,
-                    fecha DATE NOT NULL,
+                    fechaInc DATE NOT NULL,
+                    fechaFin DATE NOT NULL,
                     horaInc TIME NOT NULL,
                     horaFin TIME NOT NULL
                 )
@@ -106,6 +110,7 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Concierto (
                     idConcierto INT AUTO_INCREMENT PRIMARY KEY,
+                    nombreConcierto VARCHAR(255) NOT NULL,
                     idHorario INT,
                     aforo INT NOT NULL,
                     idContrato INT,
@@ -148,6 +153,13 @@ public class H2 {
                     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
                 )
             """);
+            //Crear roles con el idRol para eso toca mergear tablas para colocar los roles dentro de rol con los ids.
+            //con merge into se evitan duplicados cada vez que se ejecute el programa.
+            stmt.execute("""
+               MERGE INTO Rol (idRol, rol) KEY(idRol)   
+                  VALUES (1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff')
+                """);
+
             org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
             System.out.println("Base de datos inicializada correctamente");
 
@@ -157,6 +169,15 @@ public class H2 {
             User: sa
             Password: vacío
            */
+// PARA BORRAR LA BASE DE DATOS
+//            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
+//
+//            stmt.execute("DROP ALL OBJECTS");
+//
+//            stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
+//
+//            System.out.println("Base de datos limpiada");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
