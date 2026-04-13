@@ -1,28 +1,16 @@
 package org.example.ax0006.Controller;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Manager.SesionManager;
-import org.example.ax0006.Repository.HorarioRepository;
-import org.example.ax0006.Repository.InventarioObjetoRepository;
-import org.example.ax0006.Repository.InventarioRepository;
-import org.example.ax0006.Repository.TipoObjetoRepository;
 import org.example.ax0006.Service.*;
-import org.example.ax0006.Entity.Horario;
-import org.example.ax0006.Entity.Concierto;
 import org.example.ax0006.db.H2;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
 public class MenuController {
 

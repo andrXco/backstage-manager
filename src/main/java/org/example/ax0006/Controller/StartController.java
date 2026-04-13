@@ -2,21 +2,15 @@ package org.example.ax0006.Controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
 import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.AutenticacionService;
-import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.*;
 import org.example.ax0006.Manager.SceneManager;
-import org.example.ax0006.Service.ConciertoService;
-import org.example.ax0006.Service.ProfileService;
 import org.example.ax0006.db.H2;
 
-import org.example.ax0006.Service.RolService;
 import java.io.IOException;
 
 //ver base de datos:
@@ -27,7 +21,6 @@ public class StartController extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
 
         // BASE DE DATOS
         H2 h2 = new H2();
@@ -45,7 +38,8 @@ public class StartController extends Application {
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo);
-        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
+        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
+
         // MANAGERS
         SesionManager sesion = new SesionManager();
         ContextManager context = new ContextManager(
@@ -62,7 +56,6 @@ public class StartController extends Application {
                 staffService
         );
 
-
         SceneManager sceneManager = new SceneManager(stage, context);
 
         stage.setOnCloseRequest(event -> {
@@ -70,9 +63,7 @@ public class StartController extends Application {
             System.exit(0);
         });
 
-        /*SE REALIZA DE ESTA MANERA PARA QUE EL PROGRAMA NO MUERA EN CASO DE UNA EXCEPCION*/
         try {
-            /*CAMBIA DE ESCENA AL LOGIN*/
             sceneManager.showLogin();
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,6 +75,4 @@ public class StartController extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-
 }
