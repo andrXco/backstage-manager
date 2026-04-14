@@ -1,36 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox alignment="TOP_CENTER" layoutX="475.0" layoutY="220.0" prefHeight="301.0" prefWidth="250.0">
-         <children>
-            <Ellipse fill="DODGERBLUE" radiusX="125.0" radiusY="90.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label text="Usuario:" />
-            <TextField fx:id="fid_Usuario" />
-            <Label text="Contraseña:" />
+<AnchorPane prefHeight="800.0" prefWidth="1200.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #eef2f7, #dfe7f1);"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1">
 
-            <HBox alignment="CENTER" spacing="5">
-               <children>
-                  <StackPane prefWidth="200">
-                     <children>
-                        <PasswordField fx:id="fid_Contrasena" />
-                        <TextField fx:id="fid_ContrasenaVisible" managed="false" visible="false" />
-                     </children>
-                  </StackPane>
+    <children>
 
-                  <Button onAction="#togglePassword" text="👁" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <Button fx:id="fid_sign_up" layoutX="566.0" layoutY="550.0" mnemonicParsing="false" onAction="#On_sign_up" text="sign up" />
-      <Button fx:id="fid_login" layoutX="573.0" layoutY="513.0" mnemonicParsing="false" onAction="#On_login" text="login" />
-   </children>
+        <!-- Panel lateral decorativo -->
+        <AnchorPane prefHeight="800.0" prefWidth="520.0"
+                    style="-fx-background-color: linear-gradient(to bottom right, #1e3c72, #2a5298);"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox layoutX="70.0" layoutY="180.0" spacing="18.0">
+                    <children>
+                        <Label text="Bienvenido"
+                               style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;" />
+                        <Label prefWidth="360.0"
+                               text="Accede a tu cuenta para continuar con la plataforma."
+                               wrapText="true"
+                               style="-fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 17px;" />
+                        <Ellipse fill="rgba(255,255,255,0.18)" radiusX="110.0" radiusY="80.0" strokeWidth="0.0" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+
+        <!-- Tarjeta del login -->
+        <VBox layoutX="650.0" layoutY="150.0" prefWidth="360.0" spacing="16.0"
+              style="-fx-background-color: white;
+                   -fx-background-radius: 20;
+                   -fx-border-radius: 20;
+                   -fx-padding: 35;
+                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 24, 0.2, 0, 8);">
+
+            <children>
+                <Label text="Iniciar sesión"
+                       style="-fx-text-fill: #1f2937; -fx-font-size: 28px; -fx-font-weight: bold;" />
+
+                <Label text="Ingresa tus credenciales para acceder"
+                       style="-fx-text-fill: #6b7280; -fx-font-size: 13px;" />
+
+                <Separator />
+
+                <VBox spacing="8.0">
+                    <children>
+                        <Label text="Usuario"
+                               style="-fx-text-fill: #111827; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                        <TextField fx:id="fid_Usuario" promptText="Escribe tu usuario"
+                                   style="-fx-background-color: #f9fafb;
+                                    -fx-background-radius: 12;
+                                    -fx-border-color: #d1d5db;
+                                    -fx-border-radius: 12;
+                                    -fx-padding: 10 12 10 12;
+                                    -fx-font-size: 14px;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <children>
+                        <Label text="Contraseña"
+                               style="-fx-text-fill: #111827; -fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                        <HBox spacing="8.0">
+                            <children>
+                                <StackPane prefWidth="270.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <PasswordField fx:id="fid_Contrasena" promptText="Escribe tu contraseña"
+                                                       style="-fx-background-color: #f9fafb;
+                                                    -fx-background-radius: 12;
+                                                    -fx-border-color: #d1d5db;
+                                                    -fx-border-radius: 12;
+                                                    -fx-padding: 10 12 10 12;
+                                                    -fx-font-size: 14px;" />
+                                        <TextField fx:id="fid_ContrasenaVisible" managed="false" visible="false"
+                                                   promptText="Escribe tu contraseña"
+                                                   style="-fx-background-color: #f9fafb;
+                                                -fx-background-radius: 12;
+                                                -fx-border-color: #d1d5db;
+                                                -fx-border-radius: 12;
+                                                -fx-padding: 10 12 10 12;
+                                                -fx-font-size: 14px;" />
+                                    </children>
+                                </StackPane>
+
+                                <Button onAction="#togglePassword" text="👁"
+                                        style="-fx-background-color: #e5e7eb;
+                                       -fx-background-radius: 12;
+                                       -fx-text-fill: #374151;
+                                       -fx-font-size: 14px;
+                                       -fx-cursor: hand;
+                                       -fx-padding: 10 14 10 14;" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox spacing="10.0" style="-fx-padding: 10 0 0 0;">
+                    <children>
+                        <Button fx:id="fid_login" mnemonicParsing="false" onAction="#On_login" text="Login"
+                                maxWidth="1.7976931348623157E308"
+                                style="-fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8);
+                                 -fx-background-radius: 12;
+                                 -fx-text-fill: white;
+                                 -fx-font-size: 14px;
+                                 -fx-font-weight: bold;
+                                 -fx-cursor: hand;
+                                 -fx-padding: 12 18 12 18;" />
+
+                        <Button fx:id="fid_sign_up" mnemonicParsing="false" onAction="#On_sign_up" text="Sign up"
+                                maxWidth="1.7976931348623157E308"
+                                style="-fx-background-color: #f3f4f6;
+                                 -fx-background-radius: 12;
+                                 -fx-text-fill: #374151;
+                                 -fx-font-size: 14px;
+                                 -fx-font-weight: bold;
+                                 -fx-cursor: hand;
+                                 -fx-padding: 12 18 12 18;
+                                 -fx-border-color: #d1d5db;
+                                 -fx-border-radius: 12;" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+    </children>
 </AnchorPane>
-

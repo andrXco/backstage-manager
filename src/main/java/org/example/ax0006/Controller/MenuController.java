@@ -1,74 +1,78 @@
 package org.example.ax0006.Controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Manager.SesionManager;
 import org.example.ax0006.Service.ConciertoService;
-import org.example.ax0006.Entity.Horario;
-import org.example.ax0006.Entity.Concierto;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
 public class MenuController {
 
-    /*ATRIBUTOS*/
     private SceneManager sceneManager;
     private SesionManager sesion;
-
-    //BORRAR
     private ConciertoService conciertoService;
 
-    /*CONSTRUCTOR*/
-    public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService){
+    public MenuController() {
+    }
+
+    public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService) {
         this.sceneManager = sceneManager;
         this.sesion = sesion;
+        this.conciertoService = conciertoService;
+    }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
+
+    public void setSesion(SesionManager sesion) {
+        this.sesion = sesion;
+    }
+
+    public void setConciertoService(ConciertoService conciertoService) {
         this.conciertoService = conciertoService;
     }
 
     @FXML
     private Label fid_Bienvenido;
 
-    /*METODO CAMBIA EL BIENVENIDO POR EL BIENVENIDO CON EL NOMBRE DEL USUARIO*/
-    public void setNombreBienvenido(){
-        fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
-    }
-
     @FXML
     private Button fid_bt_volver;
 
     @FXML
-    /*METODO QUE CAMBIA A LA PANTALLA DE LOGIN*/
+    private Button fid_Menu_Conciertos;
+
+    @FXML
+    public void initialize() {
+        if (sesion != null && sesion.getUsuarioActual() != null && fid_Bienvenido != null) {
+            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
+        }
+    }
+
+    public void setNombreBienvenido() {
+        if (sesion != null && sesion.getUsuarioActual() != null) {
+            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
+        }
+    }
+
+    @FXML
     void On_btvolver(ActionEvent event) throws IOException {
         sesion.cerrarSesion();
         sceneManager.showLogin();
     }
 
     @FXML
-    /*APENAS SE ABRE LA VENTANA, SE REALIZA EL MENSAJE DE BIENVENIDO NOMBRE DE USUARIO*/
-    public void initialize() {
-        if (sesion.getUsuarioActual() != null) {
-            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
-        }
-    }
-
-    //boton de administracion de usuarios para asignacion de roles.
-    @FXML
     void On_admin(ActionEvent event) throws IOException {
         sceneManager.showAdminUsuarios();
     }
 
-    //Boton para entrar al perfil del usuario.
     @FXML
-    void On_perfil(ActionEvent event) {
+    void On_Perfil(ActionEvent event) {
         try {
             sceneManager.showProfile();
         } catch (IOException e) {
@@ -81,12 +85,8 @@ public class MenuController {
         }
     }
 
-    @FXML Button fid_Menu_Conciertos;
-
     @FXML
-    void On_Menu_Conciertos(ActionEvent event) throws IOException{
+    void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
     }
-
-
 }
