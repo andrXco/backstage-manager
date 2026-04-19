@@ -119,6 +119,11 @@ public class SceneManager {
         loadScene("/org/example/ax0006/menuconcierto.fxml", menuConciertoController);
     }
 
+    public void showVerContrato() throws IOException {
+    VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
+    loadScene("/org/example/ax0006/vercontrato.fxml", controller);
+    }
+
     public void setContratoTemporal(Integer id) {
     this.contratoTemporal = id;
     }
