@@ -44,4 +44,14 @@ public class SesionManager {
         return idContratoTemporal;
     }
 
+    private String pantallaOrigen;
+
+    public void setPantallaOrigen(String pantallaOrigen) {
+        this.pantallaOrigen = pantallaOrigen;
+    }
+
+    public String getPantallaOrigen() {
+        return pantallaOrigen;
+    }
+
 }

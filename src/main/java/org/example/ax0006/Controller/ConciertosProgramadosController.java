@@ -54,6 +54,9 @@ public class ConciertosProgramadosController {
     private TableColumn<Concierto, String> colNombreConcierto;
 
     @FXML
+    private TableColumn<Concierto, Void> colContrato;
+
+    @FXML
     private TableColumn<Concierto, Void> colAccion;
 
     /*Es un boton para volver al menu*/
@@ -91,8 +94,43 @@ public class ConciertosProgramadosController {
                 new SimpleStringProperty(data.getValue().getNombreConcierto())
         );
 
+        agregarBotonContrato(); // 🔥 NUEVO
         agregarBotonCancelar();
         cargarConciertos();
+    }
+
+    // =========================
+    //  BOTÓN VER CONTRATO
+    // =========================
+    private void agregarBotonContrato() {
+        sesion.setPantallaOrigen("programados");  //Identificar de que pantalla viene
+        colContrato.setCellFactory(param -> new TableCell<>() {
+
+            private final Button btnVer = new Button("Ver");
+
+            {
+                btnVer.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+                btnVer.setOnAction(event -> {
+                    Concierto c = getTableView().getItems().get(getIndex());
+
+                    // Guardar contrato en sesión
+                    sesion.setIdContratoTemporal(c.getIdContrato());
+
+                    try {
+                        sceneManager.showVerContrato();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btnVer);
+            }
+        });
     }
 
 

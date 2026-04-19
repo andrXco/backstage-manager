@@ -65,7 +65,6 @@
                                      text="Aforo"
                                      prefWidth="120.0"/>
 
-                        <!-- 🔥 NUEVA COLUMNA CONTRATO -->
                         <TableColumn fx:id="colContrato"
                                      text="Contrato"
                                      prefWidth="120.0"/>

@@ -47,7 +47,7 @@ public class ConsultarSolicitudesController {
     private TableColumn<Concierto, Integer> colAforo;
 
     @FXML
-    private TableColumn<Concierto, Void> colContrato; // 🔥 NUEVA
+    private TableColumn<Concierto, Void> colContrato; 
 
     @FXML
     private TableColumn<Concierto, Void> colAccion;
@@ -97,16 +97,17 @@ public class ConsultarSolicitudesController {
                 ).asObject()
         );
 
-        agregarBotonContrato(); // 🔥 NUEVO
+        agregarBotonContrato(); 
         agregarBotonesAccion();
 
         cargarConciertos();
     }
 
     // =========================
-    // 🔥 BOTÓN VER CONTRATO
+    //  BOTÓN VER CONTRATO
     // =========================
     private void agregarBotonContrato() {
+        sesion.setPantallaOrigen("solicitudes");
         colContrato.setCellFactory(param -> new TableCell<>() {
 
             private final Button btnVer = new Button("Ver");

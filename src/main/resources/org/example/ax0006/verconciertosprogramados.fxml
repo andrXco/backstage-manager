@@ -66,6 +66,10 @@
                                      text="Aforo"
                                      prefWidth="120.0"/>
 
+                        <TableColumn fx:id="colContrato"
+                                     text="Contrato"
+                                     prefWidth="120.0"/>
+
                         <TableColumn fx:id="colAccion"
                                      text="Cancelar"
                                      prefWidth="200.0"/>

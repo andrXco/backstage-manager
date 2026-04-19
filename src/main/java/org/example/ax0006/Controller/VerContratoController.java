@@ -61,11 +61,19 @@ public class VerContratoController {
 
     @FXML
     public void On_volver() {
-        try {
+    try {
+
+        String origen = sesion.getPantallaOrigen();
+
+        if ("programados".equals(origen)) {
+            sceneManager.showConciertosProgramados();
+        } else {
             sceneManager.showConsultarSolicitudes();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     private void mostrarError(String mensaje) {

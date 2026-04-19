@@ -42,16 +42,16 @@ public class CrearConciertoController {
     @FXML
     public void initialize() {
 
-        // 🔹 recuperar contrato
+        // recuperar contrato
         idContrato = sesion.getIdContratoTemporal();
 
-        // 🔒 bloquear botón si ya hay contrato
+        // bloquear botón si ya hay contrato
         if (idContrato != null) {
             fid_bt_agregarContrato.setDisable(true);
             fid_bt_agregarContrato.setText("Contrato ya agregado");
         }
 
-        // 🔹 recuperar concierto temporal
+        // recuperar concierto temporal
         Concierto temp = sesion.getConciertoTemporal();
 
         if (temp != null) {
@@ -140,7 +140,7 @@ public class CrearConciertoController {
 
             conciertoService.crearConcierto(concierto);
 
-            // 🧹 limpiar sesión
+            // limpiar sesión
             sesion.setConciertoTemporal(null);
             sesion.setIdContratoTemporal(null);
 
@@ -158,7 +158,7 @@ public class CrearConciertoController {
     @FXML
     public void On_agregarContrato() {
 
-        // 🔒 evitar múltiples contratos
+        // evitar múltiples contratos
         if (idContrato != null) {
             alertaConcierto("Ya existe un contrato asociado a este concierto");
             return;
