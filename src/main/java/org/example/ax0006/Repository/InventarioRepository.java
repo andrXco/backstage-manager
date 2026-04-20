@@ -18,7 +18,7 @@ public class InventarioRepository {
         this.h2 = h2;
     }
 
-    // 🔹 Crear inventario
+    // Crear inventario
     public int guardar(String nombre) {
 
         String sql = "INSERT INTO Inventario (nombre) VALUES (?)";
@@ -41,7 +41,7 @@ public class InventarioRepository {
         return -1;
     }
 
-    // 🔹 Listar inventarios
+    // Listar inventarios
     public List<Inventario> obtenerTodos() {
 
         List<Inventario> lista = new ArrayList<>();
@@ -66,7 +66,7 @@ public class InventarioRepository {
         return lista;
     }
 
-    // 🔹 Buscar por ID
+    // Buscar por ID
     public Inventario buscarPorId(int idInventario) {
 
         String sql = "SELECT * FROM Inventario WHERE idInventario = ?";
@@ -91,7 +91,7 @@ public class InventarioRepository {
         return null;
     }
 
-    // 🔥 CLAVE: obtener objetos de un inventario
+    // obtener objetos de un inventario
     public List<Objeto> obtenerObjetosPorInventario(int idInventario) {
 
         List<Objeto> lista = new ArrayList<>();
@@ -142,7 +142,7 @@ public class InventarioRepository {
         return lista;
     }
 
-    // 🔹 Eliminar inventario (opcional)
+    // Eliminar inventario (opcional)
     public void eliminar(int idInventario) {
 
         String sql = "DELETE FROM Inventario WHERE idInventario = ?";

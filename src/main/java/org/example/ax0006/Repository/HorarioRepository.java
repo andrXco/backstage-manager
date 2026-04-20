@@ -5,7 +5,7 @@ import org.example.ax0006.db.H2;
 
 import java.sql.*;
 
-/*ESTA ES UNA IMPLEMENTACION PARCIAL*/
+
 public class HorarioRepository {
 
     private H2 h2;
