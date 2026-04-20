@@ -19,7 +19,7 @@ public class ContextManager {
     private StaffService staffService;
 
     private InventarioService inventarioService;
-    private crearTipoObjetoService crearTipoObjetoService;
+    private CrearObjetoInventarioService CrearObjetoInventarioService;
     private InventarioObjetoService inventarioObjetoService;
     private consultarInventarioService consultarInventarioService;
 
@@ -36,7 +36,7 @@ public class ContextManager {
             SesionManager sesion,
             StaffService staffService,
             InventarioService inventarioService,
-            crearTipoObjetoService crearTipoObjetoService,
+            CrearObjetoInventarioService CrearObjetoInventarioService,
             InventarioObjetoService inventarioObjetoService,
             consultarInventarioService consultarInventarioService
     ) {
@@ -53,7 +53,7 @@ public class ContextManager {
         this.staffService = staffService;
 
         this.inventarioService = inventarioService;
-        this.crearTipoObjetoService = crearTipoObjetoService;
+        this.CrearObjetoInventarioService = CrearObjetoInventarioService;
         this.inventarioObjetoService = inventarioObjetoService;
         this.consultarInventarioService = consultarInventarioService;
     }
@@ -98,8 +98,8 @@ public class ContextManager {
         return inventarioService;
     }
 
-    public crearTipoObjetoService getCrearTipoObjetoService() {
-        return crearTipoObjetoService;
+    public CrearObjetoInventarioService getCrearTipoObjetoService() {
+        return CrearObjetoInventarioService;
     }
 
     public InventarioObjetoService getInventarioObjetoService() {

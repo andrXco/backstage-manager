@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.ax0006.Manager.SceneManager;
-import org.example.ax0006.Service.consultarInventarioService;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,36 +1,38 @@
 package org.example.ax0006.Service;
 
-import org.example.ax0006.Entity.Horario;
-import org.example.ax0006.Entity.Inventario;
-import org.example.ax0006.Repository.InventarioRepository;
+import org.example.ax0006.Repository.ConciertoObjetoRepository;
+import org.example.ax0006.Repository.ObjetoRepository;
 
 public class InventarioService {
 
-    private InventarioRepository inventarioRepository;
+    private ObjetoRepository objetoRepo;
+    private ConciertoObjetoRepository conciertoObjetoRepo;
 
-    public InventarioService(InventarioRepository inventarioRepository) {
-        this.inventarioRepository = inventarioRepository;
+    public InventarioService(ObjetoRepository objetoRepo,
+                             ConciertoObjetoRepository conciertoObjetoRepo) {
+        this.objetoRepo = objetoRepo;
+        this.conciertoObjetoRepo = conciertoObjetoRepo;
     }
 
-    public int crearInventario(Horario horario) {
-        Inventario inventario = new Inventario();
+    public void asignarObjetoAConcierto(int idConcierto, int idObjeto) {
 
-        int idInventario = inventarioRepository.guardarInventario(inventario);
-
-        if (idInventario != -1) {
-            int idHorario = inventarioRepository.guardarHorario(horario);
-
-            if (idHorario != -1) {
-                inventarioRepository.vincularInventarioHorario(idInventario, idHorario);
-                return idInventario;
-            }
+        if (!objetoRepo.estaDisponible(idObjeto)) {
+            throw new IllegalStateException("El objeto no está disponible");
         }
 
-        return -1;
+        // 1. asignar relación
+        conciertoObjetoRepo.asignarObjeto(idConcierto, idObjeto);
+
+        // 2. marcar como no disponible
+        objetoRepo.actualizarDisponibilidad(idObjeto, false);
     }
 
-    public boolean existeHorario(Horario h) {
-        return inventarioRepository.existeHorario(h);
-    }
+    public void liberarObjetoDeConcierto(int idConcierto, int idObjeto) {
 
+        // 1. eliminar relación
+        conciertoObjetoRepo.eliminarAsignacion(idConcierto, idObjeto);
+
+        // 2. volver disponible
+        objetoRepo.actualizarDisponibilidad(idObjeto, true);
+    }
 }

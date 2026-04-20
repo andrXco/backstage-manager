@@ -103,7 +103,7 @@ public class SceneManager {
     }
 
     public void showCrearTipoObjeto() throws IOException {
-        crearTipoObjetoController controller = new crearTipoObjetoController(
+        CrearObjetoInventarioController controller = new CrearObjetoInventarioController(
                 context.getCrearTipoObjetoService(),
                 this
         );

@@ -1,8 +1,8 @@
 package org.example.ax0006.Repository;
 
-import org.example.ax0006.Entity.Horario;
 import org.example.ax0006.Entity.Inventario;
-import org.example.ax0006.Entity.Rol;
+import org.example.ax0006.Entity.Objeto;
+import org.example.ax0006.Entity.ModeloObjeto;
 import org.example.ax0006.Entity.TipoObjeto;
 import org.example.ax0006.db.H2;
 
@@ -11,123 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventarioRepository {
+
     private H2 h2;
 
-    //CONSTRUCTOR
     public InventarioRepository(H2 h2) {
         this.h2 = h2;
     }
 
-    //SE CREA UN NUEVO INVENTARIO:
-    public int guardarInventario(Inventario I) {
-        String sql = "INSERT INTO Inventario DEFAULT VALUES";
+    // 🔹 Crear inventario
+    public int guardar(String nombre) {
+
+        String sql = "INSERT INTO Inventario (nombre) VALUES (?)";
+
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
+            stmt.setString(1, nombre);
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                int idGenerado = rs.getInt(1);
-                System.out.println("Inventario creado correctamente con ID: " + idGenerado);
-                return idGenerado;
+                return rs.getInt(1);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return -1; // error
-    }
-    public Inventario buscarInventarioPorId(int idBuscar) {
-        String sql = "SELECT * FROM Inventario WHERE idInventario = ?";
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idBuscar);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Inventario();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public String obtenerDetalleInventario(int idInventario) {
-        StringBuilder resultado = new StringBuilder();
-
-        try (Connection conn = h2.getConnection()) {
-
-            String sqlObjetos = """
-                  SELECT t.nombre
-                  FROM ObjetoInventario oi
-                  JOIN TipoObjeto t ON oi.idTipoObjeto = t.idTipoObjeto
-                   WHERE oi.idInventario = ?
-             """;
-
-            PreparedStatement stmtObj = conn.prepareStatement(sqlObjetos);
-            stmtObj.setInt(1, idInventario);
-            ResultSet rsObj = stmtObj.executeQuery();
-
-            resultado.append("Objetos:\n");
-            boolean hayObjetos = false;
-
-            while (rsObj.next()) {
-                resultado.append("- ").append(rsObj.getString("nombre")).append("\n");
-                hayObjetos = true;
-            }
-
-            if (!hayObjetos) resultado.append("Sin objetos\n");
-
-            String sqlHorarios = """
-                SELECT h.fechaInc, h.fechaFin, h.horaInc, h.horaFin
-                FROM InventarioHorario ih
-                JOIN Horario h ON ih.idHorario = h.idHorario
-                WHERE ih.idInventario = ?
-            """;
-
-            PreparedStatement stmtHor = conn.prepareStatement(sqlHorarios);
-            stmtHor.setInt(1, idInventario);
-            ResultSet rsHor = stmtHor.executeQuery();
-
-            resultado.append("\nHorarios:\n");
-            boolean hayHorarios = false;
-
-            while (rsHor.next()) {
-                resultado.append("- ")
-                        .append(rsHor.getDate("fechaInc")).append(" a ")
-                        .append(rsHor.getDate("fechaFin")).append(" ")
-                        .append(rsHor.getTime("horaInc")).append(" - ")
-                        .append(rsHor.getTime("horaFin")).append("\n");
-                hayHorarios = true;
-            }
-
-            if (!hayHorarios) resultado.append("Sin horarios\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "Error al consultar inventario";
-        }
-
-        return resultado.toString();
-    }
-
-    public int guardarHorario(Horario h) {
-        String sql = "INSERT INTO Horario (fechaInc, fechaFin, horaInc, horaFin) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setDate(1, Date.valueOf(h.getFechaInicio()));
-            stmt.setDate(2, Date.valueOf(h.getFechaFin()));
-            stmt.setTime(3, Time.valueOf(h.getHoraInicio()));
-            stmt.setTime(4, Time.valueOf(h.getHoraFin()));
-
-            stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) return rs.getInt(1);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,63 +40,121 @@ public class InventarioRepository {
 
         return -1;
     }
-    public void vincularInventarioHorario(int idInventario, int idHorario) {
-        String sql = "INSERT INTO InventarioHorario (idInventario, idHorario) VALUES (?, ?)";
+
+    // 🔹 Listar inventarios
+    public List<Inventario> obtenerTodos() {
+
+        List<Inventario> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM Inventario";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(new Inventario(
+                        rs.getInt("idInventario"),
+                        rs.getString("nombre")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    // 🔹 Buscar por ID
+    public Inventario buscarPorId(int idInventario) {
+
+        String sql = "SELECT * FROM Inventario WHERE idInventario = ?";
 
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idInventario);
-            stmt.setInt(2, idHorario);
+            ResultSet rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                return new Inventario(
+                        rs.getInt("idInventario"),
+                        rs.getString("nombre")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // 🔥 CLAVE: obtener objetos de un inventario
+    public List<Objeto> obtenerObjetosPorInventario(int idInventario) {
+
+        List<Objeto> lista = new ArrayList<>();
+
+        String sql = """
+            SELECT o.idObjeto, o.estado, o.observaciones, o.disponible,
+                   m.idModelo, m.nombre AS modeloNombre,
+                   t.idTipoObjeto, t.nombre AS tipoNombre
+            FROM Objeto o
+            JOIN ModeloObjeto m ON o.idModelo = m.idModelo
+            JOIN TipoObjeto t ON m.idTipoObjeto = t.idTipoObjeto
+            WHERE o.idInventario = ?
+        """;
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idInventario);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                TipoObjeto tipo = new TipoObjeto(
+                        rs.getInt("idTipoObjeto"),
+                        rs.getString("tipoNombre")
+                );
+
+                ModeloObjeto modelo = new ModeloObjeto(
+                        rs.getInt("idModelo"),
+                        rs.getString("modeloNombre"),
+                        tipo
+                );
+
+                Objeto obj = new Objeto();
+                obj.setIdObjeto(rs.getInt("idObjeto"));
+                obj.setModelo(modelo);
+                obj.setEstado(rs.getString("estado"));
+                obj.setObservaciones(rs.getString("observaciones"));
+                obj.setDisponible(rs.getBoolean("disponible"));
+
+                lista.add(obj);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    // 🔹 Eliminar inventario (opcional)
+    public void eliminar(int idInventario) {
+
+        String sql = "DELETE FROM Inventario WHERE idInventario = ?";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idInventario);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean existeHorario(Horario h) {
-
-        String sql = """
-        SELECT 1
-        FROM Horario
-        WHERE fechaInc = ?
-        AND fechaFin = ?
-        AND horaInc = ?
-        AND horaFin = ?
-    """;
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setDate(1, Date.valueOf(h.getFechaInicio()));
-            stmt.setDate(2, Date.valueOf(h.getFechaFin()));
-            stmt.setTime(3, Time.valueOf(h.getHoraInicio()));
-            stmt.setTime(4, Time.valueOf(h.getHoraFin()));
-
-            ResultSet rs = stmt.executeQuery();
-            return rs.next();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    public List<Integer> obtenerTodosLosIds() {
-        List<Integer> ids = new ArrayList<>();
-        String sql = "SELECT idInventario FROM Inventario";
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                ids.add(rs.getInt("idInventario"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ids;
     }
 }

@@ -1,15 +1,23 @@
 package org.example.ax0006.Entity;
 
 public class TipoObjeto {
-    int idTipoObjeto;
-    String nombre;
 
-    public TipoObjeto(String nombre) {
+    private int idTipoObjeto;
+    private String nombre;
+
+    public TipoObjeto() {}
+
+    public TipoObjeto(int idTipoObjeto, String nombre) {
+        this.idTipoObjeto = idTipoObjeto;
         this.nombre = nombre;
     }
 
     public int getIdTipoObjeto() {
         return idTipoObjeto;
+    }
+
+    public void setIdTipoObjeto(int idTipoObjeto) {
+        this.idTipoObjeto = idTipoObjeto;
     }
 
     public String getNombre() {
@@ -18,14 +26,5 @@ public class TipoObjeto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public void setIdTipoObjeto(int idTipoObjeto) {
-        this.idTipoObjeto = idTipoObjeto;
-    }
-
-    @Override
-    public String toString() {
-        return nombre;
     }
 }

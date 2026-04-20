@@ -7,7 +7,6 @@ import org.example.ax0006.Manager.ContextManager;
 import org.example.ax0006.Manager.SesionManager;
 import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.AutenticacionService;
-import org.example.ax0006.Repository.*;
 import org.example.ax0006.Service.*;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Service.ConciertoService;
@@ -55,7 +54,7 @@ public class StartController extends Application {
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator);
         StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
         InventarioService inventarioService = new InventarioService(inventarioRepo);
-        crearTipoObjetoService tipoObjetoService = new crearTipoObjetoService(tipoObjetoRepo);
+        CrearObjetoInventarioService tipoObjetoService = new CrearObjetoInventarioService(tipoObjetoRepo);
         InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
         consultarInventarioService consultarInventarioService = new consultarInventarioService(inventarioRepo);
 

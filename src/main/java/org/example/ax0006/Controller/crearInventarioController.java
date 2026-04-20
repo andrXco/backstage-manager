@@ -8,8 +8,6 @@ import org.example.ax0006.Entity.Horario;
 import org.example.ax0006.Entity.TipoObjeto;
 import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Service.InventarioService;
-import org.example.ax0006.Service.InventarioObjetoService;
-import org.example.ax0006.Service.crearTipoObjetoService;
 
 import java.io.IOException;
 import java.time.LocalTime;
@@ -30,7 +28,7 @@ public class crearInventarioController {
 
     private InventarioService inventarioService;
     private InventarioObjetoService inventarioObjetoService;
-    private crearTipoObjetoService tipoObjetoService;
+    private CrearObjetoInventarioService tipoObjetoService;
     private SceneManager sceneManager;
 
     private List<ComboBox<TipoObjeto>> combos = new ArrayList<>();
@@ -41,7 +39,7 @@ public class crearInventarioController {
     public crearInventarioController(
             InventarioService inventarioService,
             InventarioObjetoService inventarioObjetoService,
-            crearTipoObjetoService tipoObjetoService,
+            CrearObjetoInventarioService tipoObjetoService,
             SceneManager sceneManager
     ) {
         this.inventarioService = inventarioService;

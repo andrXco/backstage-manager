@@ -6,23 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.ax0006.Manager.SceneManager;
-import org.example.ax0006.Service.crearTipoObjetoService;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class crearTipoObjetoController {
+public class CrearObjetoInventarioController {
 
-    private crearTipoObjetoService service;
+    private CrearObjetoInventarioService service;
     private SceneManager sceneManager;
     @FXML
     private Button bt_volver;
     @FXML
     public Button bt_crear;
 
-    public crearTipoObjetoController(crearTipoObjetoService service, SceneManager sceneManager) {
+    public CrearObjetoInventarioController(CrearObjetoInventarioService service, SceneManager sceneManager) {
         this.service = service;
         this.sceneManager = sceneManager;
     }
