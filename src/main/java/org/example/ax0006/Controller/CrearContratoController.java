@@ -107,7 +107,7 @@ public class CrearContratoController {
        
         if (idContrato != 0) {
 
-        sesion.setIdContratoTemporal(idContrato); // ✅ correcto
+        sesion.setIdContratoTemporal(idContrato); 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Contrato creado");
         alert.setHeaderText("¡Registro exitoso!");

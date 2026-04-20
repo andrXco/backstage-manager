@@ -43,7 +43,7 @@ public class CrearConciertoController {
 
         Integer idContrato = sesion.getIdContratoTemporal();
 
-        // Si ya hay contrato, bloquear botón
+        // Si ya hay un contrato agregado, bloquear botón 
         if (idContrato != null) {
             fid_bt_agregarContrato.setDisable(true);
             fid_bt_agregarContrato.setText("Contrato ya agregado");
@@ -52,10 +52,10 @@ public class CrearConciertoController {
             fid_bt_agregarContrato.setText("Agregar contrato");
         }
 
-        // recuperar concierto temporal
+        // recuperar concierto temporal, cuando se desplaza a la pantalla de rellenar el contrato
         Concierto temp = sesion.getConciertoTemporal();
 
-        if (temp != null) {
+        if (temp != null) { //En caso contrario rellena todos los datos
 
             fid_nombreConcierto.setText(temp.getNombreConcierto());
 
@@ -92,11 +92,13 @@ public class CrearConciertoController {
 
         Integer idContrato = sesion.getIdContratoTemporal();
 
+        //Si no hay contrato y se trata de crear el concierto
         if (idContrato == null) {
             alertaConcierto("Debe agregar un contrato antes de crear el concierto");
             return;
         }
 
+        //Cuando faltan datos por rellenar y se trata de crear concierto
         try {
             String nombreConcierto = fid_nombreConcierto.getText();
 
@@ -143,11 +145,11 @@ public class CrearConciertoController {
 
             conciertoService.crearConcierto(concierto);
 
-            // 🔥 limpiar sesión al finalizar flujo
+            // limpiar sesión al finalizar flujo
             sesion.setConciertoTemporal(null);
             sesion.setIdContratoTemporal(null);
 
-            exitoConcierto();
+            exitoConcierto(); //concierto hecho
 
         } catch (IllegalArgumentException e) { /*Se reciven las excepciones personalidazadas del validator*/
             alertaConcierto(e.getMessage());
@@ -168,7 +170,7 @@ public class CrearConciertoController {
             return;
         }
 
-        // 🔥 INDICAR QUE VIENES DE CREAR CONCIERTO
+        // INDICAR QUE SE VIENE DE CREAR CONCIERTO
         sesion.setPantallaOrigen("crearContrato");
 
         Concierto temp = new Concierto();
@@ -213,7 +215,7 @@ public class CrearConciertoController {
     @FXML
     void On_volver(ActionEvent event) throws IOException {
 
-        // 🔥 limpiar sesión SOLO al salir del flujo
+        // limpiar sesión SOLO al salir del flujo FINAL
         sesion.setConciertoTemporal(null);
         sesion.setIdContratoTemporal(null);
 
