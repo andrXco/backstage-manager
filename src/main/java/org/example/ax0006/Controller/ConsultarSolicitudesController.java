@@ -63,9 +63,10 @@ public class ConsultarSolicitudesController {
     @FXML
     public void initialize() {
 
-        colNombreConcierto.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getNombreConcierto())
-        );
+        colFechaInicio.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getHorario().getFechaInicio().toString()
+                ));
 
         colFechaInicio.setCellValueFactory(data ->
                 new SimpleStringProperty(

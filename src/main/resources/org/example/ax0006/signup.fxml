@@ -79,7 +79,7 @@
                                         <TextField fx:id="fid_ContrasenaVisibleConfirmation" managed="false" promptText="Repite tu contraseña" style="-fx-background-color: #f9fafb;                                                 -fx-background-radius: 12;                                                 -fx-border-color: #d1d5db;                                                 -fx-border-radius: 12;                                                 -fx-padding: 10 12 10 12;                                                 -fx-font-size: 14px;" visible="false" />
                                     </children>
                                 </StackPane>
-                                <Button onAction="#togglePasswordConfirmation" style="-fx-background-color: #e5e7eb;                                        -fx-background-radius: 12;                                        -fx-text-fill: #374151;                                        -fx-font-size: 14px;                                        -fx-cursor: hand;                                        -fx-padding: 10 14 10 14;" text="👁" />
+                                <Button ellipsisString="👁" onAction="#togglePasswordConfirmation" style="-fx-background-color: #e5e7eb;                                        -fx-background-radius: 12;                                        -fx-text-fill: #374151;                                        -fx-font-size: 14px;                                        -fx-cursor: hand;                                        -fx-padding: 10 14 10 14;" text="👁" />
                             </children>
                         </HBox>
                     </children>
