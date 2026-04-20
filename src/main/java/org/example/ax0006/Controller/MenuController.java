@@ -47,7 +47,7 @@ public class MenuController {
     @FXML
     private Button fid_Menu_Conciertos;
 
-    @FXML private Button bt_crearInventario;
+    @FXML private Button bt_gestionDeInventario;
     @FXML private Button bt_crearTipoObjeto;
     @FXML private Button bt_consultarInventario;
 
@@ -95,7 +95,7 @@ public class MenuController {
     }
 
     @FXML
-    void on_bt_crearInventario(ActionEvent event) throws IOException {
+    void on_bt_gestionDeInventario(ActionEvent event) throws IOException {
         sceneManager.showCrearInventario();
     }
 
