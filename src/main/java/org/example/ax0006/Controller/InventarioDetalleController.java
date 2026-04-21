@@ -100,6 +100,7 @@ public class InventarioDetalleController {
 
     @FXML
     void On_volver() throws IOException {
+        session.deseleccionarInventario();
         sceneManager.showGestionInventario();
     }
 }
