@@ -62,6 +62,10 @@ public class ConsultarSolicitudesController {
 
     @FXML
     public void initialize() {
+        
+        colNombreConcierto.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getNombreConcierto())
+        );
 
         colFechaInicio.setCellValueFactory(data ->
                 new SimpleStringProperty(
@@ -123,7 +127,7 @@ public class ConsultarSolicitudesController {
                     sesion.setIdContratoTemporal(c.getIdContrato());
 
                     try {
-                        sceneManager.showVerContrato();
+                        sceneManager.showVerContrato(); //Pantalla que muestra el contrato
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
