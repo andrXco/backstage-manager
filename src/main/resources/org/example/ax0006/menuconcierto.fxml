@@ -5,14 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="800.0" prefWidth="1200.0"
+            style="-fx-background-color: linear-gradient(to bottom, #eef2f7, #e4ebf3);"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1">
 
     <!-- BARRA SUPERIOR -->
     <top>
-        <HBox prefHeight="70.0" spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+        <HBox prefHeight="80.0" alignment="CENTER_LEFT" spacing="15"
+              style="-fx-background-color: white;
+                     -fx-padding: 20 30;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 3);">
 
             <children>
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestión de Conciertos" />
+                <Label text="Gestión de Conciertos"
+                       style="-fx-font-size: 26px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #08233f;
+                              -fx-font-family: 'Segoe UI', 'Arial';"/>
             </children>
 
         </HBox>
@@ -24,21 +34,70 @@
 
             <children>
 
-                <VBox alignment="CENTER" layoutX="450.0" layoutY="150.0" spacing="20">
-   <children>
-   
-                       <!-- CREAR -->
-                       <Button fx:id="fid_bt_CrearConcierto" onAction="#On_CrearConcierto" prefWidth="300" style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-background-radius: 8;" text="Crear Solicitud de Concierto" />
-   
-                       <!-- CONSULTAR SOLICITUDES -->
-                       <Button fx:id="fid_bt_ConsultarSolicitudes" onAction="#On_ConsultarConciertos" prefWidth="300" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 8;" text="Consultar Solicitudes" />
-   
-                       <!-- CONSULTAR PROGRAMADOS -->
-                       <Button fx:id="fid_bt_ConsultarProgramados" onAction="#On_ConsultarCProgramado" prefWidth="300" style="-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-background-radius: 8;" text="Conciertos Programados" />
-   
-                       <!-- VOLVER -->
-                       <Button fx:id="fid_bt_volver" onAction="#On_btvolver" prefWidth="300" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;" text="volver al menu" />
-   </children>
+                <VBox alignment="CENTER"
+                      layoutX="450.0"
+                      layoutY="150.0"
+                      spacing="25"
+                      style="-fx-background-color: white;
+                             -fx-padding: 40;
+                             -fx-background-radius: 15;
+                             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 5);">
+
+                    <children>
+
+                        <!-- CREAR -->
+                        <Button fx:id="fid_bt_CrearConcierto"
+                                onAction="#On_CrearConcierto"
+                                prefWidth="320"
+                                prefHeight="45"
+                                text="Crear Solicitud de Concierto"
+                                style="-fx-background-color: linear-gradient(to right, #32649d, #357ABD);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;
+                                       -fx-cursor: hand;" />
+
+                        <!-- CONSULTAR SOLICITUDES -->
+                        <Button fx:id="fid_bt_ConsultarSolicitudes"
+                                onAction="#On_ConsultarConciertos"
+                                prefWidth="320"
+                                prefHeight="45"
+                                text="Consultar Solicitudes"
+                                style="-fx-background-color: linear-gradient(to right, #b3bcb7, #27ae60);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;
+                                       -fx-cursor: hand;" />
+
+                        <!-- CONSULTAR PROGRAMADOS -->
+                        <Button fx:id="fid_bt_ConsultarProgramados"
+                                onAction="#On_ConsultarCProgramado"
+                                prefWidth="320"
+                                prefHeight="45"
+                                text="Conciertos Programados"
+                                style="-fx-background-color: linear-gradient(to right, #85cfee, #7d3c98);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;
+                                       -fx-cursor: hand;" />
+
+                        <!-- VOLVER -->
+                        <Button fx:id="fid_bt_volver"
+                                onAction="#On_btvolver"
+                                prefWidth="320"
+                                prefHeight="45"
+                                text="Volver al menú"
+                                style="-fx-background-color: linear-gradient(to right, #7070fa, #c0392b);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;
+                                       -fx-cursor: hand;" />
+
+                    </children>
 
                 </VBox>
 

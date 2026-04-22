@@ -1,8 +1,10 @@
 package org.example.ax0006.Service;
 
 import org.example.ax0006.Entity.Concierto;
+import org.example.ax0006.Entity.Contrato;
 import org.example.ax0006.Repository.ConciertoRepository;
 import org.example.ax0006.Repository.HorarioRepository;
+import org.example.ax0006.Validator.ConciertoValidator;
 
 import java.util.List;
 
@@ -10,13 +12,20 @@ public class ConciertoService {
 
     private ConciertoRepository conciertoRepo;
     private HorarioRepository horarioRepo;
+    private ConciertoValidator conciertoValidator;
+    private ContratoService contratoService;
 
-    public ConciertoService(ConciertoRepository conciertoRepo, HorarioRepository horarioRepo) {
+    public ConciertoService(ConciertoRepository conciertoRepo, HorarioRepository horarioRepo, ConciertoValidator conciertoValidator, ContratoService contratoService) {
         this.conciertoRepo = conciertoRepo;
         this.horarioRepo = horarioRepo;
+        this.conciertoValidator = conciertoValidator;
+        this.contratoService = contratoService;
     }
 
     public void crearConcierto(Concierto c) {
+
+        Contrato contrato = contratoService.obtenerContratoCompleto(c.getIdContrato());
+        conciertoValidator.validar(c, contrato);
 
         // 1. Guardar horario
         int idHorario = horarioRepo.guardar(c.getHorario());
@@ -37,8 +46,6 @@ public class ConciertoService {
     public List<Concierto> obtenerConciertos() {
         return conciertoRepo.obtenerConciertos();
     }
-
-
 
     /*El atributo del programado = true */
     public void aprobarConcierto(int idConcierto) {

@@ -90,7 +90,7 @@
                                     </children>
                                 </StackPane>
 
-                                <Button onAction="#togglePassword" text="👁"
+                                <Button onAction="#togglePassword" ellipsisString="👁" text="👁"
                                         style="-fx-background-color: #e5e7eb;
                                        -fx-background-radius: 12;
                                        -fx-text-fill: #374151;

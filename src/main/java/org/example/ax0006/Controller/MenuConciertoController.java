@@ -21,6 +21,12 @@ public class MenuConciertoController {
     private Button fid_bt_ConsultarProgramados;
 
     @FXML
+    private Button fid_bt_CrearContrato;
+
+    @FXML
+    private Button fid_bt_ConsultarContrato;
+
+    @FXML
     private Button fid_bt_volver;
 
 

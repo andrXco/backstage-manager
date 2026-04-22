@@ -7,84 +7,171 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="800.0" prefWidth="1200.0"
-            style="-fx-background-color: #f4f6f8;">
+            style="-fx-background-color: linear-gradient(to bottom, #eef2f7, #dde6f0);">
 
     <!-- TOP -->
     <top>
-        <HBox spacing="600" style="-fx-background-color: white; -fx-padding: 15;">
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: white;
+                     -fx-padding: 20 30;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0, 0, 4);">
+
             <children>
                 <Label text="Crear Concierto"
-                       style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                       style="-fx-font-size: 26px;
+                              -fx-font-weight: 900;
+                              -fx-text-fill: #00134d;
+                              -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', 'Arial';" />
+
+                <Region HBox.hgrow="ALWAYS"/>
 
                 <Button text="Volver"
                         onAction="#On_volver"
-                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+                        prefHeight="40"
+                        style="-fx-background-color: linear-gradient(to right, #d66262, #c44536);
+                               -fx-text-fill: white;
+                               -fx-font-size: 13px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 12;
+                               -fx-cursor: hand;" />
             </children>
         </HBox>
     </top>
 
     <!-- CENTER -->
     <center>
-        <VBox spacing="20"
-              alignment="CENTER"
-              style="-fx-padding: 40;">
+        <StackPane>
 
             <children>
 
-                <!-- NOMBRE DEL CONCIERTO -->
-                <VBox spacing="5">
-                    <Label text="Nombre del concierto" />
-                    <TextField fx:id="fid_nombreConcierto" promptText="Ej: Rock en vivo" prefWidth="250"/>
-                </VBox>
+                <VBox alignment="CENTER"
+                      spacing="18"
+                      maxWidth="450"
+                      style="-fx-background-color: white;
+                             -fx-padding: 45;
+                             -fx-background-radius: 20;
+                             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 28, 0, 0, 10);">
 
-                <!-- FECHA -->
-                <VBox spacing="5">
-   <children>
-                       <Label text="Fecha de Inicio del concierto " />
-                       <DatePicker fx:id="fid_fecha_Inc" prefWidth="250" />
-   </children>
-                </VBox>
+                    <children>
 
-                <!-- HORA INICIO -->
-                <VBox spacing="5">
-   <children>
-                       <Label text="Hora de inicio (HH:mm) (formato de 24h)" />
-                       <TextField fx:id="fid_horaInicio" prefWidth="250" promptText="Ej: 18:00" />
-   </children>
-                </VBox>
-            <VBox spacing="5">
-               <children>
-                  <Label text="Fecha de finalizacion del concierto" />
-                  <DatePicker fx:id="fid_fecha_Fin" prefWidth="250" />
-               </children>
-            </VBox>
+                        <!-- NOMBRE -->
+                        <VBox spacing="6">
+                            <Label text="Nombre del concierto"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <TextField fx:id="fid_nombreConcierto"
+                                       promptText="Ej: Rock en vivo"
+                                       prefWidth="320"
+                                       style="-fx-background-radius: 10;
+                                              -fx-border-radius: 10;
+                                              -fx-border-color: #c7d2fe;
+                                              -fx-padding: 8;" />
+                        </VBox>
 
-                <!-- HORA FIN -->
-                <VBox spacing="5">
-   <children>
-                       <Label text="Hora de fin (HH:mm) (formato de 24h)" />
-                       <TextField fx:id="fid_horaFin" prefWidth="250" promptText="Ej: 21:00" />
-   </children>
-                </VBox>
+                        <!-- FECHA INICIO -->
+                        <VBox spacing="6">
+                            <Label text="Fecha de inicio"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <DatePicker fx:id="fid_fecha_Inc"
+                                        prefWidth="320"
+                                        style="-fx-background-radius: 10;" />
+                        </VBox>
 
-                <!-- AFORO -->
-                <VBox spacing="5">
-   <children>
-                       <Label text="Aforo" />
-                       <TextField fx:id="fid_aforo" prefWidth="250" promptText="Ej: 500" />
-   </children>
-                </VBox>
+                        <!-- HORA INICIO -->
+                        <VBox spacing="6">
+                            <Label text="Hora de inicio (24h)"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <TextField fx:id="fid_horaInicio"
+                                       prefWidth="320"
+                                       promptText="Ej: 18:00"
+                                       style="-fx-background-radius: 10;
+                                              -fx-border-radius: 10;
+                                              -fx-border-color: #c7d2fe;
+                                              -fx-padding: 8;" />
+                        </VBox>
 
-                <!-- BOTÓN CREAR -->
-                <Button text="Crear Concierto"
-                        fx:id="fid_bt_crear"
-                        onAction="#On_crearConcierto"
-                        prefWidth="200"
-                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;" />
+                        <!-- FECHA FIN -->
+                        <VBox spacing="6">
+                            <Label text="Fecha de finalización"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <DatePicker fx:id="fid_fecha_Fin"
+                                        prefWidth="320"
+                                        style="-fx-background-radius: 10;" />
+                        </VBox>
+
+                        <!-- HORA FIN -->
+                        <VBox spacing="6">
+                            <Label text="Hora de fin (24h)"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <TextField fx:id="fid_horaFin"
+                                       prefWidth="320"
+                                       promptText="Ej: 21:00"
+                                       style="-fx-background-radius: 10;
+                                              -fx-border-radius: 10;
+                                              -fx-border-color: #c7d2fe;
+                                              -fx-padding: 8;" />
+                        </VBox>
+
+                        <!-- AFORO -->
+                        <VBox spacing="6">
+                            <Label text="Aforo"
+                                   style="-fx-font-size: 14px;
+                                          -fx-font-weight: 700;
+                                          -fx-text-fill: #111f46;" />
+                            <TextField fx:id="fid_aforo"
+                                       prefWidth="320"
+                                       promptText="Ej: 500"
+                                       style="-fx-background-radius: 10;
+                                              -fx-border-radius: 10;
+                                              -fx-border-color: #c7d2fe;
+                                              -fx-padding: 8;" />
+                        </VBox>
+
+
+                         <!-- ACCIÓN SECUNDARIA (VERDE) -->
+                        <Button text="Agregar Contrato"
+                                fx:id="fid_bt_agregarContrato"
+                                onAction="#On_agregarContrato"
+                                prefWidth="260"
+                                prefHeight="42"
+                                style="-fx-background-color: linear-gradient(to right, #28a745, #1e7e34);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 13px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 12;
+                                       -fx-cursor: hand;" />
+
+                        <Separator prefWidth="320"/>
+
+                        <!-- ACCIÓN PRINCIPAL -->
+                        <Button text="Crear Concierto"
+                                fx:id="fid_bt_crear"
+                                onAction="#On_crearConcierto"
+                                prefWidth="320"
+                                prefHeight="48"
+                                style="-fx-background-color: linear-gradient(to right, #5a9fff, #1c4dc1);
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 14;
+                                       -fx-cursor: hand;" />
+
+                    </children>
+
+                </VBox>
 
             </children>
 
-        </VBox>
+        </StackPane>
     </center>
 
 </BorderPane>

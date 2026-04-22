@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
@@ -15,7 +14,12 @@
         <HBox spacing="700.0" style="-fx-background-color: white; -fx-padding: 15;">
             <children>
                 <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Solicitudes de Conciertos" />
-                <Button fx:id="fid_bt_volver" mnemonicParsing="false" onAction="#On_volver" prefHeight="29.0" prefWidth="98.0" text="Volver">
+                <Button fx:id="fid_bt_volver"
+                        mnemonicParsing="false"
+                        onAction="#On_volver"
+                        prefHeight="29.0"
+                        prefWidth="98.0"
+                        text="Volver">
                     <HBox.margin>
                         <Insets right="100.0" />
                     </HBox.margin>
@@ -41,9 +45,6 @@
                                      text="Nombre Concierto"
                                      prefWidth="200.0"/>
 
-
-
-                        <!-- NUEVAS COLUMNAS -->
                         <TableColumn fx:id="colFechaInicio"
                                      text="Fecha Inicio"
                                      prefWidth="150.0"/>
@@ -62,6 +63,10 @@
 
                         <TableColumn fx:id="colAforo"
                                      text="Aforo"
+                                     prefWidth="120.0"/>
+
+                        <TableColumn fx:id="colContrato"
+                                     text="Contrato"
                                      prefWidth="120.0"/>
 
                         <TableColumn fx:id="colAccion"

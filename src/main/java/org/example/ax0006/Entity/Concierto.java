@@ -11,6 +11,7 @@ public class Concierto {
     private boolean programado;
     private AnalisisFinanciero analisis;
     private Usuario artista; //la persona lider del concierto
+    private int idContrato;
 
     public Concierto(){}
 
@@ -89,5 +90,15 @@ public class Concierto {
 
     public void setNombreConcierto(String nombreConcierto) {
         this.nombreConcierto = nombreConcierto;
+    }
+
+    public int getIdContrato()
+    {
+        return idContrato;
+    }
+
+    public void setIdContrato(int idContrato)
+    {
+        this.idContrato = idContrato;
     }
 }

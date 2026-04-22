@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefWidth="1200.0" prefHeight="800.0"
+            style="-fx-background-color: #f4f6f8;">
+
+    <!-- TOP -->
+    <top>
+        <HBox spacing="700" style="-fx-background-color: white; -fx-padding: 15;">
+            <children>
+                <Label text="Detalle del Contrato"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+                <Button text="Volver"
+                        onAction="#On_volver"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+            </children>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 40;">
+
+            <children>
+
+                <!-- Fecha -->
+                <VBox spacing="5">
+                    <Label text="Fecha del contrato" />
+                    <Label fx:id="lblFecha"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                </VBox>
+
+                <!-- Clausulas -->
+                <VBox spacing="5">
+                    <Label text="Cláusulas" />
+                    <ListView fx:id="listClausulas"
+                              prefWidth="500"
+                              prefHeight="400"/>
+                </VBox>
+
+            </children>
+
+        </VBox>
+    </center>
+
+</BorderPane>

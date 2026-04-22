@@ -2,12 +2,8 @@ package org.example.ax0006.Controller;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.example.ax0006.Entity.Concierto;
 import org.example.ax0006.Manager.SceneManager;
@@ -18,7 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class ConsultarSolicitudesController {
-    /*En esta pantalla se consultan los conciertos a programar, ademas se puede aceptar o rechazar la solicitud*/
 
     private SesionManager sesion;
     private ConciertoService conciertoService;
@@ -33,7 +28,8 @@ public class ConsultarSolicitudesController {
     @FXML
     private TableView<Concierto> tablaConciertos;
 
-
+    @FXML
+    private TableColumn<Concierto, String> colNombreConcierto;
 
     @FXML
     private TableColumn<Concierto, String> colFechaInicio;
@@ -51,29 +47,42 @@ public class ConsultarSolicitudesController {
     private TableColumn<Concierto, Integer> colAforo;
 
     @FXML
+    private TableColumn<Concierto, Void> colContrato; 
+
+    @FXML
     private TableColumn<Concierto, Void> colAccion;
 
     @FXML
     private Button fid_bt_volver;
 
     @FXML
-    void On_volver(ActionEvent event) throws IOException {
+    void On_volver() throws IOException {
         sceneManager.showMenuConcierto();
     }
 
     @FXML
-    private TableColumn<Concierto, String> colNombreConcierto;
-
-    //se crea la tabla
-    @FXML
     public void initialize() {
+        
+        colNombreConcierto.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getNombreConcierto())
+        );
 
+        colFechaInicio.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getHorario().getFechaInicio().toString()
+                ));
 
+        colFechaInicio.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getHorario().getFechaInicio().toString()
+                )
+        );
 
         colFechaFin.setCellValueFactory(data ->
                 new SimpleStringProperty(
                         data.getValue().getHorario().getFechaFin().toString()
-                ));
+                )
+        );
 
         colHoraInicio.setCellValueFactory(data ->
                 new SimpleStringProperty(
@@ -93,15 +102,49 @@ public class ConsultarSolicitudesController {
                 ).asObject()
         );
 
-        colNombreConcierto.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getNombreConcierto())
-        );
-
+        agregarBotonContrato(); 
         agregarBotonesAccion();
 
         cargarConciertos();
     }
 
+    // =========================
+    //  BOTÓN VER CONTRATO
+    // =========================
+    private void agregarBotonContrato() {
+        sesion.setPantallaOrigen("solicitudes");
+        colContrato.setCellFactory(param -> new TableCell<>() {
+
+            private final Button btnVer = new Button("Ver");
+
+            {
+                btnVer.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+                btnVer.setOnAction(event -> {
+                    Concierto c = getTableView().getItems().get(getIndex());
+
+                    // Guardar contrato en sesión
+                    sesion.setIdContratoTemporal(c.getIdContrato());
+
+                    try {
+                        sceneManager.showVerContrato(); //Pantalla que muestra el contrato
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btnVer);
+            }
+        });
+    }
+
+    // =========================
+    // BOTONES ACEPTAR / RECHAZAR
+    // =========================
     private void agregarBotonesAccion() {
         colAccion.setCellFactory(param -> new TableCell<>() {
 
@@ -126,7 +169,10 @@ public class ConsultarSolicitudesController {
                 btnRechazar.setOnAction(event -> {
                     Concierto c = getTableView().getItems().get(getIndex());
 
-                    conciertoService.eliminarConcierto(c.getIdConcierto(),c.getHorario().getIdHorario());
+                    conciertoService.eliminarConcierto(
+                            c.getIdConcierto(),
+                            c.getHorario().getIdHorario()
+                    );
 
                     getTableView().getItems().remove(c);
                 });
@@ -140,13 +186,16 @@ public class ConsultarSolicitudesController {
         });
     }
 
+    // =========================
+    // CARGAR CONCIERTOS
+    // =========================
     private void cargarConciertos() {
         List<Concierto> lista = conciertoService.obtenerConciertosSolos();
 
-        List<Concierto> pendientes = lista.stream().filter(c -> !c.isProgramado()).toList();
+        List<Concierto> pendientes = lista.stream()
+                .filter(c -> !c.isProgramado())
+                .toList();
 
         tablaConciertos.getItems().setAll(pendientes);
     }
-
-
 }

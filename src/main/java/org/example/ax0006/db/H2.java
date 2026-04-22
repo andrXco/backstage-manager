@@ -76,31 +76,52 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS TipoObjeto (
                     idTipoObjeto INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR(255)
+                    tipo VARCHAR(255) NOT NULL
                 )
             """);
             stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Inventario(
-                    idInventario INT AUTO_INCREMENT PRIMARY KEY
+                CREATE TABLE IF NOT EXISTS ReferenciaDeObjeto (
+                    idReferenciaObjeto INT AUTO_INCREMENT PRIMARY KEY,
+                    referencia VARCHAR(255) NOT NULL
                 )
             """);
-//            stmt.execute("""
-//            DROP TABLE ObjetoInventario;
-//            """);
             stmt.execute("""
-                CREATE TABLE IF NOT EXISTS ObjetoInventario (
+                CREATE TABLE IF NOT EXISTS Objeto (
+                    idObjeto INT AUTO_INCREMENT PRIMARY KEY,
+                    FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto),
+                    FOREING KEY (idReferenciaObjeto) REFERENCES Referencia(idReferenciaObjeto)
+                )
+            """);
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS DocumentoInventario(
+                    idDocumentoInventario INT AUTO_INCREMENT PRIMARY KEY
+                )
+            """);
+            stmt.execute("""
+            DROP TABLE ObjetoInventario;
+            """);
+            stmt.execute("""
+            DROP TABLE Inventario;
+            """);
+            stmt.execute("""
+            DROP TABLE InventarioHorario;
+            """);
+            stmt.execute("""
+            DROP TABLE ConciertoInventario;
+            """);
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS ObjetoDocumentoInventario (
                     idInventario INT,
-                    idTipoObjeto INT,
-                    PRIMARY KEY (idInventario, idTipoObjeto),
-                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
-                    FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto)
+                    idObjeto INT,
+                    FOREIGN KEY (idInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
+                    FOREIGN KEY (idObjeto) REFERENCES Objeto(idObjeto)
                 )
             """);
             stmt.execute("""
-                CREATE TABLE IF NOT EXISTS InventarioHorario (
-                    PRIMARY KEY (idInventario, idHorario),
-                    idInventario INT,
-                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
+                CREATE TABLE IF NOT EXISTS DocumentoInventarioHorario (
+                    PRIMARY KEY (idDocumentoInventario, idHorario),
+                    idDocumentoInventario INT,
+                    FOREIGN KEY (idDocumentoInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
                     idHorario INT,
                     FOREIGN KEY (idHorario) REFERENCES Horario(idHorario)
                 )
@@ -123,6 +144,16 @@ public class H2 {
             """);
 
             stmt.execute("""
+                CREATE TABLE IF NOT EXISTS ConciertoDocumentoInventario (
+                    idDocumentoInventario INT,
+                    idConcierto INT,
+                    PRIMARY KEY (idDocumentoInventario, idConcierto),
+                    FOREIGN KEY (idDocumentoInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
+                    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
+                )
+            """);
+
+            stmt.execute("""
                 CREATE TABLE IF NOT EXISTS HorarioUsuario (
                     idUsuario INT,
                     idHorario INT,
@@ -132,15 +163,6 @@ public class H2 {
                 )
             """);
 
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS ConciertoInventario (
-                    idInventario INT,
-                    idConcierto INT,
-                    PRIMARY KEY (idInventario, idConcierto),
-                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
-                    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
-                )
-            """);
 
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS RolConciertoUsuario (

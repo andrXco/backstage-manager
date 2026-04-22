@@ -11,6 +11,7 @@ public class SceneManager {
 
     private Stage stage;
     private ContextManager context;
+    private Integer contratoTemporal;
 
     public SceneManager(Stage stage, ContextManager context) {
         this.stage = stage;
@@ -76,6 +77,14 @@ public class SceneManager {
     }
 
     public void showCrearConcierto() throws  IOException{
+// 🔥 SOLO limpiar si NO vienes de crear contrato
+        if (!"crearContrato".equals(context.getSesion().getPantallaOrigen())) {
+        context.getSesion().setIdContratoTemporal(null);
+        context.getSesion().setConciertoTemporal(null);
+        }
+    // 🔥 resetear origen
+    context.getSesion().setPantallaOrigen(null);
+
         CrearConciertoController crearConciertoController = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
         loadScene("/org/example/ax0006/crearconcierto.fxml", crearConciertoController);
     }
@@ -83,6 +92,24 @@ public class SceneManager {
     public void showConciertosProgramados() throws  IOException{
         ConciertosProgramadosController conciertosProgramadosController = new ConciertosProgramadosController(context.getSesion(), context.getConciertoService(), this);
         loadScene("/org/example/ax0006/verconciertosprogramados.fxml", conciertosProgramadosController);
+    }
+
+    //Crear Contrato
+    public void showCrearContrato() throws IOException {
+    CrearContratoController controller = new CrearContratoController(
+        this,
+        context.getContratoService(),
+        context.getSesion() // 🔥 AQUÍ
+    );
+    loadScene("/org/example/ax0006/crearcontrato.fxml", controller);
+    }
+
+    //Consultar Contrato
+    public void showConsultarContrato() throws IOException {
+    ConsultarContratoController controller =
+        new ConsultarContratoController(this, context.getContratoService());
+
+    loadScene("/org/example/ax0006/consultarcontrato.fxml", controller);
     }
 
     public void showMenuConcierto() throws IOException{
@@ -108,6 +135,18 @@ public class SceneManager {
                 this
         );
         loadScene("/org/example/ax0006/crearTipoObjeto.fxml", controller);
+    }
+    public void showVerContrato() throws IOException {
+    VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
+    loadScene("/org/example/ax0006/vercontrato.fxml", controller);
+    }
+
+    public void setContratoTemporal(Integer id) {
+    this.contratoTemporal = id;
+    }
+
+    public Integer getContratoTemporal() {
+    return contratoTemporal;
     }
 
     public void showConsultarInventario() throws IOException {

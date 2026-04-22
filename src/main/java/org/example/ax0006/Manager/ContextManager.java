@@ -1,6 +1,10 @@
 package org.example.ax0006.Manager;
 
-import org.example.ax0006.Repository.*;
+import org.example.ax0006.Repository.ConciertoRepository;
+import org.example.ax0006.Repository.ContratoRepository;
+import org.example.ax0006.Repository.HorarioRepository;
+import org.example.ax0006.Repository.RolRepository;
+import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.Service.*;
 import org.example.ax0006.db.H2;
 
@@ -22,6 +26,8 @@ public class ContextManager {
     private crearTipoObjetoService crearTipoObjetoService;
     private InventarioObjetoService inventarioObjetoService;
     private consultarInventarioService consultarInventarioService;
+    private ContratoService contratoService;
+    private ContratoRepository contratoRepo;
 
     public ContextManager(
             H2 h2,
@@ -38,7 +44,10 @@ public class ContextManager {
             InventarioService inventarioService,
             crearTipoObjetoService crearTipoObjetoService,
             InventarioObjetoService inventarioObjetoService,
-            consultarInventarioService consultarInventarioService
+            consultarInventarioService consultarInventarioService,
+            StaffService service, ConciertoRepository conciertoRepoExtra,
+            ContratoService contratoService,
+            ContratoRepository contratoRepo
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -58,41 +67,14 @@ public class ContextManager {
         this.consultarInventarioService = consultarInventarioService;
     }
 
-    public H2 getH2() {
-        return h2;
-    }
 
-    public UsuarioRepository getUsuarioRepository() {
-        return usuarioRepository;
-    }
+//
+//    public ProfileService getProfileService() {
+//        return profileService;
+//        this.contratoService = contratoService;
+//        this.contratoRepo = contratoRepo;
+//    }
 
-    public RolRepository getRolRepository() {
-        return rolRepository;
-    }
-
-    public AutenticacionService getAutenService() {
-        return autenService;
-    }
-
-    public ProfileService getProfileService() {
-        return profileService;
-    }
-
-    public RolService getRolService() {
-        return rolService;
-    }
-
-    public SesionManager getSesion() {
-        return sesion;
-    }
-
-    public ConciertoService getConciertoService() {
-        return conciertoService;
-    }
-
-    public StaffService getStaffService() {
-        return staffService;
-    }
 
     public InventarioService getInventarioService() {
         return inventarioService;
@@ -109,4 +91,15 @@ public class ContextManager {
     public consultarInventarioService getConsultarInventarioService() {
         return consultarInventarioService;
     }
+    public H2 getH2() { return h2; }
+    public UsuarioRepository getUsuarioRepository() { return usuarioRepository; }
+    public RolRepository getRolRepository() { return rolRepository; }
+    public AutenticacionService getAutenService() { return autenService; }
+    public ProfileService getProfileService() { return profileService; }
+    public RolService getRolService() { return rolService; }
+    public SesionManager getSesion() { return sesion; }
+    public ConciertoService getConciertoService() { return conciertoService; }
+    public StaffService getStaffService() { return staffService; }
+    public ContratoService getContratoService() { return contratoService; }
+    public ContratoRepository getContratoRepository() { return contratoRepo; }
 }
