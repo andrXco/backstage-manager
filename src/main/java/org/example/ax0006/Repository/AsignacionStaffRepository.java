@@ -56,8 +56,34 @@ public class AsignacionStaffRepository {
         }
     }
 
+    public boolean existeAsignacionEnConcierto(int idUsuario, int idConcierto) {
+        String sql = "SELECT 1 FROM RolConciertoUsuario WHERE idUsuario = ? AND idConcierto = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idConcierto);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void eliminarAsignacionesUsuarioEnConcierto(int idUsuario, int idConcierto) {
+        String sql = "DELETE FROM RolConciertoUsuario WHERE idUsuario = ? AND idConcierto = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idConcierto);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Usuario> obtenerStaffPorConcierto(int idConcierto) {
-        String sql = "SELECT u.idUsuario, u.nombre, u.contrasena, u.gmail " +
+        String sql = "SELECT DISTINCT u.idUsuario, u.nombre, u.contrasena, u.gmail " +
                 "FROM Usuario u " +
                 "JOIN RolConciertoUsuario rcu ON u.idUsuario = rcu.idUsuario " +
                 "WHERE rcu.idConcierto = ?";
@@ -102,7 +128,7 @@ public class AsignacionStaffRepository {
     }
 
     public List<Usuario> obtenerUsuariosPorConcierto(int idConcierto) {
-        String sql = "SELECT u.idUsuario, u.nombre, u.contrasena, u.gmail " +
+        String sql = "SELECT DISTINCT u.idUsuario, u.nombre, u.contrasena, u.gmail " +
                 "FROM Usuario u " +
                 "JOIN RolConciertoUsuario rcu ON u.idUsuario = rcu.idUsuario " +
                 "WHERE rcu.idConcierto = ?";
