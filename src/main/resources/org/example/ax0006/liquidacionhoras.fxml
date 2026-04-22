@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox prefHeight="70.0" spacing="10.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Liquidación de Horas" />
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="20.0" style="-fx-padding: 30;">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Liquidación por Evento" />
+            <Separator />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label style="-fx-font-weight: bold;" text="Seleccione evento:" />
+                <ComboBox fx:id="comboEvento" prefWidth="300.0" />
+            </HBox>
+            <TableView fx:id="tablaNominas" prefHeight="500.0">
+                <columns>
+                    <TableColumn fx:id="colTrabajador" prefWidth="200.0" text="Trabajador" />
+                    <TableColumn fx:id="colHoras" prefWidth="150.0" text="Horas trabajadas" />
+                    <TableColumn fx:id="colTarifa" prefWidth="150.0" text="Tarifa por hora" />
+                    <TableColumn fx:id="colExtra" prefWidth="150.0" text="Horas extra" />
+                    <TableColumn fx:id="colTotal" prefWidth="150.0" text="Total" />
+                    <TableColumn fx:id="colEstado" prefWidth="150.0" text="Estado" />
+                </columns>
+            </TableView>
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                <Label style="-fx-font-weight: bold;" text="Total general:" />
+                <Label fx:id="lblTotalGeneral" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;" text="\$0" />
+                <Button fx:id="btnGenerarReporte" style="-fx-background-color: #27ae60; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-weight: bold;" text="Generar Reporte" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

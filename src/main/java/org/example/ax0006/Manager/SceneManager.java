@@ -100,6 +100,11 @@ public class SceneManager {
         loadScene("/org/example/ax0006/menuconcierto.fxml", menuConciertoController);
     }
 
+    public void showNomina() throws  IOException{
+        MenuConciertoController menuConciertoController = new MenuConciertoController(this, context.getSesion());
+        loadScene("/org/example/ax0006/liquidacionhoras.fxml", menuConciertoController);
+    }
+
 
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {
@@ -113,6 +118,7 @@ public class SceneManager {
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }
+
 
 
 }

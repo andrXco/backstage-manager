@@ -1,5 +1,6 @@
 package org.example.ax0006.Manager;
 
+import org.example.ax0006.Entity.Nomina;
 import org.example.ax0006.Repository.ConciertoRepository;
 import org.example.ax0006.Repository.HorarioRepository;
 import org.example.ax0006.Repository.RolRepository;
@@ -24,6 +25,7 @@ public class ContextManager {
     private HorarioRepository horarioRepo;
     private ConciertoRepository conciertoRepo;
     private StaffService staffService;
+    private NominaService nominaService;
 
 
     public ContextManager(
@@ -37,7 +39,8 @@ public class ContextManager {
             RolService rolService,
             ConciertoService conciertoService,
             SesionManager sesion,
-            StaffService staffService
+            StaffService staffService,
+            NominaService nominaService
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -50,6 +53,7 @@ public class ContextManager {
         this.rolService = rolService;
         this.sesion = sesion;
         this.staffService = staffService;
+        this.nominaService = nominaService;
     }
 
     public H2 getH2() {
@@ -83,4 +87,9 @@ public class ContextManager {
     public ConciertoService getConciertoService() {return conciertoService;}
 
     public StaffService getStaffService() { return staffService; }
+
+    public NominaService getNominaService() {
+        return nominaService;
+    }
+
 }
