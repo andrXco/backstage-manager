@@ -17,7 +17,7 @@
                 </VBox>
 
                 <VBox spacing="5.0">
-                    <Label text="Código de Referencia Único:" />
+                    <Label text="Referencia del Objeto:" />
                     <TextField fx:id="fid_referencia" prefHeight="40.0" promptText="Ej: MIC-992" />
                 </VBox>
 

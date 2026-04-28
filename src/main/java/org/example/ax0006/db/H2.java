@@ -76,27 +76,29 @@ public class H2 {
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS TipoObjeto (
                     idTipoObjeto INT AUTO_INCREMENT PRIMARY KEY,
-                    tipo VARCHAR(255) NOT NULL
+                    tipo VARCHAR(255) NOT NULL UNIQUE
                 )
             """);
-//            stmt.execute("""
-//                INSERT INTO TipoObjeto (tipo) VALUES
-//                ('Micrófono'),
-//                ('Parlante'),
-//                ('Cable XLR'),
-//                ('Cable de poder'),
-//                ('Consola de mezcla'),
-//                ('Amplificador'),
-//                ('Monitor de escenario'),
-//                ('Pantalla LED'),
-//                ('Proyector'),
-//                ('Soporte de micrófono'),
-//                ('Rack de audio'),
-//                ('Interfaz de audio'),
-//                ('Sistema in-ear'),
-//                ('Luces LED'),
-//                ('Generador eléctrico');
-//            """);
+
+            stmt.execute("""
+                MERGE INTO TipoObjeto (tipo) KEY(tipo) VALUES
+                ('Micrófono'),
+                ('Parlante'),
+                ('Cable XLR'),
+                ('Cable de poder'),
+                ('Consola de mezcla'),
+                ('Amplificador'),
+                ('Monitor de escenario'),
+                ('Pantalla LED'),
+                ('Proyector'),
+                ('Soporte de micrófono'),
+                ('Rack de audio'),
+                ('Interfaz de audio'),
+                ('Sistema in-ear'),
+                ('Luces LED'),
+                ('Generador eléctrico');
+            """);
+
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS ReferenciaDeObjeto (
                     idReferenciaObjeto INT AUTO_INCREMENT PRIMARY KEY,
