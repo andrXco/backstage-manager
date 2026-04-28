@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1180.0"
+            style="-fx-background-color: #f4f6f8;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+        <VBox spacing="22.0"
+              AnchorPane.topAnchor="30.0"
+              AnchorPane.bottomAnchor="30.0"
+              AnchorPane.leftAnchor="30.0"
+              AnchorPane.rightAnchor="30.0"
+              style="-fx-background-color: #ffffff; -fx-background-radius: 18; -fx-padding: 28; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 18, 0.2, 0, 4);">
+
+            <children>
+                <Label text="Directorio de Staff"
+                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1f2937;" />
+
+                <Separator />
+
+                <VBox spacing="10.0">
+                    <children>
+                        <Label text="Seleccionar concierto"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #374151;" />
+
+                        <ComboBox fx:id="comboConcierto"
+                                  onAction="#On_seleccionarConcierto"
+                                  prefHeight="40.0"
+                                  prefWidth="360.0"
+                                  promptText="Seleccione un concierto"
+                                  style="-fx-background-color: #ffffff; -fx-border-color: #d1d5db; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 4 8 4 8;" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="22.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Staff asignado al concierto"
+                                       style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #374151;" />
+
+                                <TableView fx:id="tablaStaff"
+                                           prefHeight="470.0"
+                                           style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-background-radius: 12;">
+                                    <columns>
+                                        <TableColumn fx:id="colNombre" prefWidth="220.0" text="Nombre" />
+                                        <TableColumn fx:id="colGmail" prefWidth="260.0" text="Gmail o correo" />
+                                        <TableColumn fx:id="colSubrol" prefWidth="180.0" text="Subrol actual" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="16.0"
+                              prefWidth="300.0"
+                              style="-fx-background-color: #f9fafb; -fx-background-radius: 16; -fx-border-color: #e5e7eb; -fx-border-radius: 16; -fx-padding: 20;">
+                            <children>
+                                <Label text="Gestión de subrol"
+                                       style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1f2937;" />
+
+                                <Separator />
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label text="Subroles disponibles"
+                                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #374151;" />
+
+                                        <ComboBox fx:id="comboSubrol"
+                                                  prefHeight="40.0"
+                                                  prefWidth="260.0"
+                                                  promptText="Seleccione un subrol"
+                                                  style="-fx-background-color: #ffffff; -fx-border-color: #d1d5db; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 4 8 4 8;" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="12.0">
+                                    <children>
+                                        <Button fx:id="btnGuardarCambios"
+                                                mnemonicParsing="false"
+                                                onAction="#On_guardarCambios"
+                                                prefHeight="42.0"
+                                                prefWidth="260.0"
+                                                text="Guardar cambios"
+                                                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10;" />
+
+                                        <Button fx:id="btnVolver"
+                                                mnemonicParsing="false"
+                                                onAction="#On_volver"
+                                                prefHeight="42.0"
+                                                prefWidth="260.0"
+                                                text="Volver"
+                                                style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10;" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

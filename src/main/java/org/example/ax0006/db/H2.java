@@ -15,6 +15,7 @@ public class H2 {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
     }
+
     public void inicializarDB() {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
 
@@ -79,14 +80,33 @@ public class H2 {
                     nombre VARCHAR(255)
                 )
             """);
-
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS Inventario(
+                    idInventario INT AUTO_INCREMENT PRIMARY KEY
+                )
+            """);
+//            stmt.execute("""
+//            DROP TABLE ObjetoInventario;
+//            """);
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS ObjetoInventario (
-                    idInventario INT AUTO_INCREMENT PRIMARY KEY,
+                    idInventario INT,
                     idTipoObjeto INT,
+                    PRIMARY KEY (idInventario, idTipoObjeto),
+                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
                     FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto)
                 )
             """);
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS InventarioHorario (
+                    PRIMARY KEY (idInventario, idHorario),
+                    idInventario INT,
+                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
+                    idHorario INT,
+                    FOREIGN KEY (idHorario) REFERENCES Horario(idHorario)
+                )
+            """);
+
 
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS Concierto (
@@ -118,7 +138,7 @@ public class H2 {
                     idInventario INT,
                     idConcierto INT,
                     PRIMARY KEY (idInventario, idConcierto),
-                    FOREIGN KEY (idInventario) REFERENCES ObjetoInventario(idInventario),
+                    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario),
                     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
                 )
             """);
@@ -128,12 +148,20 @@ public class H2 {
                     idRol INT,
                     idUsuario INT,
                     idConcierto INT,
+                    subrol VARCHAR(100),
                     PRIMARY KEY (idRol, idUsuario, idConcierto),
                     FOREIGN KEY (idRol) REFERENCES Rol(idRol),
                     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
                     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
                 )
             """);
+
+            // Por si la base ya existía sin la columna subrol
+            stmt.execute("""
+                ALTER TABLE RolConciertoUsuario
+                ADD COLUMN IF NOT EXISTS subrol VARCHAR(100)
+            """);
+
             //Crear roles con el idRol para eso toca mergear tablas para colocar los roles dentro de rol con los ids.
             //con merge into se evitan duplicados cada vez que se ejecute el programa.
             stmt.execute("""
@@ -150,9 +178,17 @@ public class H2 {
             User: sa
             Password: vacío
            */
+// PARA BORRAR LA BASE DE DATOS
+//            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
+//
+//            stmt.execute("DROP ALL OBJECTS");
+//
+//            stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
+//
+//            System.out.println("Base de datos limpiada");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
-

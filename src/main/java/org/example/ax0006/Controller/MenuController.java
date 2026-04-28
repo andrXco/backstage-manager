@@ -48,6 +48,9 @@ public class MenuController {
     private Button fid_Menu_Conciertos;
 
     @FXML
+    private Button fid_bt_directorio_staff;
+
+    @FXML
     public void initialize() {
         if (sesion != null && sesion.getUsuarioActual() != null && fid_Bienvenido != null) {
             fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
@@ -88,5 +91,10 @@ public class MenuController {
     @FXML
     void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
+    }
+
+    @FXML
+    void On_Directorio_Staff(ActionEvent event) throws IOException {
+        sceneManager.showDirectorioStaff();
     }
 }

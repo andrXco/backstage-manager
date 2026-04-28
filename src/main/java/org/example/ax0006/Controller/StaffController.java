@@ -2,13 +2,18 @@ package org.example.ax0006.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.ax0006.Entity.Usuario;
+import org.example.ax0006.Manager.SceneManager;
 import org.example.ax0006.Repository.AsignacionStaffRepository;
+import org.example.ax0006.Repository.ConciertoRepository;
 import org.example.ax0006.Repository.UsuarioRepository;
 import org.example.ax0006.Service.StaffService;
 import org.example.ax0006.db.H2;
+
+import java.io.IOException;
 
 public class StaffController {
 
@@ -19,8 +24,14 @@ public class StaffController {
     @FXML private TableColumn<Usuario, String> colNombre;
     @FXML private TableColumn<Usuario, String> colGmail;
     @FXML private Label lblMensaje;
+    @FXML private Button fid_bt_volver;
 
     private StaffService staffService;
+    private SceneManager sceneManager;
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
 
     @FXML
     public void initialize() {
@@ -32,7 +43,8 @@ public class StaffController {
         H2 h2 = new H2();
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         AsignacionStaffRepository asignacionRepo = new AsignacionStaffRepository(h2);
-        //staffService = new StaffService(usuarioRepo, asignacionRepo);
+        ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
+        staffService = new StaffService(usuarioRepo, asignacionRepo, conciertoRepo);
 
         cargarListaEmpleados();
     }
@@ -56,6 +68,11 @@ public class StaffController {
         } else {
             lblMensaje.setText("El nombre de usuario ya existe");
         }
+    }
+
+    @FXML
+    void On_volver(ActionEvent event) throws IOException {
+        sceneManager.showAdminUsuarios();
     }
 
     private void cargarListaEmpleados() {
