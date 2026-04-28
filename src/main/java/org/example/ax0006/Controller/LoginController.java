@@ -100,12 +100,6 @@ public class LoginController {
             return;
         }
 
-        /*MENSAJES DE ERROR*/
-        if (!usuarioLogin.getContrasena().equals(fid_Contrasena.getText())) {
-            System.out.println("Contraseña incorrecta");
-            AlertaLogin("Error El usuario o contraseña incorrectos");
-            return;
-        }
 
         /*SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION*/
         sesion.setUsuarioActual(usuarioLogin);

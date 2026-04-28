@@ -4,6 +4,7 @@ module org.example.gestorconciertos {
     requires java.desktop;
     requires java.sql;
     requires com.h2database;
+    requires jbcrypt;
 
     opens org.example.ax0006 to javafx.fxml;
 

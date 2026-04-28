@@ -2,6 +2,7 @@ package org.example.ax0006.Service;
 
 import org.example.ax0006.Entity.Usuario;
 import org.example.ax0006.Repository.UsuarioRepository;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AutenticacionService {
 
@@ -36,12 +37,14 @@ public class AutenticacionService {
     /*METODO PARA EL LOGIN, ESTE SE UTILIZA PARA QUE EN CASO DE QUE EL USUARIO Y CONTRASEÑA SEAN VALIDOS, RETORNE EL USUARIO SINO RETORNARA NULL*/
     public Usuario login(String nombre, String contrasena) {
 
-        Usuario u = usuarioRepo.buscarPorNombre(nombre);
+    Usuario u = usuarioRepo.buscarPorNombre(nombre);
 
-        if (u == null) return null;
+    if (u == null) return null;
 
-        if (!u.getContrasena().equals(contrasena)) return null;
+    String passwordLimpia = contrasena.trim();
 
-        return u;
+    if (!BCrypt.checkpw(passwordLimpia, u.getContrasena())) return null;
+
+    return u;
     }
 }

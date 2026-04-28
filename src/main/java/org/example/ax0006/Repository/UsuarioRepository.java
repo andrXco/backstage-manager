@@ -8,10 +8,9 @@
 
 package org.example.ax0006.Repository;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.example.ax0006.db.H2;
 import org.example.ax0006.Entity.Usuario;
-
-
 
 import java.sql.*;
 
@@ -35,8 +34,9 @@ public class UsuarioRepository {
         String sql = "INSERT INTO Usuario (nombre, contrasena, gmail) VALUES (?, ?, ?)";
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+                String hash = BCrypt.hashpw(u.getContrasena(), BCrypt.gensalt());
             stmt.setString(1, u.getNombre());
-            stmt.setString(2, u.getContrasena());
+            stmt.setString(2, hash);
             stmt.setString(3, u.getGmail());
             stmt.executeUpdate();
             System.out.println("Usuario guardado en BD: " + u.getNombre());
@@ -103,7 +103,6 @@ public class UsuarioRepository {
         }
         return lista;
     }
-
 
     public String obtenerRolesDelUsuario(int idUsuario) {
         String sql = """
@@ -208,7 +207,9 @@ public class UsuarioRepository {
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, nuevaContrasena);
+            String hash = BCrypt.hashpw(nuevaContrasena, BCrypt.gensalt()); 
+
+            stmt.setString(1, hash);
             stmt.setInt(2, idUsuario);
 
             return stmt.executeUpdate() > 0;
