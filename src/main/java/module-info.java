@@ -8,12 +8,12 @@ module org.example.gestorconciertos {
 
     opens org.example.ax0006 to javafx.fxml;
 
-    exports org.example.ax0006.Entity;
-    exports org.example.ax0006.Repository;
-    exports org.example.ax0006.Service;
-    exports org.example.ax0006.Controller;
+    exports org.example.ax0006.entity;
+    exports org.example.ax0006.repository;
+    exports org.example.ax0006.service;
+    exports org.example.ax0006.controller;
     exports org.example.ax0006.db;
 
-    opens org.example.ax0006.Controller to javafx.fxml;
-    opens org.example.ax0006.Entity to javafx.fxml;
+    opens org.example.ax0006.controller to javafx.fxml;
+    opens org.example.ax0006.entity to javafx.fxml;
 }
