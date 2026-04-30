@@ -2,10 +2,10 @@ package org.example.ax0006.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.example.ax0006.Entity.Usuario;
-import org.example.ax0006.Manager.SesionManager;
-import org.example.ax0006.Repository.UsuarioRepository;
-import org.example.ax0006.Service.AutenticacionService;
+import org.example.ax0006.entity.Usuario;
+import org.example.ax0006.manager.SesionManager;
+import org.example.ax0006.repository.UsuarioRepository;
+import org.example.ax0006.service.AutenticacionService;
 import org.example.ax0006.db.H2;
 
 class StartControllerTest {
