@@ -2,6 +2,7 @@ package org.example.ax0006.db;
 
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
+
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
@@ -28,149 +29,27 @@ public class H2 {
     }
 
     public void inicializarDB() {
-        try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
+        try (Connection conn = getConnection()) {
 
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Rol (
-                    idRol INT AUTO_INCREMENT PRIMARY KEY,
-                    rol VARCHAR(255) NOT NULL
-                )
-            """);
+            // 1. Leer y ejecutar el script SQL
+            Reader reader = new InputStreamReader(Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/SQL/schema.sql"),
+                    "No se pudo encontrar el archivo schema.sql"
+            ));
 
-            stmt.execute("""
-                    CREATE TABLE IF NOT EXISTS Usuario (
-                idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-                nombre VARCHAR(255) NOT NULL,
-                gmail VARCHAR(255),
-                contrasena VARCHAR(255),           
-                telefono VARCHAR(10),
-                direccion VARCHAR(255),
-                contactoEmergenciaNombre VARCHAR(255),
-                contactoEmergenciaTelefono VARCHAR(20),
-                contactoEmergenciaRelacion VARCHAR(100)
-            )
-            """);
+            RunScript.execute(conn, reader);
+            System.out.println("Base de datos estructurada a partir de schema.sql");
 
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Contrato (
-                    idContrato INT AUTO_INCREMENT PRIMARY KEY,
-                    fecha DATE NOT NULL
-                )
-            """);
+            // 2. Iniciar el servidor web de H2
+            try {
+                Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
+                System.out.println("Consola web de H2 iniciada en el puerto 8082");
+            } catch (SQLException e) {
+                System.out.println("No se pudo iniciar el servidor web H2. Puede que ya esté corriendo.");
+            }
 
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Clausula (
-                    idClausula INT AUTO_INCREMENT PRIMARY KEY,
-                    clausula VARCHAR(255) NOT NULL,
-                    idContrato INT,
-                    FOREIGN KEY (idContrato) REFERENCES Contrato(idContrato)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS AnalisisFinanciero (
-                    idAnalisisF INT AUTO_INCREMENT PRIMARY KEY,
-                    presupuesto INT NOT NULL,
-                    gastos INT NOT NULL
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Horario (
-                    idHorario INT AUTO_INCREMENT PRIMARY KEY,
-                    fechaInc DATE NOT NULL,
-                    fechaFin DATE NOT NULL,
-                    horaInc TIME NOT NULL,
-                    horaFin TIME NOT NULL
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS TipoObjeto (
-                    idTipoObjeto INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR(255)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS ObjetoInventario (
-                    idInventario INT AUTO_INCREMENT PRIMARY KEY,
-                    idTipoObjeto INT,
-                    FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS Concierto (
-                    idConcierto INT AUTO_INCREMENT PRIMARY KEY,
-                    nombreConcierto VARCHAR(255) NOT NULL,
-                    idHorario INT,
-                    aforo INT NOT NULL,
-                    idContrato INT,
-                    programado BOOLEAN NOT NULL,
-                    idAnalisisF INT,
-                    FOREIGN KEY (idHorario) REFERENCES Horario(idHorario),
-                    FOREIGN KEY (idContrato) REFERENCES Contrato(idContrato),
-                    FOREIGN KEY (idAnalisisF) REFERENCES AnalisisFinanciero(idAnalisisF)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS HorarioUsuario (
-                    idUsuario INT,
-                    idHorario INT,
-                    PRIMARY KEY (idUsuario, idHorario),
-                    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
-                    FOREIGN KEY (idHorario) REFERENCES Horario(idHorario)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS ConciertoInventario (
-                    idInventario INT,
-                    idConcierto INT,
-                    PRIMARY KEY (idInventario, idConcierto),
-                    FOREIGN KEY (idInventario) REFERENCES ObjetoInventario(idInventario),
-                    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
-                )
-            """);
-
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
-                    idRol INT,
-                    idUsuario INT,
-                    idConcierto INT,
-                    subrol VARCHAR(100),
-                    PRIMARY KEY (idRol, idUsuario, idConcierto),
-                    FOREIGN KEY (idRol) REFERENCES Rol(idRol),
-                    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
-                    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
-                )
-            """);
-
-            // Por si la base ya existía sin la columna subrol
-            stmt.execute("""
-                ALTER TABLE RolConciertoUsuario
-                ADD COLUMN IF NOT EXISTS subrol VARCHAR(100)
-            """);
-
-            //Crear roles con el idRol para eso toca mergear tablas para colocar los roles dentro de rol con los ids.
-            //con merge into se evitan duplicados cada vez que se ejecute el programa.
-            stmt.execute("""
-               MERGE INTO Rol (idRol, rol) KEY(idRol)   
-                  VALUES (1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff')
-                """);
-
-            org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
-            System.out.println("Base de datos inicializada correctamente");
-
-            /*
-            PARA QUE HAGAN EL INGRESO BASE DE DATOS H2:
-            JDBC URL: jdbc:h2:./data/eventosdb
-            User: sa
-            Password: vacío
-           */
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            System.err.println("Error crítico al inicializar la base de datos.");
             e.printStackTrace();
         }
     }
