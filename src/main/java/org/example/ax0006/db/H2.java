@@ -17,7 +17,7 @@ import java.util.Objects;
 */
 
 public class H2 {
-    private static final String URL = "jdbc:h2:./data/eventosdb;DB_CLOSE_DELAY=-1";
+    private static final String URL = "jdbc:h2:./data/eventosdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
     private static final String USER = "sa";
     private static final String PASS = "";
 
