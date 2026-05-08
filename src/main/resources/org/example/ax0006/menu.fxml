@@ -30,6 +30,9 @@
                         <VBox prefHeight="70.0" prefWidth="280.0" spacing="8.0">
                             <children>
                                 <Label fx:id="fid_Bienvenido" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;" text="Bienvenido, Usuario" />
+                                <Label fx:id="fid_lbl_concierto"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #555;"
+                                       text="" />
                                 <HBox spacing="10.0">
                                     <children>
                                         <Button fx:id="fid_bt_perfil" mnemonicParsing="false" onAction="#On_Perfil" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Perfil" />

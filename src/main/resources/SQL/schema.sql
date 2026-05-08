@@ -98,4 +98,4 @@ CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
 
 -- Insertar roles por defecto
 MERGE INTO Rol (idRol, rol) KEY(idRol)
-    VALUES (0, 'Sin rol'),(1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff');
+    VALUES (0, 'Sin rol'),(1, 'Administrador'), (2, 'Tecnico'), (3, 'Manager'), (4, 'Staff');

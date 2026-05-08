@@ -10,6 +10,8 @@ import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.AutenticacionService;
+import org.example.ax0006.service.ConciertoService;
+import org.example.ax0006.service.StaffService;
 
 import java.io.IOException;
 
@@ -19,12 +21,16 @@ public class LoginController {
     private SceneManager sceneManager;
     private AutenticacionService autenService;
     private SesionManager sesion;
+    private StaffService staffService;
+    private ConciertoService conciertoService;
 
     /*CONSTRUCTOR DE LA CLASE*/
-    public LoginController(SceneManager sceneManager, AutenticacionService autenService, SesionManager sesion) {
+    public LoginController(SceneManager sceneManager, AutenticacionService autenService, SesionManager sesion, StaffService staffService, ConciertoService conciertoService) {
         this.sceneManager = sceneManager;
         this.autenService = autenService;
         this.sesion = sesion;
+        this.staffService = staffService;
+        this.conciertoService = conciertoService;
     }
 
     @FXML
@@ -100,6 +106,18 @@ public class LoginController {
 
         /*SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION*/
         sesion.setUsuarioActual(usuarioLogin);
+
+        if (usuarioLogin.getIdRol() != 1) {
+            int idConcierto = staffService.obtenerIdConciertoDelUsuario(usuarioLogin.getIdUsuario());
+            if (idConcierto != -1) {
+                conciertoService.obtenerConciertosSolos().stream()
+                        .filter(c -> c.getIdConcierto() == idConcierto)
+                        .findFirst()
+                        .ifPresent(sesion::setConciertoActual);
+            }
+        }
+
+
         /*EN CASO DE UN LOGEO EXITOSO CAMBIAMOS A LA VENTANA DE MENU*/
         sceneManager.showMenu();
 

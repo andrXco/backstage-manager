@@ -40,7 +40,7 @@ public class StartController extends Application {
         ContratoRepository contratoRepo = new ContratoRepository(h2);
 
         // SERVICIOS
-        AutenticacionService autenService = new AutenticacionService(usuarioRepo);
+        AutenticacionService autenService = new AutenticacionService(usuarioRepo,asignacionStaffRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);

@@ -52,13 +52,24 @@ public class MenuController {
     private Button fid_bt_admin;
 
     @FXML
+    private Label fid_lbl_concierto;
+
+
+    @FXML
     public void initialize() {
-        if (sesion != null && sesion.getUsuarioActual() != null && fid_Bienvenido != null) {
+        if (sesion != null && sesion.getUsuarioActual() != null) {
             fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
 
             boolean esAdmin = sesion.getUsuarioActual().getIdRol() == 1;
             fid_bt_admin.setVisible(esAdmin);
             fid_bt_admin.setManaged(esAdmin);
+
+
+            if (sesion.getConciertoActual() != null) {
+                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
+            } else {
+                fid_lbl_concierto.setText("");
+            }
         }
     }
 

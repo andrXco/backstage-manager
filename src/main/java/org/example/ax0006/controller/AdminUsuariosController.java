@@ -100,7 +100,7 @@ public class AdminUsuariosController {
             String nombreRol = switch (idRol) {
                 case 1 -> "Administrador";
                 case 2 -> "Tecnico";
-                case 3 -> "Artista";
+                case 3 -> "Manager";
                 case 4 -> "Staff";
                 default -> "Sin rol";
             };
@@ -234,8 +234,17 @@ public class AdminUsuariosController {
         if (tieneConcierto) {
             content.getChildren().add(chkRolGlobal);
 
-        } else {
+            // Deshabilitar checkbox si el rol no puede ser global
+            comboRoles.setOnAction(e -> {
+                Rol rolElegido = comboRoles.getValue();
+                if (rolElegido != null) {
+                    boolean puedeSerGlobal = rolElegido.getIdRol() == 1 || rolElegido.getIdRol() == 3;
+                    chkRolGlobal.setDisable(!puedeSerGlobal);
+                    if (!puedeSerGlobal) chkRolGlobal.setSelected(false);
+                }
+            });
 
+        } else {
             List<Concierto> conciertos = conciertoService.obtenerConciertosSolos();
             comboConciertos.getItems().addAll(conciertos);
             comboConciertos.setPromptText("Seleccionar concierto");
@@ -258,6 +267,22 @@ public class AdminUsuariosController {
             });
 
             content.getChildren().addAll(chkRolGlobal, labelConcierto, comboConciertos);
+
+            // Deshabilitar checkbox si el rol no puede ser global
+            comboRoles.setOnAction(e -> {
+                Rol rolElegido = comboRoles.getValue();
+                if (rolElegido != null) {
+                    boolean puedeSerGlobal = rolElegido.getIdRol() == 1 || rolElegido.getIdRol() == 3;
+                    chkRolGlobal.setDisable(!puedeSerGlobal);
+                    if (!puedeSerGlobal) {
+                        chkRolGlobal.setSelected(false);
+                        labelConcierto.setVisible(true);
+                        labelConcierto.setManaged(true);
+                        comboConciertos.setVisible(true);
+                        comboConciertos.setManaged(true);
+                    }
+                }
+            });
 
             chkRolGlobal.setOnAction(e -> {
                 boolean global = chkRolGlobal.isSelected();
@@ -288,10 +313,8 @@ public class AdminUsuariosController {
 
             if (tieneConcierto) {
                 if (chkRolGlobal.isSelected()) {
-
                     rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
                 } else {
-
                     Concierto conciertoFiltro = (Concierto) seleccionado;
                     staffService.asignarStaffAConcierto(
                             u.getIdUsuario(),
@@ -300,10 +323,8 @@ public class AdminUsuariosController {
                     );
                 }
             } else if (chkRolGlobal.isSelected()) {
-
                 rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
             } else {
-
                 Concierto conciertoSeleccionado = comboConciertos.getValue();
                 if (conciertoSeleccionado == null) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);

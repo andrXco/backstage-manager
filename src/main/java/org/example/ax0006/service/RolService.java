@@ -27,6 +27,7 @@ public class RolService {
         return rolRepo.obtenerRoles()
                 .stream()
                 .filter(r -> r.getIdRol() != 1)
+                .filter(r -> r.getIdRol() != 0)//pendiente
                 .collect(Collectors.toList());
     }
 

@@ -118,4 +118,29 @@ public class AsignacionStaffRepository {
         }
         return roles.isEmpty() ? "Sin rol" : String.join(", ", roles);
     }
+
+
+
+    //Metodo para obtener el concierto del usuario
+    public int obtenerIdConciertoDelUsuario(int idUsuario) {
+        String sql = """
+        SELECT idConcierto FROM RolConciertoUsuario
+        WHERE idUsuario = ? AND idConcierto IS NOT NULL
+        LIMIT 1
+    """;
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt("idConcierto");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+
+
+
 }
