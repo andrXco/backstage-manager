@@ -2,8 +2,6 @@ package org.example.ax0006.entity;
 
 import java.time.LocalDate;
 import java.util.List;
-import org.example.ax0006.entity.Clausula;
-
 
 public class Contrato {
     //ATRIBUTOS
