@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityNotificationController {
+
     private final SceneManager sceneManager;
     private final SesionManager sesion;
     private final ActividadService actividadService;
+
     private final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private List<Actividad> actividades = new ArrayList<>();
@@ -31,26 +33,59 @@ public class ActivityNotificationController {
         this.actividadService = actividadService;
     }
 
-    @FXML private Label fid_lbl_total_actividad;
-    @FXML private Button fid_bt_filtro_todo;
-    @FXML private Button fid_bt_filtro_accesos;
-    @FXML private Button fid_bt_filtro_alertas;
-    @FXML private Button fid_bt_filtro_mensajes;
-    @FXML private Button fid_bt_filtro_solicitudes;
+    @FXML
+    private Label fid_lbl_total_actividad;
 
-    @FXML private Button fid_bt_actividad_1;
-    @FXML private Button fid_bt_actividad_2;
-    @FXML private Button fid_bt_actividad_3;
-    @FXML private Button fid_bt_actividad_4;
-    @FXML private Button fid_bt_actividad_5;
+    @FXML
+    private Button fid_bt_filtro_todo;
 
-    @FXML private Label fid_lbl_tipo_actividad;
-    @FXML private Label fid_lbl_estado_actividad;
-    @FXML private Label fid_lbl_usuario_actividad;
-    @FXML private Label fid_lbl_fecha_actividad;
-    @FXML private Label fid_lbl_modulo_actividad;
-    @FXML private Label fid_lbl_origen_actividad;
-    @FXML private TextArea fid_txt_detalle_actividad;
+    @FXML
+    private Button fid_bt_filtro_accesos;
+
+    @FXML
+    private Button fid_bt_filtro_alertas;
+
+    @FXML
+    private Button fid_bt_filtro_mensajes;
+
+    @FXML
+    private Button fid_bt_filtro_solicitudes;
+
+    @FXML
+    private Button fid_bt_actividad_1;
+
+    @FXML
+    private Button fid_bt_actividad_2;
+
+    @FXML
+    private Button fid_bt_actividad_3;
+
+    @FXML
+    private Button fid_bt_actividad_4;
+
+    @FXML
+    private Button fid_bt_actividad_5;
+
+    @FXML
+    private Label fid_lbl_tipo_actividad;
+
+    @FXML
+    private Label fid_lbl_estado_actividad;
+
+    @FXML
+    private Label fid_lbl_usuario_actividad;
+
+    @FXML
+    private Label fid_lbl_fecha_actividad;
+
+    @FXML
+    private Label fid_lbl_modulo_actividad;
+
+    @FXML
+    private Label fid_lbl_origen_actividad;
+
+    @FXML
+    private TextArea fid_txt_detalle_actividad;
 
     @FXML
     public void initialize() {
@@ -114,7 +149,13 @@ public class ActivityNotificationController {
 
     @FXML
     void On_marcar_revisado(ActionEvent event) {
-        if (actividadSeleccionada == null) return;
+        if (actividadSeleccionada == null) {
+            return;
+        }
+
+        if (sesion == null || sesion.getUsuarioActual() == null) {
+            return;
+        }
 
         actividadService.marcarRevisado(
                 actividadSeleccionada.getIdActividad(),
@@ -132,16 +173,22 @@ public class ActivityNotificationController {
     private void cargarActividades(String filtro) {
         filtroActual = filtro;
 
+        if (actividadService == null || sesion == null || sesion.getUsuarioActual() == null) {
+            actividades = new ArrayList<>();
+            actualizarContadorPendientes(0);
+            pintarBotones();
+            limpiarDetalle();
+            resaltarFiltro(filtro);
+            return;
+        }
+
         actividades = actividadService.listarParaUsuario(
                 sesion.getUsuarioActual(),
                 filtro
         );
 
         int pendientes = actividadService.contarPendientes(sesion.getUsuarioActual());
-
-        fid_lbl_total_actividad.setText(
-                pendientes == 1 ? "1 nuevo" : pendientes + " nuevos"
-        );
+        actualizarContadorPendientes(pendientes);
 
         pintarBotones();
         resaltarFiltro(filtro);
@@ -153,11 +200,27 @@ public class ActivityNotificationController {
         }
     }
 
+    private void actualizarContadorPendientes(int pendientes) {
+        if (fid_lbl_total_actividad == null) {
+            return;
+        }
+
+        if (pendientes == 1) {
+            fid_lbl_total_actividad.setText("1 nuevo");
+        } else {
+            fid_lbl_total_actividad.setText(pendientes + " nuevos");
+        }
+    }
+
     private void pintarBotones() {
         Button[] botones = obtenerBotonesActividad();
 
         for (int i = 0; i < botones.length; i++) {
             Button boton = botones[i];
+
+            if (boton == null) {
+                continue;
+            }
 
             if (i < actividades.size()) {
                 Actividad actividad = actividades.get(i);
@@ -168,6 +231,7 @@ public class ActivityNotificationController {
 
                 aplicarEstiloActividad(boton, actividad.getTipo());
             } else {
+                boton.setText("");
                 boton.setVisible(false);
                 boton.setManaged(false);
             }
@@ -175,7 +239,7 @@ public class ActivityNotificationController {
     }
 
     private String crearTextoBoton(Actividad actividad) {
-        String usuario = actividad.getNombreUsuarioActor() == null
+        String usuario = actividad.getNombreUsuarioActor() == null || actividad.getNombreUsuarioActor().isBlank()
                 ? "Sistema"
                 : actividad.getNombreUsuarioActor();
 
@@ -183,24 +247,30 @@ public class ActivityNotificationController {
                 ? "Sin fecha"
                 : actividad.getFechaHora().format(formatoFecha);
 
-        return "● " + actividad.getModulo() + " - " + usuario + " - " + fecha;
+        String modulo = actividad.getModulo() == null || actividad.getModulo().isBlank()
+                ? "Actividad"
+                : actividad.getModulo();
+
+        return "● " + modulo + " - " + usuario + " - " + fecha;
     }
 
     private void seleccionarActividad(int indice) {
-        if (indice < 0 || indice >= actividades.size()) return;
+        if (indice < 0 || indice >= actividades.size()) {
+            return;
+        }
 
         actividadSeleccionada = actividades.get(indice);
 
-        fid_lbl_tipo_actividad.setText(actividadSeleccionada.getModulo());
+        fid_lbl_tipo_actividad.setText(valorSeguro(actividadSeleccionada.getModulo(), "Sin actividad"));
 
-        fid_lbl_estado_actividad.setText(
-                actividadSeleccionada.isRevisado() ? "Revisado" : "Nuevo"
-        );
+        if (actividadSeleccionada.isRevisado()) {
+            fid_lbl_estado_actividad.setText("Revisado");
+        } else {
+            fid_lbl_estado_actividad.setText("Nuevo");
+        }
 
         fid_lbl_usuario_actividad.setText(
-                actividadSeleccionada.getNombreUsuarioActor() == null
-                        ? "Sistema"
-                        : actividadSeleccionada.getNombreUsuarioActor()
+                valorSeguro(actividadSeleccionada.getNombreUsuarioActor(), "Sistema")
         );
 
         fid_lbl_fecha_actividad.setText(
@@ -209,9 +279,17 @@ public class ActivityNotificationController {
                         : actividadSeleccionada.getFechaHora().format(formatoFecha)
         );
 
-        fid_lbl_modulo_actividad.setText("Módulo: " + actividadSeleccionada.getModulo());
-        fid_lbl_origen_actividad.setText("Origen: " + actividadSeleccionada.getOrigen());
-        fid_txt_detalle_actividad.setText(actividadSeleccionada.getDescripcion());
+        fid_lbl_modulo_actividad.setText(
+                "Módulo: " + valorSeguro(actividadSeleccionada.getModulo(), "-")
+        );
+
+        fid_lbl_origen_actividad.setText(
+                "Origen: " + valorSeguro(actividadSeleccionada.getOrigen(), "-")
+        );
+
+        fid_txt_detalle_actividad.setText(
+                valorSeguro(actividadSeleccionada.getDescripcion(), "Sin descripción.")
+        );
     }
 
     private void limpiarDetalle() {
@@ -246,14 +324,15 @@ public class ActivityNotificationController {
         };
 
         for (Button boton : filtros) {
-            boton.setStyle(
-                    "-fx-background-color: #f3f4f6;" +
-                            "-fx-text-fill: #374151;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-background-radius: 20;" +
-                            "-fx-border-color: #d1d5db;" +
-                            "-fx-border-radius: 20;"
-            );
+            if (boton == null) {
+                continue;
+            }
+
+            boton.getStyleClass().remove("boton-filtro-activo");
+
+            if (!boton.getStyleClass().contains("boton-filtro")) {
+                boton.getStyleClass().add("boton-filtro");
+            }
         }
 
         Button activo = switch (filtro) {
@@ -264,38 +343,50 @@ public class ActivityNotificationController {
             default -> fid_bt_filtro_todo;
         };
 
-        activo.setStyle(
-                "-fx-background-color: #2563eb;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 20;"
-        );
+        if (activo == null) {
+            return;
+        }
+
+        activo.getStyleClass().remove("boton-filtro");
+
+        if (!activo.getStyleClass().contains("boton-filtro-activo")) {
+            activo.getStyleClass().add("boton-filtro-activo");
+        }
     }
 
     private void aplicarEstiloActividad(Button boton, String tipo) {
-        String colorTexto = "#1d4ed8";
-        String colorBorde = "#bfdbfe";
-
-        if ("ALERTA".equalsIgnoreCase(tipo)) {
-            colorTexto = "#c2410c";
-            colorBorde = "#fed7aa";
-        } else if ("MENSAJE".equalsIgnoreCase(tipo)) {
-            colorTexto = "#6d28d9";
-            colorBorde = "#ddd6fe";
-        } else if ("SOLICITUD".equalsIgnoreCase(tipo)) {
-            colorTexto = "#047857";
-            colorBorde = "#bbf7d0";
+        if (boton == null) {
+            return;
         }
 
-        boton.setStyle(
-                "-fx-background-color: #ffffff;" +
-                        "-fx-text-fill: " + colorTexto + ";" +
-                        "-fx-font-size: 13px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 14;" +
-                        "-fx-border-color: " + colorBorde + ";" +
-                        "-fx-border-radius: 14;" +
-                        "-fx-border-width: 1.2;"
+        boton.getStyleClass().removeAll(
+                "boton-actividad-acceso",
+                "boton-actividad-alerta",
+                "boton-actividad-mensaje",
+                "boton-actividad-solicitud"
         );
+
+        if (!boton.getStyleClass().contains("boton-actividad")) {
+            boton.getStyleClass().add("boton-actividad");
+        }
+
+        String tipoNormalizado = tipo == null ? "" : tipo.toUpperCase();
+
+        String claseTipo = switch (tipoNormalizado) {
+            case "ALERTA" -> "boton-actividad-alerta";
+            case "MENSAJE" -> "boton-actividad-mensaje";
+            case "SOLICITUD" -> "boton-actividad-solicitud";
+            default -> "boton-actividad-acceso";
+        };
+
+        boton.getStyleClass().add(claseTipo);
+    }
+
+    private String valorSeguro(String valor, String valorPorDefecto) {
+        if (valor == null || valor.isBlank()) {
+            return valorPorDefecto;
+        }
+
+        return valor;
     }
 }
