@@ -1,12 +1,5 @@
 package org.example.ax0006.service;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.example.ax0006.db.H2;
 import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.repository.UsuarioRepository;
@@ -15,6 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.sql.Connection;
+import java.sql.Statement;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("AuthenticationService")
 class AuthenticationServiceTest {
@@ -27,6 +25,20 @@ class AuthenticationServiceTest {
     void prepararEscenario() {
         // Se crea una base de datos nueva para que cada prueba empiece aislada.
         h2 = new H2();
+
+        try (Connection conn = h2.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Desactiva la integridad referencial momentáneamente y borra todo
+            // Se desactiva la integridad referencial para que sea posible borrar la base de datos con facilidad ya que con esto no se podria
+            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
+            stmt.execute("DROP ALL OBJECTS");
+            stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Falló la limpieza de la base de datos antes de la prueba");
+        }
 
         // Se inicializan las tablas necesarias antes de usar el repositorio.
         h2.inicializarDB();
