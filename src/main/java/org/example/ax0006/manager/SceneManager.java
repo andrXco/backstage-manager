@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.controller.*;
 import java.io.IOException;
-import java.net.URL;
 
 public class SceneManager {
 
@@ -19,7 +18,7 @@ public class SceneManager {
     }
 
     public void showLogin() throws IOException {
-        LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion());
+        LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion(), context.getStaffService(), context.getConciertoService());
         loadScene("/org/example/ax0006/login.fxml", loginController);
     }
 
@@ -28,34 +27,54 @@ public class SceneManager {
         loadScene("/org/example/ax0006/signup.fxml", signUpControl);
     }
 
+    /*METOOD PARA MOSTRAR EL MENU*/
     public void showMenu() throws IOException {
         MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService());
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
     }
 
+    //metodo para mostrar pantalla de administracion de usuarios.
     public void showAdminUsuarios() throws IOException {
-        AdminUsuariosController controller = new AdminUsuariosController(context.getSesion(), context.getRolService(), this, context.getConciertoService(), context.getStaffService());
+        AdminUsuariosController controller = new AdminUsuariosController(
+                context.getSesion(),
+                context.getRolService(),
+                this,
+                context.getConciertoService(),
+                context.getStaffService()
+        );
         loadScene("/org/example/ax0006/adminUsuarios.fxml", controller);
     }
 
+    //Metodo para mostrar pantalla de perfil del usuario
     public void showProfile() throws IOException {
-        ProfileController profileController = new ProfileController(this, context.getSesion(), context.getProfileService());
+        ProfileController profileController = new ProfileController(
+                this,
+                context.getSesion(),
+                context.getProfileService()
+        );
         loadScene("/org/example/ax0006/profile.fxml", profileController);
     }
 
     public void showEditProfile() throws IOException {
-        EditProfileController editProfileController = new EditProfileController(this, context.getSesion(), context.getProfileService());
+        EditProfileController editProfileController = new EditProfileController(
+                this,
+                context.getSesion(),
+                context.getProfileService()
+        );
         loadScene("/org/example/ax0006/editprofile.fxml", editProfileController);
     }
 
+    /*metodo para mostra la pantalla de mostrar los conciertos no programados*/
     public void showChangePassword() throws IOException {
-        ChangePasswordController changePasswordController = new ChangePasswordController(this, context.getSesion(), context.getProfileService());
+        ChangePasswordController changePasswordController = new ChangePasswordController(
+                this,
+                context.getSesion(),
+                context.getProfileService()
+        );
         loadScene("/org/example/ax0006/changepassword.fxml", changePasswordController);
     }
 
     public void showConsultarSolicitudes() throws IOException {
-        ConsultarSolicitudesController controller = new ConsultarSolicitudesController(context.getSesion(), context.getConciertoService(), this);
-        loadScene("/org/example/ax0006/consultarsolicitudes.fxml", controller);
     }
 
     public void showCrearConcierto() throws IOException {
@@ -73,13 +92,21 @@ public class SceneManager {
         loadScene("/org/example/ax0006/verconciertosprogramados.fxml", controller);
     }
 
+    //Crear Contrato
     public void showCrearContrato() throws IOException {
-        CrearContratoController controller = new CrearContratoController(this, context.getContratoService(), context.getSesion());
+        CrearContratoController controller = new CrearContratoController(
+                this,
+                context.getContratoService(),
+                context.getSesion()
+        );
         loadScene("/org/example/ax0006/crearcontrato.fxml", controller);
     }
 
+    //Consultar Contrato
     public void showConsultarContrato() throws IOException {
-        ConsultarContratoController controller = new ConsultarContratoController(this, context.getContratoService());
+        ConsultarContratoController controller =
+                new ConsultarContratoController(this, context.getContratoService());
+
         loadScene("/org/example/ax0006/consultarcontrato.fxml", controller);
     }
 
@@ -91,6 +118,14 @@ public class SceneManager {
     public void showVerContrato() throws IOException {
         VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
         loadScene("/org/example/ax0006/vercontrato.fxml", controller);
+    }
+
+    public void setContratoTemporal(Integer id) {
+        this.contratoTemporal = id;
+    }
+
+    public Integer getContratoTemporal() {
+        return contratoTemporal;
     }
 
     /* --- MÉTODOS DE INVENTARIO --- */
@@ -144,18 +179,13 @@ public class SceneManager {
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
 
-    public void setContratoTemporal(Integer id) { this.contratoTemporal = id; }
-    public Integer getContratoTemporal() { return contratoTemporal; }
-
+    /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {
-        URL resource = getClass().getResource(fxml);
 
-        if (resource == null) {
-            System.err.println("[FATAL ERROR] No se encontró el FXML: " + fxml);
-            throw new IOException("Location is not set: El archivo FXML no existe en la ruta: " + fxml);
-        }
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(fxml)
+        );
 
-        FXMLLoader loader = new FXMLLoader(resource);
         loader.setController(controller);
 
         Scene scene = new Scene(loader.load());

@@ -10,11 +10,12 @@ import java.io.IOException;
 
 public class MenuConciertoController {
 
+
     @FXML
     private Button fid_bt_CrearConcierto;
 
     @FXML
-    private Button fid_bt_fid_bt_ConsultarSolicitudes;
+    private Button fid_bt_ConsultarSolicitudes;
 
     @FXML
     private Button fid_bt_ConsultarProgramados;
@@ -80,6 +81,38 @@ public class MenuConciertoController {
             e.printStackTrace();
         }
     }
+
+
+
+   //control de vistas:
+    @FXML
+    public void initialize() {
+        int idRol = sesion.getUsuarioActual().getIdRol();
+
+        fid_bt_CrearConcierto.setVisible(idRol == 3);
+        fid_bt_CrearConcierto.setManaged(idRol == 3);
+
+        fid_bt_ConsultarSolicitudes.setVisible(idRol == 1);
+        fid_bt_ConsultarSolicitudes.setManaged(idRol == 1);
+
+        fid_bt_ConsultarProgramados.setVisible(idRol == 1);
+        fid_bt_ConsultarProgramados.setManaged(idRol == 1);
+
+        if (idRol == 0) {
+            fid_bt_CrearConcierto.setVisible(false);
+            fid_bt_CrearConcierto.setManaged(false);
+            fid_bt_ConsultarSolicitudes.setVisible(false);
+            fid_bt_ConsultarSolicitudes.setManaged(false);
+            fid_bt_ConsultarProgramados.setVisible(false);
+            fid_bt_ConsultarProgramados.setManaged(false);
+        }
+
+
+    }
+
+
+
+
 
     /* CREAR CONTRATO */
     @FXML

@@ -1,16 +1,21 @@
 package org.example.ax0006.service;
 
 import org.example.ax0006.entity.Usuario;
+import org.example.ax0006.repository.AsignacionStaffRepository;
 import org.example.ax0006.repository.UsuarioRepository;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AutenticacionService {
 
-    /*ATRIBUTO*/
+    /*ATRIBUTOS*/
     private UsuarioRepository usuarioRepo;
+    private AsignacionStaffRepository asignacionStaffRepo;
 
-    /*CONSTRUCTOR*/
-    public AutenticacionService(UsuarioRepository usuarioRepo) {
+
+    /*CONSTRUCTORES*/
+    public AutenticacionService(UsuarioRepository usuarioRepo, AsignacionStaffRepository asignacionStaffRepo ) {
         this.usuarioRepo = usuarioRepo;
+        this.asignacionStaffRepo = asignacionStaffRepo;
     }
 
     /*METODO PARA SIGN UP, OSEA PARA CREAR EL USUARIOM ADEMAS ESTE CUANDO TIENE EXITO AÑADE EL USUARIO A LA BASE DE DATOS
@@ -20,12 +25,13 @@ public class AutenticacionService {
         if (usuarioRepo.buscarPorNombre(nombre) != null) {
             return false;
         }
+        boolean esPrimero = usuarioRepo.obtenerUsuarios().isEmpty();
 
         Usuario nuevo = new Usuario();
         nuevo.setNombre(nombre);
         nuevo.setContrasena(contrasena);
         nuevo.setGmail(gmail);
-
+        nuevo.setIdRol(esPrimero ? 1 : 0);
 
 
         usuarioRepo.guardar(nuevo);
@@ -36,12 +42,14 @@ public class AutenticacionService {
     /*METODO PARA EL LOGIN, ESTE SE UTILIZA PARA QUE EN CASO DE QUE EL USUARIO Y CONTRASEÑA SEAN VALIDOS, RETORNE EL USUARIO SINO RETORNARA NULL*/
     public Usuario login(String nombre, String contrasena) {
 
-        Usuario u = usuarioRepo.buscarPorNombre(nombre);
+    Usuario u = usuarioRepo.buscarPorNombre(nombre);
 
-        if (u == null) return null;
+    if (u == null) return null;
 
-        if (!u.getContrasena().equals(contrasena)) return null;
+    String passwordLimpia = contrasena.trim();
 
-        return u;
+    if (!BCrypt.checkpw(passwordLimpia, u.getContrasena())) return null;
+
+    return u;
     }
 }

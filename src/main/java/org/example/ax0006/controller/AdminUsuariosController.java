@@ -41,6 +41,7 @@ public class AdminUsuariosController {
     }
 
 
+
     //elementos de la pantalla de administracion de usuarios:
     @FXML
     private Label fid_Bienvenido;
@@ -57,9 +58,8 @@ public class AdminUsuariosController {
     @FXML
     private TableColumn<Usuario, String> colGmail;
 
-
-
-
+    @FXML
+    private TableColumn<Usuario, String> colRolGlobal;
 
     @FXML
     private TableColumn<Usuario, String> colNombreRol;
@@ -94,6 +94,18 @@ public class AdminUsuariosController {
         comboConciertoFiltro.setOnAction(e -> actualizarTabla());
 
         cargarUsuariosSinAsignar();
+
+        colRolGlobal.setCellValueFactory(cellData -> {
+            int idRol = cellData.getValue().getIdRol();
+            String nombreRol = switch (idRol) {
+                case 1 -> "Administrador";
+                case 2 -> "Tecnico";
+                case 3 -> "Manager";
+                case 4 -> "Staff";
+                default -> "Sin rol";
+            };
+            return new SimpleStringProperty(nombreRol);
+        });
 
     }
 
@@ -148,13 +160,19 @@ public class AdminUsuariosController {
         List<Integer> asignados = staffService.obtenerIdsUsuariosAsignados();
         List<Usuario> sinAsignar = todos.stream()
                 .filter(u -> !asignados.contains(u.getIdUsuario()))
+                .filter(u -> u.getIdUsuario() != sesion.getUsuarioActual().getIdUsuario())
+                .filter(u -> u.getIdRol() != 1)
                 .toList();
         tablaUsuarios.setItems(FXCollections.observableArrayList(sinAsignar));
     }
 
     // Usuarios asignados a un concierto específico
     private void cargarUsuariosPorConcierto(Concierto concierto) {
-        List<Usuario> usuarios = staffService.obtenerUsuariosPorConcierto(concierto.getIdConcierto());
+        List<Usuario> usuarios = staffService.obtenerUsuariosPorConcierto(concierto.getIdConcierto())
+                .stream()
+                .filter(u -> u.getIdUsuario() != sesion.getUsuarioActual().getIdUsuario())
+                .filter(u -> u.getIdRol() != 1)
+                .toList();
         tablaUsuarios.setItems(FXCollections.observableArrayList(usuarios));
     }
 
@@ -186,7 +204,9 @@ public class AdminUsuariosController {
                     btn.setDisable(false);//pequeño cambio para que el boton estuviera disponible siempre para asignar mas roles asi ya tenga
                     setGraphic(btn);
                 }
+
             }
+
         });
     }
 
@@ -201,16 +221,30 @@ public class AdminUsuariosController {
         comboRoles.getItems().addAll(roles);
         comboRoles.setPromptText("Seleccionar rol");
 
-        VBox content = new VBox(10);
-        content.getChildren().addAll(new Label("Rol:"), comboRoles);
-
-
         Object seleccionado = comboConciertoFiltro.getValue();
         boolean tieneConcierto = seleccionado instanceof Concierto;
 
+        CheckBox chkRolGlobal = new CheckBox("Asignar como rol global");
+        Label labelConcierto = new Label("Concierto:");
         ComboBox<Concierto> comboConciertos = new ComboBox<>();
 
-        if (!tieneConcierto) {
+        VBox content = new VBox(10);
+        content.getChildren().addAll(new Label("Rol:"), comboRoles);
+
+        if (tieneConcierto) {
+            content.getChildren().add(chkRolGlobal);
+
+            // Deshabilitar checkbox si el rol no puede ser global
+            comboRoles.setOnAction(e -> {
+                Rol rolElegido = comboRoles.getValue();
+                if (rolElegido != null) {
+                    boolean puedeSerGlobal = rolElegido.getIdRol() == 1 || rolElegido.getIdRol() == 3;
+                    chkRolGlobal.setDisable(!puedeSerGlobal);
+                    if (!puedeSerGlobal) chkRolGlobal.setSelected(false);
+                }
+            });
+
+        } else {
             List<Concierto> conciertos = conciertoService.obtenerConciertosSolos();
             comboConciertos.getItems().addAll(conciertos);
             comboConciertos.setPromptText("Seleccionar concierto");
@@ -232,7 +266,31 @@ public class AdminUsuariosController {
                 }
             });
 
-            content.getChildren().addAll(new Label("Concierto:"), comboConciertos);
+            content.getChildren().addAll(chkRolGlobal, labelConcierto, comboConciertos);
+
+            // Deshabilitar checkbox si el rol no puede ser global
+            comboRoles.setOnAction(e -> {
+                Rol rolElegido = comboRoles.getValue();
+                if (rolElegido != null) {
+                    boolean puedeSerGlobal = rolElegido.getIdRol() == 1 || rolElegido.getIdRol() == 3;
+                    chkRolGlobal.setDisable(!puedeSerGlobal);
+                    if (!puedeSerGlobal) {
+                        chkRolGlobal.setSelected(false);
+                        labelConcierto.setVisible(true);
+                        labelConcierto.setManaged(true);
+                        comboConciertos.setVisible(true);
+                        comboConciertos.setManaged(true);
+                    }
+                }
+            });
+
+            chkRolGlobal.setOnAction(e -> {
+                boolean global = chkRolGlobal.isSelected();
+                labelConcierto.setVisible(!global);
+                labelConcierto.setManaged(!global);
+                comboConciertos.setVisible(!global);
+                comboConciertos.setManaged(!global);
+            });
         }
 
         dialog.getDialogPane().setContent(content);
@@ -254,15 +312,19 @@ public class AdminUsuariosController {
             }
 
             if (tieneConcierto) {
-                // Usar el concierto del filtro directamente
-                Concierto conciertoFiltro = (Concierto) seleccionado;
-                staffService.asignarStaffAConcierto(
-                        u.getIdUsuario(),
-                        conciertoFiltro.getIdConcierto(),
-                        rolSeleccionado.getIdRol()
-                );
+                if (chkRolGlobal.isSelected()) {
+                    rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
+                } else {
+                    Concierto conciertoFiltro = (Concierto) seleccionado;
+                    staffService.asignarStaffAConcierto(
+                            u.getIdUsuario(),
+                            conciertoFiltro.getIdConcierto(),
+                            rolSeleccionado.getIdRol()
+                    );
+                }
+            } else if (chkRolGlobal.isSelected()) {
+                rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
             } else {
-
                 Concierto conciertoSeleccionado = comboConciertos.getValue();
                 if (conciertoSeleccionado == null) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);

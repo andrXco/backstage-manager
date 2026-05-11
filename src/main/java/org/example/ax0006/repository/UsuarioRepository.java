@@ -8,10 +8,10 @@
 
 package org.example.ax0006.repository;
 
+import org.example.ax0006.entity.Rol;
+import org.mindrot.jbcrypt.BCrypt;
 import org.example.ax0006.db.H2;
 import org.example.ax0006.entity.Usuario;
-
-
 
 import java.sql.*;
 
@@ -32,12 +32,14 @@ public class UsuarioRepository {
 
     //INSERTA USUARIOS A LA BASE SE DATOS CON AYUDA DEL INSERT INTO A USUARIO:
     public boolean guardar(Usuario u) {
-        String sql = "INSERT INTO Usuario (nombre, contrasena, gmail) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Usuario (nombre, contrasena, gmail, idRol) VALUES (?, ?, ?, ?)";
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+                String hash = BCrypt.hashpw(u.getContrasena(), BCrypt.gensalt());
             stmt.setString(1, u.getNombre());
-            stmt.setString(2, u.getContrasena());
+            stmt.setString(2, hash);
             stmt.setString(3, u.getGmail());
+            stmt.setInt(4, u.getIdRol());
             stmt.executeUpdate();
             System.out.println("Usuario guardado en BD: " + u.getNombre());
             return true;
@@ -50,7 +52,7 @@ public class UsuarioRepository {
     //SE HACE LA CONSULTA AL NOMBRE QUE SE RECIBE COMO PARAMETRO A LA BASE DE DATOS.
     public Usuario buscarPorNombre(String nombre) {
         String sql = """
-                SELECT u.idUsuario, u.nombre, u.contrasena, u.gmail,
+                SELECT u.idUsuario, u.nombre, u.contrasena, u.gmail, u.idRol,
                        u.telefono, u.direccion,
                        u.contactoEmergenciaNombre, u.contactoEmergenciaTelefono, u.contactoEmergenciaRelacion
                 FROM Usuario u
@@ -69,6 +71,7 @@ public class UsuarioRepository {
                 u.setNombre(rs.getString("nombre"));
                 u.setContrasena(rs.getString("contrasena"));
                 u.setGmail(rs.getString("gmail"));
+                u.setIdRol(rs.getInt("idRol"));
                 u.setTelefono(rs.getString("telefono"));
                 u.setDireccion(rs.getString("direccion"));
                 u.setContactoEmergenciaNombre(rs.getString("contactoEmergenciaNombre"));
@@ -96,6 +99,7 @@ public class UsuarioRepository {
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setGmail(rs.getString("gmail"));
+                u.setIdRol(rs.getInt("idRol"));
                 lista.add(u);
             }
         } catch (SQLException e) {
@@ -103,7 +107,6 @@ public class UsuarioRepository {
         }
         return lista;
     }
-
 
     public String obtenerRolesDelUsuario(int idUsuario) {
         String sql = """
@@ -134,13 +137,16 @@ public class UsuarioRepository {
             u.idUsuario,
             u.nombre,
             u.gmail,
+            u.idRol,
             u.contrasena,
             u.telefono,
             u.direccion,
             u.contactoEmergenciaNombre,
             u.contactoEmergenciaTelefono,
-            u.contactoEmergenciaRelacion
+            u.contactoEmergenciaRelacion,
+            r.rol AS nombreRol
         FROM Usuario u
+        LEFT JOIN Rol r ON u.idRol = r.idRol
         WHERE u.idUsuario = ?
     """;
 
@@ -155,12 +161,17 @@ public class UsuarioRepository {
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setGmail(rs.getString("gmail"));
+                u.setIdRol(rs.getInt("idRol"));
                 u.setContrasena(rs.getString("contrasena"));
                 u.setTelefono(rs.getString("telefono"));
                 u.setDireccion(rs.getString("direccion"));
                 u.setContactoEmergenciaNombre(rs.getString("contactoEmergenciaNombre"));
                 u.setContactoEmergenciaTelefono(rs.getString("contactoEmergenciaTelefono"));
                 u.setContactoEmergenciaRelacion(rs.getString("contactoEmergenciaRelacion"));
+                String nombreRol = rs.getString("nombreRol");
+                if (nombreRol != null) {
+                    u.setRol(new Rol(rs.getInt("idRol"), nombreRol));
+                }
                 return u;
             }
 
@@ -208,7 +219,9 @@ public class UsuarioRepository {
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, nuevaContrasena);
+            String hash = BCrypt.hashpw(nuevaContrasena, BCrypt.gensalt());
+
+            stmt.setString(1, hash);
             stmt.setInt(2, idUsuario);
 
             return stmt.executeUpdate() > 0;
@@ -217,5 +230,22 @@ public class UsuarioRepository {
             return false;
         }
     }
+
+
+    public void actualizarRolGlobal(int idUsuario, int idRol) {
+        String sql = "UPDATE Usuario SET idRol = ? WHERE idUsuario = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idRol);
+            stmt.setInt(2, idUsuario);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
 

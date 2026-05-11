@@ -9,6 +9,7 @@ public class SesionManager {
     private Concierto conciertoTemporal;
     private Integer idContratoTemporal;
     private String pantallaOrigen;
+    private Concierto conciertoActual;
 
     public Usuario getUsuarioActual() { return usuarioActual; }
     public Usuario getUsuarioLogueado() { return usuarioActual; }
@@ -21,12 +22,37 @@ public class SesionManager {
         this.pantallaOrigen = null;
     }
 
-    public void setConciertoTemporal(Concierto conciertoTemporal) { this.conciertoTemporal = conciertoTemporal; }
-    public Concierto getConciertoTemporal() { return conciertoTemporal; }
 
-    public void setIdContratoTemporal(Integer idContratoTemporal) { this.idContratoTemporal = idContratoTemporal; }
-    public Integer getIdContratoTemporal() { return idContratoTemporal; }
+   public void setConciertoTemporal(Concierto conciertoTemporal) {
+    this.conciertoTemporal = conciertoTemporal;
+}
 
-    public void setPantallaOrigen(String pantallaOrigen) { this.pantallaOrigen = pantallaOrigen; }
-    public String getPantallaOrigen() { return pantallaOrigen; }
+    public Concierto getConciertoTemporal() {
+        return conciertoTemporal;
+    }
+
+    public void setIdContratoTemporal(Integer idContratoTemporal) {
+        this.idContratoTemporal = idContratoTemporal;
+    }
+
+    public Integer getIdContratoTemporal() {
+        return idContratoTemporal;
+    }
+
+
+    public void setPantallaOrigen(String pantallaOrigen) {
+        this.pantallaOrigen = pantallaOrigen;
+    }
+
+    public String getPantallaOrigen() {
+        return pantallaOrigen;
+    }
+
+    public Concierto getConciertoActual() {
+        return conciertoActual;
+    }
+
+    public void setConciertoActual(Concierto conciertoActual) {
+        this.conciertoActual = conciertoActual;
+    }
 }

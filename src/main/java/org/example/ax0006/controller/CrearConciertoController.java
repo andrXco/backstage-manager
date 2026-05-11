@@ -23,6 +23,9 @@ public class CrearConciertoController {
         this.sceneManager = sceneManager;
     }
 
+    // =========================
+    // FXML
+    // =========================
     @FXML private TextField fid_nombreConcierto;
     @FXML private DatePicker fid_fecha_Inc;
     @FXML private DatePicker fid_fecha_Fin;
@@ -31,6 +34,9 @@ public class CrearConciertoController {
     @FXML private TextField fid_aforo;
     @FXML private Button fid_bt_agregarContrato;
 
+    // =========================
+    // INIT
+    // =========================
     @FXML
     public void initialize() {
         Integer idContrato = sesion.getIdContratoTemporal();
@@ -65,7 +71,29 @@ public class CrearConciertoController {
 
         try {
             String nombreConcierto = fid_nombreConcierto.getText();
+
+            if (nombreConcierto == null || nombreConcierto.isEmpty()) {
+                alertaConcierto("Debe ingresar el nombre del concierto");
+                return;
+            }
+
+            if (fid_aforo.getText().isEmpty()) {
+                alertaConcierto("Debe ingresar el aforo");
+                return;
+            }
+
             int aforo = Integer.parseInt(fid_aforo.getText());
+
+            if (fid_fecha_Inc.getValue() == null || fid_fecha_Fin.getValue() == null) {
+                alertaConcierto("Debe seleccionar las fechas");
+                return;
+            }
+
+            if (fid_horaInicio.getText().isEmpty() || fid_horaFin.getText().isEmpty()) {
+                alertaConcierto("Debe ingresar las horas");
+                return;
+            }
+
             LocalTime horaInicio = LocalTime.parse(verifcarHora(fid_horaInicio.getText()));
             LocalTime horaFin = LocalTime.parse(verifcarHora(fid_horaFin.getText()));
 
@@ -95,6 +123,13 @@ public class CrearConciertoController {
 
     @FXML
     public void On_agregarContrato() {
+
+        if (sesion.getIdContratoTemporal() != null) {
+            alertaConcierto("Ya existe un contrato asociado a este concierto");
+            return;
+        }
+
+        // INDICAR QUE SE VIENE DE CREAR CONCIERTO
         sesion.setPantallaOrigen("crearContrato");
         Concierto temp = new Concierto();
         temp.setNombreConcierto(fid_nombreConcierto.getText());
@@ -134,6 +169,6 @@ public class CrearConciertoController {
     }
 
     String verifcarHora(String hora){
-        return (hora != null && hora.length() == 4) ? "0" + hora : hora;
-    }
+            return (hora != null && hora.length() == 4) ? "0" + hora : hora;
+        }
 }

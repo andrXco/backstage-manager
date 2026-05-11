@@ -12,6 +12,7 @@ public class Usuario {
     private String contactoEmergenciaNombre;
     private String contactoEmergenciaTelefono;
     private String contactoEmergenciaRelacion;
+    private int idRol;
 
     private Rol rol; // Traemos Rol para poder asignarlo a ala hora de traerlo al perfil mostrando el nombre y no el numero
 
@@ -109,4 +110,14 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
 }
+

@@ -73,7 +73,7 @@ public class AsignacionStaffRepository {
     public List<Usuario> obtenerUsuariosPorConcierto(int idConcierto) {
         List<Usuario> lista = new ArrayList<>();
         String sql = """
-        SELECT DISTINCT u.idUsuario, u.nombre, u.gmail
+        SELECT DISTINCT u.idUsuario, u.nombre, u.gmail, u.idRol
         FROM RolConciertoUsuario rcu
         JOIN Usuario u ON rcu.idUsuario = u.idUsuario
         WHERE rcu.idConcierto = ?
@@ -87,6 +87,7 @@ public class AsignacionStaffRepository {
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setGmail(rs.getString("gmail"));
+                u.setIdRol(rs.getInt("idRol"));
                 lista.add(u);
             }
         } catch (SQLException e) {
@@ -117,4 +118,29 @@ public class AsignacionStaffRepository {
         }
         return roles.isEmpty() ? "Sin rol" : String.join(", ", roles);
     }
+
+
+
+    //Metodo para obtener el concierto del usuario
+    public int obtenerIdConciertoDelUsuario(int idUsuario) {
+        String sql = """
+        SELECT idConcierto FROM RolConciertoUsuario
+        WHERE idUsuario = ? AND idConcierto IS NOT NULL
+        LIMIT 1
+    """;
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt("idConcierto");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+
+
+
 }

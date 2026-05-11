@@ -1,7 +1,15 @@
 package org.example.ax0006.manager;
 
-import org.example.ax0006.repository.*;
+import org.example.ax0006.repository.ConciertoRepository;
+import org.example.ax0006.repository.ContratoRepository;
+import org.example.ax0006.repository.HorarioRepository;
+import org.example.ax0006.repository.RolRepository;
+import org.example.ax0006.repository.UsuarioRepository;
 import org.example.ax0006.service.*;
+import org.example.ax0006.service.AutenticacionService;
+import org.example.ax0006.service.ConciertoService;
+import org.example.ax0006.service.ProfileService;
+import org.example.ax0006.service.RolService;
 import org.example.ax0006.db.H2;
 
 public class ContextManager {
