@@ -98,4 +98,14 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void On_LiquidacionHoras(ActionEvent event) {
+        try {
+            sceneManager.showNomina();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

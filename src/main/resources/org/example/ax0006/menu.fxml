@@ -7,7 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0"
+            prefWidth="1200.0"
+            style="-fx-background-color: #f4f6f8;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
+
 
     <children>
 
@@ -60,7 +65,21 @@
                         <!-- COLUMNA 2 -->
                         <VBox prefHeight="450.0" prefWidth="280.0" spacing="22.0">
                             <children>
-                                <Button fx:id="fid_bt_entradas" mnemonicParsing="false" prefHeight="120.0" prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-text-fill: #1f2937; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="N" />
+                                <Button fx:id="fid_bt_liquidacion"
+                                        mnemonicParsing="false"
+                                        onAction="#On_LiquidacionHoras"
+                                        prefHeight="120.0"
+                                        prefWidth="280.0"
+                                        style="-fx-background-color: #fef3c7;
+                                           -fx-text-fill: #92400e;
+                                           -fx-font-size: 17px;
+                                           -fx-font-weight: bold;
+                                           -fx-background-radius: 18;
+                                           -fx-border-color: #fcd34d;
+                                           -fx-border-radius: 18;
+                                           -fx-border-width: 1.2;
+                                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);"
+                                                                    text="Liquidación&#10;Horas" />
                                 <Button fx:id="fid_bt_clientes" mnemonicParsing="false" prefHeight="120.0" prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-text-fill: #1f2937; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="N" />
                                 <Button fx:id="fid_bt_reportes" mnemonicParsing="false" prefHeight="120.0" prefWidth="280.0" style="-fx-background-color: #91c3ff; -fx-text-fill: #0b418d; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="Reportes" />
                             </children>

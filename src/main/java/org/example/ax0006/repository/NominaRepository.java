@@ -1,6 +1,6 @@
-package org.example.ax0006.Repository;
+package org.example.ax0006.repository;
 
-import org.example.ax0006.Entity.Nomina;
+import org.example.ax0006.entity.Nomina;
 import org.example.ax0006.db.H2;
 
 import java.sql.*;

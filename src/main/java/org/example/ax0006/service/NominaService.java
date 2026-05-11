@@ -1,7 +1,7 @@
-package org.example.ax0006.Service;
+package org.example.ax0006.service;
 
-import org.example.ax0006.Entity.*;
-import org.example.ax0006.Repository.*;
+import org.example.ax0006.entity.*;
+import org.example.ax0006.repository.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

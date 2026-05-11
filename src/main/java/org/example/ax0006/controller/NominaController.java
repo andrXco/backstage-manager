@@ -1,4 +1,4 @@
-package org.example.ax0006.Controller;
+package org.example.ax0006.controller;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,14 +7,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import org.example.ax0006.Entity.Concierto;
-import org.example.ax0006.Entity.Nomina;
-import org.example.ax0006.Entity.Usuario;
-import org.example.ax0006.Manager.SceneManager;
-import org.example.ax0006.Manager.SesionManager;
-import org.example.ax0006.Service.ConciertoService;
-import org.example.ax0006.Service.NominaService;
-import org.example.ax0006.Service.StaffService;
+
+import javafx.util.converter.DoubleStringConverter;
+
+import org.example.ax0006.entity.Concierto;
+import org.example.ax0006.entity.Nomina;
+import org.example.ax0006.entity.Usuario;
+
+import org.example.ax0006.manager.SceneManager;
+import org.example.ax0006.manager.SesionManager;
+
+import org.example.ax0006.service.ConciertoService;
+import org.example.ax0006.service.NominaService;
+import org.example.ax0006.service.StaffService;
 
 import java.io.IOException;
 import java.util.List;
@@ -118,4 +123,3 @@ public class NominaController {
         cargarNominas(seleccionado.getIdConcierto());
     }
 }
-

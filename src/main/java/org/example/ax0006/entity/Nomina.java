@@ -1,4 +1,4 @@
-package org.example.ax0006.Entity;
+package org.example.ax0006.entity;
 
 public class Nomina {
     private int idNomina;
