@@ -10,6 +10,7 @@ public class SesionManager {
     /*ATRIBUTO*/
     private Usuario usuarioActual;
     private Concierto conciertoTemporal;
+    private Concierto conciertoActual;
 
     /*METODO PARA OBTENER EL USUARIO ACTUALMENTE LOGEADO EN EL PROGRAMA, SI NADIE SE HA LOGEADO PUES ESTE ESTA EN NULL*/
     public Usuario getUsuarioActual() {
@@ -54,4 +55,11 @@ public class SesionManager {
         return pantallaOrigen;
     }
 
+    public Concierto getConciertoActual() {
+        return conciertoActual;
+    }
+
+    public void setConciertoActual(Concierto conciertoActual) {
+        this.conciertoActual = conciertoActual;
+    }
 }

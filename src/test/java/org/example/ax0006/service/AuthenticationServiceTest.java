@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.example.ax0006.db.H2;
 import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.repository.UsuarioRepository;
+import org.example.ax0006.repository.AsignacionStaffRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +22,7 @@ class AuthenticationServiceTest {
     private H2 h2;
     private UsuarioRepository usuarioRepository;
     private AutenticacionService autenticacionService;
-
+    private AsignacionStaffRepository asignacionStaffRepo;
     @BeforeEach
     void prepararEscenario() {
         // Se crea una base de datos nueva para que cada prueba empiece aislada.
@@ -34,7 +35,8 @@ class AuthenticationServiceTest {
         usuarioRepository = new UsuarioRepository(h2);
 
         // Se crea el servicio real que será probado.
-        autenticacionService = new AutenticacionService(usuarioRepository);
+
+        autenticacionService = new AutenticacionService(usuarioRepository, asignacionStaffRepo);
     }
 
     @Nested

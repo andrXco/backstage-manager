@@ -72,4 +72,9 @@ public class StaffService {
     public String obtenerNombreRolEnConcierto(int idUsuario, int idConcierto) {
         return asignacionStaffRepository.obtenerNombreRolEnConcierto(idUsuario, idConcierto);
     }
+
+
+    public int obtenerIdConciertoDelUsuario(int idUsuario) {
+        return asignacionStaffRepository.obtenerIdConciertoDelUsuario(idUsuario);
+    }
 }

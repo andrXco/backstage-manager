@@ -11,11 +11,13 @@ CREATE TABLE IF NOT EXISTS Usuario (
     nombre VARCHAR(255) NOT NULL,
     gmail VARCHAR(255),
     contrasena VARCHAR(255),
+    idRol INT DEFAULT 0,
     telefono VARCHAR(10),
     direccion VARCHAR(255),
     contactoEmergenciaNombre VARCHAR(255),
     contactoEmergenciaTelefono VARCHAR(20),
-    contactoEmergenciaRelacion VARCHAR(100)
+    contactoEmergenciaRelacion VARCHAR(100),
+    FOREIGN KEY (idRol) REFERENCES Rol(idRol)
     );
 
 CREATE TABLE IF NOT EXISTS Contrato (
@@ -96,4 +98,4 @@ CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
 
 -- Insertar roles por defecto
 MERGE INTO Rol (idRol, rol) KEY(idRol)
-    VALUES (1, 'Administrador'), (2, 'Tecnico'), (3, 'Artista'), (4, 'Staff');
+    VALUES (0, 'Sin rol'),(1, 'Administrador'), (2, 'Tecnico'), (3, 'Manager'), (4, 'Staff');

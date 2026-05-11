@@ -31,6 +31,7 @@
                 <columns>
                     <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
                     <TableColumn fx:id="colGmail" text="Correo" prefWidth="300"/>
+                    <TableColumn fx:id="colRolGlobal" text="Rol Global" prefWidth="150"/>
                     <TableColumn fx:id="colNombreRol" text="Rol en concierto" prefWidth="200"/>
                     <TableColumn fx:id="colAccion" text="Asignar" prefWidth="200"/>
                 </columns>

@@ -59,6 +59,9 @@ public class ContextManager {
         this.contratoRepo = contratoRepo;
     }
 
+
+
+
     public H2 getH2() { return h2; }
     public UsuarioRepository getUsuarioRepository() { return usuarioRepository; }
     public RolRepository getRolRepository() { return rolRepository; }
