@@ -42,9 +42,9 @@
                                             </children>
                                         </AnchorPane>
 
-                                        <Button fx:id="fid_bt_perfil" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Perfil" />
+                                        <Button fx:id="fid_bt_perfil" mnemonicParsing="false" onAction="#On_Perfil" prefHeight="36.0" prefWidth="110.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Perfil" />
 
-                                        <Button fx:id="fid_bt_volver" mnemonicParsing="false" prefHeight="36.0" prefWidth="140.0" style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-font-weight: bold; -fx-background-radius: 10;" text="Cerrar sesión" />
+                                        <Button fx:id="fid_bt_volver" mnemonicParsing="false" onAction="#On_btvolver" prefHeight="36.0" prefWidth="140.0" style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-font-weight: bold; -fx-background-radius: 10;" text="Cerrar sesión" />
 
                                     </children>
                                 </HBox>
