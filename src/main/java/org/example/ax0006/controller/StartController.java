@@ -41,11 +41,11 @@ public class StartController extends Application {
         ActividadRepository actividadRepo = new ActividadRepository(h2);
 
         // SERVICIOS
-        AutenticacionService autenService = new AutenticacionService(usuarioRepo);
+        AutenticacionService autenService = new AutenticacionService(usuarioRepo,asignacionStaffRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);
-        ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService);
+        ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
         StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
         ActividadService actividadService = new ActividadService(actividadRepo, usuarioRepo);
 

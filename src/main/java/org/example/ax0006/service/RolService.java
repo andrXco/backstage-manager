@@ -27,6 +27,7 @@ public class RolService {
         return rolRepo.obtenerRoles()
                 .stream()
                 .filter(r -> r.getIdRol() != 1)
+                .filter(r -> r.getIdRol() != 0)//pendiente
                 .collect(Collectors.toList());
     }
 
@@ -39,4 +40,10 @@ public class RolService {
     public String obtenerNombreRol(int idRol) {
         return rolRepo.obtenerNombreRol(idRol);
     }
+
+
+    public void actualizarRolGlobal(int idUsuario, int idRol) {
+        usuarioRepo.actualizarRolGlobal(idUsuario, idRol);
+    }
+
 }

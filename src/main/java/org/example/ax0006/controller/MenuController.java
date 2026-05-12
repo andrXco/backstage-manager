@@ -23,7 +23,12 @@ public class MenuController {
     public MenuController() {
     }
 
-    public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService, ActividadService actividadService) {
+    public MenuController(
+            SceneManager sceneManager,
+            SesionManager sesion,
+            ConciertoService conciertoService,
+            ActividadService actividadService
+    ) {
         this.sceneManager = sceneManager;
         this.sesion = sesion;
         this.conciertoService = conciertoService;
@@ -40,20 +45,39 @@ public class MenuController {
     private Button fid_Menu_Conciertos;
 
     @FXML
+    private Button fid_bt_admin;
+
+    @FXML
+    private Label fid_lbl_concierto;
+
+    @FXML
     private Label fid_lbl_contador_bandeja;
 
     @FXML
     public void initialize() {
-        if (sesion != null && sesion.getUsuarioActual() != null && fid_Bienvenido != null) {
-            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
-        }
-
+        setNombreBienvenido();
         actualizarContadorBandeja();
+    }
+
+    public void setNombreBienvenido() {
+        if (sesion != null && sesion.getUsuarioActual() != null) {
+            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
+
+            boolean esAdmin = sesion.getUsuarioActual().getIdRol() == 1;
+            fid_bt_admin.setVisible(esAdmin);
+            fid_bt_admin.setManaged(esAdmin);
+
+            if (sesion.getConciertoActual() != null) {
+                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
+            } else {
+                fid_lbl_concierto.setText("");
+            }
+        }
     }
 
     @FXML
     void On_btvolver(ActionEvent event) throws IOException {
-        if (actividadService != null && sesion != null) {
+        if (actividadService != null && sesion != null && sesion.getUsuarioActual() != null) {
             actividadService.registrarLogout(sesion.getUsuarioActual());
         }
 
@@ -67,7 +91,10 @@ public class MenuController {
     }
 
     private void actualizarContadorBandeja() {
-        if (fid_lbl_contador_bandeja == null || actividadService == null || sesion == null || sesion.getUsuarioActual() == null) {
+        if (fid_lbl_contador_bandeja == null ||
+                actividadService == null ||
+                sesion == null ||
+                sesion.getUsuarioActual() == null) {
             return;
         }
 

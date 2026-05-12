@@ -24,7 +24,16 @@ public class SceneManager {
 
     /*METODO PARA MOSTRAR EL LOGIN*/
     public void showLogin() throws IOException {
-        LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion(), context.getActividadService());
+
+        LoginController loginController = new LoginController(
+                this,
+                context.getAutenService(),
+                context.getSesion(),
+                context.getActividadService(),
+                context.getStaffService(),
+                context.getConciertoService()
+        );
+
         loadScene("/org/example/ax0006/login.fxml", loginController);
     }
 

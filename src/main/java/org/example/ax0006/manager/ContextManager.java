@@ -57,6 +57,9 @@ public class ContextManager {
         this.actividadService = actividadService;
     }
 
+
+
+
     public H2 getH2() { return h2; }
     public UsuarioRepository getUsuarioRepository() { return usuarioRepository; }
     public RolRepository getRolRepository() { return rolRepository; }
