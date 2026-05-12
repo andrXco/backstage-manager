@@ -14,12 +14,12 @@ jobs:
       - name: Descargar el código
         uses: actions/checkout@v4
 
-      - name: ☕ Configurar JDK 25
+      - name: ☕ Configurar JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '25'
-          distribution: 'temurin'
-          cache: maven
+            java-version: '21'
+            distribution: 'temurin'
+            cache: maven
 
       - name: Compilar y ejecutar pruebas
         run: mvn -B clean verify
