@@ -2,9 +2,9 @@ name: Validacion FIS - Java CI
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "TEST-GENERALES" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "TEST-GENERALES" ]
 
 jobs:
   build:
