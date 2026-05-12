@@ -104,6 +104,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>module-info.class</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
