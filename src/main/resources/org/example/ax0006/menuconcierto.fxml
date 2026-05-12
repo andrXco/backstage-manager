@@ -21,7 +21,7 @@
 
                 <Separator prefWidth="350.0" />
 
-                <Button fx:id="fid_bt_crearInventario" onAction="#on_bt_crearInventario" prefHeight="60.0" prefWidth="350.0" style="-fx-background-color: #f97316; -fx-text-fill: white; -fx-font-weight: bold;" text="CREAR INVENTARIO PARA CONCIERTO" />
+                <Button fx:id="fid_bt_crearInventario" onAction="#on_bt_crearInventario" prefHeight="60.0" prefWidth="350.0" style="-fx-background-color: #f97316; -fx-text-fill: white; -fx-font-weight: bold;" text="Crear Inventario Para Concierto" />
 
                 <Button fx:id="fid_bt_volver" onAction="#On_btvolver" prefHeight="50.0" prefWidth="350.0" style="-fx-background-color: #ef4444; -fx-text-fill: white;" text="Volver al Menú Principal" />
             </children>
