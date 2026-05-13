@@ -110,6 +110,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includes>
+                        <include>org/example/ax0006/service/**</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
