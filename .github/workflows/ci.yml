@@ -10,15 +10,15 @@ jobs:
     permissions: write-all
 
     steps:
+      - name: Descargar software del repositorio
+        uses: actions/checkout@v4
+
       - name: Instalar Java
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-
-      - name: Descargar software del repositorio
-        uses: actions/checkout@v4
 
       - name: Dar permisos al wrapper de Maven
         run: chmod +x mvnw
