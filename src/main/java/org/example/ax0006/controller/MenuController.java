@@ -113,4 +113,9 @@ public class MenuController {
     void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
     }
+
+    @FXML
+    void On_Directorio_Staff(ActionEvent event) throws IOException {
+        sceneManager.showDirectorioStaff();
+    }
 }

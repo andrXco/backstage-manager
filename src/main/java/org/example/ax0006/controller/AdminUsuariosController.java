@@ -127,7 +127,7 @@ public class AdminUsuariosController {
                 super.updateItem(item, empty);
                 if (empty || item == null) setText(null);
                 else if (item instanceof Concierto c)
-                            setText(c.getNombreConcierto());
+                    setText(c.getNombreConcierto());
                 else setText(item.toString());
             }
         });
@@ -315,12 +315,27 @@ public class AdminUsuariosController {
                 if (chkRolGlobal.isSelected()) {
                     rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
                 } else {
+                    // Usar el concierto del filtro directamente
                     Concierto conciertoFiltro = (Concierto) seleccionado;
-                    staffService.asignarStaffAConcierto(
+
+                    // Se asigna el rol seleccionado sin borrar roles anteriores del mismo usuario
+                    // El subrol se envia como null porque se gestiona desde la pantalla DirectorioStaff
+                    boolean asignado = staffService.asignarStaffAConcierto(
                             u.getIdUsuario(),
                             conciertoFiltro.getIdConcierto(),
-                            rolSeleccionado.getIdRol()
+                            rolSeleccionado.getIdRol(),
+                            null
                     );
+
+                    if (!asignado) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Asignación duplicada");
+                        alert.setHeaderText("Este usuario ya tiene ese rol en este concierto");
+                        alert.showAndWait();
+                        return;
+                    }
+
+                    comboConciertoFiltro.setValue(conciertoFiltro);
                 }
             } else if (chkRolGlobal.isSelected()) {
                 rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
@@ -333,11 +348,25 @@ public class AdminUsuariosController {
                     alert.showAndWait();
                     return;
                 }
-                staffService.asignarStaffAConcierto(
+
+                // Se asigna el rol seleccionado sin borrar roles anteriores del mismo usuario
+                // El subrol se envia como null porque se gestiona desde la pantalla DirectorioStaff
+                boolean asignado = staffService.asignarStaffAConcierto(
                         u.getIdUsuario(),
                         conciertoSeleccionado.getIdConcierto(),
-                        rolSeleccionado.getIdRol()
+                        rolSeleccionado.getIdRol(),
+                        null
                 );
+
+                if (!asignado) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Asignación duplicada");
+                    alert.setHeaderText("Este usuario ya tiene ese rol en este concierto");
+                    alert.showAndWait();
+                    return;
+                }
+
+                comboConciertoFiltro.setValue(conciertoSeleccionado);
             }
             actualizarTabla();
         }
@@ -348,9 +377,3 @@ public class AdminUsuariosController {
         sceneManager.showMenu();
     }
 }
-
-
-
-
-
-
