@@ -52,6 +52,17 @@ public class SceneManager {
         loadScene("/org/example/ax0006/adminUsuarios.fxml", controller);
     }
 
+    //metodo para mostrar pantalla de directorio de staff.
+    public void showDirectorioStaff() throws IOException {
+        DirectorioStaffController controller = new DirectorioStaffController(
+                this,
+                context.getSesion(),
+                context.getConciertoService(),
+                context.getStaffService()
+        );
+        loadScene("/org/example/ax0006/directorioStaff.fxml", controller);
+    }
+
     //Metodo para mostrar pantalla de perfil del usuario
     public void showProfile() throws IOException {
         ProfileController profileController = new ProfileController(
@@ -89,8 +100,8 @@ public class SceneManager {
     public void showCrearConcierto() throws  IOException{
     //  SOLO limpiar si NO se viene de crear contrato
         if (!"crearContrato".equals(context.getSesion().getPantallaOrigen())) {
-        context.getSesion().setIdContratoTemporal(null);
-        context.getSesion().setConciertoTemporal(null);
+            context.getSesion().setIdContratoTemporal(null);
+            context.getSesion().setConciertoTemporal(null);
         }
     // esetear origen
     context.getSesion().setPantallaOrigen(null);
@@ -106,20 +117,20 @@ public class SceneManager {
 
     //Crear Contrato
     public void showCrearContrato() throws IOException {
-    CrearContratoController controller = new CrearContratoController(
-        this,
-        context.getContratoService(),
-        context.getSesion() 
-    );
-    loadScene("/org/example/ax0006/crearcontrato.fxml", controller);
+        CrearContratoController controller = new CrearContratoController(
+                this,
+                context.getContratoService(),
+                context.getSesion()
+        );
+        loadScene("/org/example/ax0006/crearcontrato.fxml", controller);
     }
 
     //Consultar Contrato
     public void showConsultarContrato() throws IOException {
-    ConsultarContratoController controller =
-        new ConsultarContratoController(this, context.getContratoService());
+        ConsultarContratoController controller =
+                new ConsultarContratoController(this, context.getContratoService());
 
-    loadScene("/org/example/ax0006/consultarcontrato.fxml", controller);
+        loadScene("/org/example/ax0006/consultarcontrato.fxml", controller);
     }
 
     public void showMenuConcierto() throws IOException{
@@ -128,8 +139,8 @@ public class SceneManager {
     }
 
     public void showVerContrato() throws IOException {
-    VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
-    loadScene("/org/example/ax0006/vercontrato.fxml", controller);
+        VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
+        loadScene("/org/example/ax0006/vercontrato.fxml", controller);
     }
 
     //MENÚ DE FINANZAS
@@ -213,11 +224,11 @@ public class SceneManager {
     
 
     public void setContratoTemporal(Integer id) {
-    this.contratoTemporal = id;
+        this.contratoTemporal = id;
     }
 
     public Integer getContratoTemporal() {
-    return contratoTemporal;
+        return contratoTemporal;
     }
 
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/

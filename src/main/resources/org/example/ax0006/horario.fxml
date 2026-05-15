@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="800.0" prefWidth="1200.0"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+
+        <Label layoutX="50" layoutY="50" text="Fecha (YYYY-MM-DD)" />
+        <TextField fx:id="ii_fecha" layoutX="250" layoutY="50" />
+
+        <Label layoutX="50" layoutY="100" text="Hora Inicio (HH:MM:SS)" />
+        <TextField fx:id="ii_horaInicio" layoutX="250" layoutY="100" />
+
+        <Label layoutX="50" layoutY="150" text="Hora Fin (HH:MM:SS)" />
+        <TextField fx:id="ii_horaFin" layoutX="250" layoutY="150" />
+
+        <Button text="Crear Horario"
+                layoutX="200"
+                layoutY="220"
+                onAction="#on_bt_crear"/>
+
+        <Button fx:id="bt_volver"
+                layoutX="1100.0" layoutY="740.0"
+                text="Volver"
+                onAction="#on_bt_volver"/>
+    </children>
+</Pane>

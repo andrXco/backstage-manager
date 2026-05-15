@@ -49,11 +49,11 @@ public class StartController extends Application {
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
-        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
         AnalisisFinancieroService analisisService = new AnalisisFinancieroService(analisisRepo);
         GastoService gastoService = new GastoService(gastoRepo);
         IngresoService ingresoService = new IngresoService(ingresoRepo);
         BoleteriaService boleteriaService = new BoleteriaService(boleteriaRepo);
+        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
 
         // MANAGERS
         SesionManager sesion = new SesionManager();

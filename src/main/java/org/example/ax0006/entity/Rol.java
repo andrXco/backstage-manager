@@ -10,6 +10,14 @@ public class Rol {
         this.rol = rol;
     }
 
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public Rol(String rol) {
+        this.rol = rol;
+    }
+
     public int getIdRol() { return idRol; }
     public String getRol() { return rol; }
 
