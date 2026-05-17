@@ -83,7 +83,7 @@ class ConciertoServiceTest {
 
     @Nested
     @DisplayName("Crear Concierto")
-    class CrearConcierto {
+    class CrearConciertoMETODO{
         @Test
         void crearConcierto() {
             Concierto concierto = new Concierto();
@@ -145,11 +145,12 @@ class ConciertoServiceTest {
             // 4. EJECUTAR SERVICIO
             // ==========================================
             conciertoService.crearConcierto(concierto);
-            // ==========================================
-            // 5. ASERCIONES
-            // ==========================================
+
             List<Concierto> conciertosGuardados = conciertoService.obtenerConciertosSolos();
 
+            // ==========================================
+            // 5. SE BUSCA EL CONCIERTO EN LA DB
+            // ==========================================
             Concierto conciertoRecuperado = null;
             for (Concierto c : conciertosGuardados) {
                 if ("Tour mundial".equals(c.getNombreConcierto())) {
@@ -157,6 +158,10 @@ class ConciertoServiceTest {
                     break;
                 }
             }
+
+            // ==========================================
+            // 6. ASSERTS
+            // ==========================================
 
             assertNotNull(conciertoRecuperado, "El concierto no se persistió en la BD.");
 
@@ -175,23 +180,21 @@ class ConciertoServiceTest {
         }
 
         @Test
-        void obtenerConciertos() {
-        }
-
-        @Test
         void aprobarConcierto() {
         }
 
         @Test
         void eliminarConcierto() {
         }
+        @Test
+        void obtenerConciertosSolos(){}
     }
 
     @Nested
-    @DisplayName("Obtener Conciertos Solos")
-    class ObtenerConciertosSolos {
+    @DisplayName("aprobarConcierto")
+    class aprobarConciertoMETODO{
         @Test
-        void obtenerConciertosSolos() {
+        void aprobarConcierto() {
             Concierto concierto = new Concierto();
             concierto.setNombreConcierto("Tour mundial");
             concierto.setAforo(25600);
@@ -248,12 +251,15 @@ class ConciertoServiceTest {
             concierto.setIdContrato(idContratoReal);
 
             // ==========================================
-            // 4. EJECUTAR SERVICIO
+            // 4. EJECUTAR METOODO DE CREAR CONCIERTO
             // ==========================================
             conciertoService.crearConcierto(concierto);
 
             List<Concierto> conciertosGuardados = conciertoService.obtenerConciertosSolos();
 
+            // ==========================================
+            // 5. SE BUSCA EL CONCIERTO
+            // ==========================================
             Concierto conciertoRecuperado = null;
             for (Concierto c : conciertosGuardados) {
                 if ("Tour mundial".equals(c.getNombreConcierto())) {
@@ -262,7 +268,60 @@ class ConciertoServiceTest {
                 }
             }
 
+            // ==========================================
+            // 6. ASSERTS ANTES DE PROGRAMAR EL CONCIERTO
+            // ==========================================
+
             assertNotNull(conciertoRecuperado, "se pudo recuperar el concierto.");
+
+            final Concierto res = conciertoRecuperado;
+            assertAll("Integridad del Concierto Persistido",
+                    () -> assertEquals("Tour mundial", res.getNombreConcierto()),
+                    () -> assertEquals(25600, res.getAforo()),
+                    () -> assertNotNull(res.getHorario()),
+                    () -> assertFalse(res.isProgramado())
+            );
+
+            conciertoService.aprobarConcierto(res.getIdConcierto());
+
+            // ==============================================
+            // 7. RECUPERAR EL CONCIERTO DE LA BASE DE DATOS
+            // ===============================================
+
+            conciertosGuardados = conciertoService.obtenerConciertosSolos();
+
+            // ==========================================
+            // 8. SE BUSCA EL CONCIERTO
+            // ==========================================
+            conciertoRecuperado = null;
+            for (Concierto c : conciertosGuardados) {
+                if ("Tour mundial".equals(c.getNombreConcierto())) {
+                    conciertoRecuperado = c;
+                    break;
+                }
+            }
+
+            // ==========================================
+            // 9. ASSERTS CON EL CONCIERTO PROGRAMADO
+            // ==========================================
+            final Concierto res1 = conciertoRecuperado;
+
+            assertNotNull(res1, "se tiene que recuperar el concierto.");
+
+            assertAll("Integridad del Concierto Persistido",
+                    () -> assertEquals("Tour mundial", res1.getNombreConcierto()),
+                    () -> assertEquals(25600, res1.getAforo()),
+                    () -> assertNotNull(res1.getHorario()),
+                    () -> assertTrue(res1.isProgramado())
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("ObtenerConciertosSolos")
+    class ObtenerConciertosSolosMETODO {
+        @Test
+        void obtenerConciertos() {
 
         }
     }

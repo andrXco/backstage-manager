@@ -45,11 +45,6 @@ public class ConciertoService {
         return conciertoRepo.obtenerConciertosSolos();
     }
 
-    /*Obtiene los conciertos, sus horarios y usuarios de la base de datos*/
-    public List<Concierto> obtenerConciertos() {
-        return conciertoRepo.obtenerConciertos();
-    }
-
     /*El atributo del programado = true */
     public void aprobarConcierto(int idConcierto) {
         conciertoRepo.aprobarConcierto(idConcierto);
