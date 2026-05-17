@@ -94,7 +94,7 @@ public class ConciertosProgramadosController {
                 new SimpleStringProperty(data.getValue().getNombreConcierto())
         );
 
-        agregarBotonContrato(); // 🔥 NUEVO
+        agregarBotonContrato();
         agregarBotonCancelar();
         cargarConciertos();
     }
