@@ -49,7 +49,7 @@ public class StartController extends Application {
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);
         InventarioService inventarioService = new InventarioService(inventarioRepo);
-        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
+        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
 
         InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
         ObjetoService objetoService = new ObjetoService(objetoRepo);
