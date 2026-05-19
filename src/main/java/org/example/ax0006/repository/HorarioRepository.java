@@ -14,7 +14,6 @@ public class HorarioRepository {
         this.h2 = h2;
     }
 
-    /*Guarda un horario en la base de datos*/
     public int guardar(Horario h) {
         String sql = "INSERT INTO Horario (fechaInc, fechaFin, horaInc, horaFin) VALUES (?, ?, ?, ?)";
 
@@ -40,11 +39,9 @@ public class HorarioRepository {
         return -1;
     }
 
-    /*Elimina un horario de su base de datos*/
     public void eliminarHorario(int idHorario) {
 
         try (Connection conn = h2.getConnection()) {
-            // 2. borrar horario
             String sql2 = "DELETE FROM HORARIO WHERE IDHORARIO = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql2)) {
                 stmt.setInt(1, idHorario);
@@ -54,5 +51,42 @@ public class HorarioRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Horario obtenerHorarioPorId(int idHorario) {
+        String sql = "SELECT * FROM Horario WHERE idHorario = ?";
+
+        try (java.sql.Connection conn = h2.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idHorario);
+
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Horario horario = new Horario();
+                    horario.setIdHorario(rs.getInt("idHorario"));
+
+                    if (rs.getDate("fechaInc") != null) {
+                        horario.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
+                    }
+                    if (rs.getDate("fechaFin") != null) {
+                        horario.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                    }
+
+                    if (rs.getTime("horaInc") != null) {
+                        horario.setHoraInicio(rs.getTime("horaInc").toLocalTime());
+                    }
+                    if (rs.getTime("horaFin") != null) {
+                        horario.setHoraFin(rs.getTime("horaFin").toLocalTime());
+                    }
+
+                    return horario;
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            System.err.println("Error al obtener el horario con ID: " + idHorario);
+            e.printStackTrace();
+        }
+        return null;
     }
 }

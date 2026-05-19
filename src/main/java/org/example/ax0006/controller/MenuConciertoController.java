@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class MenuConciertoController {
 
-
     @FXML
     private Button fid_bt_CrearConcierto;
 
@@ -27,14 +26,49 @@ public class MenuConciertoController {
     private Button fid_bt_ConsultarContrato;
 
     @FXML
+    private Button fid_bt_crearInventario;
+
+    @FXML
     private Button fid_bt_volver;
-
-
 
     /* ATRIBUTOS */
     private SceneManager sceneManager;
     private SesionManager sesion;
 
+    @FXML
+    public void initialize() {
+        int idRol = sesion.getUsuarioActual().getIdRol();
+
+        fid_bt_CrearConcierto.setVisible(idRol == 3);
+        fid_bt_CrearConcierto.setManaged(idRol == 3);
+
+        fid_bt_ConsultarSolicitudes.setVisible(idRol == 1);
+        fid_bt_ConsultarSolicitudes.setManaged(idRol == 1);
+
+        fid_bt_ConsultarProgramados.setVisible(idRol == 1);
+        fid_bt_ConsultarProgramados.setManaged(idRol == 1);
+
+        if (idRol == 3) {
+            fid_bt_crearInventario.setVisible(true);
+            fid_bt_crearInventario.setManaged(true);
+        } else if(idRol == 1) {
+            fid_bt_crearInventario.setVisible(false);
+            fid_bt_crearInventario.setManaged(false);
+        }
+
+
+        if (idRol == 0) {
+            fid_bt_CrearConcierto.setVisible(false);
+            fid_bt_CrearConcierto.setManaged(false);
+            fid_bt_ConsultarSolicitudes.setVisible(false);
+            fid_bt_ConsultarSolicitudes.setManaged(false);
+            fid_bt_ConsultarProgramados.setVisible(false);
+            fid_bt_ConsultarProgramados.setManaged(false);
+            fid_bt_crearInventario.setVisible(false);
+        }
+
+
+    }
     /* CONSTRUCTOR */
     public MenuConciertoController(SceneManager sceneManager, SesionManager sesion) {
         this.sceneManager = sceneManager;
@@ -51,6 +85,7 @@ public class MenuConciertoController {
         }
     }
 
+
     /* CREAR SOLICITUD DE CONCIERTO */
     @FXML
     void On_CrearConcierto(ActionEvent event) {
@@ -63,7 +98,7 @@ public class MenuConciertoController {
 
     /* CONSULTAR SOLICITUDES (no programados) */
     @FXML
-    void On_ConsultarConciertos(ActionEvent event) {
+    void On_showConsultarSolicitudes(ActionEvent event) {
         try {
             sceneManager.showConsultarSolicitudes();
         } catch (IOException e) {
@@ -75,45 +110,39 @@ public class MenuConciertoController {
     @FXML
     void On_ConsultarCProgramado(ActionEvent event) {
         try {
-
             sceneManager.showConciertosProgramados();
-
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
     }
 
-
-
-   //control de vistas:
+    /* CREAR CONTRATO */
     @FXML
-    public void initialize() {
-        int idRol = sesion.getUsuarioActual().getIdRol();
-
-        fid_bt_CrearConcierto.setVisible(idRol == 3);
-        fid_bt_CrearConcierto.setManaged(idRol == 3);
-
-        fid_bt_ConsultarSolicitudes.setVisible(idRol == 1);
-        fid_bt_ConsultarSolicitudes.setManaged(idRol == 1);
-
-        fid_bt_ConsultarProgramados.setVisible(idRol == 1);
-        fid_bt_ConsultarProgramados.setManaged(idRol == 1);
-
-        if (idRol == 0) {
-            fid_bt_CrearConcierto.setVisible(false);
-            fid_bt_CrearConcierto.setManaged(false);
-            fid_bt_ConsultarSolicitudes.setVisible(false);
-            fid_bt_ConsultarSolicitudes.setManaged(false);
-            fid_bt_ConsultarProgramados.setVisible(false);
-            fid_bt_ConsultarProgramados.setManaged(false);
+    void On_CrearContrato(ActionEvent event) {
+        try {
+            sceneManager.showCrearContrato();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
     }
 
+    /* CONSULTAR CONTRATO */
+    @FXML
+    void On_ConsultarContrato(ActionEvent event) {
+        try {
+            sceneManager.showConsultarContrato();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
+    /* CREAR INVENTARIO PARA CONCIERTO (FLUJO AUTOMÁTICO) */
+    @FXML
+    void on_bt_crearInventario(ActionEvent event) {
+        try {
+            sceneManager.showSeleccionarConciertoInventario();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -22,12 +22,15 @@ class ConciertoServiceTest {
     private ConciertoRepository conciertoRepo;
     private HorarioRepository horarioRepo;
     private ContratoRepository contratoRepo;
+    private InventarioRepository inventarioRepo;
 
     private ContratoService contratoService;
     private ConciertoValidator conciertoValidator;
     private HorarioValidator horarioValidator;
     private AsignacionStaffRepository asignacionStaffRepo;
     private UsuarioRepository usuarioRepo;
+    private InventarioService inventarioService;
+
 
     private ConciertoService conciertoService;
 
@@ -58,6 +61,7 @@ class ConciertoServiceTest {
         horarioRepo = new HorarioRepository(h2);
         contratoRepo = new ContratoRepository(h2);
         usuarioRepo = new UsuarioRepository(h2);
+        inventarioRepo = new InventarioRepository(h2);
 
         //Se crean los validadores
         horarioValidator = new HorarioValidator();
@@ -66,9 +70,12 @@ class ConciertoServiceTest {
         //Se crea un servicio que es parte del serivico a probar
         contratoService = new ContratoService(contratoRepo);
 
+        //Se crea un pServicio
+        inventarioService = new InventarioService(inventarioRepo);
+
 
         // Se crea el servicio real que será probado.
-        conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo);
+        conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo);
     }
 
     //Se vuelve a borrar la base de datos para que no queden datos de las pruebas

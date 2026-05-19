@@ -59,6 +59,7 @@ public class UsuarioRepository {
 
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, nombre);
             ResultSet rs = stmt.executeQuery();
 
