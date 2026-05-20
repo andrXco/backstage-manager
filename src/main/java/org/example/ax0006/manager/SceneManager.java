@@ -152,14 +152,16 @@ public class SceneManager {
     public void showAnalisisFinanciero() throws IOException {
 
         AnalisisFinancieroController controller =
-                new AnalisisFinancieroController(
+            new AnalisisFinancieroController(
 
-                        context.getAnalisisFinancieroService(),
-                        context.getGastoService(),
-                        context.getIngresoService(),
-                        context.getBoleteriaService(),
-                        this
-                );
+        context.getAnalisisFinancieroService(),
+        context.getGastoService(),
+        context.getIngresoService(),
+        context.getBoleteriaService(),
+        context.getConciertoService(),
+        context.getSesion(),
+        this
+);
 
         loadScene(
                 "/org/example/ax0006/analisisfinanciero.fxml",
@@ -175,12 +177,14 @@ public class SceneManager {
             AnalisisFinancieroController controller =
                     new AnalisisFinancieroController(
 
-                            context.getAnalisisFinancieroService(),
-                            context.getGastoService(),
-                            context.getIngresoService(),
-                            context.getBoleteriaService(),
-                            this
-                    );
+        context.getAnalisisFinancieroService(),
+        context.getGastoService(),
+        context.getIngresoService(),
+        context.getBoleteriaService(),
+        context.getConciertoService(),
+        context.getSesion(),
+        this
+);
 
             loadScene(
                     "/org/example/ax0006/analisisfinanciero.fxml",
@@ -280,6 +284,23 @@ public class SceneManager {
 
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
+
+    // SELECCIONAR CONCIERTO PARA FINANZAS
+public void showSeleccionarConciertoFinanzas() throws IOException {
+
+    SeleccionarConciertoFinanzasController controller =
+            new SeleccionarConciertoFinanzasController(
+
+                    context.getConciertoService(),
+                    context.getSesion(),
+                    this
+            );
+
+    loadScene(
+            "/org/example/ax0006/seleccionarconciertofinanzas.fxml",
+            controller
+    );
+}
 
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {

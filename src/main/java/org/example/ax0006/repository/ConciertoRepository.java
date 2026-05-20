@@ -1,25 +1,36 @@
 package org.example.ax0006.repository;
 
-import org.example.ax0006.entity.*;
 import org.example.ax0006.db.H2;
+import org.example.ax0006.entity.AnalisisFinanciero;
+import org.example.ax0006.entity.Concierto;
+import org.example.ax0006.entity.Contrato;
+import org.example.ax0006.entity.Horario;
+import org.example.ax0006.entity.Usuario;
 
-import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConciertoRepository {
 
     private H2 h2;
+    private AnalisisFinancieroRepository analisisRepo;
 
-    public ConciertoRepository(H2 h2) {
+    public ConciertoRepository(
+            H2 h2,
+            AnalisisFinancieroRepository analisisRepo
+    ) {
+
         this.h2 = h2;
+        this.analisisRepo = analisisRepo;
     }
 
     /*Metodo para guardar en la base de datos el concierto y su id de horario*/
     public int guardar(Concierto c, int idHorario) {
 
         String sql = """
-            INSERT INTO Concierto (nombreConcierto, idHorario, aforo, idContrato, programado)
+            INSERT INTO Concierto
+            (nombreConcierto, idHorario, aforo, idContrato, programado)
             VALUES (?, ?, ?, ?, ?)
         """;
 
@@ -27,6 +38,7 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
+
                 PreparedStatement stmt = conn.prepareStatement(
                         sql,
                         Statement.RETURN_GENERATED_KEYS
@@ -65,6 +77,7 @@ public class ConciertoRepository {
                    c.aforo,
                    c.programado,
                    c.idContrato,
+                   c.idAnalisisF,
                    h.idHorario,
                    h.fechaInc,
                    h.fechaFin,
@@ -77,7 +90,10 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql);
+
                 ResultSet rs = stmt.executeQuery()
         ) {
 
@@ -85,11 +101,29 @@ public class ConciertoRepository {
 
                 Horario h = new Horario();
 
-                h.setIdHorario(rs.getInt("idHorario"));
-                h.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
-                h.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
-                h.setHoraFin(rs.getTime("horaFin").toLocalTime());
+                h.setIdHorario(
+                        rs.getInt("idHorario")
+                );
+
+                h.setFechaInicio(
+                        rs.getDate("fechaInc")
+                                .toLocalDate()
+                );
+
+                h.setFechaFin(
+                        rs.getDate("fechaFin")
+                                .toLocalDate()
+                );
+
+                h.setHoraInicio(
+                        rs.getTime("horaInc")
+                                .toLocalTime()
+                );
+
+                h.setHoraFin(
+                        rs.getTime("horaFin")
+                                .toLocalTime()
+                );
 
                 Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
@@ -100,7 +134,22 @@ public class ConciertoRepository {
                         rs.getBoolean("programado")
                 );
 
-                c.setIdContrato(rs.getInt("idContrato"));
+                c.setIdContrato(
+                        rs.getInt("idContrato")
+                );
+
+                int idAnalisis =
+                        rs.getInt("idAnalisisF");
+
+                if (!rs.wasNull()) {
+
+                    AnalisisFinanciero af =
+                            analisisRepo.buscarPorId(
+                                    idAnalisis
+                            );
+
+                    c.setAnalisis(af);
+                }
 
                 lista.add(c);
             }
@@ -122,6 +171,8 @@ public class ConciertoRepository {
                    c.nombreConcierto,
                    c.aforo,
                    c.programado,
+                   c.idContrato,
+                   c.idAnalisisF,
                    h.idHorario,
                    h.fechaInc,
                    h.fechaFin,
@@ -141,7 +192,10 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql);
+
                 ResultSet rs = stmt.executeQuery()
         ) {
 
@@ -149,11 +203,29 @@ public class ConciertoRepository {
 
                 Horario h = new Horario();
 
-                h.setIdHorario(rs.getInt("idHorario"));
-                h.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
-                h.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
-                h.setHoraFin(rs.getTime("horaFin").toLocalTime());
+                h.setIdHorario(
+                        rs.getInt("idHorario")
+                );
+
+                h.setFechaInicio(
+                        rs.getDate("fechaInc")
+                                .toLocalDate()
+                );
+
+                h.setFechaFin(
+                        rs.getDate("fechaFin")
+                                .toLocalDate()
+                );
+
+                h.setHoraInicio(
+                        rs.getTime("horaInc")
+                                .toLocalTime()
+                );
+
+                h.setHoraFin(
+                        rs.getTime("horaFin")
+                                .toLocalTime()
+                );
 
                 Usuario artista = null;
 
@@ -161,8 +233,13 @@ public class ConciertoRepository {
 
                     artista = new Usuario();
 
-                    artista.setIdUsuario(rs.getInt("idUsuario"));
-                    artista.setNombre(rs.getString("nombre"));
+                    artista.setIdUsuario(
+                            rs.getInt("idUsuario")
+                    );
+
+                    artista.setNombre(
+                            rs.getString("nombre")
+                    );
                 }
 
                 Concierto c = new Concierto(
@@ -173,6 +250,23 @@ public class ConciertoRepository {
                         artista,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(
+                        rs.getInt("idContrato")
+                );
+
+                int idAnalisis =
+                        rs.getInt("idAnalisisF");
+
+                if (!rs.wasNull()) {
+
+                    AnalisisFinanciero af =
+                            analisisRepo.buscarPorId(
+                                    idAnalisis
+                            );
+
+                    c.setAnalisis(af);
+                }
 
                 lista.add(c);
             }
@@ -197,6 +291,8 @@ public class ConciertoRepository {
                    c.nombreConcierto,
                    c.aforo,
                    c.programado,
+                   c.idContrato,
+                   c.idAnalisisF,
                    h.idHorario,
                    h.fechaInc,
                    h.fechaFin,
@@ -217,7 +313,9 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql)
         ) {
 
             stmt.setInt(1, idUsuario);
@@ -229,11 +327,29 @@ public class ConciertoRepository {
 
                 Horario h = new Horario();
 
-                h.setIdHorario(rs.getInt("idHorario"));
-                h.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
-                h.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
-                h.setHoraFin(rs.getTime("horaFin").toLocalTime());
+                h.setIdHorario(
+                        rs.getInt("idHorario")
+                );
+
+                h.setFechaInicio(
+                        rs.getDate("fechaInc")
+                                .toLocalDate()
+                );
+
+                h.setFechaFin(
+                        rs.getDate("fechaFin")
+                                .toLocalDate()
+                );
+
+                h.setHoraInicio(
+                        rs.getTime("horaInc")
+                                .toLocalTime()
+                );
+
+                h.setHoraFin(
+                        rs.getTime("horaFin")
+                                .toLocalTime()
+                );
 
                 Usuario u = null;
 
@@ -241,8 +357,13 @@ public class ConciertoRepository {
 
                     u = new Usuario();
 
-                    u.setIdUsuario(rs.getInt("idUsuario"));
-                    u.setNombre(rs.getString("nombre"));
+                    u.setIdUsuario(
+                            rs.getInt("idUsuario")
+                    );
+
+                    u.setNombre(
+                            rs.getString("nombre")
+                    );
                 }
 
                 Concierto c = new Concierto(
@@ -253,6 +374,23 @@ public class ConciertoRepository {
                         u,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(
+                        rs.getInt("idContrato")
+                );
+
+                int idAnalisis =
+                        rs.getInt("idAnalisisF");
+
+                if (!rs.wasNull()) {
+
+                    AnalisisFinanciero af =
+                            analisisRepo.buscarPorId(
+                                    idAnalisis
+                            );
+
+                    c.setAnalisis(af);
+                }
 
                 lista.add(c);
             }
@@ -265,7 +403,9 @@ public class ConciertoRepository {
     }
 
     /*Buscar por artista*/
-    public List<Concierto> buscarPorArtista(String nombreArtista) {
+    public List<Concierto> buscarPorArtista(
+            String nombreArtista
+    ) {
 
         List<Concierto> lista = new ArrayList<>();
 
@@ -274,6 +414,8 @@ public class ConciertoRepository {
                    c.nombreConcierto,
                    c.aforo,
                    c.programado,
+                   c.idContrato,
+                   c.idAnalisisF,
                    h.idHorario,
                    h.fechaInc,
                    h.fechaFin,
@@ -293,7 +435,9 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql)
         ) {
 
             stmt.setString(1, nombreArtista);
@@ -304,16 +448,39 @@ public class ConciertoRepository {
 
                 Horario h = new Horario();
 
-                h.setIdHorario(rs.getInt("idHorario"));
-                h.setFechaInicio(rs.getDate("fechaInc").toLocalDate());
-                h.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
-                h.setHoraFin(rs.getTime("horaFin").toLocalTime());
+                h.setIdHorario(
+                        rs.getInt("idHorario")
+                );
+
+                h.setFechaInicio(
+                        rs.getDate("fechaInc")
+                                .toLocalDate()
+                );
+
+                h.setFechaFin(
+                        rs.getDate("fechaFin")
+                                .toLocalDate()
+                );
+
+                h.setHoraInicio(
+                        rs.getTime("horaInc")
+                                .toLocalTime()
+                );
+
+                h.setHoraFin(
+                        rs.getTime("horaFin")
+                                .toLocalTime()
+                );
 
                 Usuario u = new Usuario();
 
-                u.setIdUsuario(rs.getInt("idUsuario"));
-                u.setNombre(rs.getString("nombre"));
+                u.setIdUsuario(
+                        rs.getInt("idUsuario")
+                );
+
+                u.setNombre(
+                        rs.getString("nombre")
+                );
 
                 Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
@@ -323,6 +490,23 @@ public class ConciertoRepository {
                         u,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(
+                        rs.getInt("idContrato")
+                );
+
+                int idAnalisis =
+                        rs.getInt("idAnalisisF");
+
+                if (!rs.wasNull()) {
+
+                    AnalisisFinanciero af =
+                            analisisRepo.buscarPorId(
+                                    idAnalisis
+                            );
+
+                    c.setAnalisis(af);
+                }
 
                 lista.add(c);
             }
@@ -349,7 +533,9 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql)
         ) {
 
             stmt.setInt(1, idRol);
@@ -374,7 +560,9 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql)
         ) {
 
             stmt.setInt(1, id);
@@ -387,9 +575,13 @@ public class ConciertoRepository {
     }
 
     /*Eliminar concierto*/
-    public void eliminarConcierto(int idConcierto) {
+    public void eliminarConcierto(
+            int idConcierto
+    ) {
 
-        try (Connection conn = h2.getConnection()) {
+        try (
+                Connection conn = h2.getConnection()
+        ) {
 
             conn.setAutoCommit(false);
 
@@ -398,7 +590,10 @@ public class ConciertoRepository {
                 WHERE idConcierto = ?
             """;
 
-            try (PreparedStatement stmt = conn.prepareStatement(sqlInv)) {
+            try (
+                    PreparedStatement stmt =
+                            conn.prepareStatement(sqlInv)
+            ) {
 
                 stmt.setInt(1, idConcierto);
                 stmt.executeUpdate();
@@ -409,7 +604,10 @@ public class ConciertoRepository {
                 WHERE idConcierto = ?
             """;
 
-            try (PreparedStatement stmt = conn.prepareStatement(sqlRel)) {
+            try (
+                    PreparedStatement stmt =
+                            conn.prepareStatement(sqlRel)
+            ) {
 
                 stmt.setInt(1, idConcierto);
                 stmt.executeUpdate();
@@ -420,7 +618,10 @@ public class ConciertoRepository {
                 WHERE idConcierto = ?
             """;
 
-            try (PreparedStatement stmt = conn.prepareStatement(sqlConc)) {
+            try (
+                    PreparedStatement stmt =
+                            conn.prepareStatement(sqlConc)
+            ) {
 
                 stmt.setInt(1, idConcierto);
                 stmt.executeUpdate();
@@ -447,7 +648,9 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql)
         ) {
 
             stmt.setInt(1, idAnalisisF);

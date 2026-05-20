@@ -57,7 +57,8 @@ class ConciertoServiceTest {
         h2.inicializarDB();
 
         // Se crea el repositorio real conectado a la base de datos de prueba.
-        conciertoRepo = new ConciertoRepository(h2);
+        AnalisisFinancieroRepository analisisFinancieroRepo = new AnalisisFinancieroRepository(h2);
+        conciertoRepo = new ConciertoRepository(h2,analisisFinancieroRepo);
         horarioRepo = new HorarioRepository(h2);
         contratoRepo = new ContratoRepository(h2);
         usuarioRepo = new UsuarioRepository(h2);

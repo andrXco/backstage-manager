@@ -12,8 +12,11 @@ import org.example.ax0006.entity.Ingreso;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.service.AnalisisFinancieroService;
 import org.example.ax0006.service.BoleteriaService;
+import org.example.ax0006.service.ConciertoService;
 import org.example.ax0006.service.GastoService;
 import org.example.ax0006.service.IngresoService;
+import org.example.ax0006.entity.Concierto;
+import org.example.ax0006.manager.SesionManager;
 
 import java.io.IOException;
 
@@ -27,6 +30,8 @@ public class AnalisisFinancieroController {
     private IngresoService ingresoService;
     private BoleteriaService boleteriaService;
     private SceneManager sceneManager;
+    private SesionManager sesion;
+    private ConciertoService conciertoService;
 
     // =========================
     // ID ACTUAL
@@ -36,20 +41,26 @@ public class AnalisisFinancieroController {
     // =========================
     // CONSTRUCTOR
     // =========================
-    public AnalisisFinancieroController(
-            AnalisisFinancieroService analisisService,
-            GastoService gastoService,
-            IngresoService ingresoService,
-            BoleteriaService boleteriaService,
-            SceneManager sceneManager
-    ) {
 
-        this.analisisService = analisisService;
-        this.gastoService = gastoService;
-        this.ingresoService = ingresoService;
-        this.boleteriaService = boleteriaService;
-        this.sceneManager = sceneManager;
-    }
+    public AnalisisFinancieroController(
+
+        AnalisisFinancieroService analisisService,
+        GastoService gastoService,
+        IngresoService ingresoService,
+        BoleteriaService boleteriaService,
+        ConciertoService conciertoService,
+        SesionManager sesion,
+        SceneManager sceneManager
+) {
+
+    this.analisisService = analisisService;
+    this.gastoService = gastoService;
+    this.ingresoService = ingresoService;
+    this.boleteriaService = boleteriaService;
+    this.conciertoService = conciertoService;
+    this.sesion = sesion;
+    this.sceneManager = sceneManager;
+}
 
     // =========================
     // PRESUPUESTO
@@ -153,6 +164,36 @@ public class AnalisisFinancieroController {
                         data.getValue().getIngresoTotal()
                 )
         );
+
+
+
+        // 4. AGREGAR ESTO AL FINAL DEL initialize()
+
+Concierto concierto =
+        sesion.getConciertoActual();
+
+if (concierto != null) {
+
+    if (concierto.getAnalisis() != null) {
+
+        cargarAnalisis(
+                concierto.getAnalisis()
+                        .getIdAnalisisF()
+        );
+
+    } else {
+
+        int nuevoId =
+                analisisService.crearPresupuesto(1);
+
+        conciertoService.asignarPresupuesto(
+                concierto.getIdConcierto(),
+                nuevoId
+        );
+
+        cargarAnalisis(nuevoId);
+    }
+}
     }
 
     // =========================

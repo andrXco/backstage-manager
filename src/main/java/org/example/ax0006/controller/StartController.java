@@ -35,7 +35,8 @@ public class StartController extends Application {
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         RolRepository rolRepo = new RolRepository(h2);
         HorarioRepository horarioRepo = new HorarioRepository(h2);
-        ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
+        AnalisisFinancieroRepository analisisFinancieroRepo = new AnalisisFinancieroRepository(h2);
+        ConciertoRepository conciertoRepo = new ConciertoRepository(h2,analisisFinancieroRepo);
         AsignacionStaffRepository asignacionStaffRepo = new AsignacionStaffRepository(h2);
         ContratoRepository contratoRepo = new ContratoRepository(h2);
         AnalisisFinancieroRepository analisisRepo = new AnalisisFinancieroRepository(h2);
