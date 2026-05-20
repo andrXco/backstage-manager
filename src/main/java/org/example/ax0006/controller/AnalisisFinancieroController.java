@@ -167,33 +167,7 @@ public class AnalisisFinancieroController {
 
 
 
-        // 4. AGREGAR ESTO AL FINAL DEL initialize()
 
-Concierto concierto =
-        sesion.getConciertoActual();
-
-if (concierto != null) {
-
-    if (concierto.getAnalisis() != null) {
-
-        cargarAnalisis(
-                concierto.getAnalisis()
-                        .getIdAnalisisF()
-        );
-
-    } else {
-
-        int nuevoId =
-                analisisService.crearPresupuesto(1);
-
-        conciertoService.asignarPresupuesto(
-                concierto.getIdConcierto(),
-                nuevoId
-        );
-
-        cargarAnalisis(nuevoId);
-    }
-}
     }
 
     // =========================

@@ -1,7 +1,5 @@
 package org.example.ax0006.controller;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +7,7 @@ import javafx.scene.control.*;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
+import org.example.ax0006.service.AnalisisFinancieroService;
 import org.example.ax0006.service.ConciertoService;
 
 import java.io.IOException;
@@ -19,6 +18,7 @@ public class SeleccionarConciertoFinanzasController {
     // SERVICES
     // =========================
     private ConciertoService conciertoService;
+    private AnalisisFinancieroService analisisService;
     private SceneManager sceneManager;
     private SesionManager sesion;
 
@@ -27,53 +27,21 @@ public class SeleccionarConciertoFinanzasController {
     // =========================
     public SeleccionarConciertoFinanzasController(
             ConciertoService conciertoService,
-            SceneManager sceneManager,
-            SesionManager sesion
+            AnalisisFinancieroService analisisService,
+            SesionManager sesion,
+            SceneManager sceneManager
     ) {
-
         this.conciertoService = conciertoService;
-        this.sceneManager = sceneManager;
+        this.analisisService = analisisService;
         this.sesion = sesion;
+        this.sceneManager = sceneManager;
     }
 
-    public SeleccionarConciertoFinanzasController(
-
-        ConciertoService conciertoService,
-        SesionManager sesion,
-        SceneManager sceneManager
-) {
-
-    this.conciertoService = conciertoService;
-    this.sesion = sesion;
-    this.sceneManager = sceneManager;
-}
-
     // =========================
-    // TABLA
+    // COMBO BOX
     // =========================
     @FXML
-    private TableView<Concierto> tablaConciertos;
-
-    @FXML
-    private TableColumn<Concierto, Integer> colId;
-
-    @FXML
-    private TableColumn<Concierto, String> colNombre;
-
-    @FXML
-    private TableColumn<Concierto, Integer> colAforo;
-
-    @FXML
-    private TableColumn<Concierto, String> colEstado;
-
-    // =========================
-    // BOTONES
-    // =========================
-    @FXML
-    private Button fid_bt_gestionar;
-
-    @FXML
-    private Button fid_bt_volver;
+    private ComboBox<Concierto> comboConciertos;
 
     // =========================
     // INITIALIZE
@@ -81,96 +49,70 @@ public class SeleccionarConciertoFinanzasController {
     @FXML
     public void initialize() {
 
-        colId.setCellValueFactory(
-                data -> new SimpleObjectProperty<>(
-                        data.getValue().getIdConcierto()
-                )
-        );
-
-        colNombre.setCellValueFactory(
-                data -> new SimpleStringProperty(
-                        data.getValue().getNombreConcierto()
-                )
-        );
-
-        colAforo.setCellValueFactory(
-                data -> new SimpleObjectProperty<>(
-                        data.getValue().getAforo()
-                )
-        );
-
-        colEstado.setCellValueFactory(
-                data -> new SimpleStringProperty(
-
-                        data.getValue().isProgramado()
-                                ? "Programado"
-                                : "Pendiente"
-                )
-        );
-
-        cargarTabla();
-    }
-
-    // =========================
-    // CARGAR TABLA
-    // =========================
-    private void cargarTabla() {
-
-        tablaConciertos.setItems(
-
+        comboConciertos.setItems(
                 FXCollections.observableArrayList(
                         conciertoService.obtenerConciertosSolos()
                 )
         );
+
+        // Mostrar nombre en el combo
+        comboConciertos.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty || c == null ? null : c.getNombreConcierto());
+            }
+        });
+
+        comboConciertos.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty || c == null ? null : c.getNombreConcierto());
+            }
+        });
     }
 
     // =========================
-    // GESTIONAR FINANZAS
+    // CONTINUAR
     // =========================
     @FXML
-    public void On_gestionarFinanzas() {
+    public void On_continuar() {
 
         Concierto seleccionado =
-
-                tablaConciertos.getSelectionModel()
-                        .getSelectedItem();
+                comboConciertos.getValue();
 
         if (seleccionado == null) {
-
-            mostrarError(
-                    "Seleccione un concierto"
-            );
-
+            mostrarError("Seleccione un concierto");
             return;
         }
 
-        // GUARDAR CONCIERTO ACTUAL
-        sesion.setConciertoActual(
-                seleccionado
-        );
+        sesion.setConciertoActual(seleccionado);
 
         try {
 
-            // SI YA TIENE ANALISIS
             if (seleccionado.getAnalisis() != null) {
+
                 sceneManager.showAnalisisFinanciero(
-                        seleccionado.getAnalisis()
-                                .getIdAnalisisF()
+                        seleccionado.getAnalisis().getIdAnalisisF()
                 );
 
-            } 
-            else {
+            } else {
 
-                sceneManager.showAnalisisFinanciero();
+                int nuevoId =
+                        analisisService.crearPresupuesto(1);
+
+                conciertoService.asignarPresupuesto(
+                        seleccionado.getIdConcierto(),
+                        nuevoId
+                );
+
+                sceneManager.showAnalisisFinanciero(nuevoId);
             }
 
         } catch (IOException e) {
-
             e.printStackTrace();
-
-            mostrarError(
-                    "No se pudo abrir finanzas"
-            );
+            mostrarError("No se pudo abrir finanzas");
         }
     }
 
@@ -181,11 +123,8 @@ public class SeleccionarConciertoFinanzasController {
     public void On_volver() {
 
         try {
-
             sceneManager.showMenuFinanzas();
-
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -195,13 +134,10 @@ public class SeleccionarConciertoFinanzasController {
     // =========================
     private void mostrarError(String msg) {
 
-        Alert alert =
-                new Alert(Alert.AlertType.ERROR);
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("No se pudo continuar");
         alert.setContentText(msg);
-
         alert.showAndWait();
     }
 }

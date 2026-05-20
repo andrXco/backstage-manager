@@ -285,19 +285,16 @@ public class SceneManager {
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
 
-    // SELECCIONAR CONCIERTO PARA FINANZAS
-public void showSeleccionarConciertoFinanzas() throws IOException {
-
+        public void showSeleccionarConciertoFinanzas() throws IOException {
     SeleccionarConciertoFinanzasController controller =
             new SeleccionarConciertoFinanzasController(
-
                     context.getConciertoService(),
+                    context.getAnalisisFinancieroService(),
                     context.getSesion(),
                     this
             );
-
     loadScene(
-            "/org/example/ax0006/seleccionarconciertofinanzas.fxml",
+            "/org/example/ax0006/asignarpresupuesto.fxml",
             controller
     );
 }

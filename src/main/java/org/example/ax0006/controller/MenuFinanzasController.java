@@ -72,7 +72,7 @@ public class MenuFinanzasController {
     @FXML
     void On_AsignarPresupuesto(ActionEvent event) {
         try {
-            sceneManager.showAsignarPresupuesto();
+            sceneManager.showSeleccionarConciertoFinanzas();
 
         } catch (IOException e) {
 
