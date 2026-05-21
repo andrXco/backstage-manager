@@ -86,7 +86,7 @@ class ProfileServiceTest {
                 "password123",
                 "test_login_exitoso@example.com");
 
-        final Usuario usuario = profileService.obtenerPerfilCompleto(4);
+        final Usuario usuario = profileService.obtenerPerfilCompleto(1);
 
         assertAll("verificacion de usuario completo",
                 ()-> assertTrue(usuarioCreado),
@@ -108,7 +108,7 @@ class ProfileServiceTest {
 
         profileService.actualizarPerfil(usuario);
 
-        final Usuario usuario1 =  profileService.obtenerPerfilCompleto(4);
+        final Usuario usuario1 =  profileService.obtenerPerfilCompleto(1);
 
         assertAll("verificacion de usuario completo",
                 ()-> assertTrue(usuarioCreado),
@@ -137,7 +137,7 @@ class ProfileServiceTest {
                 "password123",
                 "test_login_exitoso@example.com");
 
-        final Usuario usuario = profileService.obtenerPerfilCompleto(4);
+        final Usuario usuario = profileService.obtenerPerfilCompleto(1);
 
         assertAll("verificacion de usuario completo",
                 ()-> assertTrue(usuarioCreado),
@@ -151,9 +151,9 @@ class ProfileServiceTest {
                 ()-> assertNull(usuario.getTelefono())
         );
 
-        profileService.cambiarContrasena(4, "123password");
+        profileService.cambiarContrasena(1, "123password");
 
-        final Usuario usuario1 = profileService.obtenerPerfilCompleto(4);
+        final Usuario usuario1 = profileService.obtenerPerfilCompleto(1);
 
         assertAll("verificacion de usuario completo",
                 ()-> assertTrue(usuarioCreado),
