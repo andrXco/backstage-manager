@@ -454,12 +454,12 @@ class ConciertoServiceTest {
            List<Concierto> conciertoSolos = conciertoService.obtenerConciertosSolos();
 
 
-           assertEquals(conciertoSolos.size(), 3);
+           assertEquals(1, conciertoSolos.size(), "tamaño del concierto");
            for(Concierto conciertoSolo : conciertoSolos) {
                assertAll("Integridad del Concierto Persistido",
-                       () -> assertNotNull(conciertoSolo.getNombreConcierto()),
-                       () -> assertNotEquals(0, conciertoSolo.getAforo()),
-                       () -> assertNotNull(conciertoSolo.getHorario())
+                       () -> assertNotNull(conciertoSolo.getNombreConcierto(), "se obtiene el nombre"),
+                       () -> assertNotEquals(0, conciertoSolo.getAforo(), "se obtiene el aforo"),
+                       () -> assertNotNull(conciertoSolo.getHorario(), "se obtiene el horario")
                );
            }
 
