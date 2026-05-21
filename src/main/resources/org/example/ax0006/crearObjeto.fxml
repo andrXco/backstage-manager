@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text layoutX="430.0" layoutY="100.0" text="Registro de Objeto Físico">
+            <font><Font name="System Bold" size="26.0"/></font>
+        </Text>
+
+        <VBox layoutX="400.0" layoutY="180.0" spacing="25.0" prefWidth="400.0">
+            <children>
+                <VBox spacing="5.0">
+                    <Label text="Seleccione Tipo de Objeto:" />
+                    <ComboBox fx:id="cb_tipoObjeto" prefHeight="40.0" prefWidth="400.0" promptText="Seleccione un tipo..." />
+                </VBox>
+
+                <VBox spacing="5.0">
+                    <Label text="Referencia del Objeto:" />
+                    <TextField fx:id="fid_referencia" prefHeight="40.0" promptText="Ej: MIC-992" />
+                </VBox>
+
+                <Label fx:id="lbl_msg" style="-fx-text-fill: #059669; -fx-font-weight: bold;" wrapText="true" />
+
+                <HBox spacing="15.0">
+                    <children>
+                        <Button onAction="#On_guardarObjeto" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #08233f; -fx-text-fill: white;" text="Guardar Registro" />
+                        <Button onAction="#On_volver" prefHeight="45.0" prefWidth="185.0" text="Volver" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</Pane>

@@ -81,13 +81,13 @@ public class LoginController {
     }
 
     @FXML
-    /*METODO PARA PODER IR A LA PANTALLA DE SIGN UP*/
+        /*METODO PARA PODER IR A LA PANTALLA DE SIGN UP*/
     void On_sign_up(ActionEvent event) throws IOException {
         sceneManager.showSignUp();
     }
 
     @FXML
-    /*METODO QUE EJECUTA EL LOGIN Y QUE CAMBIA A LA PANTALLA DE MENU SI ESTE ES EXITOSO*/
+        /*METODO QUE EJECUTA EL LOGIN Y QUE CAMBIA A LA PANTALLA DE MENU SI ESTE ES EXITOSO*/
     void On_login(ActionEvent event) throws IOException {
         if (mostrando) {
             togglePassword();

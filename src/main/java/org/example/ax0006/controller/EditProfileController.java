@@ -120,7 +120,14 @@ public class EditProfileController {
         actualizado.setIdUsuario(usuarioSesion.getIdUsuario());
         actualizado.setContrasena(usuarioSesion.getContrasena());
 
-        actualizado.setNombre(ii_Nombre.getText());
+        actualizado.setNombre(usuarioSesion.getNombre());
+        if(usuarioSesion.getNombre() != ii_Nombre.getText()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No se puede cambiar el nombre de perfil");
+            alert.setContentText("El resto de cambios se guardaron");
+            alert.showAndWait();
+        }
         actualizado.setGmail(ii_Correo.getText());
         actualizado.setTelefono(ii_telefono.getText());
         actualizado.setDireccion(ii_direccion.getText());

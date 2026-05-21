@@ -25,13 +25,16 @@ class ConciertoServiceTest {
     private ConciertoRepository conciertoRepo;
     private HorarioRepository horarioRepo;
     private ContratoRepository contratoRepo;
-    private UsuarioRepository usuarioRepo;
-    private AsignacionStaffRepository asignacionStaffRepo;
+    private InventarioRepository inventarioRepo;
 
     // Servicios y Validadores
     private ContratoService contratoService;
     private ConciertoValidator conciertoValidator;
     private HorarioValidator horarioValidator;
+    private AsignacionStaffRepository asignacionStaffRepo;
+    private UsuarioRepository usuarioRepo;
+    private InventarioService inventarioService;
+
 
     // Servicio Principal a Probar
     private ConciertoService conciertoService;
@@ -48,6 +51,7 @@ class ConciertoServiceTest {
         horarioRepo = new HorarioRepository(h2);
         contratoRepo = new ContratoRepository(h2);
         usuarioRepo = new UsuarioRepository(h2);
+        inventarioRepo = new InventarioRepository(h2);
         asignacionStaffRepo = new AsignacionStaffRepository(h2);
 
         // 3. Inicializar validadores
@@ -57,8 +61,14 @@ class ConciertoServiceTest {
         // 4. Inicializar servicios secundarios
         contratoService = new ContratoService(contratoRepo);
 
+        //Se crea un pServicio
+        inventarioService = new InventarioService(inventarioRepo);
+
+
+        // Se crea el servicio real que será probado.
+        conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo);
         // 5. Inicializar el servicio real que será probado
-        conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo);
+        conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo);
     }
 
     @AfterEach

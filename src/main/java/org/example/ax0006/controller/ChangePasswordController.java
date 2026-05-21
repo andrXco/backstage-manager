@@ -9,6 +9,7 @@ import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.ProfileService;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -57,7 +58,7 @@ public class ChangePasswordController {
             return;
         }
 
-        if (!usuarioSesion.getContrasena().equals(actual)) {
+        if (!BCrypt.checkpw(actual, usuarioSesion.getContrasena())) {
             mostrarAlerta(Alert.AlertType.ERROR, "Contraseña incorrecta", "La contraseña actual no coincide.");
             return;
         }
@@ -67,7 +68,7 @@ public class ChangePasswordController {
             return;
         }
 
-        if (nueva.equals(actual)) {
+        if (BCrypt.checkpw(nueva, usuarioSesion.getContrasena())) {
             mostrarAlerta(Alert.AlertType.ERROR, "Contraseña inválida", "La nueva contraseña debe ser diferente a la actual.");
             return;
         }

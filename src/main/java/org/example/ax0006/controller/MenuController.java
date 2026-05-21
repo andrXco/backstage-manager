@@ -54,6 +54,12 @@ public class MenuController {
     @FXML
     private Label fid_lbl_concierto;
 
+    @FXML
+    private Button fid_bt_crearObjeto;
+
+    @FXML
+    private Button fid_bt_mantenimientoObjeto;
+
 
     @FXML
     public void initialize() {
@@ -61,8 +67,23 @@ public class MenuController {
             fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
 
             boolean esAdmin = sesion.getUsuarioActual().getIdRol() == 1;
+            boolean esTecnico = sesion.getUsuarioActual().getIdRol() == 2;
+            boolean esManager = sesion.getUsuarioActual().getIdRol() == 3;
             fid_bt_admin.setVisible(esAdmin);
             fid_bt_admin.setManaged(esAdmin);
+
+            fid_bt_crearObjeto.setVisible(esAdmin);
+            fid_bt_crearObjeto.setManaged(esAdmin);
+
+            fid_bt_mantenimientoObjeto.setVisible(esAdmin);
+            fid_bt_mantenimientoObjeto.setManaged(esAdmin);
+
+            fid_bt_mantenimientoObjeto.setVisible(esManager);
+            fid_bt_mantenimientoObjeto.setManaged(esManager);
+
+            fid_bt_mantenimientoObjeto.setVisible(esAdmin);
+            fid_bt_mantenimientoObjeto.setManaged(esAdmin);
+
 
 
             if (sesion.getConciertoActual() != null) {
@@ -113,6 +134,18 @@ public class MenuController {
     void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
     }
+
+    @FXML
+    void on_bt_crearObjeto(ActionEvent event) throws IOException {
+        sceneManager.showCrearObjeto();
+    }
+
+    @FXML
+    void on_bt_MantenimientoObjeto() throws IOException {
+        sceneManager.showMantenimiento();
+    }
+
+
 
     @FXML
     void On_Directorio_Staff(ActionEvent event) throws IOException {
