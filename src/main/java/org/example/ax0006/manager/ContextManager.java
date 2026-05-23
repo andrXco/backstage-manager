@@ -11,6 +11,8 @@ import org.example.ax0006.service.ConciertoService;
 import org.example.ax0006.service.ProfileService;
 import org.example.ax0006.service.RolService;
 import org.example.ax0006.db.H2;
+import org.example.ax0006.repository.NominaRepository;
+import org.example.ax0006.repository.AsignacionStaffRepository;
 
 public class ContextManager {
 
@@ -28,6 +30,8 @@ public class ContextManager {
     private ContratoService contratoService;
     private ContratoRepository contratoRepo;
     private NominaService nominaService;
+    private NominaRepository nominaRepository;
+    private AsignacionStaffRepository asignacionStaffRepository;
 
     public ContextManager(
             H2 h2,
@@ -43,7 +47,9 @@ public class ContextManager {
             StaffService staffService,
             ConciertoRepository conciertoRepoExtra, 
             ContratoService contratoService,
-            ContratoRepository contratoRepo
+            ContratoRepository contratoRepo,
+            NominaRepository nominaRepository,
+            AsignacionStaffRepository asignacionStaffRepository
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -58,6 +64,9 @@ public class ContextManager {
         this.staffService = staffService;
         this.contratoService = contratoService;
         this.contratoRepo = contratoRepo;
+        this.nominaRepository = nominaRepository;
+        this.asignacionStaffRepository = asignacionStaffRepository;
+        this.nominaService = new NominaService(nominaRepository, conciertoRepo, asignacionStaffRepository);
     }
 
 

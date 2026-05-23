@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
@@ -28,7 +29,6 @@ public class MenuConciertoController {
 
     @FXML
     private Button fid_bt_volver;
-
 
 
     /* ATRIBUTOS */
@@ -86,7 +86,6 @@ public class MenuConciertoController {
     }
 
 
-
    //control de vistas:
     @FXML
     public void initialize() {
@@ -101,6 +100,7 @@ public class MenuConciertoController {
         fid_bt_ConsultarProgramados.setVisible(idRol == 1);
         fid_bt_ConsultarProgramados.setManaged(idRol == 1);
 
+
         if (idRol == 0) {
             fid_bt_CrearConcierto.setVisible(false);
             fid_bt_CrearConcierto.setManaged(false);
@@ -112,8 +112,5 @@ public class MenuConciertoController {
 
 
     }
-
-
-
 
 }

@@ -38,6 +38,7 @@ public class StartController extends Application {
         ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
         AsignacionStaffRepository asignacionStaffRepo = new AsignacionStaffRepository(h2);
         ContratoRepository contratoRepo = new ContratoRepository(h2);
+        NominaRepository nominaRepo = new NominaRepository(h2);
 
         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo,asignacionStaffRepo);
@@ -63,7 +64,9 @@ public class StartController extends Application {
                 staffService,
                 conciertoRepo,
                 contratoService,
-                contratoRepo
+                contratoRepo,
+                nominaRepo,
+                asignacionStaffRepo
         );
 
 
@@ -88,6 +91,5 @@ public class StartController extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 
 }

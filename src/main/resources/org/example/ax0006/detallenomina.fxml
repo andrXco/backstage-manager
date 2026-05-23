@@ -8,44 +8,44 @@
 <VBox alignment="CENTER" spacing="15"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      prefHeight="500"
-      prefWidth="400"
-      style="-fx-background-color: #1e1e1e;">
+      prefHeight="800"
+      prefWidth="1200"
+      style="-fx-background-color: white;">
 
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
     <Label text="Detalle Nómina"
-           style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;" />
+           style="-fx-font-size: 24px; -fx-text-fill: black; -fx-font-weight: bold;" />
 
     <Label fx:id="lblNombre"
            text="Nombre"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblRol"
            text="Rol"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblHoras"
            text="Horas"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblExtra"
            text="Horas Extra"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblTarifa"
            text="Tarifa"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblTotal"
            text="Total"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Label fx:id="lblEstado"
            text="Estado"
-           style="-fx-text-fill: white; -fx-font-size: 18px;" />
+           style="-fx-text-fill: black; -fx-font-size: 18px;" />
 
     <Button text="Volver"
             onAction="#On_volver"

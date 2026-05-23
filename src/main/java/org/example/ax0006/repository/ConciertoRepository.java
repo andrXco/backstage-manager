@@ -21,8 +21,8 @@ public class ConciertoRepository {
     public int guardar(Concierto c, int idHorario) {
 
         String sql = """
-        INSERT INTO Concierto (nombreConcierto, idHorario, aforo, programado)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO Concierto (nombreConcierto, idHorario, aforo, idcontrato, programado)
+        VALUES (?, ?, ?, ?, ?)
     """;
 
         int idConciertoGenerado = 0;
@@ -33,7 +33,8 @@ public class ConciertoRepository {
             stmt.setString(1, c.getNombreConcierto());
             stmt.setInt(2, idHorario);
             stmt.setInt(3, c.getAforo());
-            stmt.setBoolean(4, c.isProgramado());
+            stmt.setInt(4, c.getIdContrato());
+            stmt.setBoolean(5, c.isProgramado());
 
             stmt.executeUpdate();
 
@@ -53,8 +54,10 @@ public class ConciertoRepository {
     public Concierto obtenerPorId(int idConcierto) {
 
         String sql = """
-            SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado,
-                   h.idHorario, h.fechaInc, h.fechaFin, h.horaInc, h.horaFin
+            SELECT c.idConcierto, c.nombreConcierto, c.aforo,
+                   c.programado, c.idContrato,
+                   h.idHorario, h.fechaInc, h.fechaFin,
+                   h.horaInc, h.horaFin
             FROM Concierto c
             JOIN Horario h ON c.idHorario = h.idHorario
             WHERE c.idConcierto = ?
@@ -75,7 +78,7 @@ public class ConciertoRepository {
                 h.setHoraInicio(rs.getTime("horaInc").toLocalTime());
                 h.setHoraFin(rs.getTime("horaFin").toLocalTime());
 
-                return new Concierto(
+                Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
                         rs.getString("nombreConcierto"),
                         h,
@@ -83,6 +86,10 @@ public class ConciertoRepository {
                         null,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(rs.getInt("idContrato"));
+                return c;
+
             }
 
         } catch (SQLException e) {
@@ -98,8 +105,11 @@ public class ConciertoRepository {
         List<Concierto> lista = new ArrayList<>();
 
         String sql = """
-        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado,
-               h.idHorario, h.fechaInc,h.fechaFin, h.horaInc, h.horaFin
+        SELECT c.idConcierto, c.nombreConcierto,
+               c.aforo, c.programado,
+               c.idContrato,
+               h.idHorario, h.fechaInc,h.fechaFin,
+               h.horaInc, h.horaFin
         FROM Concierto c
         JOIN Horario h ON c.idHorario = h.idHorario
     
@@ -125,6 +135,9 @@ public class ConciertoRepository {
                         null,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(rs.getInt("idContrato"));
+
                 lista.add(c);
             }
         } catch (SQLException e) {
@@ -135,14 +148,13 @@ public class ConciertoRepository {
 
 
 
-
     /*Obtiene conciertos de la base de datos y los guarda como objetos, ademas tambien trae el objeto del artista y el objeto de su horario*/
     public List<Concierto> obtenerConciertos() {
 
         List<Concierto> lista = new ArrayList<>();
 
         String sql = """
-        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado,
+        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado, c.idContrato, 
                h.idHorario,h.fechaInc, h.fechaFin, h.horaInc, h.horaFin,
                u.idUsuario, u.nombre
         FROM Concierto c
@@ -184,6 +196,8 @@ public class ConciertoRepository {
                         rs.getBoolean("programado")
                 );
 
+                c.setIdContrato(rs.getInt("idContrato"));
+
                 lista.add(c);
             }
 
@@ -200,7 +214,7 @@ public class ConciertoRepository {
         List<Concierto> lista = new ArrayList<>();
 
         String sql = """
-        SELECT c.idConcierto, c.aforo, c.programado,
+        SELECT c.idConcierto, c.nombreConcierto, c.aforo, c.programado, c.idContrato,
                h.idHorario, h.fechaInc, h.fechaFin, h.horaInc, h.horaFin,
                u.idUsuario, u.nombre
         FROM Concierto c
@@ -238,9 +252,11 @@ public class ConciertoRepository {
                         rs.getString("nombreConcierto"),
                         h,
                         rs.getInt("aforo"),
-                        u,
+                        null,
                         rs.getBoolean("programado")
                 );
+
+                c.setIdContrato(rs.getInt("idContrato"));
 
                 lista.add(c);
             }

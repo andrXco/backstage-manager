@@ -31,8 +31,19 @@
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                 <Label style="-fx-font-weight: bold;" text="Seleccione evento:" />
                 <ComboBox fx:id="comboEvento" prefWidth="300.0" />
+                <Button text="APROBAR"
+                        onAction="#On_Aprobar"
+                        style="-fx-background-color: #2ecc71;
+               -fx-text-fill: white;" />
+
+                <Button text="RECHAZAR"
+                        onAction="#On_Rechazar"
+                        style="-fx-background-color: #e74c3c;
+               -fx-text-fill: white;" />
             </HBox>
-            <TableView fx:id="tablaNominas" prefHeight="500.0">
+            <TableView fx:id="tablaNominas"
+                       editable="true"
+                       prefHeight="500.0">
                 <columns>
                     <TableColumn fx:id="colTrabajador" prefWidth="200.0" text="Trabajador" />
                     <TableColumn fx:id="colHoras"      prefWidth="150.0" text="Horas trabajadas" />
@@ -43,6 +54,12 @@
                 </columns>
             </TableView>
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                <Button text="Asignar Nómina"
+                        onAction="#On_AsignarNomina"
+                        style="-fx-background-color: #3498db;
+                   -fx-background-radius: 8;
+                   -fx-text-fill: white;
+                   -fx-font-weight: bold;" />
                 <Label style="-fx-font-weight: bold;" text="Total general:" />
                 <Label fx:id="lblTotalGeneral"
                        style="-fx-font-weight: bold; -fx-text-fill: #27ae60;" text="\$0" />

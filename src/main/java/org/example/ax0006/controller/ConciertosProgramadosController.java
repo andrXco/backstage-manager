@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
@@ -31,9 +32,6 @@ public class ConciertosProgramadosController {
 
     @FXML
     private TableView<Concierto> tablaConciertos;
-
-
-
 
     @FXML
     private TableColumn<Concierto, String> colFechaInicio;
@@ -112,9 +110,19 @@ public class ConciertosProgramadosController {
                 btnVer.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
 
                 btnVer.setOnAction(event -> {
+
                     Concierto c = getTableView().getItems().get(getIndex());
 
-                    // Guardar contrato en sesión
+                    System.out.println("ID CONTRATO DEL CONCIERTO: " + c.getIdContrato());
+
+                    if (c.getIdContrato() == 0) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("Este concierto no tiene contrato");
+                        alert.showAndWait();
+
+                        return;
+                    }
+
                     sesion.setIdContratoTemporal(c.getIdContrato());
 
                     try {

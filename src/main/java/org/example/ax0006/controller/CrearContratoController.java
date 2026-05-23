@@ -112,6 +112,7 @@ public class CrearContratoController {
         Contrato contrato = new Contrato();
         contrato.setFecha(fecha);
         contrato.setClausulas(clausulas);
+        contrato.setEstadoFirma("PENDIENTE");
 
         int idContrato = contratoService.crearContrato(contrato);
        
@@ -156,6 +157,22 @@ public class CrearContratoController {
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void enviarFirma() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("Firma enviada");
+
+        alert.setHeaderText(null);
+
+        alert.setContentText(
+                "El contrato fue enviado para firma correctamente"
+        );
+
         alert.showAndWait();
     }
 }

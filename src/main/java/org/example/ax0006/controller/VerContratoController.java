@@ -9,6 +9,7 @@ import org.example.ax0006.entity.Contrato;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.ContratoService;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,9 +33,24 @@ public class VerContratoController {
     private ListView<String> listClausulas;
 
     @FXML
+    private Button btnAprobar;
+
+    @FXML
+    private Button btnRechazar;
+
+    @FXML
     public void initialize() {
 
         Integer idContrato = sesion.getIdContratoTemporal();
+
+        boolean esAdmin =
+                sesion.getUsuarioActual().getIdRol() == 1;
+
+        btnAprobar.setVisible(esAdmin);
+        btnAprobar.setManaged(esAdmin);
+
+        btnRechazar.setVisible(esAdmin);
+        btnRechazar.setManaged(esAdmin);
 
         if (idContrato == null) {
             mostrarError("No hay contrato seleccionado");
@@ -54,8 +70,10 @@ public class VerContratoController {
         // Mostrar cláusulas
         List<Clausula> clausulas = contrato.getClausulas();
 
-        for (Clausula cl : clausulas) {
-            listClausulas.getItems().add(cl.getClausula());
+        if (clausulas != null) {
+            for (Clausula cl : clausulas) {
+                listClausulas.getItems().add(cl.getClausula());
+            }
         }
     }
 
@@ -82,4 +100,41 @@ public class VerContratoController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    @FXML
+    void On_AprobarFirma() {
+
+        Integer idContrato = sesion.getIdContratoTemporal();
+
+        contratoService.aprobarFirma(idContrato);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("Firma");
+        alert.setHeaderText("Contrato aprobado");
+        alert.setContentText(
+                "La firma fue aprobada correctamente."
+        );
+
+        alert.showAndWait();
+    }
+
+    @FXML
+    void On_RechazarFirma() {
+
+        Integer idContrato = sesion.getIdContratoTemporal();
+
+        contratoService.rechazarFirma(idContrato);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("Firma");
+        alert.setHeaderText("Contrato rechazado");
+        alert.setContentText(
+                "La firma fue rechazada."
+        );
+
+        alert.showAndWait();
+    }
+
 }

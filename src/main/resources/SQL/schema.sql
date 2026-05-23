@@ -22,8 +22,9 @@ CREATE TABLE IF NOT EXISTS Usuario (
 
 CREATE TABLE IF NOT EXISTS Contrato (
     idContrato INT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE NOT NULL
-);
+    fecha DATE NOT NULL,
+    estadoFirma VARCHAR(20) DEFAULT 'PENDIENTE'
+    );
 
 CREATE TABLE IF NOT EXISTS Clausula (
     idClausula INT AUTO_INCREMENT PRIMARY KEY,
@@ -109,6 +110,7 @@ CREATE TABLE IF NOT EXISTS Nomina (
     tarifaPorHora DOUBLE NOT NULL,
     horasExtra DOUBLE DEFAULT 0,
     total DOUBLE NOT NULL,
+    estado VARCHAR(20) DEFAULT 'PENDIENTE',
     pagado BOOLEAN DEFAULT FALSE,
 
     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto),

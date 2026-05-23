@@ -37,7 +37,7 @@ public class SceneManager {
 
     /*METOOD PARA MOSTRAR EL MENU*/
     public void showMenu() throws IOException{
-        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService());
+        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService(), context.getNominaService());
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
     }
 
@@ -148,20 +148,35 @@ public class SceneManager {
                 context.getStaffService()
         );
 
-        public void showDetalleNomina(org.example.ax0006.entity.Nomina nomina) throws IOException {
-
-            context.getSesion().setNominaSeleccionada(nomina);
-
-            DetalleNominaController controller = new DetalleNominaController(
-                    this,
-                    context.getSesion(),
-                    context.getStaffService()
-            );
-
-            loadScene("/org/example/ax0006/detallenomina.fxml", controller);
-        }
-
         loadScene("/org/example/ax0006/liquidacionhoras.fxml", controller);
+    }
+
+    public void showAsignarNomina(java.util.List<org.example.ax0006.entity.Nomina> nominas) throws IOException {
+
+        AsignarNominaController controller =
+                new AsignarNominaController(
+                        this,
+                        context.getSesion(),
+                        context.getNominaService(),
+                        context.getStaffService()
+                );
+
+        loadScene("/org/example/ax0006/asignarnomina.fxml", controller);
+
+        controller.cargarNominas(nominas);
+    }
+
+    public void showDetalleNomina(org.example.ax0006.entity.Nomina nomina) throws IOException {
+        context.getSesion().setNominaSeleccionada(nomina);
+        DetalleNominaController controller = new DetalleNominaController(
+                this,
+                context.getSesion(),
+                context.getStaffService()
+        );
+
+        loadScene("/org/example/ax0006/detallenomina.fxml", controller);
+
+        controller.cargarDatos();
     }
 
 

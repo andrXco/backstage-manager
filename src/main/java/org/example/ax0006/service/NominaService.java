@@ -51,7 +51,6 @@ public class NominaService {
         double horasBase = calcularHorasTrabajadas(concierto);
         List<Usuario> staffList = asignacionStaffRepository.obtenerUsuariosPorConcierto(idConcierto);
 
-        // 👇 PEGA ESTO AQUÍ
         System.out.println("Staff encontrados: " + staffList.size());
         System.out.println("Horas calculadas: " + horasBase);
 
@@ -63,7 +62,7 @@ public class NominaService {
             String rolNombre = asignacionStaffRepository.obtenerNombreRolEnConcierto(u.getIdUsuario(), idConcierto);
             double tarifa = obtenerTarifaPorRol(rolNombre);
             double total = horasBase * tarifa;
-            Nomina n = new Nomina(idConcierto, u.getIdUsuario(), rolNombre, horasBase, tarifa, 0, total, false);
+            Nomina n = new Nomina( idConcierto, u.getIdUsuario(), rolNombre, horasBase, tarifa, 0, total, "PENDIENTE", false);
             nominaRepository.guardar(n);
         }
     }
@@ -80,11 +79,26 @@ public class NominaService {
         nominaRepository.actualizarHorasExtraYTotal(idNomina, horasExtra, nuevoTotal);
     }
 
-    public void actualizarEstado(int idNomina, boolean pagado) {
-        nominaRepository.actualizarEstado(idNomina, pagado);
+    public void actualizarEstado(int idNomina, String estado) {
+        nominaRepository.actualizarEstado(idNomina, estado);
     }
 
     public double calcularTotalGeneral(int idConcierto) {
         return nominaRepository.obtenerPorConcierto(idConcierto).stream().mapToDouble(Nomina::getTotal).sum();
     }
+
+    public void actualizarHorasYTarifa(int idNomina, double horasTrabajadas, double tarifaPorHora, double horasExtra) {
+
+        nominaRepository.actualizarHorasYTarifa(
+                idNomina,
+                horasTrabajadas,
+                tarifaPorHora,
+                horasExtra
+        );
+    }
+
+    public List<Nomina> obtenerTodas() {
+        return nominaRepository.obtenerTodas();
+    }
+
 }

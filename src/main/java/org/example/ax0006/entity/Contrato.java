@@ -8,6 +8,7 @@ public class Contrato {
     private int idContrato;
     private LocalDate fecha;
     private List<Clausula> clausulas;
+    private String estadoFirma;
 
     //CONTRUCTORES
     public Contrato() {
@@ -42,4 +43,8 @@ public class Contrato {
     public void setClausulas(List<Clausula> clausulas) {
         this.clausulas = clausulas;
     }
+
+    public String getEstadoFirma() {return estadoFirma;}
+
+    public void setEstadoFirma(String estadoFirma) {this.estadoFirma = estadoFirma;}
 }

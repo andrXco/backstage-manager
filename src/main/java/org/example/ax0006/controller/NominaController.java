@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.TableRow;
 import javafx.util.converter.DoubleStringConverter;
 
@@ -26,16 +27,27 @@ import java.util.List;
 
 public class NominaController {
 
-    @FXML private ComboBox<Concierto> comboEvento;
-    @FXML private TableView<Nomina> tablaNominas;
-    @FXML private TableColumn<Nomina, String> colTrabajador;
-    @FXML private TableColumn<Nomina, Number> colHoras;
-    @FXML private TableColumn<Nomina, Number> colTarifa;
-    @FXML private TableColumn<Nomina, Double> colExtra;
-    @FXML private TableColumn<Nomina, Number> colTotal;
-    @FXML private TableColumn<Nomina, String> colEstado;
-    @FXML private Label lblTotalGeneral;
-    @FXML private Button btnGenerarReporte;
+    @FXML
+    private ComboBox<Concierto> comboEvento;
+    @FXML
+    private TableView<Nomina> tablaNominas;
+    @FXML
+    private TableColumn<Nomina, String> colTrabajador;
+    @FXML
+    private TableColumn<Nomina, Double> colHoras;
+    @FXML
+    private TableColumn<Nomina, Double> colTarifa;
+    @FXML
+    private TableColumn<Nomina, Double> colExtra;
+    @FXML
+    private TableColumn<Nomina, Double> colTotal;
+    @FXML
+    private TableColumn<Nomina, String> colEstado;
+    @FXML
+    private Label lblTotalGeneral;
+    @FXML
+    private Button btnGenerarReporte;
+
 
     private SceneManager sceneManager;
     private SesionManager sesion;
@@ -43,7 +55,6 @@ public class NominaController {
     private NominaService nominaService;
     private StaffService staffService;
 
-    public NominaController() {}
 
     public NominaController(SceneManager sceneManager, SesionManager sesion,
                             ConciertoService conciertoService, NominaService nominaService,
@@ -58,6 +69,11 @@ public class NominaController {
     @FXML
     public void initialize() {
 
+        System.out.println(
+                "ROL EN NOMINA: " +
+                sesion.getUsuarioActual().getIdRol()
+        );
+
         colTrabajador.setCellValueFactory(cellData -> {
             int idUsuario = cellData.getValue().getIdUsuario();
             Usuario u = staffService.listarEmpleados().stream()
@@ -66,38 +82,43 @@ public class NominaController {
             return new SimpleStringProperty(u != null ? u.getNombre() : "Desconocido");
         });
 
-        colHoras.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getHorasTrabajadas()));
-        colTarifa.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTarifaPorHora()));
-        colExtra.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getHorasExtra()).asObject());
-        colTotal.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotal()));
-        colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isPagado() ? "Pagado" : "Pendiente"));
+        colHoras.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(
+                        cellData.getValue().getHorasTrabajadas()
+                ).asObject()
+        );
+        colTarifa.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(
+                        cellData.getValue().getTarifaPorHora()
+                ).asObject()
+        );
+
+        colExtra.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(
+                        cellData.getValue().getHorasExtra()
+                ).asObject()
+        );
+
+        colTotal.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(
+                        cellData.getValue().getTotal()
+                ).asObject()
+        );
+
+        colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstado()));
 
         tablaNominas.setEditable(true);
 
-        tablaNominas.setRowFactory(tv -> {
-            TableRow<Nomina> row = new TableRow<>();
 
-            row.setOnMouseClicked(event -> {
+        System.out.println("SESION NOMINA: " + sesion);
+        System.out.println("USUARIO NOMINA: " + sesion.getUsuarioActual());
+        System.out.println("ROL NOMINA: " + sesion.getUsuarioActual().getIdRol());
 
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    Nomina nominaSeleccionada = row.getItem();
-                    sesion.setNominaSeleccionada(nominaSeleccionada);
-                    try {
-                        sceneManager.showDetalleNomina();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            return row;
-        });
 
-        colExtra.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.DoubleStringConverter()));
-        colExtra.setOnEditCommit(event -> {
-            Nomina nomina = event.getRowValue();
-            nominaService.actualizarHorasExtra(nomina.getIdNomina(), event.getNewValue());
-            cargarNominas(comboEvento.getValue().getIdConcierto());
-        });
+        boolean esManager =
+                sesion.getUsuarioActual().getIdRol() == 3;
+
+        tablaNominas.setEditable(esManager);
 
         comboEvento.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -114,9 +135,7 @@ public class NominaController {
 
         tablaNominas.setRowFactory(tv -> {
             TableRow<Nomina> row = new TableRow<>();
-
             row.setOnMouseClicked(event -> {
-
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
 
                     Nomina nomina = row.getItem();
@@ -151,14 +170,87 @@ public class NominaController {
 
     @FXML
     void On_GenerarReporte(ActionEvent event) {
-        Concierto seleccionado = comboEvento.getValue();
-        if (seleccionado == null) {
+        Nomina nominaSeleccionada = tablaNominas.getSelectionModel().getSelectedItem();
+        if (nominaSeleccionada == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Aviso");
-            alert.setHeaderText("Seleccione un evento primero");
+            alert.setHeaderText("Seleccione una nómina de la tabla");
             alert.showAndWait();
             return;
         }
-        cargarNominas(seleccionado.getIdConcierto());
+        try {
+            sceneManager.showDetalleNomina(nominaSeleccionada);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    @FXML
+    void On_AsignarNomina(ActionEvent event) {
+
+        System.out.println("ENTRO AL BOTON");
+        int rol = sesion.getUsuarioActual().getIdRol();
+        System.out.println("ROL ACTUAL: " + rol);
+        boolean esManager = rol == 3;
+        System.out.println("ES MANAGER: " + esManager);
+
+        if (!esManager) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setHeaderText("Acceso denegado");
+            alert.setContentText(
+                    "Solo el manager puede asignar nómina."
+            );
+
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+
+            sceneManager.showAsignarNomina(
+                    nominaService.obtenerTodas()
+            );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void On_Aprobar(ActionEvent event) {
+
+        cambiarEstado("APROBADO");
+    }
+
+    @FXML
+    void On_Rechazar(ActionEvent event) {
+
+        cambiarEstado("RECHAZADO");
+    }
+
+    private void cambiarEstado(String estado) {
+
+        Nomina nomina =
+                tablaNominas.getSelectionModel().getSelectedItem();
+
+        if (nomina == null) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Seleccione una nómina");
+            alert.showAndWait();
+            return;
+        }
+
+        nominaService.actualizarEstado(
+                nomina.getIdNomina(),
+                estado
+        );
+
+        nomina.setEstado(estado);
+
+        tablaNominas.refresh();
+    }
+
 }

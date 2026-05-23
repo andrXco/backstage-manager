@@ -243,8 +243,5 @@ public class UsuarioRepository {
         }
     }
 
-
-
-
 }
 

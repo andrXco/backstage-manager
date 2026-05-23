@@ -10,6 +10,7 @@ public class Nomina {
     private double horasExtra;          // ingreso manual
     private double total;               // (horasTrabajadas * tarifa) + (horasExtra * tarifa * 1.5) por ejemplo
     private boolean pagado;             // estado
+    private String estado;
 
     // Constructor vacío
     public Nomina() {}
@@ -17,7 +18,8 @@ public class Nomina {
     // Constructor con campos principales
     public Nomina(int idConcierto, int idUsuario, String rol,
                   double horasTrabajadas, double tarifaPorHora,
-                  double horasExtra, double total, boolean pagado) {
+                  double horasExtra, double total, String estado,
+                  boolean pagado) {
 
         this.idConcierto = idConcierto;
         this.idUsuario = idUsuario;
@@ -26,6 +28,7 @@ public class Nomina {
         this.tarifaPorHora = tarifaPorHora;
         this.horasExtra = horasExtra;
         this.total = total;
+        this.estado = estado;
         this.pagado = pagado;
     }
 
@@ -48,4 +51,5 @@ public class Nomina {
     public void setTotal(double total) { this.total = total; }
     public boolean isPagado() { return pagado; }
     public void setPagado(boolean pagado) { this.pagado = pagado; }
+    public String getEstado() { return estado; } public void setEstado(String estado) { this.estado = estado; }
 }

@@ -21,13 +21,16 @@ public class ContratoRepository {
     // =========================
     public int guardar(Contrato c) {
 
-        String sql = "INSERT INTO Contrato (fecha) VALUES (?)";
+        String sql = "INSERT INTO Contrato (fecha, estadoFirma) VALUES (?, ?)";
+
         int idGenerado = 0;
 
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setDate(1, Date.valueOf(c.getFecha()));
+            stmt.setString(2, c.getEstadoFirma());
+
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -82,6 +85,7 @@ public class ContratoRepository {
                 Contrato c = new Contrato();
                 c.setIdContrato(rs.getInt("idContrato"));
                 c.setFecha(rs.getDate("fecha").toLocalDate());
+                c.setEstadoFirma(rs.getString("estadoFirma"));
 
                 lista.add(c);
             }
@@ -110,6 +114,7 @@ public class ContratoRepository {
                 Contrato c = new Contrato();
                 c.setIdContrato(rs.getInt("idContrato"));
                 c.setFecha(rs.getDate("fecha").toLocalDate());
+                c.setEstadoFirma(rs.getString("estadoFirma"));
                 return c;
             }
 
@@ -150,4 +155,23 @@ public class ContratoRepository {
 
         return lista;
     }
+
+    public void actualizarEstadoFirma(int idContrato, String estado) {
+
+        String sql =
+                "UPDATE Contrato SET estadoFirma = ? WHERE idContrato = ?";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, estado);
+            stmt.setInt(2, idContrato);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

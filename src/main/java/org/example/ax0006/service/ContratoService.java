@@ -78,4 +78,12 @@ public class ContratoService {
     public List<Clausula> obtenerClausulas(int idContrato) {
         return contratoRepo.obtenerClausulasPorContrato(idContrato);
     }
+
+    public void aprobarFirma(int idContrato) {
+        contratoRepo.actualizarEstadoFirma(idContrato, "APROBADO");
+    }
+
+    public void rechazarFirma(int idContrato) {
+        contratoRepo.actualizarEstadoFirma(idContrato, "RECHAZADO");
+    }
 }

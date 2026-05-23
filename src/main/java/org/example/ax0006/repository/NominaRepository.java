@@ -16,7 +16,7 @@ public class NominaRepository {
     }
 
     public void guardar(Nomina nomina) {
-        String sql = "INSERT INTO Nomina (idConcierto, idUsuario, rol, horasTrabajadas, tarifaPorHora, horasExtra, total, pagado) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Nomina (idConcierto, idUsuario, rol, horasTrabajadas, tarifaPorHora, horasExtra, total, estado, pagado) VALUES (?,?,?,?,?,?,?,?,?)";
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, nomina.getIdConcierto());
@@ -26,7 +26,9 @@ public class NominaRepository {
             stmt.setDouble(5, nomina.getTarifaPorHora());
             stmt.setDouble(6, nomina.getHorasExtra());
             stmt.setDouble(7, nomina.getTotal());
-            stmt.setBoolean(8, nomina.isPagado());
+            stmt.setString(8, nomina.getEstado());
+            stmt.setBoolean(9, nomina.isPagado());
+
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
@@ -54,6 +56,7 @@ public class NominaRepository {
                 n.setTarifaPorHora(rs.getDouble("tarifaPorHora"));
                 n.setHorasExtra(rs.getDouble("horasExtra"));
                 n.setTotal(rs.getDouble("total"));
+                n.setEstado(rs.getString("estado"));
                 n.setPagado(rs.getBoolean("pagado"));
                 lista.add(n);
             }
@@ -63,26 +66,96 @@ public class NominaRepository {
         return lista;
     }
 
-    public void actualizarHorasExtraYTotal(int idNomina, double horasExtra, double total) {
-        String sql = "UPDATE Nomina SET horasExtra = ?, total = ? WHERE idNomina = ?";
+    public void actualizarHorasExtraYTotal(int idNomina,
+                                           double horasExtra,
+                                           double total) {
+
+        String sql = """
+    UPDATE Nomina
+    SET horasExtra = ?,
+        total = ?
+    WHERE idNomina = ?
+    """;
+
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setDouble(1, horasExtra);
             stmt.setDouble(2, total);
             stmt.setInt(3, idNomina);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarHorasYTarifa(int idNomina, double horasTrabajadas, double tarifaPorHora, double horasExtra) {
+
+        double total = (horasTrabajadas * tarifaPorHora) + (horasExtra * tarifaPorHora * 1.5);
+
+        String sql = """
+        UPDATE Nomina
+        SET horasTrabajadas = ?,
+            tarifaPorHora = ?,
+            horasExtra = ?,
+            total = ?
+        WHERE idNomina = ?
+        """;
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, horasTrabajadas);
+            stmt.setDouble(2, tarifaPorHora);
+            stmt.setDouble(3, horasExtra);
+            stmt.setDouble(4, total);
+            stmt.setInt(5, idNomina);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarEstado(int idNomina, String estado) {
+        String sql = "UPDATE Nomina SET estado = ? WHERE idNomina = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, estado);
+            stmt.setInt(2, idNomina);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void actualizarEstado(int idNomina, boolean pagado) {
-        String sql = "UPDATE Nomina SET pagado = ? WHERE idNomina = ?";
+    public void actualizarHorasYTarifa(int idNomina,
+                                       double horasTrabajadas,
+                                       double tarifaPorHora) {
+
+        double total = horasTrabajadas * tarifaPorHora;
+
+        String sql = """
+        UPDATE Nomina
+        SET horasTrabajadas = ?,
+            tarifaPorHora = ?,
+            total = ?
+        WHERE idNomina = ?
+        """;
+
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setBoolean(1, pagado);
-            stmt.setInt(2, idNomina);
+
+            stmt.setDouble(1, horasTrabajadas);
+            stmt.setDouble(2, tarifaPorHora);
+            stmt.setDouble(3, total);
+            stmt.setInt(4, idNomina);
+
             stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,6 +177,7 @@ public class NominaRepository {
                 n.setTarifaPorHora(rs.getDouble("tarifaPorHora"));
                 n.setHorasExtra(rs.getDouble("horasExtra"));
                 n.setTotal(rs.getDouble("total"));
+                n.setEstado(rs.getString("estado"));
                 n.setPagado(rs.getBoolean("pagado"));
                 return n;
             }
@@ -111,5 +185,41 @@ public class NominaRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Nomina> obtenerTodas() {
+
+        List<Nomina> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM Nomina";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Nomina n = new Nomina();
+
+                n.setIdNomina(rs.getInt("idNomina"));
+                n.setIdConcierto(rs.getInt("idConcierto"));
+                n.setIdUsuario(rs.getInt("idUsuario"));
+                n.setRol(rs.getString("rol"));
+                n.setHorasTrabajadas(rs.getDouble("horasTrabajadas"));
+                n.setTarifaPorHora(rs.getDouble("tarifaPorHora"));
+                n.setHorasExtra(rs.getDouble("horasExtra"));
+                n.setTotal(rs.getDouble("total"));
+                n.setEstado(rs.getString("estado"));
+                n.setPagado(rs.getBoolean("pagado"));
+
+                lista.add(n);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

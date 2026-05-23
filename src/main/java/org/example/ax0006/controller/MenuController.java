@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.ConciertoService;
+import org.example.ax0006.service.NominaService;
 
 import java.io.IOException;
 
@@ -16,8 +17,17 @@ public class MenuController {
     private SceneManager sceneManager;
     private SesionManager sesion;
     private ConciertoService conciertoService;
+    private NominaService nominaService;
 
-    public MenuController() {
+    public MenuController(SceneManager sceneManager,
+                          SesionManager sesion,
+                          ConciertoService conciertoService,
+                          NominaService nominaService) {
+
+        this.sceneManager = sceneManager;
+        this.sesion = sesion;
+        this.conciertoService = conciertoService;
+        this.nominaService = nominaService;
     }
 
     public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService) {
@@ -117,7 +127,9 @@ public class MenuController {
     @FXML
     private void On_Nomina() {
         try {
-            sceneManager.showNomina();
+            sceneManager.showAsignarNomina(
+                    nominaService.obtenerTodas()
+            );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,8 +137,34 @@ public class MenuController {
 
     @FXML
     void On_LiquidacionHoras(ActionEvent event) {
+
+        int rol = sesion.getUsuarioActual().getIdRol();
+
+        // SOLO MANAGER
+        if (rol != 3) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Acceso denegado");
+            alert.setHeaderText("No autorizado");
+            alert.setContentText(
+                    "Solo el manager puede gestionar nóminas."
+            );
+
+            alert.showAndWait();
+
+            return;
+        }
+
         try {
+
+            System.out.println(
+                    "ROL EN MENU: " +
+                            sesion.getUsuarioActual().getIdRol()
+            );
+
             sceneManager.showNomina();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
