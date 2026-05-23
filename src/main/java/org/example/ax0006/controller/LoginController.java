@@ -93,6 +93,7 @@ public class LoginController {
 
     @FXML
         /* METODO PARA PODER IR A LA PANTALLA DE SIGN UP */
+        /*METODO PARA PODER IR A LA PANTALLA DE SIGN UP*/
     void On_sign_up(ActionEvent event) throws IOException {
         sceneManager.showSignUp();
     }

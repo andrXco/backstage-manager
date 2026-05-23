@@ -54,9 +54,37 @@ public class MenuController {
     private Label fid_lbl_contador_bandeja;
 
     @FXML
+    private Button fid_bt_crearObjeto;
+
+    @FXML
+    private Button fid_bt_mantenimientoObjeto;
+
+
+    @FXML
     public void initialize() {
-        setNombreBienvenido();
-        actualizarContadorBandeja();
+        if (sesion != null && sesion.getUsuarioActual() != null) {
+            fid_Bienvenido.setText("Bienvenido " + sesion.getUsuarioActual().getNombre());
+
+            boolean esAdmin = sesion.getUsuarioActual().getIdRol() == 1;
+            boolean esTecnico = sesion.getUsuarioActual().getIdRol() == 2;
+            boolean esManager = sesion.getUsuarioActual().getIdRol() == 3;
+            fid_bt_admin.setVisible(esAdmin);
+            fid_bt_admin.setManaged(esAdmin);
+
+            fid_bt_crearObjeto.setVisible(esAdmin);
+            fid_bt_crearObjeto.setManaged(esAdmin);
+
+            fid_bt_mantenimientoObjeto.setVisible(esAdmin || esManager);
+            fid_bt_mantenimientoObjeto.setManaged(esAdmin || esManager);
+
+            if (sesion.getConciertoActual() != null) {
+                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
+            } else {
+                fid_lbl_concierto.setText("");
+            }
+
+            actualizarContadorBandeja();
+        }
     }
 
     public void setNombreBienvenido() {
@@ -127,5 +155,22 @@ public class MenuController {
     @FXML
     void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
+    }
+
+    @FXML
+    void on_bt_crearObjeto(ActionEvent event) throws IOException {
+        sceneManager.showCrearObjeto();
+    }
+
+    @FXML
+    void on_bt_MantenimientoObjeto() throws IOException {
+        sceneManager.showMantenimiento();
+    }
+
+
+
+    @FXML
+    void On_Directorio_Staff(ActionEvent event) throws IOException {
+        sceneManager.showDirectorioStaff();
     }
 }

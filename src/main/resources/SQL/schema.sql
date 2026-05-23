@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS Usuario (
     FOREIGN KEY (idRol) REFERENCES Rol(idRol)
     );
 
+ALTER TABLE Usuario
+    ADD COLUMN IF NOT EXISTS idRol INT DEFAULT 0;
+
 CREATE TABLE IF NOT EXISTS Contrato (
                                         idContrato INT AUTO_INCREMENT PRIMARY KEY,
                                         fecha DATE NOT NULL
@@ -46,10 +49,24 @@ CREATE TABLE IF NOT EXISTS Horario (
                                        horaFin TIME NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS ReferenciaDeObjeto (
+   idReferenciaObjeto INT AUTO_INCREMENT PRIMARY KEY,
+   referencia VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS TipoObjeto (
-                                          idTipoObjeto INT AUTO_INCREMENT PRIMARY KEY,
-                                          nombre VARCHAR(255)
-    );
+
+    idTipoObjeto INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Objeto (
+    idObjeto INT AUTO_INCREMENT PRIMARY KEY,
+    idTipoObjeto INT NOT NULL,
+    idReferenciaObjeto INT NOT NULL,
+    FOREIGN KEY (idTipoObjeto) REFERENCES TipoObjeto(idTipoObjeto),
+    FOREIGN KEY (idReferenciaObjeto) REFERENCES ReferenciaDeObjeto(idReferenciaObjeto)
+);
 
 CREATE TABLE IF NOT EXISTS ObjetoInventario (
                                                 idInventario INT AUTO_INCREMENT PRIMARY KEY,
@@ -86,6 +103,16 @@ CREATE TABLE IF NOT EXISTS ConciertoInventario (
     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
     );
 
+-- Tabla que almacena los subroles disponibles para usuarios con rol Staff
+CREATE TABLE IF NOT EXISTS Subrol (
+                                      idSubrol INT AUTO_INCREMENT PRIMARY KEY,
+                                      nombre VARCHAR(100) NOT NULL
+);
+
+-- Insertar subroles por defecto
+MERGE INTO Subrol (idSubrol, nombre) KEY(idSubrol)
+    VALUES (1, 'Sonido'), (2, 'Luces'), (3, 'Seguridad'), (4, 'Logística'), (5, 'Producción');
+
 CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
                                                    idRol INT,
                                                    idUsuario INT,
@@ -120,6 +147,33 @@ CREATE TABLE IF NOT EXISTS EstadoActividadUsuario (
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
     );
 
+CREATE TABLE IF NOT EXISTS DocumentoInventario (
+        idDocumentoInventario INT AUTO_INCREMENT PRIMARY KEY
+    );
+
+CREATE TABLE IF NOT EXISTS ObjetoDocumentoInventario (
+        idInventario INT,
+        idObjeto INT,
+        FOREIGN KEY (idInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
+        FOREIGN KEY (idObjeto) REFERENCES Objeto(idObjeto)
+    );
+
+CREATE TABLE IF NOT EXISTS DocumentoInventarioHorario (
+        idDocumentoInventario INT,
+        idHorario INT,
+        PRIMARY KEY (idDocumentoInventario, idHorario),
+        FOREIGN KEY (idDocumentoInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
+        FOREIGN KEY (idHorario) REFERENCES Horario(idHorario)
+    );
+
+CREATE TABLE IF NOT EXISTS ConciertoDocumentoInventario (
+        idDocumentoInventario INT,
+        idConcierto INT,
+        PRIMARY KEY (idDocumentoInventario, idConcierto),
+        FOREIGN KEY (idDocumentoInventario) REFERENCES DocumentoInventario(idDocumentoInventario),
+        FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
+    );
+
 -- Insertar roles por defecto
 MERGE INTO Rol (idRol, rol) KEY(idRol)
     VALUES (0, 'Sin rol'),(1, 'Administrador'), (2, 'Tecnico'), (3, 'Manager'), (4, 'Staff');
@@ -137,7 +191,8 @@ MERGE INTO Usuario (idUsuario, nombre, gmail, contrasena, idRol, telefono, direc
     VALUES
     (1, 'Admin', 'admin@gestionconcierto.com', '$2a$10$ToZhw13TSN5sI4X1N9YnjuMFRk1lYBtXGtCVHzDEpWbnLHMw.9X7O', 1, '314234123', 'Calle 100 #48-90', 'Aseguradora ALIANZA', '310233211', 'Aseguradora'),
     (2, 'Feid', 'feid@vidaloka.com', '$2a$10$ToZhw13TSN5sI4X1N9YnjuMFRk1lYBtXGtCVHzDEpWbnLHMw.9X7O', 3, '310000221', 'Calle 44 #22-01', 'Centrals Seguros', '324231231', 'Aseguradora'),
-    (3, 'Pepe', 'pepe@cloro.co', '$2a$10$ToZhw13TSN5sI4X1N9YnjuMFRk1lYBtXGtCVHzDEpWbnLHMw.9X7O', 0, '312324123', 'Calle 1 #32-09', 'Abuelita Marta', '3111211', 'Abuela');
+    (3, 'Pepe', 'pepe@cloro.co', '$2a$10$ToZhw13TSN5sI4X1N9YnjuMFRk1lYBtXGtCVHzDEpWbnLHMw.9X7O', 2, '312324123', 'Calle 1 #32-09', 'Abuelita Marta', '3111211', 'Abuela');
+
 
 ALTER TABLE Usuario ALTER COLUMN idUsuario RESTART WITH 4;
 
@@ -182,3 +237,24 @@ MERGE INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) KEY (idRol, idUsu
     VALUES
     (3, 2, 1), -- Asigna a Feid (Usuario 2) al Concierto 1 con Rol 3
     (3, 2, 2); -- Asigna a Feid (Usuario 2) al Concierto 2 con Rol 3
+
+MERGE INTO TipoObjeto (tipo) KEY(tipo) VALUES
+    ('Micrófono'),
+    ('Parlante'),
+    ('Cable XLR'),
+    ('Cable de poder'),
+    ('Consola de mezcla'),
+    ('Amplificador'),
+    ('Monitor de escenario'),
+    ('Pantalla LED'),
+    ('Proyector'),
+    ('Soporte de micrófono'),
+    ('Rack de audio'),
+    ('Interfaz de audio'),
+    ('Sistema in-ear'),
+    ('Luces LED'),
+    ('Generador eléctrico');
+
+MERGE INTO Concierto (idConcierto, nombreConcierto, aforo, programado)
+    KEY(idConcierto)
+    VALUES (0, 'mantenimiento', 0, FALSE);

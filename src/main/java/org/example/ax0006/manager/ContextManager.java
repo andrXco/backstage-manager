@@ -18,6 +18,10 @@ public class ContextManager {
     private HorarioRepository horarioRepo;
     private ConciertoRepository conciertoRepo;
     private StaffService staffService;
+
+    private InventarioService inventarioService;
+    private InventarioObjetoService inventarioObjetoService;
+    private ObjetoService objetoService;
     private ContratoService contratoService;
     private ContratoRepository contratoRepo;
     private ActividadRepository actividadRepository;
@@ -35,6 +39,10 @@ public class ContextManager {
             ConciertoService conciertoService,
             SesionManager sesion,
             StaffService staffService,
+
+            InventarioService inventarioService,
+            InventarioObjetoService inventarioObjetoService,
+            ObjetoService objetoService,
             ContratoService contratoService,
             ContratoRepository contratoRepo,
             ActividadRepository actividadRepository,
@@ -51,15 +59,18 @@ public class ContextManager {
         this.rolService = rolService;
         this.sesion = sesion;
         this.staffService = staffService;
+        this.inventarioService = inventarioService;
+        this.inventarioObjetoService = inventarioObjetoService;
+        this.objetoService = objetoService;
         this.contratoService = contratoService;
         this.contratoRepo = contratoRepo;
         this.actividadRepository = actividadRepository;
         this.actividadService = actividadService;
     }
 
-
-
-
+    public InventarioService getInventarioService() { return inventarioService; }
+    public InventarioObjetoService getInventarioObjetoService() { return inventarioObjetoService; }
+    public ObjetoService getObjetoService() { return objetoService; }
     public H2 getH2() { return h2; }
     public UsuarioRepository getUsuarioRepository() { return usuarioRepository; }
     public RolRepository getRolRepository() { return rolRepository; }
@@ -73,4 +84,5 @@ public class ContextManager {
     public ContratoRepository getContratoRepository() { return contratoRepo; }
     public ActividadRepository getActividadRepository() { return actividadRepository; }
     public ActividadService getActividadService() { return actividadService; }
+    public HorarioRepository getHorarioRepo() {return horarioRepo;}
 }

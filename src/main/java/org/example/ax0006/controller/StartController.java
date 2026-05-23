@@ -40,16 +40,26 @@ public class StartController extends Application {
         ContratoRepository contratoRepo = new ContratoRepository(h2);
         ActividadRepository actividadRepo = new ActividadRepository(h2);
 
+        InventarioRepository inventarioRepo = new InventarioRepository(h2);
+        InventarioObjetoRepository inventarioObjetoRepo = new InventarioObjetoRepository(h2);
+        ObjetoRepository objetoRepo = new ObjetoRepository(h2);
+
         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo,asignacionStaffRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);
-        ConciertoService conciertoService = new ConciertoService(conciertoRepo, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
-        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo);
         ActividadService actividadService = new ActividadService(actividadRepo, usuarioRepo);
+        InventarioService inventarioService = new InventarioService(inventarioRepo);
 
-        // MANAGERS
+        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
+
+        InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
+        ObjetoService objetoService = new ObjetoService(objetoRepo);
+        ConciertoService conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
+
+
+
         SesionManager sesion = new SesionManager();
         ContextManager context = new ContextManager(
                 h2,
@@ -63,6 +73,9 @@ public class StartController extends Application {
                 conciertoService,
                 sesion,
                 staffService,
+                inventarioService,
+                inventarioObjetoService,
+                objetoService,
                 contratoService,
                 contratoRepo,
                 actividadRepo,

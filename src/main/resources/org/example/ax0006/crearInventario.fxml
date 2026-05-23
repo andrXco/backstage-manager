@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f3f4f6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text layoutX="400.0" layoutY="60.0" text="Gestión de Inventario de Concierto">
+            <font><Font name="System Bold" size="28.0"/></font>
+        </Text>
+
+        <VBox layoutX="100.0" layoutY="100.0" prefWidth="450.0" spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <children>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Información del Concierto" />
+                <VBox spacing="5.0">
+                    <Label text="ID Concierto Relacionado:" />
+                    <TextField fx:id="tf_idConcierto" editable="false" prefHeight="35.0" style="-fx-background-color: #e5e7eb;" />
+                </VBox>
+                <HBox spacing="10.0">
+                    <VBox spacing="5.0">
+                        <Label text="Fecha Inicio:" />
+                        <DatePicker fx:id="dp_fechaInicio" prefWidth="200.0" />
+                    </VBox>
+                    <VBox spacing="5.0">
+                        <Label text="Fecha Fin:" />
+                        <DatePicker fx:id="dp_fechaFin" prefWidth="200.0" />
+                    </VBox>
+                </HBox>
+                <HBox spacing="10.0">
+                    <VBox spacing="5.0">
+                        <Label text="Hora Inicio:" />
+                        <TextField fx:id="tf_horaInicio" promptText="HH:mm" />
+                    </VBox>
+                    <VBox spacing="5.0">
+                        <Label text="Hora Fin:" />
+                        <TextField fx:id="tf_horaFin" promptText="HH:mm" />
+                    </VBox>
+                </HBox>
+                <Separator />
+                <Button fx:id="btn_confirmar_todo" onAction="#on_bt_crear" prefHeight="50.0" prefWidth="410.0" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold;" text="CONFIRMAR TODO EL INVENTARIO" />
+                <Button onAction="#on_bt_volver" prefHeight="35.0" prefWidth="410.0" style="-fx-background-color: #ef4444; -fx-text-fill: white;" text="Volver al Menú" />
+            </children>
+        </VBox>
+
+        <StackPane layoutX="600.0" layoutY="100.0" prefHeight="600.0" prefWidth="500.0">
+            <children>
+
+                <VBox fx:id="panel_agregar" spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Agregar Objetos al Inventario" />
+                        <HBox spacing="10.0">
+                            <children>
+                                <ComboBox fx:id="cb_objetos" prefHeight="40.0" prefWidth="350.0" promptText="Seleccionar objeto de la base de datos..." />
+                                <Button onAction="#on_bt_agregar_lista" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white;" text="Agregar" />
+                            </children>
+                        </HBox>
+                        <Label text="Objetos seleccionados:" />
+                        <ListView fx:id="lv_objetos_seleccionados" prefHeight="350.0" prefWidth="460.0" />
+                        <Button onAction="#on_bt_quitar_lista" style="-fx-background-color: #f87171; -fx-text-fill: white;" text="Quitar Seleccionado" />
+                    </children>
+                </VBox>
+
+                <VBox fx:id="panel_eliminar" alignment="CENTER" managed="false" spacing="25.0" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 10; -fx-border-color: #ef4444; -fx-border-radius: 10; -fx-border-width: 2;" visible="false">
+                    <children>
+                        <Label text="¡Inventario Detectado!" style="-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #ef4444;" />
+                        <Text text="Este concierto ya tiene objetos asignados. Para crear un nuevo inventario desde cero, primero debes eliminar el actual." textAlignment="CENTER" wrappingWidth="400.0">
+                            <font><Font size="14.0" /></font>
+                        </Text>
+                        <Button onAction="#on_bt_eliminar_existente" prefHeight="60.0" prefWidth="350.0" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand;" text="ELIMINAR INVENTARIO EXISTENTE" />
+                        <Label text="Nota: Esta acción no se puede deshacer." style="-fx-text-fill: #64748b; -fx-font-style: italic;" />
+                    </children>
+                </VBox>
+
+            </children>
+        </StackPane>
+    </children>
+</Pane>
