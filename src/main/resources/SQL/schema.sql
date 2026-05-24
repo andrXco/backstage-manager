@@ -1,5 +1,27 @@
 -- schema.sql
 -- Creación de la estructura de la base de datos para la Gestión de Conciertos
+DROP TABLE IF EXISTS ConciertoDocumentoInventario;
+DROP TABLE IF EXISTS ObjetoDocumentoInventario;
+DROP TABLE IF EXISTS DocumentoInventarioHorario;
+DROP TABLE IF EXISTS DocumentoInventario;
+DROP TABLE IF EXISTS ConciertoInventario;
+DROP TABLE IF EXISTS RolConciertoUsuario;
+DROP TABLE IF EXISTS HorarioUsuario;
+DROP TABLE IF EXISTS Boleteria;
+DROP TABLE IF EXISTS Ingreso;
+DROP TABLE IF EXISTS Gasto;
+DROP TABLE IF EXISTS Concierto;
+DROP TABLE IF EXISTS AnalisisFinanciero;
+DROP TABLE IF EXISTS Clausula;
+DROP TABLE IF EXISTS Contrato;
+DROP TABLE IF EXISTS Horario;
+DROP TABLE IF EXISTS Objeto;
+DROP TABLE IF EXISTS ObjetoInventario;
+DROP TABLE IF EXISTS ReferenciaDeObjeto;
+DROP TABLE IF EXISTS TipoObjeto;
+DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS Subrol;
+DROP TABLE IF EXISTS Rol;
 
 CREATE TABLE IF NOT EXISTS Rol (
         idRol INT AUTO_INCREMENT PRIMARY KEY,
@@ -204,7 +226,8 @@ ALTER TABLE Usuario ALTER COLUMN idUsuario RESTART WITH 4;
 MERGE INTO Horario (idHorario, fechaInc, fechaFin, horaInc, horaFin) KEY (idHorario)
     VALUES
     (1, '2026-05-01', '2026-05-01', '20:00:00', '01:00:00'),
-    (2, '2026-07-05', '2026-07-07', '21:00:00', '03:00:00');
+    (2, '2026-05-04', '2026-05-05', '20:00:00', '01:00:00'),
+    (3, '2026-07-05', '2026-07-07', '21:00:00', '03:00:00');
 
 ALTER TABLE Horario ALTER COLUMN idHorario RESTART WITH 3;
 
@@ -212,7 +235,8 @@ ALTER TABLE Horario ALTER COLUMN idHorario RESTART WITH 3;
 MERGE INTO Contrato (idContrato, fecha) KEY (idContrato)
     VALUES
     (1, '2026-04-01'),
-    (2, '2026-06-05');
+    (2, '2026-04-01'),
+    (3, '2026-06-05');
 
 ALTER TABLE Contrato ALTER COLUMN idContrato RESTART WITH 3;
 
@@ -231,7 +255,8 @@ ALTER TABLE Clausula ALTER COLUMN idClausula RESTART WITH 6;
 MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado, idAnalisisF) KEY(idConcierto)
     VALUES
     (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, null),
-    (2, 'Vida loka', 2, 35000, 2, TRUE, null);
+    (2, 'Hola Mundo', 1, 100001, 1, FALSE, null),
+    (3, 'Vida loka', 2, 35000, 2, TRUE, null);
 
 ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
 
