@@ -83,18 +83,6 @@
                                    -fx-font-weight: bold;
                                    -fx-background-radius: 12;"/>
                     
-                    <!-- ASIGNAR -->
-                    <Button fx:id="fid_bt_AsignarPresupuesto"
-                            text="Asignar Presupuesto a Concierto"
-                            onAction="#On_AsignarPresupuesto"
-                            prefWidth="420"
-                            prefHeight="70"
-                            style="-fx-background-color: #9333ea;
-                                -fx-text-fill: white;
-                                -fx-font-size: 18px;
-                                -fx-font-weight: bold;
-                                -fx-background-radius: 12;"/>
-
                 </VBox>
 
             </center>

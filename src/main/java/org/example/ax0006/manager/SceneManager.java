@@ -208,24 +208,6 @@ public class SceneManager {
     );
     }
 
-    public void showAsignarPresupuesto() throws IOException {
-
-    AsignarPresupuestoController controller =
-            new AsignarPresupuestoController(
-
-                    context.getAnalisisFinancieroService(),
-                    context.getConciertoService(),
-                    this
-            );
-
-    loadScene(
-            "/org/example/ax0006/asignarpresupuesto.fxml",
-            controller
-    );
-    }
-    
-    
-
     public void setContratoTemporal(Integer id) {
         this.contratoTemporal = id;
     }
