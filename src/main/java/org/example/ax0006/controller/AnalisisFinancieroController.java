@@ -234,16 +234,15 @@ public class AnalisisFinancieroController {
             );
 
         } else {
-
-            int nuevoId =
-                    analisisService.crearPresupuesto(1);
-
-            conciertoService.asignarPresupuesto(
-                    conciertoSeleccionado.getIdConcierto(),
-                    nuevoId
-            );
-
-            cargarAnalisis(nuevoId);
+            idAnalisisActual = 0;
+            lbl_idPresupuesto.setText("ID Presupuesto: No creado");
+            fid_presupuesto.clear();
+            chk_aprobado.setSelected(false);
+            tablaGastos.getItems().clear();
+            tablaIngresos.getItems().clear();
+            tablaBoleteria.getItems().clear();
+            lblTotalGastos.setText("Gasto Total: 0");
+            lblTotalIngresos.setText("Ingreso Total: 0");
         }
     }
 

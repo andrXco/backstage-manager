@@ -1,27 +1,5 @@
 -- schema.sql
 -- Creación de la estructura de la base de datos para la Gestión de Conciertos
-DROP TABLE IF EXISTS ConciertoDocumentoInventario;
-DROP TABLE IF EXISTS ObjetoDocumentoInventario;
-DROP TABLE IF EXISTS DocumentoInventarioHorario;
-DROP TABLE IF EXISTS DocumentoInventario;
-DROP TABLE IF EXISTS ConciertoInventario;
-DROP TABLE IF EXISTS RolConciertoUsuario;
-DROP TABLE IF EXISTS HorarioUsuario;
-DROP TABLE IF EXISTS Boleteria;
-DROP TABLE IF EXISTS Ingreso;
-DROP TABLE IF EXISTS Gasto;
-DROP TABLE IF EXISTS Concierto;
-DROP TABLE IF EXISTS AnalisisFinanciero;
-DROP TABLE IF EXISTS Clausula;
-DROP TABLE IF EXISTS Contrato;
-DROP TABLE IF EXISTS Horario;
-DROP TABLE IF EXISTS Objeto;
-DROP TABLE IF EXISTS ObjetoInventario;
-DROP TABLE IF EXISTS ReferenciaDeObjeto;
-DROP TABLE IF EXISTS TipoObjeto;
-DROP TABLE IF EXISTS Usuario;
-DROP TABLE IF EXISTS Subrol;
-DROP TABLE IF EXISTS Rol;
 
 CREATE TABLE IF NOT EXISTS Rol (
         idRol INT AUTO_INCREMENT PRIMARY KEY,
