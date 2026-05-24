@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="800.0" prefWidth="1200.0" spacing="20.0" style="-fx-background-color: #f8fafc; -fx-padding: 40;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Button onAction="#on_volver" style="-fx-background-color: #64748b; -fx-text-fill: white;" text="← Volver" />
+            <Text fx:id="txt_titulo" text="Detalles del Concierto">
+                <font><Font name="System Bold" size="28.0" /></font>
+            </Text>
+        </HBox>
+
+        <GridPane hgap="20" vgap="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="200" />
+                <ColumnConstraints prefWidth="400" />
+            </columnConstraints>
+            <children>
+                <Label text="Nombre del Concierto:" style="-fx-font-weight: bold;" GridPane.rowIndex="0" />
+                <Label fx:id="lbl_nombre" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Aforo Total:" style="-fx-font-weight: bold;" GridPane.rowIndex="1" />
+                <Label fx:id="lbl_aforo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Horario:" style="-fx-font-weight: bold;" GridPane.rowIndex="2" />
+                <Label fx:id="lbl_horario" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="ID Contrato:" style="-fx-font-weight: bold;" GridPane.rowIndex="3" />
+                <Label fx:id="lbl_contrato" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </children>
+        </GridPane>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS">
+            <Label text="Inventario Asignado (Objetos):" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+            <ListView fx:id="lv_inventario" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;" />
+        </VBox>
+    </children>
+</VBox>

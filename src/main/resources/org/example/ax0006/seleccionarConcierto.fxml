@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="20.0" style="-fx-background-color: #f8fafc; -fx-padding: 40;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Concierto para Inventario">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Text>
+
+        <Label text="Selecciona de la lista el concierto al que deseas vincular un nuevo inventario:" style="-fx-font-size: 14px; -fx-text-fill: #64748b;" />
+
+        <TableView fx:id="tv_conciertos" prefHeight="500.0" prefWidth="1120.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
+            <columns>
+                <TableColumn fx:id="col_id" prefWidth="100.0" text="ID" />
+                <TableColumn fx:id="col_nombre" prefWidth="400.0" text="Nombre del Concierto" />
+                <TableColumn fx:id="col_fecha" prefWidth="250.0" text="Fecha" />
+                <TableColumn fx:id="col_estado" prefWidth="200.0" text="Estado (Programado)" />
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER" spacing="30.0">
+            <children>
+                <Button onAction="#on_bt_volver" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold;" text="CANCELAR" />
+                <Button onAction="#on_bt_seleccionar" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;" text="CONTINUAR A INVENTARIO" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

@@ -86,7 +86,7 @@ public class SignUpController {
     }
 
     @FXML
-    /*METODO PARA HACER QUE EL '👁' QUE MUESTRA LA CONTRASEÑA FUNCIONE EN EL CAMPO DE CONFIRMAR CONTRASEÑA*/
+        /*METODO PARA HACER QUE EL '👁' QUE MUESTRA LA CONTRASEÑA FUNCIONE EN EL CAMPO DE CONFIRMAR CONTRASEÑA*/
     void togglePasswordConfirmation() {
         if (mostrandoConfirmation) {
             fid_ContrasenaConfirmation.setText(fid_ContrasenaVisibleConfirmation.getText());
@@ -183,4 +183,3 @@ public class SignUpController {
     }
 
 }
-
