@@ -293,7 +293,7 @@ public class ConciertoRepository {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Concierto c = new Concierto();
-                    
+
                     c.setIdConcierto(rs.getInt("idConcierto"));
                     c.setNombreConcierto(rs.getString("nombreConcierto"));
                     c.setAforo(rs.getInt("aforo"));
