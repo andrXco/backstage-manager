@@ -3,7 +3,6 @@
  * JULIAN LEON
  * ANDRES
  */
-
 package org.example.ax0006.repository;
 
 import org.example.ax0006.entity.Rol;
@@ -12,7 +11,6 @@ import org.example.ax0006.db.H2;
 import org.example.ax0006.entity.Usuario;
 
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,19 +18,13 @@ public class UsuarioRepository {
 
     private H2 h2;
 
-
-
-    //CONSTRUCTOR
     public UsuarioRepository(H2 h2) {
         this.h2 = h2;
     }
 
-
-    //INSERTA USUARIOS A LA BASE SE DATOS CON AYUDA DEL INSERT INTO A USUARIO:
     public boolean guardar(Usuario u) {
         String sql = "INSERT INTO Usuario (nombre, contrasena, gmail, idRol) VALUES (?, ?, ?, ?)";
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = h2.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             String hash = BCrypt.hashpw(u.getContrasena(), BCrypt.gensalt());
             stmt.setString(1, u.getNombre());
             stmt.setString(2, hash);
@@ -47,7 +39,6 @@ public class UsuarioRepository {
         }
     }
 
-    //SE HACE LA CONSULTA AL NOMBRE QUE SE RECIBE COMO PARAMETRO A LA BASE DE DATOS.
     public Usuario buscarPorNombre(String nombre) {
         String sql = """
                 SELECT u.idUsuario, u.nombre, u.contrasena, u.gmail, u.idRol,
@@ -83,8 +74,6 @@ public class UsuarioRepository {
         return null;
     }
 
-
-    //METODO PARA OBTENER TODOS LOS USUARIOS REGISTRADOS EN LA BASE DE DATOS
     public List<Usuario> obtenerUsuarios() {
         List<Usuario> lista = new ArrayList<>();
 
@@ -126,9 +115,6 @@ public class UsuarioRepository {
         return roles.isEmpty() ? "Sin rol" : String.join(", ", roles);
     }
 
-
-
-    //PERMITE BUSCAR EL USUARIO Y MOSTRARLO EN SU PERFIL
     public Usuario buscarCompletoPorId(int idUsuario) {
         String sql = """
         SELECT 
@@ -238,6 +224,26 @@ public class UsuarioRepository {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Elimina un usuario por su ID (Solo Administrador)
+     */
+    public boolean eliminarPorId(int idUsuario) {
+        String sql = "DELETE FROM Usuario WHERE idUsuario = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            int filasEliminadas = stmt.executeUpdate();
+
+            System.out.println("Usuario eliminado ID: " + idUsuario + " | Filas: " + filasEliminadas);
+            return filasEliminadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

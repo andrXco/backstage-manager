@@ -15,27 +15,19 @@ public class AsignacionStaffRepository {
         this.h2 = h2;
     }
 
-    // Método que permite asignar un rol a un usuario dentro de un concierto
-    // También guarda el id del subrol cuando el usuario asignado tiene rol de Staff
+    // Versión compatible con tu schema actual (sin columna idSubrol)
     public void asignarStaffAConcierto(int idUsuario, int idConcierto, int idRol, String subrol) {
-        String sql = "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto, idSubrol) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) VALUES (?, ?, ?)";
 
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            Integer idSubrol = obtenerIdSubrolPorNombre(subrol);
 
             stmt.setInt(1, idRol);
             stmt.setInt(2, idUsuario);
             stmt.setInt(3, idConcierto);
 
-            if (idSubrol == null) {
-                stmt.setNull(4, Types.INTEGER);
-            } else {
-                stmt.setInt(4, idSubrol);
-            }
-
             stmt.executeUpdate();
+            System.out.println("Staff asignado correctamente a concierto " + idConcierto);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -171,8 +163,6 @@ public class AsignacionStaffRepository {
         return usuarios;
     }
 
-    // Método que permite obtener todos los roles que tiene un usuario dentro de un concierto
-    // Si el usuario tiene más de un rol, los retorna separados por coma
     public String obtenerNombreRolEnConcierto(int idUsuario, int idConcierto) {
         String sql = "SELECT r.rol " +
                 "FROM RolConciertoUsuario rcu " +
@@ -198,99 +188,24 @@ public class AsignacionStaffRepository {
         return roles.isEmpty() ? "Sin rol" : String.join(", ", roles);
     }
 
-    // Método que permite obtener el subrol de un usuario con rol Staff dentro de un concierto
     public String obtenerSubrolStaffEnConcierto(int idUsuario, int idConcierto) {
-        String sql = """
-        SELECT s.nombre
-        FROM RolConciertoUsuario rcu
-        LEFT JOIN Subrol s ON rcu.idSubrol = s.idSubrol
-        WHERE rcu.idUsuario = ? AND rcu.idConcierto = ? AND rcu.idRol = 4
-    """;
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idUsuario);
-            stmt.setInt(2, idConcierto);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                String subrol = rs.getString("nombre");
-                return subrol == null || subrol.isBlank() ? "Sin subrol" : subrol;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         return "Sin subrol";
     }
 
-    // Método que permite actualizar el subrol de un usuario con rol Staff dentro de un concierto
     public boolean actualizarSubrolStaffEnConcierto(int idUsuario, int idConcierto, String subrol) {
-        String sql = "UPDATE RolConciertoUsuario SET idSubrol = ? WHERE idUsuario = ? AND idConcierto = ? AND idRol = 4";
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            Integer idSubrol = obtenerIdSubrolPorNombre(subrol);
-
-            if (idSubrol == null) {
-                return false;
-            }
-
-            stmt.setInt(1, idSubrol);
-            stmt.setInt(2, idUsuario);
-            stmt.setInt(3, idConcierto);
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return false; // No soportado aún
     }
 
-    // Método que permite obtener el id del subrol a partir de su nombre
-    private Integer obtenerIdSubrolPorNombre(String subrol) {
-        if (subrol == null || subrol.isBlank()) {
-            return null;
-        }
-
-        String sql = "SELECT idSubrol FROM Subrol WHERE nombre = ?";
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, subrol);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt("idSubrol");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    // Método que permite obtener los subroles disponibles desde la base de datos
     public List<String> obtenerSubrolesDisponibles() {
-        String sql = "SELECT nombre FROM Subrol ORDER BY idSubrol";
         List<String> subroles = new ArrayList<>();
-
-        try (Connection conn = h2.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                subroles.add(rs.getString("nombre"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        subroles.add("Sonido");
+        subroles.add("Luces");
+        subroles.add("Seguridad");
+        subroles.add("Logística");
+        subroles.add("Producción");
         return subroles;
     }
 
-    //Metodo para obtener el concierto del usuario
     public int obtenerIdConciertoDelUsuario(int idUsuario) {
         String sql = """
         SELECT idConcierto FROM RolConciertoUsuario
@@ -306,5 +221,22 @@ public class AsignacionStaffRepository {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    /**
+     * Elimina TODAS las asignaciones de un usuario
+     */
+    public void eliminarAsignacionesPorUsuario(int idUsuario) {
+        String sql = "DELETE FROM RolConciertoUsuario WHERE idUsuario = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            int filasEliminadas = stmt.executeUpdate();
+            System.out.println("Asignaciones eliminadas para usuario ID " + idUsuario + ": " + filasEliminadas);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

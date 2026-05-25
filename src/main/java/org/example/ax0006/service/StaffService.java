@@ -14,7 +14,6 @@ public class StaffService {
     private final AsignacionStaffRepository asignacionStaffRepository;
     private final ConciertoRepository conciertoRepository;
 
-    // Constructor que recibe los repositorios por inyección de dependencias
     public StaffService(UsuarioRepository usuarioRepository,
                         AsignacionStaffRepository asignacionStaffRepository,
                         ConciertoRepository conciertoRepository) {
@@ -41,8 +40,6 @@ public class StaffService {
         return usuarioRepository.obtenerUsuarios();
     }
 
-    // Método que permite asignar un rol a un usuario dentro de un concierto
-    // No elimina roles anteriores, para permitir que un usuario tenga varios roles en el mismo concierto
     public boolean asignarStaffAConcierto(int idUsuario, int idConcierto, int idRol, String subrol) {
         if (asignacionStaffRepository.existeAsignacion(idUsuario, idConcierto, idRol)) {
             return false;
@@ -55,55 +52,46 @@ public class StaffService {
         asignacionStaffRepository.eliminarAsignacion(idUsuario, idConcierto, idRol);
     }
 
-    public double generarNomina(int idConcierto) {
-        return 0.0;
-    }
-
-    // Método que permite obtener el staff que fue asignado a un concierto
     public List<Usuario> obtenerStaffPorConcierto(int idConcierto) {
         return asignacionStaffRepository.obtenerStaffPorConcierto(idConcierto);
     }
 
-    // Método que permite obtener la lista de conciertos registrados
-    public List<Concierto> listarConciertos() {
-        return conciertoRepository.obtenerConciertos();
-    }
-
-    // Retorna los ids de todos los usuarios que tienen al menos una asignación
-    public List<Integer> obtenerIdsUsuariosAsignados() {
-        return asignacionStaffRepository.obtenerIdsUsuariosAsignados();
-    }
-
-    // Retorna los usuarios asignados a un concierto específico
     public List<Usuario> obtenerUsuariosPorConcierto(int idConcierto) {
         return asignacionStaffRepository.obtenerUsuariosPorConcierto(idConcierto);
     }
 
-    // Retorna el nombre del rol del usuario en un concierto específico
     public String obtenerNombreRolEnConcierto(int idUsuario, int idConcierto) {
         return asignacionStaffRepository.obtenerNombreRolEnConcierto(idUsuario, idConcierto);
     }
 
-    // Retorna el subrol del usuario con rol Staff en un concierto específico desde la base de datos
     public String obtenerSubrolStaffEnConcierto(int idUsuario, int idConcierto) {
         return asignacionStaffRepository.obtenerSubrolStaffEnConcierto(idUsuario, idConcierto);
     }
 
-    // Actualiza el subrol del usuario con rol Staff en un concierto específico en la base de datos
     public boolean actualizarSubrolStaffEnConcierto(int idUsuario, int idConcierto, String subrol) {
-        if (subrol == null || subrol.isBlank()) {
-            return false;
-        }
-
         return asignacionStaffRepository.actualizarSubrolStaffEnConcierto(idUsuario, idConcierto, subrol);
     }
 
-    // Retorna la lista de subroles disponibles registrados en la base de datos
     public List<String> obtenerSubrolesDisponibles() {
         return asignacionStaffRepository.obtenerSubrolesDisponibles();
     }
 
     public int obtenerIdConciertoDelUsuario(int idUsuario) {
         return asignacionStaffRepository.obtenerIdConciertoDelUsuario(idUsuario);
+    }
+
+    public List<Integer> obtenerIdsUsuariosAsignados() {
+        return asignacionStaffRepository.obtenerIdsUsuariosAsignados();
+    }
+
+    /**
+     * Elimina un empleado del sistema (solo debe ser llamado por el Administrador)
+     */
+    public boolean eliminarEmpleado(int idUsuario) {
+        // Primero eliminamos todas sus asignaciones
+        asignacionStaffRepository.eliminarAsignacionesPorUsuario(idUsuario);
+
+        // Luego eliminamos el usuario
+        return usuarioRepository.eliminarPorId(idUsuario);
     }
 }

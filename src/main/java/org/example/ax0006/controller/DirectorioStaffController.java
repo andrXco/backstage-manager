@@ -4,12 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.manager.SceneManager;
@@ -35,59 +30,34 @@ public class DirectorioStaffController {
         this.staffService = staffService;
     }
 
-    @FXML
-    private ComboBox<Concierto> comboConcierto;
-
-    @FXML
-    private TableView<Usuario> tablaStaff;
-
-    @FXML
-    private TableColumn<Usuario, String> colNombre;
-
-    @FXML
-    private TableColumn<Usuario, String> colGmail;
-
-    @FXML
-    private TableColumn<Usuario, String> colSubrol;
-
-    @FXML
-    private ComboBox<String> comboSubrol;
-
-    @FXML
-    private Button btnGuardarCambios;
-
-    @FXML
-    private Button btnVolver;
+    @FXML private ComboBox<Concierto> comboConcierto;
+    @FXML private TableView<Usuario> tablaStaff;
+    @FXML private TableColumn<Usuario, String> colNombre;
+    @FXML private TableColumn<Usuario, String> colGmail;
+    @FXML private TableColumn<Usuario, String> colSubrol;
+    @FXML private ComboBox<String> comboSubrol;
+    @FXML private Button btnGuardarCambios;
+    @FXML private Button btnVolver;
+    @FXML private Button btnEliminarEmpleado;
 
     @FXML
     public void initialize() {
-        colNombre.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getNombre())
-        );
-
-        colGmail.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getGmail())
-        );
-
+        colNombre.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombre()));
+        colGmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getGmail()));
         colSubrol.setCellValueFactory(data -> {
             Concierto conciertoSeleccionado = comboConcierto.getValue();
             if (conciertoSeleccionado == null) {
                 return new SimpleStringProperty("Sin subrol");
             }
-
             String subrol = staffService.obtenerSubrolStaffEnConcierto(
                     data.getValue().getIdUsuario(),
-                    conciertoSeleccionado.getIdConcierto()
-            );
-
+                    conciertoSeleccionado.getIdConcierto());
             if (subrol == null || subrol.isBlank()) {
                 subrol = "Sin subrol";
             }
-
             return new SimpleStringProperty(subrol);
         });
 
-        // Carga los subroles disponibles desde la base de datos
         comboSubrol.getItems().addAll(staffService.obtenerSubrolesDisponibles());
 
         comboConcierto.getItems().addAll(
@@ -121,12 +91,15 @@ public class DirectorioStaffController {
         });
 
         tablaStaff.getSelectionModel().selectedItemProperty().addListener((obs, anterior, actual) -> usuarioSeleccionado = actual);
+
+        if (btnEliminarEmpleado != null) {
+            btnEliminarEmpleado.setOnAction(this::eliminarEmpleadoSeleccionado);
+        }
     }
 
     @FXML
     void On_seleccionarConcierto(ActionEvent event) {
         Concierto conciertoSeleccionado = comboConcierto.getValue();
-
         if (conciertoSeleccionado == null) {
             tablaStaff.getItems().clear();
             usuarioSeleccionado = null;
@@ -135,7 +108,6 @@ public class DirectorioStaffController {
 
         List<Usuario> staffDelConcierto = staffService.obtenerUsuariosPorConcierto(conciertoSeleccionado.getIdConcierto())
                 .stream()
-                // Se valida con contains porque ahora un usuario puede tener varios roles, por ejemplo: "Tecnico, Staff"
                 .filter(u -> {
                     String roles = staffService.obtenerNombreRolEnConcierto(u.getIdUsuario(), conciertoSeleccionado.getIdConcierto());
                     return roles != null && roles.toLowerCase().contains("staff");
@@ -207,6 +179,46 @@ public class DirectorioStaffController {
             sceneManager.showMenu();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Elimina el empleado seleccionado de la tabla (Solo Administrador)
+     */
+    @FXML
+    private void eliminarEmpleadoSeleccionado(ActionEvent event) {
+        Usuario seleccionado = tablaStaff.getSelectionModel().getSelectedItem();
+
+        if (seleccionado == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Debe seleccionar un empleado");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar Eliminación");
+        confirmacion.setHeaderText("¿Eliminar empleado?");
+        confirmacion.setContentText("¿Está seguro de eliminar a " + seleccionado.getNombre() + "?\nEsta acción no se puede deshacer.");
+
+        if (confirmacion.showAndWait().get() == ButtonType.OK) {
+            boolean eliminado = staffService.eliminarEmpleado(seleccionado.getIdUsuario());
+
+            if (eliminado) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Éxito");
+                alert.setHeaderText("Empleado eliminado");
+                alert.setContentText(seleccionado.getNombre() + " ha sido eliminado correctamente.");
+                alert.showAndWait();
+
+                On_seleccionarConcierto(null);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No se pudo eliminar");
+                alert.showAndWait();
+            }
         }
     }
 }

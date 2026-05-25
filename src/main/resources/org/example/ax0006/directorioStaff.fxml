@@ -94,6 +94,15 @@
                                                 text="Guardar cambios"
                                                 style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10;" />
 
+                                        <!-- === NUEVO: Botón Eliminar Empleado === -->
+                                        <Button fx:id="btnEliminarEmpleado"
+                                                mnemonicParsing="false"
+                                                onAction="#eliminarEmpleadoSeleccionado"
+                                                prefHeight="42.0"
+                                                prefWidth="260.0"
+                                                text="Eliminar Empleado"
+                                                style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10;" />
+
                                         <Button fx:id="btnVolver"
                                                 mnemonicParsing="false"
                                                 onAction="#On_volver"
