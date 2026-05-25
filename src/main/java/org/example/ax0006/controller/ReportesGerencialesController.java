@@ -2,14 +2,21 @@ package org.example.ax0006.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.ConciertoService;
 import org.example.ax0006.service.AnalisisFinancieroService;
+import org.example.ax0006.service.ReporteService;
+import org.example.ax0006.dto.ReporteDashboardDTO;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class ReportesGerencialesController {
 
@@ -17,18 +24,22 @@ public class ReportesGerencialesController {
     private final SesionManager sesion;
     private final ConciertoService conciertoService;
     private final AnalisisFinancieroService analisisService;
+    private final ReporteService reporteService;
 
     public ReportesGerencialesController(
             SceneManager sceneManager,
             SesionManager sesion,
             ConciertoService conciertoService,
-            AnalisisFinancieroService analisisService
+            AnalisisFinancieroService analisisService,
+            ReporteService reporteService
     ) {
         this.sceneManager = sceneManager;
         this.sesion = sesion;
         this.conciertoService = conciertoService;
         this.analisisService = analisisService;
+        this.reporteService = reporteService;
     }
+    
     // =========================
     // UI
     // =========================
@@ -79,18 +90,19 @@ public class ReportesGerencialesController {
     }
 
     // =========================
-    // KPIs (placeholder sin DB extra)
+    // KPIs
     // =========================
 
     private void cargarKPIs() {
+        ReporteDashboardDTO dashboard = reporteService.generarDashboard();
 
-        List<Concierto> conciertos = conciertoService.obtenerConciertosSolos();
+        java.text.NumberFormat currencyFormatter = java.text.NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
+        currencyFormatter.setMaximumFractionDigits(0);
+        lbl_ingresosTotales.setText(currencyFormatter.format(dashboard.getIngresosTotales()));
 
-        lbl_eventosActivos.setText(String.valueOf(conciertos.size()));
-
-        lbl_ingresosTotales.setText("COP 0"); // luego lo conectas a analisisService
-        lbl_artistaRentable.setText("N/A");
-        lbl_reportesGenerados.setText("0");
+        lbl_eventosActivos.setText(String.valueOf(dashboard.getEventosActivos()));
+        lbl_artistaRentable.setText(dashboard.getArtistaMasRentable());
+        lbl_reportesGenerados.setText(String.valueOf(dashboard.getReportesGenerados()));
     }
 
     // =========================
@@ -109,10 +121,24 @@ public class ReportesGerencialesController {
 
         String resumen =
                 "Evento: " + c.getNombreConcierto() + "\n" +
-                        "Aforo: " + c.getAforo() + "\n" +
-                        "Programado: " + c.isProgramado() + "\n";
+                "Aforo: " + c.getAforo() + "\n" +
+                "Programado: " + (c.isProgramado() ? "Sí" : "No") + "\n" +
+                "Artista: " + (c.getArtista() != null ? c.getArtista().getNombre() : "No asignado") + "\n";
 
         txt_resumenEvento.setText(resumen);
+    }
+
+    @FXML
+    public void On_verRendimiento() {
+        Concierto c = combo_eventos.getValue();
+
+        if (c == null) {
+            txt_resumenEvento.setText("Selecciona un evento primero.");
+            return;
+        }
+
+        String rendimiento = reporteService.obtenerRendimientoConcierto(c);
+        txt_resumenEvento.setText(rendimiento);
     }
 
     @FXML
@@ -125,27 +151,58 @@ public class ReportesGerencialesController {
             return;
         }
 
-        txt_resumenEvento.setText(
-                "REPORTE DEL EVENTO\n\n" +
-                        "Nombre: " + c.getNombreConcierto() + "\n" +
-                        "Aforo: " + c.getAforo() + "\n" +
-                        "Estado: " + (c.isProgramado() ? "Programado" : "Pendiente") + "\n"
-        );
+        String emitidoPor = (sesion.getUsuarioActual() != null) ? sesion.getUsuarioActual().getNombre() : "Gerente de Eventos";
+        String reporte = reporteService.generarYGuardarReporte(c, emitidoPor);
+        txt_resumenEvento.setText(reporte);
+
+        cargarKPIs();
     }
 
     @FXML
     public void On_artistaRentable() {
-        lbl_artistaRentable.setText("Función pendiente (requiere análisis financiero)");
+        String rentabilidad = reporteService.obtenerArtistasRentabilidad();
+        txt_resumenEvento.setText(rentabilidad);
     }
 
     @FXML
     public void On_historial() {
-        txt_resumenEvento.setText("Historial aún no implementado");
+        String historial = reporteService.obtenerHistorialReportes();
+        txt_resumenEvento.setText(historial);
     }
 
     @FXML
     public void On_exportar() {
-        txt_resumenEvento.setText("Exportación aún no implementada");
+        String contenido = txt_resumenEvento.getText();
+        if (contenido == null || contenido.isBlank()) {
+            mostrarAlerta("Exportar Reporte", "No hay contenido para exportar en el resumen del evento.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar Reporte");
+        fileChooser.setInitialFileName("reporte_gerencial.txt");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Texto (*.txt)", "*.txt"));
+
+        Stage stage = (Stage) bt_exportar.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(contenido);
+                mostrarAlerta("Exportar Reporte", "Reporte exportado exitosamente a:\n" + file.getAbsolutePath(), Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mostrarAlerta("Error al Exportar", "Ocurrió un error al guardar el archivo:\n" + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
     @FXML

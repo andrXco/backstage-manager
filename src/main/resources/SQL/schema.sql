@@ -227,3 +227,13 @@ MERGE INTO TipoObjeto (tipo) KEY(tipo) VALUES
 MERGE INTO Concierto (idConcierto, nombreConcierto, aforo, programado)
     KEY(idConcierto)
     VALUES (0, 'mantenimiento', 0, FALSE);
+
+CREATE TABLE IF NOT EXISTS Reporte (
+    idReporte INT AUTO_INCREMENT PRIMARY KEY,
+    idConcierto INT,
+    nombreConcierto VARCHAR(255),
+    tipo VARCHAR(50),
+    fechaGeneracion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    contenido VARCHAR(4000),
+    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto) ON DELETE SET NULL
+);

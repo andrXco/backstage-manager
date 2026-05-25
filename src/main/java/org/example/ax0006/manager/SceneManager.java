@@ -304,7 +304,8 @@ public class SceneManager {
                         this,
                         context.getSesion(),
                         context.getConciertoService(),
-                        context.getAnalisisFinancieroService()
+                        context.getAnalisisFinancieroService(),
+                        context.getReporteService()
                 );
 
         loadScene(

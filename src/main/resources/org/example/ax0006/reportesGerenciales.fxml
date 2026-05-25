@@ -27,7 +27,7 @@
 
             </VBox>
 
-            <Button fx:id="bt_exportar" prefHeight="45" prefWidth="200" style="-fx-background-color: #2563eb;                            -fx-text-fill: white;                            -fx-font-size: 14px;                            -fx-font-weight: bold;                            -fx-background-radius: 12;" text="Exportar Reporte" />
+            <Button fx:id="bt_exportar" onAction="#On_exportar" prefHeight="45" prefWidth="200" style="-fx-background-color: #2563eb;                            -fx-text-fill: white;                            -fx-font-size: 14px;                            -fx-font-weight: bold;                            -fx-background-radius: 12;" text="Exportar Reporte" />
 
         </HBox>
 
@@ -92,13 +92,13 @@
 
                 <Label style="-fx-font-size: 18px;                               -fx-font-weight: bold;                               -fx-text-fill: #111827;" text="Acciones Principales" />
 
-                <Button fx:id="bt_rendimiento" onAction="#On_generarReporte" prefHeight="45" style="-fx-background-color: #2563eb;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Ver Rendimiento de Evento" />
+                <Button fx:id="bt_rendimiento" onAction="#On_verRendimiento" prefHeight="45" style="-fx-background-color: #2563eb;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Ver Rendimiento de Evento" />
 
-                <Button fx:id="bt_generarReporte" prefHeight="45" style="-fx-background-color: #10b981;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Generar Reportes" />
+                <Button fx:id="bt_generarReporte" onAction="#On_generarReporte" prefHeight="45" style="-fx-background-color: #10b981;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Generar Reportes" />
 
-                <Button fx:id="bt_artistaRentable" prefHeight="45" style="-fx-background-color: #f59e0b;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Consultar Artista Más Rentable" />
+                <Button fx:id="bt_artistaRentable" onAction="#On_artistaRentable" prefHeight="45" style="-fx-background-color: #f59e0b;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Consultar Artista Más Rentable" />
 
-                <Button fx:id="bt_historial" prefHeight="45" style="-fx-background-color: #6b7280;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Historial de Reportes" />
+                <Button fx:id="bt_historial" onAction="#On_historial" prefHeight="45" style="-fx-background-color: #6b7280;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Historial de Reportes" />
 
             </VBox>
 

@@ -45,6 +45,7 @@ public class StartController extends Application {
         GastoRepository gastoRepo = new GastoRepository(h2);
         IngresoRepository ingresoRepo = new IngresoRepository(h2);
         BoleteriaRepository boleteriaRepo = new BoleteriaRepository(h2);
+        ReporteRepository reporteRepo = new ReporteRepository(h2);
 
         InventarioRepository inventarioRepo = new InventarioRepository(h2);
         InventarioObjetoRepository inventarioObjetoRepo = new InventarioObjetoRepository(h2);
@@ -67,6 +68,7 @@ public class StartController extends Application {
         InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
         ObjetoService objetoService = new ObjetoService(objetoRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
+        ReporteService reporteService = new ReporteService(conciertoService, ingresoService, boleteriaService, gastoService, reporteRepo);
 
 
 
@@ -94,7 +96,9 @@ public class StartController extends Application {
                 analisisRepo,
                 gastoService,
                 ingresoService,
-                boleteriaService
+                boleteriaService,
+                reporteRepo,
+                reporteService
         );
 
 
