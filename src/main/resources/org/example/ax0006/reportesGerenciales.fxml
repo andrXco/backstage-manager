@@ -1,55 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
-            prefWidth="1200"
-            prefHeight="720"
-            style="-fx-background-color: #f4f6f8;">
+<AnchorPane prefHeight="720" prefWidth="1200" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
 
     <!-- CONTENEDOR PRINCIPAL -->
-    <VBox layoutX="30"
-          layoutY="25"
-          prefWidth="1140"
-          prefHeight="670"
-          spacing="25"
-          style="-fx-background-color: white;
-                 -fx-background-radius: 20;
-                 -fx-padding: 30;
-                 -fx-border-radius: 20;
-                 -fx-border-color: #e5e7eb;">
+    <VBox layoutX="30" layoutY="25" prefHeight="670" prefWidth="1140" spacing="25" style="-fx-background-color: white;                  -fx-background-radius: 20;                  -fx-padding: 30;                  -fx-border-radius: 20;                  -fx-border-color: #e5e7eb;">
 
         <!-- HEADER -->
         <HBox spacing="20">
 
-            <VBox spacing="5" prefWidth="850">
+            <VBox prefWidth="850" spacing="5">
 
-                <Label text="Dashboard Gerencial"
-                       style="-fx-font-size: 30px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #111827;" />
+                <Label style="-fx-font-size: 30px;                               -fx-font-weight: bold;                               -fx-text-fill: #111827;" text="Dashboard Gerencial" />
 
-                <Label text="Panel de análisis y reportes de conciertos"
-                       style="-fx-font-size: 14px;
-                              -fx-text-fill: #6b7280;" />
+                <Label style="-fx-font-size: 14px;                               -fx-text-fill: #6b7280;" text="Panel de análisis y reportes de conciertos" />
 
             </VBox>
 
-            <Button text="Exportar Reporte"
-                    prefWidth="200"
-                    prefHeight="45"
-                    style="-fx-background-color: #2563eb;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-font-weight: bold;
-                           -fx-background-radius: 12;" />
+            <Button fx:id="bt_exportar" prefHeight="45" prefWidth="200" style="-fx-background-color: #2563eb;                            -fx-text-fill: white;                            -fx-font-size: 14px;                            -fx-font-weight: bold;                            -fx-background-radius: 12;" text="Exportar Reporte" />
 
         </HBox>
 
@@ -59,94 +35,46 @@
         <HBox spacing="20">
 
             <!-- KPI 1 -->
-            <VBox prefWidth="260"
-                  prefHeight="130"
-                  spacing="12"
-                  style="-fx-background-color: #eff6ff;
-                         -fx-background-radius: 18;
-                         -fx-padding: 20;">
+            <VBox prefHeight="130" prefWidth="260" spacing="12" style="-fx-background-color: #eff6ff;                          -fx-background-radius: 18;                          -fx-padding: 20;">
 
-                <Label text="Ingresos Totales"
-                       style="-fx-font-size: 15px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #1e3a8a;" />
+                <Label style="-fx-font-size: 15px;                               -fx-font-weight: bold;                               -fx-text-fill: #1e3a8a;" text="Ingresos Totales" />
 
-                <Label text="USD 0.00"
-                       style="-fx-font-size: 28px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #2563eb;" />
+                <Label fx:id="lbl_ingresosTotales" style="-fx-font-size: 28px;                               -fx-font-weight: bold;                               -fx-text-fill: #2563eb;" text="COP 0.00" />
 
-                <Label text="Último mes"
-                       style="-fx-text-fill: #6b7280;" />
+                <Label style="-fx-text-fill: #6b7280;" text="Último mes" />
 
             </VBox>
 
             <!-- KPI 2 -->
-            <VBox prefWidth="260"
-                  prefHeight="130"
-                  spacing="12"
-                  style="-fx-background-color: #ecfdf5;
-                         -fx-background-radius: 18;
-                         -fx-padding: 20;">
+            <VBox prefHeight="130" prefWidth="260" spacing="12" style="-fx-background-color: #ecfdf5;                          -fx-background-radius: 18;                          -fx-padding: 20;">
 
-                <Label text="Eventos Activos"
-                       style="-fx-font-size: 15px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #065f46;" />
+                <Label style="-fx-font-size: 15px;                               -fx-font-weight: bold;                               -fx-text-fill: #065f46;" text="Eventos Activos" />
 
-                <Label text="0"
-                       style="-fx-font-size: 28px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #10b981;" />
+                <Label fx:id="lbl_eventosActivos" style="-fx-font-size: 28px;                               -fx-font-weight: bold;                               -fx-text-fill: #10b981;" text="0" />
 
-                <Label text="Eventos programados"
-                       style="-fx-text-fill: #6b7280;" />
+                <Label style="-fx-text-fill: #6b7280;" text="Eventos programados" />
 
             </VBox>
 
             <!-- KPI 3 -->
-            <VBox prefWidth="260"
-                  prefHeight="130"
-                  spacing="12"
-                  style="-fx-background-color: #fffbeb;
-                         -fx-background-radius: 18;
-                         -fx-padding: 20;">
+            <VBox prefHeight="130" prefWidth="260" spacing="12" style="-fx-background-color: #fffbeb;                          -fx-background-radius: 18;                          -fx-padding: 20;">
 
-                <Label text="Artista Más Rentable"
-                       style="-fx-font-size: 15px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #92400e;" />
+                <Label style="-fx-font-size: 15px;                               -fx-font-weight: bold;                               -fx-text-fill: #92400e;" text="Artista Más Rentable" />
 
-                <Label text="N/A"
-                       style="-fx-font-size: 28px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #f59e0b;" />
+                <Label fx:id="lbl_artistaRentable" style="-fx-font-size: 28px;                               -fx-font-weight: bold;                               -fx-text-fill: #f59e0b;" text="N/A" />
 
-                <Label text="Mayor rentabilidad"
-                       style="-fx-text-fill: #6b7280;" />
+                <Label style="-fx-text-fill: #6b7280;" text="Mayor rentabilidad" />
 
             </VBox>
 
             <!-- KPI 4 -->
-            <VBox prefWidth="260"
-                  prefHeight="130"
-                  spacing="12"
-                  style="-fx-background-color: #f5f3ff;
-                         -fx-background-radius: 18;
-                         -fx-padding: 20;">
+            <VBox prefHeight="130" prefWidth="260" spacing="12" style="-fx-background-color: #f5f3ff;                          -fx-background-radius: 18;                          -fx-padding: 20;">
 
-                <Label text="Reportes Generados"
-                       style="-fx-font-size: 15px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #5b21b6;" />
+                <Label style="-fx-font-size: 15px;                               -fx-font-weight: bold;                               -fx-text-fill: #5b21b6;" text="Reportes Generados" />
 
-                <Label text="0"
-                       style="-fx-font-size: 28px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #7c3aed;" />
+                <Label fx:id="lbl_reportesGenerados" style="-fx-font-size: 28px;                               -fx-font-weight: bold;                               -fx-text-fill: #7c3aed;" text="0" />
 
-                <Label text="Reportes históricos"
-                       style="-fx-text-fill: #6b7280;" />
+                <Label style="-fx-text-fill: #6b7280;" text="Reportes históricos" />
 
             </VBox>
 
@@ -158,82 +86,38 @@
         <HBox spacing="25">
 
             <!-- PANEL IZQUIERDO -->
-            <VBox prefWidth="420"
-                  spacing="18"
-                  style="-fx-background-color: #f9fafb;
-                         -fx-background-radius: 18;
-                         -fx-padding: 22;">
+            <VBox prefWidth="420" spacing="18" style="-fx-background-color: #f9fafb;                          -fx-background-radius: 18;                          -fx-padding: 22;">
 
-                <Label text="Acciones Principales"
-                       style="-fx-font-size: 18px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #111827;" />
+                <Label style="-fx-font-size: 18px;                               -fx-font-weight: bold;                               -fx-text-fill: #111827;" text="Acciones Principales" />
 
-                <Button text="Ver Rendimiento de Evento"
-                        prefHeight="45"
-                        style="-fx-background-color: #2563eb;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 12;" />
+                <Button fx:id="bt_rendimiento" prefHeight="45" style="-fx-background-color: #2563eb;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Ver Rendimiento de Evento" />
 
-                <Button text="Generar Reportes"
-                        prefHeight="45"
-                        style="-fx-background-color: #10b981;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 12;" />
+                <Button fx:id="bt_generarReporte" prefHeight="45" style="-fx-background-color: #10b981;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Generar Reportes" />
 
-                <Button text="Consultar Artista Más Rentable"
-                        prefHeight="45"
-                        style="-fx-background-color: #f59e0b;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 12;" />
+                <Button fx:id="bt_artistaRentable" prefHeight="45" style="-fx-background-color: #f59e0b;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Consultar Artista Más Rentable" />
 
-                <Button text="Historial de Reportes"
-                        prefHeight="45"
-                        style="-fx-background-color: #6b7280;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 12;" />
+                <Button fx:id="bt_historial" prefHeight="45" style="-fx-background-color: #6b7280;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Historial de Reportes" />
 
             </VBox>
 
             <!-- PANEL DERECHO -->
-            <VBox prefWidth="650"
-                  spacing="18"
-                  style="-fx-background-color: #f9fafb;
-                         -fx-background-radius: 18;
-                         -fx-padding: 22;">
+            <VBox prefWidth="650" spacing="18" style="-fx-background-color: #f9fafb;                          -fx-background-radius: 18;                          -fx-padding: 22;">
 
-                <Label text="Análisis Rápido"
-                       style="-fx-font-size: 18px;
-                              -fx-font-weight: bold;
-                              -fx-text-fill: #111827;" />
+                <Label style="-fx-font-size: 18px;                               -fx-font-weight: bold;                               -fx-text-fill: #111827;" text="Análisis Rápido" />
 
                 <VBox spacing="8">
 
-                    <Label text="Seleccionar Evento"
-                           style="-fx-font-weight: bold;
-                                  -fx-text-fill: #374151;" />
+                    <Label style="-fx-font-weight: bold;                                   -fx-text-fill: #374151;" text="Seleccionar Evento" />
 
-                    <ComboBox prefHeight="40"
-                              promptText="Seleccione un evento"
-                              style="-fx-background-radius: 10;
-                                     -fx-border-radius: 10;" />
+                    <ComboBox fx:id="combo_eventos" onAction="#On_seleccionarEvento" prefHeight="40" promptText="Seleccione un evento" style="-fx-background-radius: 10;                                      -fx-border-radius: 10;" />
 
                 </VBox>
 
                 <VBox spacing="8">
 
-                    <Label text="Resumen del Evento"
-                           style="-fx-font-weight: bold;
-                                  -fx-text-fill: #374151;" />
+                    <Label style="-fx-font-weight: bold;                                   -fx-text-fill: #374151;" text="Resumen del Evento" />
 
-                    <TextArea prefHeight="240"
-                              wrapText="true"
-                              style="-fx-background-radius: 12;
-                                     -fx-border-radius: 12;" />
+                    <TextArea fx:id="txt_resumenEvento" prefHeight="240" style="-fx-background-radius: 12;                                      -fx-border-radius: 12;" wrapText="true" />
 
                 </VBox>
 
