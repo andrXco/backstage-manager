@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.manager.SceneManager;
+import org.example.ax0006.manager.SesionManager;
 import org.example.ax0006.service.ConciertoService;
 import org.example.ax0006.service.AnalisisFinancieroService;
 
@@ -13,19 +14,21 @@ import java.util.List;
 public class ReportesGerencialesController {
 
     private final SceneManager sceneManager;
+    private final SesionManager sesion;
     private final ConciertoService conciertoService;
     private final AnalisisFinancieroService analisisService;
 
     public ReportesGerencialesController(
             SceneManager sceneManager,
+            SesionManager sesion,
             ConciertoService conciertoService,
             AnalisisFinancieroService analisisService
     ) {
         this.sceneManager = sceneManager;
+        this.sesion = sesion;
         this.conciertoService = conciertoService;
         this.analisisService = analisisService;
     }
-
     // =========================
     // UI
     // =========================

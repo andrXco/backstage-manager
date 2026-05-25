@@ -92,7 +92,7 @@
 
                 <Label style="-fx-font-size: 18px;                               -fx-font-weight: bold;                               -fx-text-fill: #111827;" text="Acciones Principales" />
 
-                <Button fx:id="bt_rendimiento" prefHeight="45" style="-fx-background-color: #2563eb;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Ver Rendimiento de Evento" />
+                <Button fx:id="bt_rendimiento" onAction="#On_generarReporte" prefHeight="45" style="-fx-background-color: #2563eb;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Ver Rendimiento de Evento" />
 
                 <Button fx:id="bt_generarReporte" prefHeight="45" style="-fx-background-color: #10b981;                                -fx-text-fill: white;                                -fx-font-weight: bold;                                -fx-background-radius: 12;" text="Generar Reportes" />
 
