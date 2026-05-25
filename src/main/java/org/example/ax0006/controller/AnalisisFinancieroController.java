@@ -195,12 +195,6 @@ public class AnalisisFinancieroController {
             }
         });
 
-        // PRE-SELECCIONAR si ya hay concierto en sesión
-        Concierto actual = sesion.getConciertoActual();
-        if (actual != null) {
-            comboConcierto.setValue(actual);
-            On_seleccionarConcierto();
-        }
     }
 
     // =========================
@@ -648,6 +642,7 @@ public class AnalisisFinancieroController {
         }
 
         mostrarExito("Finanzas del evento guardadas correctamente.");
+        sesion.setConciertoActual(null);
         try {
                 sceneManager.showMenuFinanzas();
         } catch (IOException e) {
@@ -661,7 +656,7 @@ public class AnalisisFinancieroController {
     // =========================
     @FXML
     public void On_volver() throws IOException {
-
+        sesion.setConciertoActual(null);
         sceneManager.showMenuFinanzas();
     }
 
