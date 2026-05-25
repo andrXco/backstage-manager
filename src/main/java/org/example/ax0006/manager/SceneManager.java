@@ -118,9 +118,10 @@ public class SceneManager {
             context.getSesion().setConciertoTemporal(null);
         }
 
-        context.getSesion().setPantallaOrigen(null);
-        CrearConciertoController controller = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
-        loadScene("/org/example/ax0006/crearconcierto.fxml", controller);
+    context.getSesion().setPantallaOrigen(null);
+
+        CrearConciertoController crearConciertoController = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
+        loadScene("/org/example/ax0006/crearconcierto.fxml", crearConciertoController);
     }
 
     public void showConciertosProgramados() throws IOException {
@@ -154,6 +155,72 @@ public class SceneManager {
     public void showVerContrato() throws IOException {
         VerContratoController controller = new VerContratoController(this, context.getContratoService(), context.getSesion());
         loadScene("/org/example/ax0006/vercontrato.fxml", controller);
+    }
+
+    //MENÚ DE FINANZAS
+    public void showMenuFinanzas() throws IOException{
+        MenuFinanzasController menuFinanzasController = new MenuFinanzasController(this, context.getSesion());
+        loadScene("/org/example/ax0006/menufinanzas.fxml", menuFinanzasController);
+    }
+
+    // CREAR ANALISIS NUEVO
+    public void showAnalisisFinanciero() throws IOException {
+
+        AnalisisFinancieroController controller =
+            new AnalisisFinancieroController(
+
+        context.getAnalisisFinancieroService(),
+        context.getGastoService(),
+        context.getIngresoService(),
+        context.getBoleteriaService(),
+        context.getConciertoService(),
+        context.getSesion(),
+        this
+);
+
+        loadScene(
+                "/org/example/ax0006/analisisfinanciero.fxml",
+                controller
+        );
+    }
+
+    //ABRIR ANALISIS EXISTENTE
+    public void showAnalisisFinanciero(
+                int idAnalisis
+        ) throws IOException {
+
+            AnalisisFinancieroController controller =
+                    new AnalisisFinancieroController(
+
+        context.getAnalisisFinancieroService(),
+        context.getGastoService(),
+        context.getIngresoService(),
+        context.getBoleteriaService(),
+        context.getConciertoService(),
+        context.getSesion(),
+        this
+);
+
+            loadScene(
+                    "/org/example/ax0006/analisisfinanciero.fxml",
+                    controller
+            );
+
+            controller.cargarAnalisis(idAnalisis);
+        }
+    
+    public void showConsultarFinanzas() throws IOException {
+
+    ConsultarFinanzasController controller =
+            new ConsultarFinanzasController(
+                    context.getAnalisisFinancieroService(),
+                    this
+            );
+
+    loadScene(
+            "/org/example/ax0006/consultarfinanzas.fxml",
+            controller
+    );
     }
 
     public void setContratoTemporal(Integer id) {
@@ -215,6 +282,20 @@ public class SceneManager {
 
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
+
+        public void showSeleccionarConciertoFinanzas() throws IOException {
+    SeleccionarConciertoFinanzasController controller =
+            new SeleccionarConciertoFinanzasController(
+                    context.getConciertoService(),
+                    context.getAnalisisFinancieroService(),
+                    context.getSesion(),
+                    this
+            );
+    loadScene(
+            "/org/example/ax0006/asignarpresupuesto.fxml",
+            controller
+    );
+}
 
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {

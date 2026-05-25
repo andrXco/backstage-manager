@@ -26,6 +26,7 @@ public class StartController extends Application {
         // BASE DE DATOS
         H2 h2 = new H2();
         h2.inicializarDB();
+        h2.cargarDatosDePrueba();
 
         // VALIDATORS
         HorarioValidator horarioValidator = new HorarioValidator();
@@ -35,10 +36,15 @@ public class StartController extends Application {
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         RolRepository rolRepo = new RolRepository(h2);
         HorarioRepository horarioRepo = new HorarioRepository(h2);
-        ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
+        AnalisisFinancieroRepository analisisFinancieroRepo = new AnalisisFinancieroRepository(h2);
+        ConciertoRepository conciertoRepo = new ConciertoRepository(h2,analisisFinancieroRepo);
         AsignacionStaffRepository asignacionStaffRepo = new AsignacionStaffRepository(h2);
         ContratoRepository contratoRepo = new ContratoRepository(h2);
         ActividadRepository actividadRepo = new ActividadRepository(h2);
+        AnalisisFinancieroRepository analisisRepo = new AnalisisFinancieroRepository(h2);
+        GastoRepository gastoRepo = new GastoRepository(h2);
+        IngresoRepository ingresoRepo = new IngresoRepository(h2);
+        BoleteriaRepository boleteriaRepo = new BoleteriaRepository(h2);
 
         InventarioRepository inventarioRepo = new InventarioRepository(h2);
         InventarioObjetoRepository inventarioObjetoRepo = new InventarioObjetoRepository(h2);
@@ -50,6 +56,10 @@ public class StartController extends Application {
         RolService rolService = new RolService(rolRepo, usuarioRepo);
         ContratoService contratoService = new ContratoService(contratoRepo);
         ActividadService actividadService = new ActividadService(actividadRepo, usuarioRepo);
+        AnalisisFinancieroService analisisService = new AnalisisFinancieroService(analisisRepo);
+        GastoService gastoService = new GastoService(gastoRepo);
+        IngresoService ingresoService = new IngresoService(ingresoRepo);
+        BoleteriaService boleteriaService = new BoleteriaService(boleteriaRepo);
         InventarioService inventarioService = new InventarioService(inventarioRepo);
 
         StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
@@ -79,7 +89,12 @@ public class StartController extends Application {
                 contratoService,
                 contratoRepo,
                 actividadRepo,
-                actividadService
+                actividadService,
+                analisisService,
+                analisisRepo,
+                gastoService,
+                ingresoService,
+                boleteriaService
         );
 
 
@@ -104,6 +119,5 @@ public class StartController extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 
 }

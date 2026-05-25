@@ -6,32 +6,57 @@ import org.example.ax0006.entity.Usuario;
 public class SesionManager {
 
     private Usuario usuarioActual;
+
     private Concierto conciertoTemporal;
+
     private Integer idContratoTemporal;
+
     private String pantallaOrigen;
+
+    // NUEVO
     private Concierto conciertoActual;
 
-    public Usuario getUsuarioActual() { return usuarioActual; }
-    public Usuario getUsuarioLogueado() { return usuarioActual; }
-    public void setUsuarioActual(Usuario usuarioActual) { this.usuarioActual = usuarioActual; }
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    public Usuario getUsuarioLogueado() {
+        return usuarioActual;
+    }
+
+    public void setUsuarioActual(
+            Usuario usuarioActual
+    ) {
+
+        this.usuarioActual = usuarioActual;
+    }
 
     public void cerrarSesion() {
+
         this.usuarioActual = null;
         this.conciertoTemporal = null;
         this.idContratoTemporal = null;
         this.pantallaOrigen = null;
+
+        // NUEVO
+        this.conciertoActual = null;
     }
 
+    public void setConciertoTemporal(
+            Concierto conciertoTemporal
+    ) {
 
-   public void setConciertoTemporal(Concierto conciertoTemporal) {
-    this.conciertoTemporal = conciertoTemporal;
-}
+        this.conciertoTemporal = conciertoTemporal;
+    }
 
     public Concierto getConciertoTemporal() {
         return conciertoTemporal;
     }
 
-    public void setIdContratoTemporal(Integer idContratoTemporal) {
+    public void setIdContratoTemporal(
+            Integer idContratoTemporal
+    ) {
+
         this.idContratoTemporal = idContratoTemporal;
     }
 
@@ -39,8 +64,10 @@ public class SesionManager {
         return idContratoTemporal;
     }
 
+    public void setPantallaOrigen(
+            String pantallaOrigen
+    ) {
 
-    public void setPantallaOrigen(String pantallaOrigen) {
         this.pantallaOrigen = pantallaOrigen;
     }
 
@@ -48,11 +75,17 @@ public class SesionManager {
         return pantallaOrigen;
     }
 
+    // =========================
+    // CONCIERTO ACTUAL
+    // =========================
     public Concierto getConciertoActual() {
         return conciertoActual;
     }
 
-    public void setConciertoActual(Concierto conciertoActual) {
+    public void setConciertoActual(
+            Concierto conciertoActual
+    ) {
+
         this.conciertoActual = conciertoActual;
     }
 }

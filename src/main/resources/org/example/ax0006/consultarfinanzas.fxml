@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0"
+            prefWidth="1200.0"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <children>
+
+        <BorderPane AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+
+            <!-- =========================
+                 TITULO
+            ========================= -->
+            <top>
+
+                <VBox alignment="CENTER"
+                      spacing="10">
+
+                    <padding>
+                        <Insets top="30"
+                                bottom="20"/>
+                    </padding>
+
+                    <Label text="Consultar Finanzas"
+                           style="-fx-font-size: 30px;
+                                  -fx-font-weight: bold;"/>
+
+                    <Label text="Presupuestos registrados en el sistema"
+                           style="-fx-font-size: 15px;
+                                  -fx-text-fill: #6b7280;"/>
+
+                </VBox>
+
+            </top>
+
+            <!-- =========================
+                 TABLA
+            ========================= -->
+            <center>
+
+                <VBox spacing="20">
+
+                    <padding>
+                        <Insets top="20"
+                                left="40"
+                                right="40"
+                                bottom="20"/>
+                    </padding>
+
+                    <TableView fx:id="tablaFinanzas"
+                               prefHeight="500"
+                               style="-fx-border-color: #d1d5db;
+                                      -fx-border-radius: 10;">
+
+                        <columns>
+
+                            <TableColumn fx:id="colId"
+                                         text="ID"
+                                         prefWidth="150"/>
+
+                            <TableColumn fx:id="colPresupuesto"
+                                         text="Presupuesto"
+                                         prefWidth="450"/>
+
+                            <TableColumn fx:id="colEstado"
+                                         text="Estado"
+                                         prefWidth="300"/>
+
+                        </columns>
+
+                    </TableView>
+
+                    <!-- =========================
+                         BOTONES
+                    ========================= -->
+                    <HBox alignment="CENTER"
+                           spacing="20">
+
+                        <Button fx:id="fid_bt_editar"
+                                text="Editar Presupuesto"
+                                onAction="#On_editar"
+                                prefWidth="220"
+                                prefHeight="45"
+                                style="-fx-background-color: #2563eb;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 15px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;"/>
+
+                        <Button fx:id="fid_bt_volver"
+                                text="Volver"
+                                onAction="#On_volver"
+                                prefWidth="180"
+                                prefHeight="45"
+                                style="-fx-background-color: #374151;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 15px;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 10;"/>
+
+                    </HBox>
+
+                </VBox>
+
+            </center>
+
+        </BorderPane>
+
+    </children>
+
+</AnchorPane>

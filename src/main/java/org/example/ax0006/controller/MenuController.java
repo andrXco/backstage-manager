@@ -44,6 +44,10 @@ public class MenuController {
     @FXML
     private Button fid_Menu_Conciertos;
 
+
+    @FXML 
+    private Button fid_Menu_Finanzas;
+
     @FXML
     private Button fid_bt_admin;
 
@@ -150,6 +154,11 @@ public class MenuController {
             alert.showAndWait();
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void On_irMenuFinanzas(ActionEvent event) throws IOException {
+        sceneManager.showMenuFinanzas();
     }
 
     @FXML

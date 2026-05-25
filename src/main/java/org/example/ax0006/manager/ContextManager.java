@@ -26,6 +26,11 @@ public class ContextManager {
     private ContratoRepository contratoRepo;
     private ActividadRepository actividadRepository;
     private ActividadService actividadService;
+    private AnalisisFinancieroService analisisService;
+    private AnalisisFinancieroRepository analisisRepo;
+    private GastoService gastoService;
+    private IngresoService ingresoService;
+    private BoleteriaService boleteriaService;
 
     public ContextManager(
             H2 h2,
@@ -46,7 +51,12 @@ public class ContextManager {
             ContratoService contratoService,
             ContratoRepository contratoRepo,
             ActividadRepository actividadRepository,
-            ActividadService actividadService
+            ActividadService actividadService,
+            AnalisisFinancieroService analisisService,
+            AnalisisFinancieroRepository analisisRepo,
+            GastoService gastoService,
+            IngresoService ingresoService,
+            BoleteriaService boleteriaService
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -66,6 +76,11 @@ public class ContextManager {
         this.contratoRepo = contratoRepo;
         this.actividadRepository = actividadRepository;
         this.actividadService = actividadService;
+        this.analisisService = analisisService;
+        this.analisisRepo = analisisRepo;
+        this.gastoService = gastoService;
+        this.ingresoService = ingresoService;
+        this.boleteriaService = boleteriaService;
     }
 
     public InventarioService getInventarioService() { return inventarioService; }
@@ -84,5 +99,10 @@ public class ContextManager {
     public ContratoRepository getContratoRepository() { return contratoRepo; }
     public ActividadRepository getActividadRepository() { return actividadRepository; }
     public ActividadService getActividadService() { return actividadService; }
+    public AnalisisFinancieroService getAnalisisFinancieroService() { return analisisService;}
+    public AnalisisFinancieroRepository getAnalisisFinancieroRepository() {return analisisRepo;}
+    public GastoService getGastoService() { return gastoService;}
+    public IngresoService getIngresoService() { return ingresoService;}
+    public BoleteriaService getBoleteriaService() { return boleteriaService;}
     public HorarioRepository getHorarioRepo() {return horarioRepo;}
 }

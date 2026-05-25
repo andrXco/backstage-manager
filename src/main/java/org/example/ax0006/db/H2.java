@@ -22,7 +22,12 @@ public class H2 {
     private static final String USER = "sa";
     private static final String PASS = "";
 
-    public H2() {}; //Constructor
+    private Server webServer;
+
+    public H2() {
+    }
+
+    ; //Constructor
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
@@ -54,5 +59,24 @@ public class H2 {
             e.printStackTrace();
         }
     }
-}
 
+    public void cerrarServidor() {
+        if (webServer != null) {
+            webServer.stop();
+            webServer = null;
+            System.out.println("Servidor web de H2 detenido correctamente.");
+        }
+    }
+
+    public void cargarDatosDePrueba() {
+        try (Connection conn = getConnection()) {
+            Reader reader = new InputStreamReader(Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/SQL/datos.sql")
+            ));
+            RunScript.execute(conn, reader);
+            System.out.println("Datos de prueba cargados para la interfaz gráfica.");
+        } catch (Exception e) {
+            System.out.println("Nota: No se cargaron datos de prueba o ya existían.");
+        }
+    }
+}
