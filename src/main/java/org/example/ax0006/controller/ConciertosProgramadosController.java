@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConciertosProgramadosController {
+    /*pantalla en donde se ven los conciertos programados, ademas se pueden cancelar ahi mismo*/
 
     private SesionManager sesion;
     private ConciertoService conciertoService;

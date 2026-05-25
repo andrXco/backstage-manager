@@ -26,6 +26,7 @@ public class StartController extends Application {
         // BASE DE DATOS
         H2 h2 = new H2();
         h2.inicializarDB();
+        h2.cargarDatosDePrueba();
 
         // VALIDATORS
         HorarioValidator horarioValidator = new HorarioValidator();
