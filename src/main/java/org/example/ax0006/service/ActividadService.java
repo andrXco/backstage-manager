@@ -80,20 +80,17 @@ public class ActividadService {
     private String obtenerRolPrincipal(Usuario usuario) {
         if (usuario == null) return "Sin rol";
 
-        String roles = usuarioRepository.obtenerRolesDelUsuario(usuario.getIdUsuario());
-
-        if (roles == null || roles.isBlank() || "Sin rol".equalsIgnoreCase(roles)) {
-            if (usuario.getIdUsuario() == 1 || "admin".equalsIgnoreCase(usuario.getNombre())) {
-                return ROL_ADMIN;
-            }
-
-            return "Sin rol";
-        }
-
-        if (roles.contains(ROL_ADMIN)) {
+        if (usuario.getIdUsuario() == 1 || "admin".equalsIgnoreCase(usuario.getNombre())) {
             return ROL_ADMIN;
         }
 
+        String roles = usuarioRepository.obtenerRolesDelUsuario(usuario.getIdUsuario());
+        if (roles == null || roles.isBlank() || "Sin rol".equalsIgnoreCase(roles)) {
+            return "Sin rol";
+        }
+        if (roles.contains(ROL_ADMIN)) {
+            return ROL_ADMIN;
+        }
         return roles.split(",")[0].trim();
     }
 }
