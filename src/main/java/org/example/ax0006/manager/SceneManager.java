@@ -24,7 +24,16 @@ public class SceneManager {
 
     /*METODO PARA MOSTRAR EL LOGIN*/
     public void showLogin() throws IOException {
-        LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion(), context.getStaffService(), context.getConciertoService());
+
+        LoginController loginController = new LoginController(
+                this,
+                context.getAutenService(),
+                context.getSesion(),
+                context.getActividadService(),
+                context.getStaffService(),
+                context.getConciertoService()
+        );
+
         loadScene("/org/example/ax0006/login.fxml", loginController);
     }
 
@@ -35,9 +44,15 @@ public class SceneManager {
     }
 
     /*METOOD PARA MOSTRAR EL MENU*/
-    public void showMenu() throws IOException {
-        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService());
+    public void showMenu() throws IOException{
+        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService(), context.getActividadService());
+
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
+    }
+
+    public void showActividad() throws IOException {
+        ActivityNotificationController activityNotificationController = new ActivityNotificationController(this, context.getSesion(), context.getActividadService());
+        loadScene("/org/example/ax0006/notificaciones.fxml", activityNotificationController);
     }
 
     //metodo para mostrar pantalla de administracion de usuarios.
@@ -102,7 +117,7 @@ public class SceneManager {
             context.getSesion().setIdContratoTemporal(null);
             context.getSesion().setConciertoTemporal(null);
         }
-    // esetear origen
+
     context.getSesion().setPantallaOrigen(null);
 
         CrearConciertoController crearConciertoController = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
@@ -214,6 +229,7 @@ public class SceneManager {
 
     public Integer getContratoTemporal() {
         return contratoTemporal;
+
     }
 
     /* --- MÉTODOS DE INVENTARIO --- */

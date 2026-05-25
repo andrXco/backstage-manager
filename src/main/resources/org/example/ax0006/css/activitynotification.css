@@ -1,0 +1,44 @@
+.boton-filtro {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 20;
+}
+
+.boton-filtro-activo {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+}
+
+.boton-actividad {
+    -fx-background-color: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-width: 1.2;
+}
+
+.boton-actividad-acceso {
+    -fx-text-fill: #1d4ed8;
+    -fx-border-color: #bfdbfe;
+}
+
+.boton-actividad-alerta {
+    -fx-text-fill: #c2410c;
+    -fx-border-color: #fed7aa;
+}
+
+.boton-actividad-mensaje {
+    -fx-text-fill: #6d28d9;
+    -fx-border-color: #ddd6fe;
+}
+
+.boton-actividad-solicitud {
+    -fx-text-fill: #047857;
+    -fx-border-color: #bbf7d0;
+}

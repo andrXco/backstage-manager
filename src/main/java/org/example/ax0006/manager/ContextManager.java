@@ -1,11 +1,7 @@
 package org.example.ax0006.manager;
 
-import org.example.ax0006.repository.AnalisisFinancieroRepository;
-import org.example.ax0006.repository.ConciertoRepository;
-import org.example.ax0006.repository.ContratoRepository;
-import org.example.ax0006.repository.HorarioRepository;
-import org.example.ax0006.repository.RolRepository;
-import org.example.ax0006.repository.UsuarioRepository;
+
+import org.example.ax0006.repository.*;
 import org.example.ax0006.service.*;
 import org.example.ax0006.db.H2;
 
@@ -28,6 +24,8 @@ public class ContextManager {
     private ObjetoService objetoService;
     private ContratoService contratoService;
     private ContratoRepository contratoRepo;
+    private ActividadRepository actividadRepository;
+    private ActividadService actividadService;
     private AnalisisFinancieroService analisisService;
     private AnalisisFinancieroRepository analisisRepo;
     private GastoService gastoService;
@@ -46,11 +44,14 @@ public class ContextManager {
             ConciertoService conciertoService,
             SesionManager sesion,
             StaffService staffService,
+
             InventarioService inventarioService,
             InventarioObjetoService inventarioObjetoService,
             ObjetoService objetoService,
             ContratoService contratoService,
             ContratoRepository contratoRepo,
+            ActividadRepository actividadRepository,
+            ActividadService actividadService,
             AnalisisFinancieroService analisisService,
             AnalisisFinancieroRepository analisisRepo,
             GastoService gastoService,
@@ -73,6 +74,8 @@ public class ContextManager {
         this.objetoService = objetoService;
         this.contratoService = contratoService;
         this.contratoRepo = contratoRepo;
+        this.actividadRepository = actividadRepository;
+        this.actividadService = actividadService;
         this.analisisService = analisisService;
         this.analisisRepo = analisisRepo;
         this.gastoService = gastoService;
@@ -94,6 +97,8 @@ public class ContextManager {
     public StaffService getStaffService() { return staffService; }
     public ContratoService getContratoService() { return contratoService; }
     public ContratoRepository getContratoRepository() { return contratoRepo; }
+    public ActividadRepository getActividadRepository() { return actividadRepository; }
+    public ActividadService getActividadService() { return actividadService; }
     public AnalisisFinancieroService getAnalisisFinancieroService() { return analisisService;}
     public AnalisisFinancieroRepository getAnalisisFinancieroRepository() {return analisisRepo;}
     public GastoService getGastoService() { return gastoService;}
