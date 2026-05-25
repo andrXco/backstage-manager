@@ -28,15 +28,13 @@
                         <VBox prefHeight="70.0" prefWidth="390.0" spacing="8.0">
                             <children>
                                 <Label fx:id="fid_Bienvenido" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;" text="Bienvenido, Usuario" />
-
-                                <Label fx:id="fid_lbl_concierto" style="-fx-font-size: 13px; -fx-text-fill: #555;" text="" />
                                 <HBox spacing="10.0">
                                     <children>
 
                                         <!-- BOTÓN TIPO NOTIFICACIÓN -->
                                         <AnchorPane prefHeight="38.0" prefWidth="58.0">
                                             <children>
-                                                <Button fx:id="fid_bt_bandeja" layoutY="-19.0" mnemonicParsing="false" onAction="#On_bandeja" prefHeight="38.0" prefWidth="46.0" style="-fx-background-color: #f97316; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(249,115,22,0.35), 10, 0, 0, 2);" text="🔔" />
+                                                <Button fx:id="fid_bt_bandeja" layoutY="-2.0" mnemonicParsing="false" onAction="#On_bandeja" prefHeight="38.0" prefWidth="46.0" style="-fx-background-color: #f97316; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(249,115,22,0.35), 10, 0, 0, 2);" text="🔔" />
                                                 <Label fx:id="fid_lbl_contador_bandeja" layoutX="32.0" layoutY="-5.0" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 3 7 3 7;" text="0" />
                                             </children>
                                         </AnchorPane>
