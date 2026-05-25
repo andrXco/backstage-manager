@@ -9,6 +9,10 @@ import java.util.List;
 
 public class ActividadService {
     private static final String ROL_ADMIN = "Administrador";
+    private static final String ROL_TECNICO = "Tecnico";
+    private static final String ROL_MANAGER = "Manager";
+    private static final String ROL_STAFF = "Staff";
+    private static final String ROL_SIN = "Sin rol";
 
     private final ActividadRepository actividadRepository;
     private final UsuarioRepository usuarioRepository;
@@ -78,19 +82,36 @@ public class ActividadService {
     }
 
     private String obtenerRolPrincipal(Usuario usuario) {
-        if (usuario == null) return "Sin rol";
+        if (usuario == null) return ROL_SIN;
 
-        if (usuario.getIdUsuario() == 1 || "admin".equalsIgnoreCase(usuario.getNombre())) {
+        // No asumir que id=1 es administrador: ese supuesto rompe tests y entornos sin datos seed.
+        if ("admin".equalsIgnoreCase(usuario.getNombre()) || usuario.getIdRol() == 1) {
             return ROL_ADMIN;
         }
 
         String roles = usuarioRepository.obtenerRolesDelUsuario(usuario.getIdUsuario());
-        if (roles == null || roles.isBlank() || "Sin rol".equalsIgnoreCase(roles)) {
-            return "Sin rol";
+        if (roles == null || roles.isBlank() || ROL_SIN.equalsIgnoreCase(roles)) {
+            return rolDesdeIdGlobal(usuario.getIdRol());
         }
-        if (roles.contains(ROL_ADMIN)) {
-            return ROL_ADMIN;
+        String[] rolesSeparados = roles.split(",");
+        for (String rol : rolesSeparados) {
+            if (ROL_ADMIN.equalsIgnoreCase(rol.trim())) {
+                return ROL_ADMIN;
+            }
         }
-        return roles.split(",")[0].trim();
+        if (rolesSeparados.length == 0) {
+            return rolDesdeIdGlobal(usuario.getIdRol());
+        }
+        return rolesSeparados[0].trim();
+    }
+
+    private String rolDesdeIdGlobal(int idRol) {
+        return switch (idRol) {
+            case 1 -> ROL_ADMIN;
+            case 2 -> ROL_TECNICO;
+            case 3 -> ROL_MANAGER;
+            case 4 -> ROL_STAFF;
+            default -> ROL_SIN;
+        };
     }
 }

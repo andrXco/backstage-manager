@@ -395,11 +395,16 @@ class ActividadServiceTest {
     class ResolucionRolPrincipal {
 
         @Test
-        @DisplayName("debe resolver a Administrador para usuario con ID 1 sin roles")
+        @DisplayName("debe resolver a Administrador para usuario con rol global Administrador")
         void resolverAdminPorId() throws Exception {
-            // El usuario Admin ya se crea por defecto con ID 1 en schema.sql.
-            // Busquemos al usuario Admin directamente.
-            Usuario admin = usuarioRepository.buscarCompletoPorId(1);
+            Usuario u = new Usuario();
+            u.setNombre("AdminGlobal");
+            u.setContrasena("pass");
+            u.setGmail("adminglobal@example.com");
+            u.setIdRol(1); // Administrador global
+            assertTrue(usuarioRepository.guardar(u));
+
+            Usuario admin = usuarioRepository.buscarPorNombre("AdminGlobal");
             assertNotNull(admin);
 
             // Insertemos una actividad dirigida a "Administrador"

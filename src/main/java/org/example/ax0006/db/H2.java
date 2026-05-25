@@ -45,9 +45,6 @@ public class H2 {
             RunScript.execute(conn, reader);
             System.out.println("Base de datos estructurada a partir de schema.sql");
 
-            // 2. Cargar datos de prueba
-            cargarDatosDePrueba();
-
 
             // 4. Iniciar el servidor web de H2
             try {
