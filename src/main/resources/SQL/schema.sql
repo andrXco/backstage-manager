@@ -229,7 +229,6 @@ ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
 MERGE INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) KEY (idRol, idUsuario, idConcierto)
     VALUES
     (3, 2, 1), -- Asigna a Feid (Usuario 2) al Concierto 1 con Rol 3
-    (3, 2, 2); -- Asigna a Feid (Usuario 2) al Concierto 2 con Rol 3
 
 MERGE INTO TipoObjeto (tipo) KEY(tipo) VALUES
     ('Micrófono'),
