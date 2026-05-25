@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0"
+            prefWidth="1200.0"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <children>
+
+        <BorderPane AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+
+        
+            <!-- =========================
+                 SELECTOR DE CONCIERTO
+            ========================= -->
+            <top>
+                <VBox alignment="CENTER"
+                      spacing="10">
+
+                    <padding>
+                        <Insets top="20" bottom="20"/>
+                    </padding>
+
+                    <Label text="Gestión Financiera del Evento"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+
+                    <Label fx:id="lbl_idPresupuesto"
+                           text="ID Presupuesto: No creado"
+                           style="-fx-font-size: 16px; -fx-text-fill: #2563eb;"/>
+
+                    <HBox alignment="CENTER" spacing="15">
+                        <Label text="Concierto:"
+                               style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                        <ComboBox fx:id="comboConcierto"
+                                  prefWidth="350"
+                                  prefHeight="40"
+                                  onAction="#On_seleccionarConcierto"
+                                  style="-fx-font-size: 14px;"/>
+                    </HBox>
+
+                </VBox>
+            </top>
+
+            <!-- =========================
+                 CONTENIDO
+            ========================= -->
+            <center>
+
+                <ScrollPane fitToWidth="true">
+
+                    <content>
+
+                        <VBox spacing="30">
+
+                            <padding>
+                                <Insets top="20"
+                                        left="30"
+                                        right="30"
+                                        bottom="30"/>
+                            </padding>
+
+                            <!-- =========================
+                                 PRESUPUESTO
+                            ========================= -->
+                            <VBox spacing="15"
+                                  style="-fx-border-color: #d1d5db;
+                                         -fx-border-radius: 10;
+                                         -fx-padding: 20;">
+
+                                <Label text="Presupuesto"
+                                       style="-fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+
+                                <HBox spacing="15"
+                                       alignment="CENTER_LEFT">
+
+                                    <Label text="Valor Presupuesto:"/>
+
+                                    <TextField fx:id="fid_presupuesto"
+                                               prefWidth="250"/>
+
+                                    <Button text="Guardar"
+                                            onAction="#On_guardarPresupuesto"/>
+
+                                    <Button text="Editar"
+                                            onAction="#On_editarPresupuesto"/>
+
+                                    <Button text="Eliminar"
+                                            onAction="#On_eliminarPresupuesto"/>
+                                </HBox>
+
+                            </VBox>
+
+                            <!-- =========================
+                                 GASTOS
+                            ========================= -->
+                            <VBox spacing="15"
+                                  style="-fx-border-color: #d1d5db;
+                                         -fx-border-radius: 10;
+                                         -fx-padding: 20;">
+
+                                <Label text="Gastos"
+                                       style="-fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+
+                                <HBox spacing="15">
+
+                                    <TextField fx:id="fid_descripcionGasto"
+                                               promptText="Descripción del gasto"
+                                               prefWidth="400"/>
+
+                                    <TextField fx:id="fid_valorGasto"
+                                               promptText="Valor"
+                                               prefWidth="150"/>
+
+                                    <Button text="Agregar Gasto"
+                                            onAction="#On_agregarGasto"/>
+
+                                    <Button text="Eliminar Seleccionado"
+                                            onAction="#On_eliminarGasto"/>
+                                </HBox>
+
+                                <TableView fx:id="tablaGastos"
+                                           prefHeight="200">
+
+                                    <columns>
+
+                                        <TableColumn fx:id="colDescripcionGasto"
+                                                     text="Descripción"
+                                                     prefWidth="700"/>
+
+                                        <TableColumn fx:id="colValorGasto"
+                                                     text="Valor"
+                                                     prefWidth="200"/>
+
+                                    </columns>
+
+                                </TableView>
+
+                                <Label fx:id="lblTotalGastos"
+                                       text="Gasto Total: 0"
+                                       style="-fx-font-size: 16px;
+                                              -fx-font-weight: bold;
+                                              -fx-text-fill: red;"/>
+
+                            </VBox>
+
+                            <!-- =========================
+                                 INGRESOS GENERALES
+                            ========================= -->
+                            <VBox spacing="15"
+                                  style="-fx-border-color: #d1d5db;
+                                         -fx-border-radius: 10;
+                                         -fx-padding: 20;">
+
+                                <Label text="Ingresos Generales"
+                                       style="-fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+
+                                <HBox spacing="15">
+
+                                    <TextField fx:id="fid_descripcionIngreso"
+                                               promptText="Descripción del ingreso"
+                                               prefWidth="400"/>
+
+                                    <TextField fx:id="fid_valorIngreso"
+                                               promptText="Valor"
+                                               prefWidth="150"/>
+
+                                    <Button text="Agregar Ingreso"
+                                            onAction="#On_agregarIngreso"/>
+
+                                    <Button text="Eliminar Seleccionado"
+                                            onAction="#On_eliminarIngreso"/>
+                                </HBox>
+
+                                <TableView fx:id="tablaIngresos"
+                                           prefHeight="200">
+
+                                    <columns>
+
+                                        <TableColumn fx:id="colDescripcionIngreso"
+                                                     text="Descripción"
+                                                     prefWidth="700"/>
+
+                                        <TableColumn fx:id="colValorIngreso"
+                                                     text="Valor"
+                                                     prefWidth="200"/>
+
+                                    </columns>
+
+                                </TableView>
+
+                                <Label fx:id="lblTotalIngresos"
+                                       text="Ingreso Total: 0"
+                                       style="-fx-font-size: 16px;
+                                              -fx-font-weight: bold;
+                                              -fx-text-fill: green;"/>
+
+                            </VBox>
+
+                            <!-- =========================
+                                 BOLETERIA
+                            ========================= -->
+                            <VBox spacing="15"
+                                  style="-fx-border-color: #d1d5db;
+                                         -fx-border-radius: 10;
+                                         -fx-padding: 20;">
+
+                                <Label text="Boletería"
+                                       style="-fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+
+                                <HBox spacing="15">
+
+                                    <TextField fx:id="fid_seccion"
+                                               promptText="Sección"
+                                               prefWidth="200"/>
+
+                                    <TextField fx:id="fid_cantidad"
+                                               promptText="Cantidad"
+                                               prefWidth="120"/>
+
+                                    <TextField fx:id="fid_precioBoleta"
+                                               promptText="Precio Boleta"
+                                               prefWidth="150"/>
+
+                                    <Button text="Agregar"
+                                            onAction="#On_agregarBoleteria"/>
+
+                                    <Button text="Eliminar Seleccionado"
+                                            onAction="#On_eliminarBoleteria"/>
+                                </HBox>
+
+                                <TableView fx:id="tablaBoleteria"
+                                           prefHeight="220">
+
+                                    <columns>
+
+                                        <TableColumn fx:id="colSeccion"
+                                                     text="Sección"
+                                                     prefWidth="300"/>
+
+                                        <TableColumn fx:id="colCantidad"
+                                                     text="Cantidad"
+                                                     prefWidth="150"/>
+
+                                        <TableColumn fx:id="colPrecio"
+                                                     text="Precio Boleta"
+                                                     prefWidth="200"/>
+
+                                        <TableColumn fx:id="colIngresoTotal"
+                                                     text="Ingreso Total"
+                                                     prefWidth="250"/>
+
+                                    </columns>
+
+                                </TableView>
+
+                            </VBox>
+
+                            <!-- =========================
+                                 APROBACION
+                            ========================= -->
+                            <VBox spacing="15"
+                                  alignment="CENTER_LEFT"
+                                  style="-fx-border-color: #d1d5db;
+                                         -fx-border-radius: 10;
+                                         -fx-padding: 20;">
+
+                                <Label text="Aprobación del Presupuesto"
+                                       style="-fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+
+                                <HBox spacing="20"
+                                       alignment="CENTER_LEFT">
+
+                                    <CheckBox fx:id="chk_aprobado"
+                                              text="Presupuesto aprobado"/>
+
+                                    <Button text="Actualizar Estado"
+                                            onAction="#On_aprobarPresupuesto"/>
+                                </HBox>
+
+                            </VBox>
+
+                        <!-- =========================
+                            GUARDAR FINANZAS
+                        ========================= -->
+                        <HBox alignment="CENTER">
+
+                            <Button text="Guardar Finanzas del Evento"
+                                    onAction="#On_guardarFinanzas"
+                                    style="-fx-background-color: #16a34a;
+                                        -fx-text-fill: white;
+                                        -fx-font-size: 15px;
+                                        -fx-font-weight: bold;
+                                        -fx-padding: 12 30 12 30;"/>
+
+                        </HBox>
+
+                            <!-- =========================
+                                 VOLVER
+                            ========================= -->
+                            <HBox alignment="CENTER">
+
+                                <Button text="Volver"
+                                        onAction="#On_volver"
+                                        style="-fx-background-color: #2563eb;
+                                               -fx-text-fill: white;
+                                               -fx-font-size: 14px;
+                                               -fx-padding: 10 25 10 25;"/>
+                            </HBox>
+
+                        </VBox>
+
+                    </content>
+
+                </ScrollPane>
+
+            </center>
+
+        </BorderPane>
+
+    </children>
+
+</AnchorPane>

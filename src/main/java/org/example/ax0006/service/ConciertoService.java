@@ -80,4 +80,12 @@ public class ConciertoService {
     public List<Concierto> listarConciertos() {
         return conciertoRepo.obtenerConciertos();
     }
+
+
+    public void asignarPresupuesto(int idConcierto,int idAnalisisF) {
+    conciertoRepo.asignarAnalisisFinanciero(
+            idConcierto,
+            idAnalisisF
+    );
+}
 }

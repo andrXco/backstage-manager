@@ -1,15 +1,12 @@
 package org.example.ax0006.manager;
 
+import org.example.ax0006.repository.AnalisisFinancieroRepository;
 import org.example.ax0006.repository.ConciertoRepository;
 import org.example.ax0006.repository.ContratoRepository;
 import org.example.ax0006.repository.HorarioRepository;
 import org.example.ax0006.repository.RolRepository;
 import org.example.ax0006.repository.UsuarioRepository;
 import org.example.ax0006.service.*;
-import org.example.ax0006.service.AutenticacionService;
-import org.example.ax0006.service.ConciertoService;
-import org.example.ax0006.service.ProfileService;
-import org.example.ax0006.service.RolService;
 import org.example.ax0006.db.H2;
 
 public class ContextManager {
@@ -31,6 +28,11 @@ public class ContextManager {
     private ObjetoService objetoService;
     private ContratoService contratoService;
     private ContratoRepository contratoRepo;
+    private AnalisisFinancieroService analisisService;
+    private AnalisisFinancieroRepository analisisRepo;
+    private GastoService gastoService;
+    private IngresoService ingresoService;
+    private BoleteriaService boleteriaService;
 
     public ContextManager(
             H2 h2,
@@ -48,7 +50,12 @@ public class ContextManager {
             InventarioObjetoService inventarioObjetoService,
             ObjetoService objetoService,
             ContratoService contratoService,
-            ContratoRepository contratoRepo
+            ContratoRepository contratoRepo,
+            AnalisisFinancieroService analisisService,
+            AnalisisFinancieroRepository analisisRepo,
+            GastoService gastoService,
+            IngresoService ingresoService,
+            BoleteriaService boleteriaService
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -66,6 +73,11 @@ public class ContextManager {
         this.objetoService = objetoService;
         this.contratoService = contratoService;
         this.contratoRepo = contratoRepo;
+        this.analisisService = analisisService;
+        this.analisisRepo = analisisRepo;
+        this.gastoService = gastoService;
+        this.ingresoService = ingresoService;
+        this.boleteriaService = boleteriaService;
     }
 
     public InventarioService getInventarioService() { return inventarioService; }
@@ -82,5 +94,10 @@ public class ContextManager {
     public StaffService getStaffService() { return staffService; }
     public ContratoService getContratoService() { return contratoService; }
     public ContratoRepository getContratoRepository() { return contratoRepo; }
+    public AnalisisFinancieroService getAnalisisFinancieroService() { return analisisService;}
+    public AnalisisFinancieroRepository getAnalisisFinancieroRepository() {return analisisRepo;}
+    public GastoService getGastoService() { return gastoService;}
+    public IngresoService getIngresoService() { return ingresoService;}
+    public BoleteriaService getBoleteriaService() { return boleteriaService;}
     public HorarioRepository getHorarioRepo() {return horarioRepo;}
 }

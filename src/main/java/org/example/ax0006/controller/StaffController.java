@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.manager.SceneManager;
+import org.example.ax0006.repository.AnalisisFinancieroRepository;
 import org.example.ax0006.repository.AsignacionStaffRepository;
 import org.example.ax0006.repository.ConciertoRepository;
 import org.example.ax0006.repository.UsuarioRepository;
@@ -44,7 +45,10 @@ public class StaffController {
         H2 h2 = new H2();
         UsuarioRepository usuarioRepo = new UsuarioRepository(h2);
         AsignacionStaffRepository asignacionRepo = new AsignacionStaffRepository(h2);
-        ConciertoRepository conciertoRepo = new ConciertoRepository(h2);
+
+        AnalisisFinancieroRepository analisisFinancieroRepo = new AnalisisFinancieroRepository(h2);
+        ConciertoRepository conciertoRepo = new ConciertoRepository(h2,analisisFinancieroRepo);
+        
         staffService = new StaffService(usuarioRepo, asignacionRepo, conciertoRepo);
 
         cargarListaEmpleados();

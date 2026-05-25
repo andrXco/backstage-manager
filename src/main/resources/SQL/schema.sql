@@ -38,7 +38,36 @@ CREATE TABLE IF NOT EXISTS Clausula (
 CREATE TABLE IF NOT EXISTS AnalisisFinanciero (
     idAnalisisF INT AUTO_INCREMENT PRIMARY KEY,
     presupuesto INT NOT NULL,
-    gastos INT NOT NULL
+    aprobado BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS Gasto (
+    idGasto INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255),
+    valor INT NOT NULL,
+    idAnalisisF INT,
+    FOREIGN KEY (idAnalisisF)
+        REFERENCES AnalisisFinanciero(idAnalisisF)
+);
+
+CREATE TABLE IF NOT EXISTS Ingreso (
+    idIngreso INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255),
+    valor INT NOT NULL,
+    idAnalisisF INT,
+    FOREIGN KEY (idAnalisisF)
+        REFERENCES AnalisisFinanciero(idAnalisisF)
+);
+
+CREATE TABLE IF NOT EXISTS Boleteria (
+    idBoleteria INT AUTO_INCREMENT PRIMARY KEY,
+    seccion VARCHAR(255),
+    cantidad INT,
+    precioBoleta INT,
+    ingresoTotal INT,
+    idAnalisisF INT,
+    FOREIGN KEY (idAnalisisF)
+        REFERENCES AnalisisFinanciero(idAnalisisF)
 );
 
 CREATE TABLE IF NOT EXISTS Horario (

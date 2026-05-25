@@ -46,8 +46,10 @@ class ConciertoServiceTest {
         // 1. Inicializar BD (Ahora solo ejecuta el DDL puro de schema.sql sin datos basura)
         h2.inicializarDB();
 
+        // Se crea el repositorio real conectado a la base de datos de prueba.
+        AnalisisFinancieroRepository analisisFinancieroRepo = new AnalisisFinancieroRepository(h2);
+        conciertoRepo = new ConciertoRepository(h2,analisisFinancieroRepo);
         // 2. Inicializar repositorios reales conectados a la BD de prueba
-        conciertoRepo = new ConciertoRepository(h2);
         horarioRepo = new HorarioRepository(h2);
         contratoRepo = new ContratoRepository(h2);
         usuarioRepo = new UsuarioRepository(h2);
