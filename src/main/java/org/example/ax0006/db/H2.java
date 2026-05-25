@@ -70,7 +70,7 @@ public class H2 {
     public void cargarDatosDePrueba() {
         try (Connection conn = getConnection()) {
             Reader reader = new InputStreamReader(Objects.requireNonNull(
-                    this.getClass().getResourceAsStream("/SQL/data.sql")
+                    this.getClass().getResourceAsStream("/SQL/datos.sql")
             ));
             RunScript.execute(conn, reader);
             System.out.println("Datos de prueba cargados para la interfaz gráfica.");
