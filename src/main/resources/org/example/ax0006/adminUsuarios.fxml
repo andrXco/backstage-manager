@@ -28,10 +28,11 @@
             <TableView fx:id="tablaUsuarios" prefHeight="500.0" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
-                    <TableColumn fx:id="colGmail" text="Correo" prefWidth="300"/>
-                    <TableColumn fx:id="colRolGlobal" text="Rol Global" prefWidth="150"/>
+                    <TableColumn fx:id="colGmail" text="Correo" prefWidth="250"/>
+                    <TableColumn fx:id="colRolGlobal" text="Rol Global" prefWidth="140"/>
                     <TableColumn fx:id="colNombreRol" text="Rol en concierto" prefWidth="200"/>
-                    <TableColumn fx:id="colAccion" text="Asignar" prefWidth="200"/>
+                    <TableColumn fx:id="colAccion" text="Asignar" prefWidth="120"/>
+                    <TableColumn fx:id="colEliminar" text="Eliminar" prefWidth="100"/>
                 </columns>
             </TableView>
             <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text="Volver al Menú" />

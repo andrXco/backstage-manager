@@ -85,13 +85,10 @@ public class StaffService {
     }
 
     /**
-     * Elimina un empleado del sistema (solo debe ser llamado por el Administrador)
+     * Elimina un empleado del sistema
      */
     public boolean eliminarEmpleado(int idUsuario) {
-        // Primero eliminamos todas sus asignaciones
         asignacionStaffRepository.eliminarAsignacionesPorUsuario(idUsuario);
-
-        // Luego eliminamos el usuario
         return usuarioRepository.eliminarPorId(idUsuario);
     }
 }

@@ -1,4 +1,5 @@
 package org.example.ax0006.controller;
+
 import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
@@ -40,40 +41,17 @@ public class AdminUsuariosController {
         this.staffService = staffService;
     }
 
-
-
     //elementos de la pantalla de administracion de usuarios:
-    @FXML
-    private Label fid_Bienvenido;
-
-    @FXML
-    private Button fid_bt_volver;
-
-    @FXML
-    private TableView<Usuario> tablaUsuarios;
-
-    @FXML
-    private TableColumn<Usuario, String> colNombre;
-
-    @FXML
-    private TableColumn<Usuario, String> colGmail;
-
-    @FXML
-    private TableColumn<Usuario, String> colRolGlobal;
-
-    @FXML
-    private TableColumn<Usuario, String> colNombreRol;
-
-    @FXML
-    private TableColumn<Usuario, Void> colAccion; //columna para asignar rol
-
-    @FXML
-    private ComboBox<Object> comboConciertoFiltro;
-
-
-
-
-
+    @FXML private Label fid_Bienvenido;
+    @FXML private Button fid_bt_volver;
+    @FXML private TableView<Usuario> tablaUsuarios;
+    @FXML private TableColumn<Usuario, String> colNombre;
+    @FXML private TableColumn<Usuario, String> colGmail;
+    @FXML private TableColumn<Usuario, String> colRolGlobal;
+    @FXML private TableColumn<Usuario, String> colNombreRol;
+    @FXML private TableColumn<Usuario, Void> colAccion; //columna para asignar rol
+    @FXML private TableColumn<Usuario, Void> colEliminar; //columna para eliminar usuario
+    @FXML private ComboBox<Object> comboConciertoFiltro;
 
     @FXML
     public void initialize() {
@@ -90,6 +68,7 @@ public class AdminUsuariosController {
 
         cargarComboConciertoFiltro();
         agregarBoton();
+        agregarBotonEliminar(); // botón para eliminar usuarios
 
         comboConciertoFiltro.setOnAction(e -> actualizarTabla());
 
@@ -106,9 +85,7 @@ public class AdminUsuariosController {
             };
             return new SimpleStringProperty(nombreRol);
         });
-
     }
-
 
     private void cargarComboConciertoFiltro() {
         comboConciertoFiltro.getItems().clear();
@@ -119,7 +96,6 @@ public class AdminUsuariosController {
                         .toList()
         );
         comboConciertoFiltro.setValue("Sin asignar");
-
 
         comboConciertoFiltro.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -201,13 +177,67 @@ public class AdminUsuariosController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    btn.setDisable(false);//pequeño cambio para que el boton estuviera disponible siempre para asignar mas roles asi ya tenga
+                    btn.setDisable(false);
                     setGraphic(btn);
                 }
+            }
+        });
+    }
 
+    // Agrega botón para eliminar usuario
+    private void agregarBotonEliminar() {
+        colEliminar.setCellFactory(param -> new TableCell<>() {
+            private final Button btnEliminar = new Button("Eliminar");
+
+            {
+                btnEliminar.setStyle("-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-size: 12px;");
+                btnEliminar.setOnAction(event -> {
+                    Usuario u = getTableView().getItems().get(getIndex());
+                    eliminarUsuarioSeleccionado(u);
+                });
             }
 
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Usuario usuarioFila = getTableView().getItems().get(getIndex());
+                    btnEliminar.setDisable(usuarioFila.getIdUsuario() == sesion.getUsuarioActual().getIdUsuario());
+                    setGraphic(btnEliminar);
+                }
+            }
         });
+    }
+
+    // Elimina el usuario seleccionado (solo Administrador)
+    private void eliminarUsuarioSeleccionado(Usuario usuario) {
+        if (usuario == null) return;
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar Eliminación");
+        confirmacion.setHeaderText("¿Eliminar usuario?");
+        confirmacion.setContentText("¿Está seguro de eliminar a " + usuario.getNombre() + "?\nEsta acción no se puede deshacer.");
+
+        if (confirmacion.showAndWait().get() == ButtonType.OK) {
+            boolean eliminado = staffService.eliminarEmpleado(usuario.getIdUsuario());
+
+            if (eliminado) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Éxito");
+                alert.setHeaderText("Usuario eliminado");
+                alert.setContentText(usuario.getNombre() + " ha sido eliminado correctamente.");
+                alert.showAndWait();
+
+                actualizarTabla();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No se pudo eliminar el usuario");
+                alert.showAndWait();
+            }
+        }
     }
 
     private void mostrarPopupRol(Usuario u) {
@@ -234,7 +264,6 @@ public class AdminUsuariosController {
         if (tieneConcierto) {
             content.getChildren().add(chkRolGlobal);
 
-            // Deshabilitar checkbox si el rol no puede ser global
             comboRoles.setOnAction(e -> {
                 Rol rolElegido = comboRoles.getValue();
                 if (rolElegido != null) {
@@ -268,7 +297,6 @@ public class AdminUsuariosController {
 
             content.getChildren().addAll(chkRolGlobal, labelConcierto, comboConciertos);
 
-            // Deshabilitar checkbox si el rol no puede ser global
             comboRoles.setOnAction(e -> {
                 Rol rolElegido = comboRoles.getValue();
                 if (rolElegido != null) {
@@ -315,11 +343,7 @@ public class AdminUsuariosController {
                 if (chkRolGlobal.isSelected()) {
                     rolService.actualizarRolGlobal(u.getIdUsuario(), rolSeleccionado.getIdRol());
                 } else {
-                    // Usar el concierto del filtro directamente
                     Concierto conciertoFiltro = (Concierto) seleccionado;
-
-                    // Se asigna el rol seleccionado sin borrar roles anteriores del mismo usuario
-                    // El subrol se envia como null porque se gestiona desde la pantalla DirectorioStaff
                     boolean asignado = staffService.asignarStaffAConcierto(
                             u.getIdUsuario(),
                             conciertoFiltro.getIdConcierto(),
@@ -349,8 +373,6 @@ public class AdminUsuariosController {
                     return;
                 }
 
-                // Se asigna el rol seleccionado sin borrar roles anteriores del mismo usuario
-                // El subrol se envia como null porque se gestiona desde la pantalla DirectorioStaff
                 boolean asignado = staffService.asignarStaffAConcierto(
                         u.getIdUsuario(),
                         conciertoSeleccionado.getIdConcierto(),

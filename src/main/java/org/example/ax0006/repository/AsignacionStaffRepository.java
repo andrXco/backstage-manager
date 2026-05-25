@@ -15,19 +15,24 @@ public class AsignacionStaffRepository {
         this.h2 = h2;
     }
 
-    // Versión compatible con tu schema actual (sin columna idSubrol)
     public void asignarStaffAConcierto(int idUsuario, int idConcierto, int idRol, String subrol) {
-        String sql = "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) VALUES (?, ?, ?)";
-
+        String sql = "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto, idSubrol) VALUES (?, ?, ?, ?)";
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            Integer idSubrol = obtenerIdSubrolPorNombre(subrol);
             stmt.setInt(1, idRol);
             stmt.setInt(2, idUsuario);
             stmt.setInt(3, idConcierto);
 
+            if (idSubrol == null) {
+                stmt.setNull(4, Types.INTEGER);
+            } else {
+                stmt.setInt(4, idSubrol);
+            }
+
             stmt.executeUpdate();
-            System.out.println("Staff asignado correctamente a concierto " + idConcierto);
+            System.out.println("Staff asignado correctamente");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -189,20 +194,90 @@ public class AsignacionStaffRepository {
     }
 
     public String obtenerSubrolStaffEnConcierto(int idUsuario, int idConcierto) {
+        String sql = """
+        SELECT s.nombre
+        FROM RolConciertoUsuario rcu
+        LEFT JOIN Subrol s ON rcu.idSubrol = s.idSubrol
+        WHERE rcu.idUsuario = ? AND rcu.idConcierto = ? AND rcu.idRol = 4
+    """;
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idConcierto);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String subrol = rs.getString("nombre");
+                return subrol == null || subrol.isBlank() ? "Sin subrol" : subrol;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return "Sin subrol";
     }
 
     public boolean actualizarSubrolStaffEnConcierto(int idUsuario, int idConcierto, String subrol) {
-        return false; // No soportado aún
+        String sql = "UPDATE RolConciertoUsuario SET idSubrol = ? WHERE idUsuario = ? AND idConcierto = ? AND idRol = 4";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            Integer idSubrol = obtenerIdSubrolPorNombre(subrol);
+
+            if (idSubrol == null) {
+                return false;
+            }
+
+            stmt.setInt(1, idSubrol);
+            stmt.setInt(2, idUsuario);
+            stmt.setInt(3, idConcierto);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private Integer obtenerIdSubrolPorNombre(String subrol) {
+        if (subrol == null || subrol.isBlank()) {
+            return null;
+        }
+
+        String sql = "SELECT idSubrol FROM Subrol WHERE nombre = ?";
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, subrol);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("idSubrol");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public List<String> obtenerSubrolesDisponibles() {
+        String sql = "SELECT nombre FROM Subrol ORDER BY idSubrol";
         List<String> subroles = new ArrayList<>();
-        subroles.add("Sonido");
-        subroles.add("Luces");
-        subroles.add("Seguridad");
-        subroles.add("Logística");
-        subroles.add("Producción");
+
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                subroles.add(rs.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return subroles;
     }
 
