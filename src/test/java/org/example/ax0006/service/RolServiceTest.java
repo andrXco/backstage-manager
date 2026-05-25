@@ -66,14 +66,14 @@ class RolServiceTest {
         @Test
         @DisplayName("retorna roles sin incluir Administrador ni Sin rol")
         void retornaRolesSinAdminNiSinRol() {
-            // Se obtienen los roles asignables desde el servicio
+            //Se obtienen los roles asignables desde el servicio
             List<Rol> roles = rolService.obtenerRolesAsignables();
 
-            // No debe retornar null ni estar vacía
+            //No debe retornar null ni estar vacía
             assertNotNull(roles, "La lista de roles no debe ser null.");
             assertFalse(roles.isEmpty(), "Debe haber al menos un rol asignable.");
 
-            // No debe contener Administrador (idRol=1) ni Sin rol (idRol=0)
+            //No debe contener Administrador idRol=1 ni Sin rol idRol=0
             boolean contieneAdmin = roles.stream().anyMatch(r -> r.getIdRol() == 1);
             boolean contieneSinRol = roles.stream().anyMatch(r -> r.getIdRol() == 0);
 
@@ -87,7 +87,7 @@ class RolServiceTest {
         void retornaRolesEsperados() {
             List<Rol> roles = rolService.obtenerRolesAsignables();
 
-            // Verificar que los roles asignables esperados estén presentes
+            //Verificar que los roles asignables esperados estén presentes
             boolean tieneTecnico = roles.stream().anyMatch(r -> r.getIdRol() == 2);
             boolean tieneManager = roles.stream().anyMatch(r -> r.getIdRol() == 3);
             boolean tieneStaff = roles.stream().anyMatch(r -> r.getIdRol() == 4);
@@ -118,7 +118,7 @@ class RolServiceTest {
         @Test
         @DisplayName("retorna todos los usuarios registrados")
         void retornaUsuariosRegistrados() {
-            // Registrar usuarios directamente en el repositorio
+            //Registrar usuarios directamente en el repositorio
             Usuario u1 = new Usuario();
             u1.setNombre("usuario1");
             u1.setContrasena("pass1");
@@ -149,7 +149,7 @@ class RolServiceTest {
         @Test
         @DisplayName("retorna el nombre correcto para un idRol existente")
         void retornaNombreRolExistente() {
-            // idRol=1 es Administrador según el MERGE de H2
+
             String nombreRol = rolService.obtenerNombreRol(1);
 
             assertNotNull(nombreRol, "El nombre del rol no debe ser null.");
@@ -167,7 +167,7 @@ class RolServiceTest {
         @Test
         @DisplayName("retorna Sin rol para un idRol inexistente")
         void retornaSinRolParaIdInexistente() {
-            // idRol=99 no existe en la base de datos
+
             String nombreRol = rolService.obtenerNombreRol(99);
 
             assertEquals("Sin rol", nombreRol, "Un idRol inexistente debe retornar 'Sin rol'.");
@@ -183,7 +183,7 @@ class RolServiceTest {
         @Test
         @DisplayName("actualiza correctamente el rol global de un usuario")
         void actualizaRolGlobalExitosamente() {
-            // Crear usuario con idRol=0 (sin rol)
+            //Crear usuario con idRol=0 sin rol.
             Usuario u = new Usuario();
             u.setNombre("usuario_rol_global");
             u.setContrasena("pass123");
@@ -191,15 +191,15 @@ class RolServiceTest {
             u.setIdRol(0);
             usuarioRepository.guardar(u);
 
-            // Obtener el usuario guardado para tener su id
+
             Usuario guardado = usuarioRepository.buscarPorNombre("usuario_rol_global");
             assertNotNull(guardado, "El usuario debe existir.");
             assertEquals(0, guardado.getIdRol(), "El rol inicial debe ser 0.");
 
-            // Actualizar rol global a Manager (idRol=3)
+
             rolService.actualizarRolGlobal(guardado.getIdUsuario(), 3);
 
-            // Verificar que el rol fue actualizado
+
             Usuario actualizado = usuarioRepository.buscarPorNombre("usuario_rol_global");
             assertEquals(3, actualizado.getIdRol(), "El rol debe haberse actualizado a Manager (3).");
         }
@@ -216,7 +216,7 @@ class RolServiceTest {
 
             Usuario guardado = usuarioRepository.buscarPorNombre("usuario_a_admin");
 
-            // Actualizar a Administrador (idRol=1)
+
             rolService.actualizarRolGlobal(guardado.getIdUsuario(), 1);
 
             Usuario actualizado = usuarioRepository.buscarPorNombre("usuario_a_admin");
@@ -235,12 +235,12 @@ class RolServiceTest {
 
             Usuario guardado = usuarioRepository.buscarPorNombre("usuario_multiples_roles");
 
-            // Primero asignar Tecnico (idRol=2)
+
             rolService.actualizarRolGlobal(guardado.getIdUsuario(), 2);
             Usuario trasTecnico = usuarioRepository.buscarPorNombre("usuario_multiples_roles");
             assertEquals(2, trasTecnico.getIdRol(), "Debe ser Tecnico.");
 
-            // Luego cambiar a Staff (idRol=4)
+
             rolService.actualizarRolGlobal(guardado.getIdUsuario(), 4);
             Usuario trasStaff = usuarioRepository.buscarPorNombre("usuario_multiples_roles");
             assertEquals(4, trasStaff.getIdRol(), "Debe ser Staff.");
