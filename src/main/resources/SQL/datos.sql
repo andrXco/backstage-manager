@@ -39,27 +39,26 @@ MERGE INTO Clausula (idClausula, clausula, idContrato) KEY (idClausula)
 
 ALTER TABLE Clausula ALTER COLUMN idClausula RESTART WITH 6;
 
--- 5. CONCIERTOS (referenciando Horario y Contrato existentes)
-MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado, idAnalisisF) KEY(idConcierto)
-    VALUES
-    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, 1),
-    (2, 'Vida loka', 2, 35000, 2, TRUE, 2);
-
-ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
-
--- 6. TABLAS INTERMEDIAS
--- 3 = Manager/Artista
-MERGE INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) KEY (idRol, idUsuario, idConcierto)
-    VALUES
-    (3, 2, 1), -- Asigna a Feid (Usuario 2) al Concierto 1 con Rol 3
-    (3, 2, 2); -- Asigna a Feid (Usuario 2) al Concierto 2 con Rol 3
-
--- 7. ANALISIS FINANCIERO
+-- 5. ANALISIS FINANCIERO (Debe ir antes de conciertos para evitar violaciones de clave foránea)
 MERGE INTO AnalisisFinanciero (idAnalisisF, presupuesto, aprobado) KEY (idAnalisisF)
     VALUES
     (1, 50000, TRUE),
     (2, 80000, TRUE);
 ALTER TABLE AnalisisFinanciero ALTER COLUMN idAnalisisF RESTART WITH 3;
+
+-- 6. CONCIERTOS (referenciando Horario, Contrato y Análisis Financiero existentes)
+MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado, idAnalisisF) KEY(idConcierto)
+    VALUES
+    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, 1),
+    (2, 'Vida loka', 2, 35000, 2, TRUE, 2);
+ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
+
+-- 7. TABLAS INTERMEDIAS
+-- 3 = Manager/Artista
+MERGE INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) KEY (idRol, idUsuario, idConcierto)
+    VALUES
+    (3, 2, 1), -- Asigna a Feid (Usuario 2) al Concierto 1 con Rol 3
+    (3, 2, 2); -- Asigna a Feid (Usuario 2) al Concierto 2 con Rol 3
 
 -- 8. GASTOS
 MERGE INTO Gasto (idGasto, descripcion, valor, idAnalisisF) KEY (idGasto)
