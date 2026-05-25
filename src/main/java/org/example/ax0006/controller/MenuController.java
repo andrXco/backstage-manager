@@ -52,9 +52,6 @@ public class MenuController {
     private Button fid_bt_admin;
 
     @FXML
-    private Label fid_lbl_concierto;
-
-    @FXML
     private Label fid_lbl_contador_bandeja;
 
     @FXML
@@ -81,12 +78,6 @@ public class MenuController {
             fid_bt_mantenimientoObjeto.setVisible(esAdmin || esManager);
             fid_bt_mantenimientoObjeto.setManaged(esAdmin || esManager);
 
-            if (sesion.getConciertoActual() != null) {
-                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
-            } else {
-                fid_lbl_concierto.setText("");
-            }
-
             actualizarContadorBandeja();
         }
     }
@@ -99,11 +90,6 @@ public class MenuController {
             fid_bt_admin.setVisible(esAdmin);
             fid_bt_admin.setManaged(esAdmin);
 
-            if (sesion.getConciertoActual() != null) {
-                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
-            } else {
-                fid_lbl_concierto.setText("");
-            }
         }
     }
 
