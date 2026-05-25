@@ -297,6 +297,22 @@ public class SceneManager {
     );
 }
 
+    public void showReportesGerenciales() throws IOException {
+
+        ReportesGerencialesController controller =
+                new ReportesGerencialesController(
+                        this,
+                        context.getSesion(),
+                        context.getConciertoService(),
+                        context.getAnalisisFinancieroService()
+                );
+
+        loadScene(
+                "/org/example/ax0006/reportesGerenciales.fxml",
+                controller
+        );
+    }
+
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {
 

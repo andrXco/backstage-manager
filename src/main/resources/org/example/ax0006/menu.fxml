@@ -73,8 +73,21 @@
                             <children>
                                 <Button fx:id="fid_bt_entradas" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-text-fill: #1f2937; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="N" />
                                 <Button fx:id="fid_bt_clientes" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-text-fill: #1f2937; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="N" />
-                                <Button fx:id="fid_bt_reportes" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #91c3ff; -fx-text-fill: #0b418d; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-border-color: #dbe2ea; -fx-border-radius: 18; -fx-border-width: 1.2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);" text="Reportes" />
-                            </children>
+                                <Button fx:id="fid_bt_reportesGerenciales"
+                                        mnemonicParsing="false"
+                                        prefHeight="70.0"
+                                        prefWidth="280.0"
+                                        style="-fx-background-color: #91c3ff;
+               -fx-text-fill: #0b418d;
+               -fx-font-size: 17px;
+               -fx-font-weight: bold;
+               -fx-background-radius: 18;
+               -fx-border-color: #dbe2ea;
+               -fx-border-radius: 18;
+               -fx-border-width: 1.2;
+               -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);"
+                                        text="Reportes"
+                                        onAction="#On_ReportesGerenciales"/>                            </children>
                         </VBox>
 
                         <VBox prefHeight="450.0" prefWidth="280.0" spacing="22.0">
