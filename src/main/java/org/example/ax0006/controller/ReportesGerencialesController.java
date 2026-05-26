@@ -67,7 +67,7 @@ public class ReportesGerencialesController {
     @FXML
     public void initialize() {
 
-        List<Concierto> conciertos = conciertoService.obtenerConciertosSolos();
+        List<Concierto> conciertos = conciertoService.listarConciertos();
         combo_eventos.getItems().setAll(conciertos);
 
         combo_eventos.setCellFactory(lv -> new ListCell<>() {
@@ -122,8 +122,7 @@ public class ReportesGerencialesController {
         String resumen =
                 "Evento: " + c.getNombreConcierto() + "\n" +
                 "Aforo: " + c.getAforo() + "\n" +
-                "Programado: " + (c.isProgramado() ? "Sí" : "No") + "\n" +
-                "Artista: " + (c.getArtista() != null ? c.getArtista().getNombre() : "No asignado") + "\n";
+                "Programado: " + (c.isProgramado() ? "Sí" : "No") + "\n";
 
         txt_resumenEvento.setText(resumen);
     }
