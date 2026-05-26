@@ -94,6 +94,8 @@ class ReporteServiceTest {
 
     @Test
     void testGenerarDashboardYReporte() {
+        int ingresosBase = reporteService.generarDashboard().getIngresosTotales();
+
         // 1. Crear Artista
         Usuario artista = new Usuario();
         artista.setNombre("Artista Test");
@@ -157,7 +159,8 @@ class ReporteServiceTest {
 
         // 7. Test KPIs / Dashboard
         ReporteDashboardDTO dashboard = reporteService.generarDashboard();
-        assertEquals(25000, dashboard.getIngresosTotales(), "Ingresos totales deben ser 20000 + 5000 = 25000");
+        int incrementoIngresos = dashboard.getIngresosTotales() - ingresosBase;
+        assertEquals(25000, incrementoIngresos, "El incremento de ingresos debe ser 20000 + 5000 = 25000");
         assertEquals("Artista Test", dashboard.getArtistaMasRentable());
 
         // 8. Test Rendimiento String
