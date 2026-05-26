@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions: write-all
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Descargar software del repositorio
@@ -42,4 +44,3 @@ jobs:
           coverage_report_title: 'Test coverage results'
           coverage_report_name: 'Test coverage results'
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
