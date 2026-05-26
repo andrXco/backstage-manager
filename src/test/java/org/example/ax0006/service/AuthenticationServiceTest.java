@@ -64,6 +64,8 @@ class AuthenticationServiceTest {
         } catch (Exception e) {
             e.printStackTrace();
             fail("Falló la limpieza de la base de datos antes de la prueba");
+        }finally {
+            h2.cerrarServidor();
         }
     }
 

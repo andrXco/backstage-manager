@@ -6,9 +6,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
 import org.example.ax0006.entity.Usuario;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
+import org.example.ax0006.service.ActividadService;
 import org.example.ax0006.service.AutenticacionService;
 import org.example.ax0006.service.ConciertoService;
 import org.example.ax0006.service.StaffService;
@@ -17,18 +19,27 @@ import java.io.IOException;
 
 public class LoginController {
 
-    /*ATRIBUTOS*/
+    /* ATRIBUTOS */
     private SceneManager sceneManager;
     private AutenticacionService autenService;
     private SesionManager sesion;
+    private ActividadService actividadService;
     private StaffService staffService;
     private ConciertoService conciertoService;
 
-    /*CONSTRUCTOR DE LA CLASE*/
-    public LoginController(SceneManager sceneManager, AutenticacionService autenService, SesionManager sesion, StaffService staffService, ConciertoService conciertoService) {
+    /* CONSTRUCTOR DE LA CLASE */
+    public LoginController(
+            SceneManager sceneManager,
+            AutenticacionService autenService,
+            SesionManager sesion,
+            ActividadService actividadService,
+            StaffService staffService,
+            ConciertoService conciertoService
+    ) {
         this.sceneManager = sceneManager;
         this.autenService = autenService;
         this.sesion = sesion;
+        this.actividadService = actividadService;
         this.staffService = staffService;
         this.conciertoService = conciertoService;
     }
@@ -51,7 +62,7 @@ public class LoginController {
     private boolean mostrando = false;
 
     @FXML
-    /*METODO PARA HACER QUE EL '👁' QUE MUESTRA LA CONTRASEÑA FUNCIONE EN EL CAMPO DE CONTRASEÑA*/
+    /* METODO PARA HACER QUE EL '👁' QUE MUESTRA LA CONTRASEÑA FUNCIONE EN EL CAMPO DE CONTRASEÑA */
     public void togglePassword() {
         if (mostrando) {
             fid_Contrasena.setText(fid_ContrasenaVisible.getText());
@@ -70,41 +81,44 @@ public class LoginController {
         mostrando = !mostrando;
     }
 
-    /*METODO PARA CREAR UNA PANTALLA POP UP PARA AVISAR EN CASO DE ERROR*/
-    void AlertaLogin (String CausaError){
+    /* METODO PARA CREAR UNA PANTALLA POP UP PARA AVISAR EN CASO DE ERROR */
+    void AlertaLogin(String CausaError) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error de Login");
         alert.setHeaderText("No se pudo iniciar sesión");
         alert.setContentText(CausaError);
 
-        alert.showAndWait(); // Esto abre el POP UP
+        alert.showAndWait();
     }
 
     @FXML
+        /* METODO PARA PODER IR A LA PANTALLA DE SIGN UP */
         /*METODO PARA PODER IR A LA PANTALLA DE SIGN UP*/
     void On_sign_up(ActionEvent event) throws IOException {
         sceneManager.showSignUp();
     }
 
     @FXML
-        /*METODO QUE EJECUTA EL LOGIN Y QUE CAMBIA A LA PANTALLA DE MENU SI ESTE ES EXITOSO*/
+        /* METODO QUE EJECUTA EL LOGIN Y QUE CAMBIA A LA PANTALLA DE MENU SI ESTE ES EXITOSO */
     void On_login(ActionEvent event) throws IOException {
         if (mostrando) {
             togglePassword();
         }
 
-        //ATRAVEZ DEL SERVICIO DE AUTENTICACION OBTENEMOS EL USUARIO QUE SE VA A LOGEAR
-        Usuario usuarioLogin = autenService.login(fid_Usuario.getText(), fid_Contrasena.getText());
+        // A través del servicio de autenticación obtenemos el usuario que se va a logear
+        Usuario usuarioLogin = autenService.login(
+                fid_Usuario.getText(),
+                fid_Contrasena.getText()
+        );
 
-        /*MENSAJES DE ERROR*/
+        /* MENSAJES DE ERROR */
         if (usuarioLogin == null) {
             System.out.println("Usuario no existe");
             AlertaLogin("Error El usuario o contraseña incorrectos");
             return;
         }
 
-
-        /*SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION*/
+        /* SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION */
         sesion.setUsuarioActual(usuarioLogin);
         System.out.println(
                 "ROL GUARDADO EN SESION: " +
@@ -116,8 +130,18 @@ public class LoginController {
                         usuarioLogin.getIdRol()
         );
 
+        /* REGISTRAR NOTIFICACION DE LOGIN */
+        if (actividadService != null) {
+            actividadService.registrarLogin(usuarioLogin);
+        }
+
+        /*
+            SI EL USUARIO NO ES ADMINISTRADOR,
+            SE BUSCA EL CONCIERTO ASOCIADO AL STAFF
+        */
         if (usuarioLogin.getIdRol() != 1) {
             int idConcierto = staffService.obtenerIdConciertoDelUsuario(usuarioLogin.getIdUsuario());
+
             if (idConcierto != -1) {
                 conciertoService.obtenerConciertosSolos().stream()
                         .filter(c -> c.getIdConcierto() == idConcierto)
@@ -126,9 +150,7 @@ public class LoginController {
             }
         }
 
-
-        /*EN CASO DE UN LOGEO EXITOSO CAMBIAMOS A LA VENTANA DE MENU*/
+        /* EN CASO DE UN LOGEO EXITOSO CAMBIAMOS A LA VENTANA DE MENU */
         sceneManager.showMenu();
-
     }
 }

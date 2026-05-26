@@ -5,10 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
+import org.example.ax0006.service.ActividadService;
 import org.example.ax0006.service.ConciertoService;
-import org.example.ax0006.service.NominaService;
 
 import java.io.IOException;
 
@@ -17,35 +18,21 @@ public class MenuController {
     private SceneManager sceneManager;
     private SesionManager sesion;
     private ConciertoService conciertoService;
-    private NominaService nominaService;
+    private ActividadService actividadService;
 
-    public MenuController(SceneManager sceneManager,
-                          SesionManager sesion,
-                          ConciertoService conciertoService,
-                          NominaService nominaService) {
+    public MenuController() {
+    }
 
+    public MenuController(
+            SceneManager sceneManager,
+            SesionManager sesion,
+            ConciertoService conciertoService,
+            ActividadService actividadService
+    ) {
         this.sceneManager = sceneManager;
         this.sesion = sesion;
         this.conciertoService = conciertoService;
-        this.nominaService = nominaService;
-    }
-
-    public MenuController(SceneManager sceneManager, SesionManager sesion, ConciertoService conciertoService) {
-        this.sceneManager = sceneManager;
-        this.sesion = sesion;
-        this.conciertoService = conciertoService;
-    }
-
-    public void setSceneManager(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
-    }
-
-    public void setSesion(SesionManager sesion) {
-        this.sesion = sesion;
-    }
-
-    public void setConciertoService(ConciertoService conciertoService) {
-        this.conciertoService = conciertoService;
+        this.actividadService = actividadService;
     }
 
     @FXML
@@ -58,11 +45,14 @@ public class MenuController {
     private Button fid_Menu_Conciertos;
 
 
+    @FXML 
+    private Button fid_Menu_Finanzas;
+
     @FXML
     private Button fid_bt_admin;
 
     @FXML
-    private Label fid_lbl_concierto;
+    private Label fid_lbl_contador_bandeja;
 
     @FXML
     private Button fid_bt_crearObjeto;
@@ -85,22 +75,10 @@ public class MenuController {
             fid_bt_crearObjeto.setVisible(esAdmin);
             fid_bt_crearObjeto.setManaged(esAdmin);
 
-            fid_bt_mantenimientoObjeto.setVisible(esAdmin);
-            fid_bt_mantenimientoObjeto.setManaged(esAdmin);
+            fid_bt_mantenimientoObjeto.setVisible(esAdmin || esManager);
+            fid_bt_mantenimientoObjeto.setManaged(esAdmin || esManager);
 
-            fid_bt_mantenimientoObjeto.setVisible(esManager);
-            fid_bt_mantenimientoObjeto.setManaged(esManager);
-
-            fid_bt_mantenimientoObjeto.setVisible(esAdmin);
-            fid_bt_mantenimientoObjeto.setManaged(esAdmin);
-
-
-
-            if (sesion.getConciertoActual() != null) {
-                fid_lbl_concierto.setText("Concierto: " + sesion.getConciertoActual().getNombreConcierto());
-            } else {
-                fid_lbl_concierto.setText("");
-            }
+            actualizarContadorBandeja();
         }
     }
 
@@ -117,8 +95,32 @@ public class MenuController {
 
     @FXML
     void On_btvolver(ActionEvent event) throws IOException {
+        if (actividadService != null && sesion != null && sesion.getUsuarioActual() != null) {
+            actividadService.registrarLogout(sesion.getUsuarioActual());
+        }
+
         sesion.cerrarSesion();
         sceneManager.showLogin();
+    }
+
+    @FXML
+    void On_bandeja(ActionEvent event) throws IOException {
+        sceneManager.showActividad();
+    }
+
+    private void actualizarContadorBandeja() {
+        if (fid_lbl_contador_bandeja == null ||
+                actividadService == null ||
+                sesion == null ||
+                sesion.getUsuarioActual() == null) {
+            return;
+        }
+
+        int pendientes = actividadService.contarPendientes(sesion.getUsuarioActual());
+
+        fid_lbl_contador_bandeja.setText(String.valueOf(pendientes));
+        fid_lbl_contador_bandeja.setVisible(pendientes > 0);
+        fid_lbl_contador_bandeja.setManaged(pendientes > 0);
     }
 
     @FXML
@@ -141,56 +143,14 @@ public class MenuController {
     }
 
     @FXML
+    public void On_irMenuFinanzas(ActionEvent event) throws IOException {
+        sceneManager.showMenuFinanzas();
+    }
+
+    @FXML
     void On_Menu_Conciertos(ActionEvent event) throws IOException {
         sceneManager.showMenuConcierto();
     }
-
-    @FXML
-    private void On_Nomina() {
-        try {
-            sceneManager.showAsignarNomina(
-                    nominaService.obtenerTodas()
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void On_LiquidacionHoras(ActionEvent event) {
-
-        int rol = sesion.getUsuarioActual().getIdRol();
-
-        // SOLO MANAGER
-        if (rol != 3) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Acceso denegado");
-            alert.setHeaderText("No autorizado");
-            alert.setContentText(
-                    "Solo el manager puede gestionar nóminas."
-            );
-
-            alert.showAndWait();
-
-            return;
-        }
-
-        try {
-
-            System.out.println(
-                    "ROL EN MENU: " +
-                            sesion.getUsuarioActual().getIdRol()
-            );
-
-            sceneManager.showNomina();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @FXML
     void on_bt_crearObjeto(ActionEvent event) throws IOException {

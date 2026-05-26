@@ -4,9 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ax0006.controller.*;
-import org.example.ax0006.controller.DetalleNominaController;
-import java.io.IOException;
 
+import java.io.IOException;
 
 
 /*ESTA CLASE ES LA QUE HACE TODO EL CAMBIO DE ESCENAS POSIBLE AL ENVIAR LA INFORMACION Y AL SIMPLIFICAR EL CAMBIAR DE ESCENA*/
@@ -25,7 +24,16 @@ public class SceneManager {
 
     /*METODO PARA MOSTRAR EL LOGIN*/
     public void showLogin() throws IOException {
-        LoginController loginController = new LoginController(this, context.getAutenService(), context.getSesion(), context.getStaffService(), context.getConciertoService());
+
+        LoginController loginController = new LoginController(
+                this,
+                context.getAutenService(),
+                context.getSesion(),
+                context.getActividadService(),
+                context.getStaffService(),
+                context.getConciertoService()
+        );
+
         loadScene("/org/example/ax0006/login.fxml", loginController);
     }
 
@@ -37,8 +45,14 @@ public class SceneManager {
 
     /*METOOD PARA MOSTRAR EL MENU*/
     public void showMenu() throws IOException{
-        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService(), context.getNominaService());
+        MenuController menuControl = new MenuController(this, context.getSesion(), context.getConciertoService(), context.getActividadService());
+
         loadScene("/org/example/ax0006/menu.fxml", menuControl);
+    }
+
+    public void showActividad() throws IOException {
+        ActivityNotificationController activityNotificationController = new ActivityNotificationController(this, context.getSesion(), context.getActividadService());
+        loadScene("/org/example/ax0006/notificaciones.fxml", activityNotificationController);
     }
 
     //metodo para mostrar pantalla de administracion de usuarios.
@@ -103,9 +117,11 @@ public class SceneManager {
             context.getSesion().setIdContratoTemporal(null);
             context.getSesion().setConciertoTemporal(null);
         }
-        context.getSesion().setPantallaOrigen(null);
-        CrearConciertoController controller = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
-        loadScene("/org/example/ax0006/crearconcierto.fxml", controller);
+
+    context.getSesion().setPantallaOrigen(null);
+
+        CrearConciertoController crearConciertoController = new CrearConciertoController(context.getSesion(), context.getConciertoService(), this);
+        loadScene("/org/example/ax0006/crearconcierto.fxml", crearConciertoController);
     }
 
     public void showConciertosProgramados() throws IOException {
@@ -141,54 +157,78 @@ public class SceneManager {
         loadScene("/org/example/ax0006/vercontrato.fxml", controller);
     }
 
+    //MENÚ DE FINANZAS
+    public void showMenuFinanzas() throws IOException{
+        MenuFinanzasController menuFinanzasController = new MenuFinanzasController(this, context.getSesion());
+        loadScene("/org/example/ax0006/menufinanzas.fxml", menuFinanzasController);
+    }
+
+    // CREAR ANALISIS NUEVO
+    public void showAnalisisFinanciero() throws IOException {
+
+        AnalisisFinancieroController controller =
+            new AnalisisFinancieroController(
+
+        context.getAnalisisFinancieroService(),
+        context.getGastoService(),
+        context.getIngresoService(),
+        context.getBoleteriaService(),
+        context.getConciertoService(),
+        context.getSesion(),
+        this
+);
+
+        loadScene(
+                "/org/example/ax0006/analisisfinanciero.fxml",
+                controller
+        );
+    }
+
+    public void showAnalisisFinanciero(int idAnalisis) throws IOException {
+
+    context.getSesion().setPantallaOrigen("consultarFinanzas");
+
+    AnalisisFinancieroController controller =
+            new AnalisisFinancieroController(
+                    context.getAnalisisFinancieroService(),
+                    context.getGastoService(),
+                    context.getIngresoService(),
+                    context.getBoleteriaService(),
+                    context.getConciertoService(),
+                    context.getSesion(),
+                    this
+            );
+
+    loadScene(
+            "/org/example/ax0006/analisisfinanciero.fxml",
+            controller
+    );
+
+    controller.cargarAnalisis(idAnalisis);
+    }
+    
+    public void showConsultarFinanzas() throws IOException {
+
+    ConsultarFinanzasController controller =
+            new ConsultarFinanzasController(
+                    context.getAnalisisFinancieroService(),
+                    this
+            );
+
+    loadScene(
+            "/org/example/ax0006/consultarfinanzas.fxml",
+            controller
+    );
+    }
+
     public void setContratoTemporal(Integer id) {
         this.contratoTemporal = id;
     }
 
     public Integer getContratoTemporal() {
         return contratoTemporal;
+
     }
-
-    public void showNomina() throws IOException {
-        NominaController controller = new NominaController(
-                this,
-                context.getSesion(),
-                context.getConciertoService(),
-                context.getNominaService(),
-                context.getStaffService()
-        );
-
-        loadScene("/org/example/ax0006/liquidacionhoras.fxml", controller);
-    }
-
-    public void showAsignarNomina(java.util.List<org.example.ax0006.entity.Nomina> nominas) throws IOException {
-
-        AsignarNominaController controller =
-                new AsignarNominaController(
-                        this,
-                        context.getSesion(),
-                        context.getNominaService(),
-                        context.getStaffService()
-                );
-
-        loadScene("/org/example/ax0006/asignarnomina.fxml", controller);
-
-        controller.cargarNominas(nominas);
-    }
-
-    public void showDetalleNomina(org.example.ax0006.entity.Nomina nomina) throws IOException {
-        context.getSesion().setNominaSeleccionada(nomina);
-        DetalleNominaController controller = new DetalleNominaController(
-                this,
-                context.getSesion(),
-                context.getStaffService()
-        );
-
-        loadScene("/org/example/ax0006/detallenomina.fxml", controller);
-
-        controller.cargarDatos();
-    }
-
 
     /* --- MÉTODOS DE INVENTARIO --- */
 
@@ -240,6 +280,20 @@ public class SceneManager {
 
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
+
+        public void showSeleccionarConciertoFinanzas() throws IOException {
+    SeleccionarConciertoFinanzasController controller =
+            new SeleccionarConciertoFinanzasController(
+                    context.getConciertoService(),
+                    context.getAnalisisFinancieroService(),
+                    context.getSesion(),
+                    this
+            );
+    loadScene(
+            "/org/example/ax0006/asignarpresupuesto.fxml",
+            controller
+    );
+}
 
     /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {

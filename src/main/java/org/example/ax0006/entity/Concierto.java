@@ -26,6 +26,7 @@ public class Concierto {
         this.artista = artista;
     }
 
+    
     /*GETTERS Y SETTERS*/
 
     public int getIdConcierto() {
@@ -101,4 +102,6 @@ public class Concierto {
     @Override public String toString() {
         return nombreConcierto;
     }
+
+    
 }

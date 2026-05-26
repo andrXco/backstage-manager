@@ -25,7 +25,6 @@ public class ObjetoRepository {
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                // Formato: "1 - Micrófono (Shure SM58)"
                 lista.add(rs.getInt("idObjeto") + " - " + rs.getString("tipo") + " (" + rs.getString("referencia") + ")");
             }
         } catch (SQLException e) {
