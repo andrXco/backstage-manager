@@ -476,16 +476,32 @@ class ActividadServiceTest {
             Usuario savedUser = usuarioRepository.buscarPorNombre("MultirolesAdmin");
             assertNotNull(savedUser);
 
-            // Asignar rol "Staff" (4) y "Administrador" (1)
-            asignarRolAUsuario(savedUser.getIdUsuario(), 4); // Staff
-            asignarRolAUsuario(savedUser.getIdUsuario(), 1); // Administrador
+
+            asignarRolAUsuario(savedUser.getIdUsuario(), 4);
+            asignarRolAUsuario(savedUser.getIdUsuario(), 1);
 
             actividadRepository.registrarActividad("TIPO", "MODULO", "Sistema", "Alerta Admin", null, "Administrador");
 
             List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
-            // Como tiene rol Administrador en la lista, se resuelve a Administrador principal.
+
             boolean tieneAlertaAdmin = acts.stream().anyMatch(a -> "Alerta Admin".equals(a.getDescripcion()));
             assertTrue(tieneAlertaAdmin);
+        }
+        @Test
+        @DisplayName("debe resolver a Sin rol para un idRol desconocido")
+        void resolverSinRolParaIdDesconocido() throws Exception {
+            Usuario u = new Usuario();
+            u.setNombre("UsuarioSinRol");
+            u.setContrasena("pass");
+            u.setGmail("sinrol@example.com");
+            u.setIdRol(99);
+            assertTrue(usuarioRepository.guardar(u));
+
+            Usuario savedUser = usuarioRepository.buscarPorNombre("UsuarioSinRol");
+            assertNotNull(savedUser);
+
+            List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
+            assertNotNull(acts);
         }
     }
 }

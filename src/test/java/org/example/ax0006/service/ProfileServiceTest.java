@@ -125,9 +125,18 @@ class ProfileServiceTest {
 
     }
 
-    //PENDIENTE
     @Test
+    @DisplayName("obtener roles del usuario")
     void obtenerRolesDelUsuario() {
+        boolean usuarioCreado = autenticacionService.signUp(
+                "testuser_roles",
+                "password123",
+                "roles@example.com");
+        assertTrue(usuarioCreado);
+
+
+        String roles = profileService.obtenerRolesDelUsuario(1);
+        assertDoesNotThrow(() -> profileService.obtenerRolesDelUsuario(1));
     }
 
     @Test

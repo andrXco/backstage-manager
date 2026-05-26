@@ -121,4 +121,26 @@ class StaffServiceTest {
             assertTrue(actualizado);
         }
     }
+    @Nested
+    @DisplayName("Eliminar Asignacion")
+    class EliminarAsignacionMETODO {
+
+        @Test
+        void eliminarAsignacion() {
+
+            staffService.crearEmpleado("StaffEliminar", "pass", "eliminar@test.com");
+            Usuario staff = usuarioRepo.buscarPorNombre("StaffEliminar");
+
+            staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Sonido");
+
+
+            List<Usuario> antes = staffService.obtenerStaffPorConcierto(0);
+            assertTrue(antes.stream().anyMatch(u -> u.getIdUsuario() == staff.getIdUsuario()));
+
+
+            assertDoesNotThrow(() ->
+                    staffService.eliminarAsignacion(staff.getIdUsuario(), 0, 4)
+            );
+        }
+    }
 }
