@@ -70,7 +70,9 @@ public class AdminUsuariosController {
     @FXML
     private ComboBox<Object> comboConciertoFiltro;
 
-
+    // Nueva funcionalidad: Botón para desasignar rol a un usuario seleccionado
+    @FXML
+    private Button fid_bt_desasignarRol;
 
 
 
@@ -369,6 +371,94 @@ public class AdminUsuariosController {
                 comboConciertoFiltro.setValue(conciertoSeleccionado);
             }
             actualizarTabla();
+        }
+    }
+
+    // Nueva funcionalidad: Muestra popup para elegir cuál rol específico desasignar
+    // (funciona tanto si tiene 1 rol como si tiene varios en el mismo concierto)
+    @FXML
+    void desasignarRol(ActionEvent event) {
+        Usuario u = tablaUsuarios.getSelectionModel().getSelectedItem();
+        if (u == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Ningún usuario seleccionado");
+            alert.setHeaderText("Por favor selecciona un usuario de la tabla");
+            alert.showAndWait();
+            return;
+        }
+
+        Object seleccionado = comboConciertoFiltro.getValue();
+        if (!(seleccionado instanceof Concierto c)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Acción no disponible");
+            alert.setHeaderText("Debes filtrar por un concierto específico para desasignar un rol");
+            alert.showAndWait();
+            return;
+        }
+
+        String rolesActuales = staffService.obtenerNombreRolEnConcierto(u.getIdUsuario(), c.getIdConcierto());
+
+        if (rolesActuales.equals("Sin rol")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Sin roles");
+            alert.setHeaderText("Este usuario no tiene roles asignados en este concierto");
+            alert.showAndWait();
+            return;
+        }
+
+        // Crear popup para elegir el rol a desasignar
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Desasignar Rol");
+        dialog.setHeaderText("Usuario: " + u.getNombre() + "\nConcierto: " + c.getNombreConcierto());
+
+        ComboBox<String> comboRoles = new ComboBox<>();
+        String[] rolesLista = rolesActuales.split(", ");
+        comboRoles.getItems().addAll(rolesLista);
+        comboRoles.setValue(rolesLista[0]); // seleccionar el primero por defecto
+
+        VBox content = new VBox(10);
+        content.getChildren().addAll(new Label("Selecciona el rol a desasignar:"), comboRoles);
+        dialog.getDialogPane().setContent(content);
+
+        ButtonType confirmar = new ButtonType("Desasignar", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmar, cancelar);
+
+        Optional<ButtonType> resultado = dialog.showAndWait();
+
+        if (resultado.isPresent() && resultado.get() == confirmar) {
+            String rolSeleccionado = comboRoles.getValue();
+
+            int idRol = switch (rolSeleccionado) {
+                case "Administrador" -> 1;
+                case "Tecnico" -> 2;
+                case "Manager" -> 3;
+                case "Staff" -> 4;
+                default -> -1;
+            };
+
+            if (idRol == -1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No se pudo identificar el rol seleccionado");
+                alert.showAndWait();
+                return;
+            }
+
+            boolean desasignado = staffService.desasignarRolEspecifico(u.getIdUsuario(), c.getIdConcierto(), idRol);
+
+            if (desasignado) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Rol desasignado");
+                alert.setHeaderText("Se eliminó el rol: " + rolSeleccionado);
+                alert.showAndWait();
+                actualizarTabla();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText("No se pudo desasignar el rol");
+                alert.showAndWait();
+            }
         }
     }
 

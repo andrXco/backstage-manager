@@ -317,4 +317,10 @@ public class AsignacionStaffRepository {
             e.printStackTrace();
         }
     }
+
+    // Nueva funcionalidad: Desasigna todos los roles del usuario en el concierto específico
+    public boolean desasignarStaffDeConcierto(int idUsuario, int idConcierto) {
+        eliminarAsignacionesUsuarioEnConcierto(idUsuario, idConcierto);
+        return true;
+    }
 }

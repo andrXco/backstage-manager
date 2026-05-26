@@ -34,7 +34,12 @@
                     <TableColumn fx:id="colAccion" text="Asignar" prefWidth="200"/>
                 </columns>
             </TableView>
-            <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text="Volver al Menú" />
+
+            <!-- Nueva funcionalidad: Botón para desasignar rol a un usuario seleccionado -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="fid_bt_desasignarRol" onAction="#desasignarRol" prefWidth="180.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;" text="Desasignar Rol" />
+                <Button fx:id="fid_bt_volver" onAction="#On_volver" prefWidth="150" text="Volver al Menú" />
+            </HBox>
         </VBox>
     </center>
 

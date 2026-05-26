@@ -106,4 +106,11 @@ public class StaffService {
     public int obtenerIdConciertoDelUsuario(int idUsuario) {
         return asignacionStaffRepository.obtenerIdConciertoDelUsuario(idUsuario);
     }
+
+    // Nueva funcionalidad: Desasigna un rol ESPECÍFICO de un usuario en un concierto
+    // (permite que un usuario tenga varios roles y solo se elimine el seleccionado)
+    public boolean desasignarRolEspecifico(int idUsuario, int idConcierto, int idRol) {
+        asignacionStaffRepository.eliminarAsignacion(idUsuario, idConcierto, idRol);
+        return true;
+    }
 }
