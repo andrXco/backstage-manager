@@ -184,30 +184,28 @@ public class SceneManager {
         );
     }
 
-    //ABRIR ANALISIS EXISTENTE
-    public void showAnalisisFinanciero(
-                int idAnalisis
-        ) throws IOException {
+    public void showAnalisisFinanciero(int idAnalisis) throws IOException {
 
-            AnalisisFinancieroController controller =
-                    new AnalisisFinancieroController(
+    context.getSesion().setPantallaOrigen("consultarFinanzas");
 
-        context.getAnalisisFinancieroService(),
-        context.getGastoService(),
-        context.getIngresoService(),
-        context.getBoleteriaService(),
-        context.getConciertoService(),
-        context.getSesion(),
-        this
-);
-
-            loadScene(
-                    "/org/example/ax0006/analisisfinanciero.fxml",
-                    controller
+    AnalisisFinancieroController controller =
+            new AnalisisFinancieroController(
+                    context.getAnalisisFinancieroService(),
+                    context.getGastoService(),
+                    context.getIngresoService(),
+                    context.getBoleteriaService(),
+                    context.getConciertoService(),
+                    context.getSesion(),
+                    this
             );
 
-            controller.cargarAnalisis(idAnalisis);
-        }
+    loadScene(
+            "/org/example/ax0006/analisisfinanciero.fxml",
+            controller
+    );
+
+    controller.cargarAnalisis(idAnalisis);
+    }
     
     public void showConsultarFinanzas() throws IOException {
 

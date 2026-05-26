@@ -81,8 +81,7 @@ public class ConciertoService {
         return conciertoRepo.obtenerConciertos();
     }
 
-
-    public void asignarPresupuesto(int idConcierto,int idAnalisisF) {
+    public void asignarPresupuesto(int idConcierto, Integer idAnalisisF) {
     conciertoRepo.asignarAnalisisFinanciero(
             idConcierto,
             idAnalisisF

@@ -40,10 +40,10 @@ MERGE INTO Clausula (idClausula, clausula, idContrato) KEY (idClausula)
 ALTER TABLE Clausula ALTER COLUMN idClausula RESTART WITH 6;
 
 -- 5. CONCIERTOS (referenciando Horario y Contrato existentes)
-MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado, idAnalisisF) KEY(idConcierto)
-    VALUES
-    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, null),
-    (2, 'Vida loka', 2, 35000, 2, TRUE, null);
+MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado) KEY(idConcierto)
+VALUES
+    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE),
+    (2, 'Vida loka', 2, 35000, 2, TRUE);
 
 ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
 
