@@ -22,7 +22,12 @@ public class H2 {
     private static final String USER = "sa";
     private static final String PASS = "";
 
-    public H2() {}; //Constructor
+    private Server webServer;
+
+    public H2() {
+    }
+
+    ; //Constructor
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
@@ -40,17 +45,39 @@ public class H2 {
             RunScript.execute(conn, reader);
             System.out.println("Base de datos estructurada a partir de schema.sql");
 
-            org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
-            System.out.println("Base de datos inicializada correctamente");
 
-            /*
-            PARA QUE HAGAN EL INGRESO BASE DE DATOS H2:
-            JDBC URL: jdbc:h2:./data/eventosdb
-            User: sa
-            Password: vacío
-           */
-        } catch (SQLException e) {
+            // 4. Iniciar el servidor web de H2
+            try {
+                Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
+                System.out.println("Consola web de H2 iniciada en el puerto 8082");
+            } catch (SQLException e) {
+                System.out.println("No se pudo iniciar el servidor web H2. Puede que ya esté corriendo.");
+            }
+
+
+        } catch (Exception e) {
+            System.err.println("Error crítico al inicializar la base de datos.");
             e.printStackTrace();
+        }
+    }
+
+    public void cerrarServidor() {
+        if (webServer != null) {
+            webServer.stop();
+            webServer = null;
+            System.out.println("Servidor web de H2 detenido correctamente.");
+        }
+    }
+
+    public void cargarDatosDePrueba() {
+        try (Connection conn = getConnection()) {
+            Reader reader = new InputStreamReader(Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/SQL/datos.sql")
+            ));
+            RunScript.execute(conn, reader);
+            System.out.println("Datos de prueba cargados para la interfaz gráfica.");
+        } catch (Exception e) {
+            System.out.println("Nota: No se cargaron datos de prueba o ya existían.");
         }
     }
 }

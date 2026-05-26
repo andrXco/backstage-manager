@@ -1,18 +1,9 @@
 package org.example.ax0006.manager;
 
-import org.example.ax0006.repository.ConciertoRepository;
-import org.example.ax0006.repository.ContratoRepository;
-import org.example.ax0006.repository.HorarioRepository;
-import org.example.ax0006.repository.RolRepository;
-import org.example.ax0006.repository.UsuarioRepository;
+
+import org.example.ax0006.repository.*;
 import org.example.ax0006.service.*;
-import org.example.ax0006.service.AutenticacionService;
-import org.example.ax0006.service.ConciertoService;
-import org.example.ax0006.service.ProfileService;
-import org.example.ax0006.service.RolService;
 import org.example.ax0006.db.H2;
-import org.example.ax0006.repository.NominaRepository;
-import org.example.ax0006.repository.AsignacionStaffRepository;
 
 public class ContextManager {
 
@@ -33,9 +24,15 @@ public class ContextManager {
     private ObjetoService objetoService;
     private ContratoService contratoService;
     private ContratoRepository contratoRepo;
-    private NominaService nominaService;
+    private ActividadRepository actividadRepository;
+    private ActividadService actividadService;
+    private AnalisisFinancieroService analisisService;
+    private AnalisisFinancieroRepository analisisRepo;
+    private GastoService gastoService;
+    private IngresoService ingresoService;
+    private BoleteriaService boleteriaService;
     private NominaRepository nominaRepository;
-    private AsignacionStaffRepository asignacionStaffRepository;
+    private NominaService nominaService;
 
     public ContextManager(
             H2 h2,
@@ -49,14 +46,22 @@ public class ContextManager {
             ConciertoService conciertoService,
             SesionManager sesion,
             StaffService staffService,
+
             InventarioService inventarioService,
             InventarioObjetoService inventarioObjetoService,
             ObjetoService objetoService,
             ContratoService contratoService,
             ContratoRepository contratoRepo,
-            NominaRepository nominaRepository,
-            AsignacionStaffRepository asignacionStaffRepository
-    ) {
+            ActividadRepository actividadRepository,
+            ActividadService actividadService,
+            AnalisisFinancieroService analisisService,
+            AnalisisFinancieroRepository analisisRepo,
+             GastoService gastoService,
+             IngresoService ingresoService,
+             BoleteriaService boleteriaService,
+             NominaRepository nominaRepository,
+             NominaService nominaService
+     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
@@ -73,10 +78,16 @@ public class ContextManager {
         this.objetoService = objetoService;
         this.contratoService = contratoService;
         this.contratoRepo = contratoRepo;
-        this.nominaRepository = nominaRepository;
-        this.asignacionStaffRepository = asignacionStaffRepository;
-        this.nominaService = new NominaService(nominaRepository, conciertoRepo, asignacionStaffRepository);
-    }
+        this.actividadRepository = actividadRepository;
+        this.actividadService = actividadService;
+        this.analisisService = analisisService;
+        this.analisisRepo = analisisRepo;
+         this.gastoService = gastoService;
+         this.ingresoService = ingresoService;
+         this.boleteriaService = boleteriaService;
+         this.nominaRepository = nominaRepository;
+         this.nominaService = nominaService;
+     }
 
     public InventarioService getInventarioService() { return inventarioService; }
     public InventarioObjetoService getInventarioObjetoService() { return inventarioObjetoService; }
@@ -92,6 +103,13 @@ public class ContextManager {
     public StaffService getStaffService() { return staffService; }
     public ContratoService getContratoService() { return contratoService; }
     public ContratoRepository getContratoRepository() { return contratoRepo; }
-    public HorarioRepository getHorarioRepo() {return horarioRepo;}
-    public NominaService getNominaService() { return nominaService; }
+    public ActividadRepository getActividadRepository() { return actividadRepository; }
+    public ActividadService getActividadService() { return actividadService; }
+    public AnalisisFinancieroService getAnalisisFinancieroService() { return analisisService;}
+    public AnalisisFinancieroRepository getAnalisisFinancieroRepository() {return analisisRepo;}
+    public GastoService getGastoService() { return gastoService;}
+    public IngresoService getIngresoService() { return ingresoService;}
+    public BoleteriaService getBoleteriaService() { return boleteriaService;}
+     public HorarioRepository getHorarioRepo() {return horarioRepo;}
+     public NominaService getNominaService() { return nominaService; }
 }

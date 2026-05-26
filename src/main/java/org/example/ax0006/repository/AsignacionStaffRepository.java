@@ -16,7 +16,6 @@ public class AsignacionStaffRepository {
     }
 
     // Método que permite asignar un rol a un usuario dentro de un concierto
-    // También guarda el id del subrol cuando el usuario asignado tiene rol de Staff
     public void asignarStaffAConcierto(int idUsuario, int idConcierto, int idRol, String subrol) {
         String sql = "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto, idSubrol) VALUES (?, ?, ?, ?)";
 
@@ -36,6 +35,7 @@ public class AsignacionStaffRepository {
             }
 
             stmt.executeUpdate();
+            System.out.println("Staff asignado correctamente");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -171,8 +171,6 @@ public class AsignacionStaffRepository {
         return usuarios;
     }
 
-    // Método que permite obtener todos los roles que tiene un usuario dentro de un concierto
-    // Si el usuario tiene más de un rol, los retorna separados por coma
     public String obtenerNombreRolEnConcierto(int idUsuario, int idConcierto) {
         String sql = "SELECT r.rol " +
                 "FROM RolConciertoUsuario rcu " +
@@ -198,7 +196,6 @@ public class AsignacionStaffRepository {
         return roles.isEmpty() ? "Sin rol" : String.join(", ", roles);
     }
 
-    // Método que permite obtener el subrol de un usuario con rol Staff dentro de un concierto
     public String obtenerSubrolStaffEnConcierto(int idUsuario, int idConcierto) {
         String sql = """
         SELECT s.nombre
@@ -224,7 +221,6 @@ public class AsignacionStaffRepository {
         return "Sin subrol";
     }
 
-    // Método que permite actualizar el subrol de un usuario con rol Staff dentro de un concierto
     public boolean actualizarSubrolStaffEnConcierto(int idUsuario, int idConcierto, String subrol) {
         String sql = "UPDATE RolConciertoUsuario SET idSubrol = ? WHERE idUsuario = ? AND idConcierto = ? AND idRol = 4";
 
@@ -248,7 +244,6 @@ public class AsignacionStaffRepository {
         }
     }
 
-    // Método que permite obtener el id del subrol a partir de su nombre
     private Integer obtenerIdSubrolPorNombre(String subrol) {
         if (subrol == null || subrol.isBlank()) {
             return null;
@@ -271,7 +266,6 @@ public class AsignacionStaffRepository {
         return null;
     }
 
-    // Método que permite obtener los subroles disponibles desde la base de datos
     public List<String> obtenerSubrolesDisponibles() {
         String sql = "SELECT nombre FROM Subrol ORDER BY idSubrol";
         List<String> subroles = new ArrayList<>();
@@ -290,7 +284,6 @@ public class AsignacionStaffRepository {
         return subroles;
     }
 
-    //Metodo para obtener el concierto del usuario
     public int obtenerIdConciertoDelUsuario(int idUsuario) {
         String sql = """
         SELECT idConcierto FROM RolConciertoUsuario
@@ -306,5 +299,22 @@ public class AsignacionStaffRepository {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    /**
+     * Elimina TODAS las asignaciones de un usuario (en todos los conciertos)
+     */
+    public void eliminarAsignacionesPorUsuario(int idUsuario) {
+        String sql = "DELETE FROM RolConciertoUsuario WHERE idUsuario = ?";
+        try (Connection conn = h2.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            int filasEliminadas = stmt.executeUpdate();
+            System.out.println("Asignaciones eliminadas para usuario ID " + idUsuario + ": " + filasEliminadas);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

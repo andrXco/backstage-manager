@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions: write-all
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Descargar software del repositorio
@@ -24,10 +26,10 @@ jobs:
         run: chmod +x mvnw
 
       - name: Compilar y empaquetar
-        run: ./mvnw --batch-mode -DskipTests package
+        run: mvn --batch-mode -DskipTests package
 
       - name: Ejecutar pruebas automatizadas
-        run: ./mvnw --batch-mode verify
+        run: mvn --batch-mode verify
 
       - name: Generar reporte de resultados de pruebas
         uses: mikepenz/action-junit-report@v5
@@ -42,4 +44,3 @@ jobs:
           coverage_report_title: 'Test coverage results'
           coverage_report_name: 'Test coverage results'
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
