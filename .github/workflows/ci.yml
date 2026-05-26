@@ -26,10 +26,10 @@ jobs:
         run: chmod +x mvnw
 
       - name: Compilar y empaquetar
-        run: ./mvnw --batch-mode -DskipTests package
+        run: mvn --batch-mode -DskipTests package
 
       - name: Ejecutar pruebas automatizadas
-        run: ./mvnw --batch-mode verify
+        run: mvn --batch-mode verify
 
       - name: Generar reporte de resultados de pruebas
         uses: mikepenz/action-junit-report@v5
