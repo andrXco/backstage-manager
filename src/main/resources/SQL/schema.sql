@@ -210,6 +210,22 @@ CREATE TABLE IF NOT EXISTS ConciertoDocumentoInventario (
     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
     );
 
+CREATE TABLE IF NOT EXISTS Nomina (
+    idNomina INT AUTO_INCREMENT PRIMARY KEY,
+    idConcierto INT NOT NULL,
+    idUsuario INT NOT NULL,
+    rol VARCHAR(100),
+    horasTrabajadas DOUBLE NOT NULL,
+    tarifaPorHora DOUBLE NOT NULL,
+    horasExtra DOUBLE DEFAULT 0,
+    total DOUBLE NOT NULL,
+    estado VARCHAR(20) DEFAULT 'PENDIENTE',
+    pagado BOOLEAN DEFAULT FALSE,
+
+    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
+
 -- Insertar roles por defecto
 MERGE INTO Rol (idRol, rol) KEY(idRol)
     VALUES (0, 'Sin rol'), (1, 'Administrador'), (2, 'Tecnico'), (3, 'Manager'), (4, 'Staff');
@@ -222,4 +238,3 @@ MERGE INTO TipoObjeto (tipo) KEY(tipo)
 
 MERGE INTO Concierto (idConcierto, nombreConcierto, aforo, programado)
     KEY(idConcierto) VALUES (0, 'mantenimiento', 0, FALSE);
-
