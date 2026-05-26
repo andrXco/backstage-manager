@@ -246,4 +246,10 @@ class RolServiceTest {
             assertEquals(4, trasStaff.getIdRol(), "Debe ser Staff.");
         }
     }
+    @Test
+    @DisplayName("constructor por defecto no lanza excepción")
+    void constructorPorDefectoFunciona() {
+
+        assertDoesNotThrow(() -> new RolService());
+    }
 }
