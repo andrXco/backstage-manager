@@ -127,20 +127,112 @@ class StaffServiceTest {
 
         @Test
         void eliminarAsignacion() {
-
             staffService.crearEmpleado("StaffEliminar", "pass", "eliminar@test.com");
             Usuario staff = usuarioRepo.buscarPorNombre("StaffEliminar");
-
             staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Sonido");
-
 
             List<Usuario> antes = staffService.obtenerStaffPorConcierto(0);
             assertTrue(antes.stream().anyMatch(u -> u.getIdUsuario() == staff.getIdUsuario()));
 
-
             assertDoesNotThrow(() ->
                     staffService.eliminarAsignacion(staff.getIdUsuario(), 0, 4)
             );
+        }
+    }
+
+    // ← BORRA DESDE AQUÍ: el segundo bloque @Nested que empieza en línea 146
+    // @Nested
+    // @DisplayName("Eliminar Asignacion")
+    // class EliminarAsignacionMETODO { ... }
+    // ← HASTA AQUÍ (líneas 146-161 aproximadamente)
+
+
+    @Nested
+    @DisplayName("Generar Nomina")
+    class GenerarNominaMETODO {
+
+        @Test
+        void generarNomina() {
+            double nomina = staffService.generarNomina(1);
+            assertEquals(0.0, nomina);
+        }
+    }
+
+    @Nested
+    @DisplayName("Obtener Ids Usuarios Asignados")
+    class ObtenerIdsUsuariosAsignadosMETODO {
+
+        @Test
+        void obtenerIdsUsuariosAsignados() {
+            List<Integer> ids = staffService.obtenerIdsUsuariosAsignados();
+            assertNotNull(ids);
+        }
+    }
+
+    @Nested
+    @DisplayName("Obtener Usuarios Por Concierto")
+    class ObtenerUsuariosPorConciertoMETODO {
+
+        @Test
+        void obtenerUsuariosPorConcierto() {
+            List<Usuario> usuarios = staffService.obtenerUsuariosPorConcierto(0);
+            assertNotNull(usuarios);
+        }
+    }
+
+    @Nested
+    @DisplayName("Obtener Nombre Rol En Concierto")
+    class ObtenerNombreRolEnConciertoMETODO {
+
+        @Test
+        void obtenerNombreRolEnConcierto() {
+            staffService.crearEmpleado("StaffRol", "pass", "rol@test.com");
+            Usuario staff = usuarioRepo.buscarPorNombre("StaffRol");
+            staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Luces");
+
+            String nombreRol = staffService.obtenerNombreRolEnConcierto(staff.getIdUsuario(), 0);
+            assertNotNull(nombreRol);
+        }
+    }
+
+    @Nested
+    @DisplayName("Obtener Subroles Disponibles")
+    class ObtenerSubrolesDisponiblesMETODO {
+
+        @Test
+        void obtenerSubrolesDisponibles() {
+            List<String> subroles = staffService.obtenerSubrolesDisponibles();
+            assertNotNull(subroles);
+        }
+    }
+
+    @Nested
+    @DisplayName("Obtener Id Concierto Del Usuario")
+    class ObtenerIdConciertoDelUsuarioMETODO {
+
+        @Test
+        void obtenerIdConciertoDelUsuario() {
+            staffService.crearEmpleado("StaffConcierto", "pass", "concierto@test.com");
+            Usuario staff = usuarioRepo.buscarPorNombre("StaffConcierto");
+            staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Audio");
+
+            int idConcierto = staffService.obtenerIdConciertoDelUsuario(staff.getIdUsuario());
+            assertEquals(0, idConcierto);
+        }
+    }
+
+    @Nested
+    @DisplayName("Actualizar Subrol invalido")
+    class ActualizarSubrolInvalidoMETODO {
+
+        @Test
+        void actualizarSubrolNullRetornaFalse() {
+            assertFalse(staffService.actualizarSubrolStaffEnConcierto(1, 0, null));
+        }
+
+        @Test
+        void actualizarSubrolVacioRetornaFalse() {
+            assertFalse(staffService.actualizarSubrolStaffEnConcierto(1, 0, "  "));
         }
     }
 }

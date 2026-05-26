@@ -594,4 +594,16 @@ class ConciertoServiceTest {
             assertNotNull(conciertos);
         }
     }
+    @Nested
+    @DisplayName("AsignarPresupuesto")
+    class AsignarPresupuestoMETODO {
+
+        @Test
+        void asignarPresupuesto() {
+
+            assertDoesNotThrow(() ->
+                    conciertoService.asignarPresupuesto(0, null)
+            );
+        }
+    }
 }

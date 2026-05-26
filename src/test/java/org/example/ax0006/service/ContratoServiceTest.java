@@ -260,4 +260,36 @@ class ContratoServiceTest {
         }
 
     }
+    @Test
+    void crearContratoNullRetornaCero() {
+        // contrato null → debe retornar 0
+        int resultado = contratoService.crearContrato(null);
+        assertEquals(0, resultado);
+    }
+
+    @Test
+    void crearContratoSinFechaRetornaCero() {
+        // contrato sin fecha → debe retornar 0
+        Contrato contrato = new Contrato();
+        contrato.setFecha(null);
+        int resultado = contratoService.crearContrato(contrato);
+        assertEquals(0, resultado);
+    }
+
+    @Test
+    void crearContratoSinClausulasRetornaCero() {
+        // contrato sin cláusulas → debe retornar 0
+        Contrato contrato = new Contrato();
+        contrato.setFecha(LocalDate.now());
+        contrato.setClausulas(new ArrayList<>());
+        int resultado = contratoService.crearContrato(contrato);
+        assertEquals(0, resultado);
+    }
+
+    @Test
+    void obtenerContratoCompletoInexistenteRetornaNull() {
+        // id que no existe → debe retornar null (línea 57: if contrato == null return null)
+        Contrato resultado = contratoService.obtenerContratoCompleto(9999);
+        assertNull(resultado);
+    }
 }
