@@ -33,6 +33,8 @@ public class ContextManager {
     private BoleteriaService boleteriaService;
     private ReporteRepository reporteRepo;
     private ReporteService reporteService;
+    private NominaRepository nominaRepository;
+    private NominaService nominaService;
 
     public ContextManager(
             H2 h2,
@@ -60,7 +62,9 @@ public class ContextManager {
             IngresoService ingresoService,
             BoleteriaService boleteriaService,
             ReporteRepository reporteRepo,
-            ReporteService reporteService
+            ReporteService reporteService,
+            NominaRepository nominaRepository,
+            NominaService nominaService
     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
@@ -87,6 +91,8 @@ public class ContextManager {
         this.boleteriaService = boleteriaService;
         this.reporteRepo = reporteRepo;
         this.reporteService = reporteService;
+        this.nominaRepository = nominaRepository;
+        this.nominaService = nominaService;
     }
 
     public InventarioService getInventarioService() { return inventarioService; }
@@ -113,4 +119,5 @@ public class ContextManager {
     public HorarioRepository getHorarioRepo() {return horarioRepo;}
     public ReporteRepository getReporteRepository() { return reporteRepo; }
     public ReporteService getReporteService() { return reporteService; }
+    public NominaService getNominaService() { return nominaService; }
 }

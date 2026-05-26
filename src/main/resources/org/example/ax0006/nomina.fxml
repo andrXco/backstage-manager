@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="800.0"
+            prefWidth="1200.0"
+            style="-fx-background-color: #f4f6f8;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+
+        <VBox spacing="20.0"
+              alignment="TOP_CENTER"
+              layoutX="50.0"
+              layoutY="30.0"
+              prefWidth="1100.0">
+
+            <Label text="Gestión de Nóminas"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+            <HBox spacing="15.0" alignment="CENTER_LEFT">
+                <Label text="Seleccionar Evento:"
+                       style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                <ComboBox fx:id="comboEvento"
+                          prefWidth="300.0"
+                          promptText="Seleccione un concierto" />
+            </HBox>
+
+            <TableView fx:id="tablaNominas"
+                       prefHeight="450.0"
+                       prefWidth="1100.0"
+                       style="-fx-background-color: #ffffff;">
+
+                <columns>
+                    <TableColumn fx:id="colTrabajador" text="Trabajador" prefWidth="180.0"/>
+                    <TableColumn fx:id="colHoras" text="Horas" prefWidth="100.0"/>
+                    <TableColumn fx:id="colTarifa" text="Tarifa" prefWidth="120.0"/>
+                    <TableColumn fx:id="colExtra" text="Horas Extra" prefWidth="100.0"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="130.0"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="120.0"/>
+                </columns>
+
+            </TableView>
+
+            <Label fx:id="lblTotalGeneral"
+                   text="Total General: $0"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+            <HBox spacing="15.0" alignment="CENTER">
+                <Button fx:id="btnGenerarReporte"
+                        text="Ver Reporte"
+                        onAction="#On_GenerarReporte"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                <Button text="Asignar Nóminas"
+                        onAction="#On_AsignarNomina"
+                        style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                <Button text="Aprobar"
+                        onAction="#On_Aprobar"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                <Button text="Rechazar"
+                        onAction="#On_Rechazar"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                <Button text="Volver"
+                        onAction="#On_volver"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold;" />
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

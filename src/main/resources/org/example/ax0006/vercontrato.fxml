@@ -43,6 +43,22 @@
                               prefHeight="400"/>
                 </VBox>
 
+                <HBox spacing="15" alignment="CENTER">
+
+                    <Button fx:id="btnAprobar"
+                            text="Aprobar Firma"
+                            onAction="#On_AprobarFirma"
+                            style="-fx-background-color: #2ecc71;
+                   -fx-text-fill: white;" />
+
+                    <Button fx:id="btnRechazar"
+                            text="Rechazar Firma"
+                            onAction="#On_RechazarFirma"
+                            style="-fx-background-color: #e74c3c;
+                   -fx-text-fill: white;" />
+
+                </HBox>
+
             </children>
 
         </VBox>

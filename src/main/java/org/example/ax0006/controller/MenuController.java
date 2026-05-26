@@ -176,7 +176,13 @@ public class MenuController {
     }
 
     @FXML
+    void On_LiquidacionHoras(ActionEvent event) throws IOException {
+        sceneManager.showLiquidacionHoras();
+    }
+
+    @FXML
     void On_ReportesGerenciales(ActionEvent event) throws IOException {
         sceneManager.showReportesGerenciales();
     }
 }
+

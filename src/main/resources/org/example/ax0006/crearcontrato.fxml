@@ -76,6 +76,12 @@
                             onAction="#guardarContrato"
                             style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 8;" />
 
+                    <Button text="Enviar para firma"
+                            onAction="#enviarFirma"
+                            style="-fx-background-color: #9b59b6;
+                                    -fx-text-fill: white;
+                                    -fx-background-radius: 8;" />
+
                     <Button text="Volver"
                             onAction="#cancelar"
                             style="-fx-background-color: #bdc3c7; -fx-text-fill: black; -fx-background-radius: 8;" />

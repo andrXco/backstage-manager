@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
 public class MenuConciertoController {
+
 
     @FXML
     private Button fid_bt_CrearConcierto;
@@ -30,6 +32,7 @@ public class MenuConciertoController {
 
     @FXML
     private Button fid_bt_volver;
+
 
     /* ATRIBUTOS */
     private SceneManager sceneManager;
@@ -117,6 +120,8 @@ public class MenuConciertoController {
     }
 
     /* CREAR CONTRATO */
+
+   //control de vistas:
     @FXML
     void On_CrearContrato(ActionEvent event) {
         try {

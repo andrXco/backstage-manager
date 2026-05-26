@@ -1,0 +1,55 @@
+package org.example.ax0006.entity;
+
+public class Nomina {
+    private int idNomina;
+    private int idConcierto;
+    private int idUsuario;
+    private String rol;
+    private double horasTrabajadas;   // calculadas automáticamente
+    private double tarifaPorHora;      // según rol
+    private double horasExtra;          // ingreso manual
+    private double total;               // (horasTrabajadas * tarifa) + (horasExtra * tarifa * 1.5) por ejemplo
+    private boolean pagado;             // estado
+    private String estado;
+
+    // Constructor vacío
+    public Nomina() {}
+
+    // Constructor con campos principales
+    public Nomina(int idConcierto, int idUsuario, String rol,
+                  double horasTrabajadas, double tarifaPorHora,
+                  double horasExtra, double total, String estado,
+                  boolean pagado) {
+
+        this.idConcierto = idConcierto;
+        this.idUsuario = idUsuario;
+        this.rol = rol;
+        this.horasTrabajadas = horasTrabajadas;
+        this.tarifaPorHora = tarifaPorHora;
+        this.horasExtra = horasExtra;
+        this.total = total;
+        this.estado = estado;
+        this.pagado = pagado;
+    }
+
+    // Getters y Setters (generar con Alt+Insert)
+    public int getIdNomina() { return idNomina; }
+    public void setIdNomina(int idNomina) { this.idNomina = idNomina; }
+    public int getIdConcierto() { return idConcierto; }
+    public void setIdConcierto(int idConcierto) { this.idConcierto = idConcierto; }
+    public int getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
+    public double getHorasTrabajadas() { return horasTrabajadas; }
+    public void setHorasTrabajadas(double horasTrabajadas) { this.horasTrabajadas = horasTrabajadas; }
+    public double getTarifaPorHora() { return tarifaPorHora; }
+    public void setTarifaPorHora(double tarifaPorHora) { this.tarifaPorHora = tarifaPorHora; }
+    public double getHorasExtra() { return horasExtra; }
+    public void setHorasExtra(double horasExtra) { this.horasExtra = horasExtra; }
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
+    public boolean isPagado() { return pagado; }
+    public void setPagado(boolean pagado) { this.pagado = pagado; }
+    public String getEstado() { return estado; } public void setEstado(String estado) { this.estado = estado; }
+}

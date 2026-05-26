@@ -98,9 +98,9 @@ public class Concierto {
         return idContrato;
     }
 
-    public void setIdContrato(int idContrato)
-    {
-        this.idContrato = idContrato;
+    public void setIdContrato(int idContrato) { this.idContrato = idContrato;}
+    @Override public String toString() {
+        return nombreConcierto;
     }
 
     
