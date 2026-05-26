@@ -105,7 +105,24 @@ public class NominaController {
                 ).asObject()
         );
 
-        colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstado()));
+        colEstado.setCellValueFactory(cellData -> {
+            String estado = cellData.getValue().getEstado();
+
+            String bonito;
+
+            switch (estado) {
+                case "PAGADO":
+                    bonito = "Pagado";
+                    break;
+                case "NO_PAGO":
+                    bonito = "No pago";
+                    break;
+                default:
+                    bonito = "Pendiente";
+            }
+
+            return new SimpleStringProperty(bonito);
+        });
 
         tablaNominas.setEditable(true);
 
@@ -221,13 +238,13 @@ public class NominaController {
     @FXML
     void On_Aprobar(ActionEvent event) {
 
-        cambiarEstado("APROBADO");
+        cambiarEstado("PAGADO");
     }
 
     @FXML
     void On_Rechazar(ActionEvent event) {
 
-        cambiarEstado("RECHAZADO");
+        cambiarEstado("NO_PAGO");
     }
 
     private void cambiarEstado(String estado) {
@@ -251,6 +268,19 @@ public class NominaController {
         nomina.setEstado(estado);
 
         tablaNominas.refresh();
+    }
+
+    @FXML
+    void On_VerNominaGeneral(ActionEvent event) {
+
+        Concierto c = comboEvento.getValue();
+        if (c == null) return;
+
+        var resumen = nominaService.obtenerNominaGeneralPorEvento(c.getIdConcierto());
+
+        resumen.forEach(r -> {
+            System.out.println(r.rol + " | " + r.cantidad + " | " + r.total);
+        });
     }
 
 }

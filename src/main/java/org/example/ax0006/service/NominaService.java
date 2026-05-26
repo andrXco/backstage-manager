@@ -62,7 +62,7 @@ public class NominaService {
             String rolNombre = asignacionStaffRepository.obtenerNombreRolEnConcierto(u.getIdUsuario(), idConcierto);
             double tarifa = obtenerTarifaPorRol(rolNombre);
             double total = horasBase * tarifa;
-            Nomina n = new Nomina( idConcierto, u.getIdUsuario(), rolNombre, horasBase, tarifa, 0, total, "PENDIENTE", false);
+            Nomina n = new Nomina( idConcierto, u.getIdUsuario(), rolNombre, horasBase, tarifa, 0, total, "Pendiente", false);
             nominaRepository.guardar(n);
         }
     }
@@ -101,4 +101,36 @@ public class NominaService {
         return nominaRepository.obtenerTodas();
     }
 
+    public class ResumenNomina {
+        public String rol;
+        public int cantidad;
+        public double total;
+    }
+
+    public List<ResumenNomina> obtenerNominaGeneralPorEvento(int idConcierto) {
+
+        List<Nomina> nominas = nominaRepository.obtenerPorConcierto(idConcierto);
+
+        return nominas.stream()
+                .collect(java.util.stream.Collectors.groupingBy(Nomina::getRol))
+                .entrySet()
+                .stream()
+                .map(e -> {
+                    ResumenNomina r = new ResumenNomina();
+                    r.rol = e.getKey();
+                    r.cantidad = e.getValue().size();
+                    r.total = e.getValue().stream().mapToDouble(Nomina::getTotal).sum();
+                    return r;
+                })
+                .toList();
+    }
+    public double obtenerTotalGeneralEvento(int idConcierto) {
+        return nominaRepository.obtenerPorConcierto(idConcierto)
+                .stream()
+                .mapToDouble(Nomina::getTotal)
+                .sum();
+    }
+
 }
+
+
