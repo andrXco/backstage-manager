@@ -1,5 +1,6 @@
 package org.example.ax0006.repository;
 
+import org.example.ax0006.entity.*;
 import org.example.ax0006.db.H2;
 import org.example.ax0006.entity.AnalisisFinanciero;
 import org.example.ax0006.entity.Concierto;
@@ -7,6 +8,7 @@ import org.example.ax0006.entity.Contrato;
 import org.example.ax0006.entity.Horario;
 import org.example.ax0006.entity.Usuario;
 
+import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -153,11 +155,9 @@ public class ConciertoRepository {
 
                 lista.add(c);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return lista;
     }
 
@@ -242,6 +242,8 @@ public class ConciertoRepository {
                     );
                 }
 
+
+                // Concierto
                 Concierto c = new Concierto(
                         rs.getInt("idConcierto"),
                         rs.getString("nombreConcierto"),
@@ -446,6 +448,7 @@ public class ConciertoRepository {
 
             while (rs.next()) {
 
+                // Horario
                 Horario h = new Horario();
 
                 h.setIdHorario(
@@ -626,9 +629,7 @@ public class ConciertoRepository {
                 stmt.setInt(1, idConcierto);
                 stmt.executeUpdate();
             }
-
             conn.commit();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
