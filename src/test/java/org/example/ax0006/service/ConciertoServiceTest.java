@@ -572,4 +572,38 @@ class ConciertoServiceTest {
 
         }
     }
+
+    @Nested
+    @DisplayName("EliminarInventarioConcierto")
+    class EliminarInventarioConcierto {
+        @Test
+        void eliminarInventarioConcierto() {
+
+            assertDoesNotThrow(() ->
+                    conciertoService.eliminarInventarioConcierto(0, 0, 0, new ArrayList<>())
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("ListarConciertos")
+    class ListarConciertosMETODO {
+        @Test
+        void listarConciertos() {
+            List<Concierto> conciertos = conciertoService.listarConciertos();
+            assertNotNull(conciertos);
+        }
+    }
+    @Nested
+    @DisplayName("AsignarPresupuesto")
+    class AsignarPresupuestoMETODO {
+
+        @Test
+        void asignarPresupuesto() {
+
+            assertDoesNotThrow(() ->
+                    conciertoService.asignarPresupuesto(0, null)
+            );
+        }
+    }
 }
