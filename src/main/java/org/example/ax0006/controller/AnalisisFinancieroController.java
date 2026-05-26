@@ -118,6 +118,8 @@ public class AnalisisFinancieroController {
     @FXML private TableColumn<Boleteria, Integer> colPrecio;
     @FXML private TableColumn<Boleteria, Integer> colIngresoTotal;
 
+    @FXML private Button btn_guardarFinanzas;
+
     // =========================
     // INITIALIZE
     // =========================
@@ -172,10 +174,13 @@ public class AnalisisFinancieroController {
                 )
         );
 
-        // CARGAR COMBO CONCIERTOS
+        // CARGAR COMBO — solo conciertos SIN análisis financiero
         comboConcierto.setItems(
                 FXCollections.observableArrayList(
                         conciertoService.obtenerConciertosSolos()
+                                .stream()
+                                .filter(c -> c.getAnalisis() == null)
+                                .toList()
                 )
         );
 
@@ -194,6 +199,12 @@ public class AnalisisFinancieroController {
                 setText(empty || c == null ? null : c.getNombreConcierto());
             }
         });
+
+        // OCULTAR botón si viene de consultarFinanzas
+        if ("consultarFinanzas".equals(sesion.getPantallaOrigen())) {
+            btn_guardarFinanzas.setVisible(false);
+            btn_guardarFinanzas.setManaged(false);
+        }
 
     }
 
@@ -237,6 +248,8 @@ public class AnalisisFinancieroController {
             tablaBoleteria.getItems().clear();
             lblTotalGastos.setText("Gasto Total: 0");
             lblTotalIngresos.setText("Ingreso Total: 0");
+            comboConcierto.setDisable(false);
+
         }
     }
 
@@ -250,13 +263,27 @@ public class AnalisisFinancieroController {
 
         if (idAnalisisActual != 0) {
             mostrarError(
-                "Ya existe un presupuesto creado para este concierto. Use 'Editar' para modificarlo."
+                "Ya existe un presupuesto para este concierto. Use 'Editar' para modificarlo."
             );
             return;
         }
 
-        if (comboConcierto.getValue() == null) {
+        Concierto conciertoActual = comboConcierto.getValue();
+
+        if (conciertoActual == null) {
             mostrarError("Debe seleccionar un concierto primero.");
+            return;
+        }
+
+        // VERIFICAR EN BD que el concierto no tenga ya un análisis
+        // recargando desde el combo actualizado
+        if (conciertoActual.getAnalisis() != null) {
+            mostrarError(
+                "Este concierto ya tiene un presupuesto. Use 'Editar' para modificarlo."
+            );
+            cargarAnalisis(
+                conciertoActual.getAnalisis().getIdAnalisisF()
+            );
             return;
         }
 
@@ -341,13 +368,34 @@ public class AnalisisFinancieroController {
     @FXML
     public void On_eliminarPresupuesto() {
 
-        analisisService.eliminarAnalisis(
-                idAnalisisActual
-        );
+        if (idAnalisisActual == 0) {
+            mostrarError("No hay presupuesto para eliminar.");
+            return;
+        }
 
-        mostrarExito(
-                "Presupuesto eliminado"
-        );
+        Concierto concierto = sesion.getConciertoActual();
+
+        if (concierto != null) {
+            conciertoService.asignarPresupuesto(
+                    concierto.getIdConcierto(),
+                    0
+            );
+        }
+
+        analisisService.eliminarAnalisis(idAnalisisActual);
+
+        idAnalisisActual = 0;
+        lbl_idPresupuesto.setText("ID Presupuesto: No creado");
+        fid_presupuesto.clear();
+        chk_aprobado.setSelected(false);
+        tablaGastos.getItems().clear();
+        tablaIngresos.getItems().clear();
+        tablaBoleteria.getItems().clear();
+        lblTotalGastos.setText("Gasto Total: 0");
+        lblTotalIngresos.setText("Ingreso Total: 0");
+        comboConcierto.setDisable(false);
+
+        mostrarExito("Presupuesto eliminado.");
     }
 
     // =========================
@@ -624,6 +672,7 @@ public class AnalisisFinancieroController {
         actualizarTablaGastos();
         actualizarTablaIngresos();
         actualizarTablaBoleteria();
+         comboConcierto.setDisable(true);
     }
 
     @FXML
@@ -656,6 +705,7 @@ public class AnalisisFinancieroController {
     // =========================
     @FXML
     public void On_volver() throws IOException {
+        sesion.setPantallaOrigen(null);
         sesion.setConciertoActual(null);
         sceneManager.showMenuFinanzas();
     }

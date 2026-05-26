@@ -51,6 +51,13 @@ MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato
     VALUES
     (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, 1),
     (2, 'Vida loka', 2, 35000, 2, TRUE, 2);
+
+-- 5. CONCIERTOS (referenciando Horario y Contrato existentes)
+MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado) KEY(idConcierto)
+VALUES
+    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE),
+    (2, 'Vida loka', 2, 35000, 2, TRUE);
+
 ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
 
 -- 7. TABLAS INTERMEDIAS
