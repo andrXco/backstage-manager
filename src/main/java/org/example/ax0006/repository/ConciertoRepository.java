@@ -635,11 +635,19 @@ public class ConciertoRepository {
         }
     }
 
-    //Asignar análisis financiero
-    public void asignarAnalisisFinanciero(
-            int idConcierto,
-            Integer idAnalisisF
-    ) {
+     public Concierto obtenerPorId(int idConcierto) {
+         List<Concierto> todos = obtenerConciertosSolos();
+         return todos.stream()
+                 .filter(c -> c.getIdConcierto() == idConcierto)
+                 .findFirst()
+                 .orElse(null);
+     }
+
+     //Asignar análisis financiero
+     public void asignarAnalisisFinanciero(
+             int idConcierto,
+             Integer idAnalisisF
+     ) {
 
         String sql = """
             UPDATE Concierto

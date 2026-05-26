@@ -2,6 +2,7 @@ package org.example.ax0006.manager;
 
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.entity.Usuario;
+import org.example.ax0006.entity.Nomina;
 
 public class SesionManager {
 
@@ -15,6 +16,7 @@ public class SesionManager {
 
     // NUEVO
     private Concierto conciertoActual;
+    private Nomina nominaSeleccionada;
 
     public Usuario getUsuarioActual() {
         return usuarioActual;
@@ -88,4 +90,8 @@ public class SesionManager {
 
         this.conciertoActual = conciertoActual;
     }
+
+    public Nomina getNominaSeleccionada() { return nominaSeleccionada; }
+
+    public void setNominaSeleccionada(Nomina nominaSeleccionada) { this.nominaSeleccionada = nominaSeleccionada; }
 }

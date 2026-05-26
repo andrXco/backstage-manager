@@ -80,6 +80,14 @@ class StaffServiceTest {
             boolean asignado = staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Sonido");
             assertTrue(asignado);
         }
+
+        @Test
+        void asignarStaffDuplicadoRetornaFalse() {
+            staffService.crearEmpleado("StaffDup", "pass", "staffdup@test.com");
+            Usuario staff = usuarioRepo.buscarPorNombre("StaffDup");
+            assertTrue(staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Sonido"));
+            assertFalse(staffService.asignarStaffAConcierto(staff.getIdUsuario(), 0, 4, "Sonido"));
+        }
     }
 
     @Nested

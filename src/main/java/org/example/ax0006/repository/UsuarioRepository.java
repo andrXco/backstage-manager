@@ -4,6 +4,8 @@
  * ANDRES
  */
 
+
+
 package org.example.ax0006.repository;
 
 import org.example.ax0006.entity.Rol;
@@ -240,4 +242,5 @@ public class UsuarioRepository {
             e.printStackTrace();
         }
     }
+
 }

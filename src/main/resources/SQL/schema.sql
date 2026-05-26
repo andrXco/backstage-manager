@@ -25,8 +25,12 @@ ALTER TABLE Usuario
 
 CREATE TABLE IF NOT EXISTS Contrato (
                                         idContrato INT AUTO_INCREMENT PRIMARY KEY,
-                                        fecha DATE NOT NULL
+                                        fecha DATE NOT NULL,
+                                        estadoFirma VARCHAR(255) DEFAULT 'PENDIENTE'
 );
+
+ALTER TABLE Contrato
+    ADD COLUMN IF NOT EXISTS estadoFirma VARCHAR(255) DEFAULT 'PENDIENTE';
 
 CREATE TABLE IF NOT EXISTS Clausula (
                                         idClausula INT AUTO_INCREMENT PRIMARY KEY,
@@ -206,6 +210,22 @@ CREATE TABLE IF NOT EXISTS ConciertoDocumentoInventario (
     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto)
     );
 
+CREATE TABLE IF NOT EXISTS Nomina (
+    idNomina INT AUTO_INCREMENT PRIMARY KEY,
+    idConcierto INT NOT NULL,
+    idUsuario INT NOT NULL,
+    rol VARCHAR(100),
+    horasTrabajadas DOUBLE NOT NULL,
+    tarifaPorHora DOUBLE NOT NULL,
+    horasExtra DOUBLE DEFAULT 0,
+    total DOUBLE NOT NULL,
+    estado VARCHAR(20) DEFAULT 'PENDIENTE',
+    pagado BOOLEAN DEFAULT FALSE,
+
+    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
+
 -- Insertar roles por defecto
 MERGE INTO Rol (idRol, rol) KEY(idRol)
     VALUES (0, 'Sin rol'), (1, 'Administrador'), (2, 'Tecnico'), (3, 'Manager'), (4, 'Staff');
@@ -217,5 +237,16 @@ MERGE INTO TipoObjeto (tipo) KEY(tipo)
     ('Sistema in-ear'), ('Luces LED'), ('Generador eléctrico');
 
 MERGE INTO Concierto (idConcierto, nombreConcierto, aforo, programado)
-    KEY(idConcierto) VALUES (0, 'mantenimiento', 0, FALSE);
+    KEY(idConcierto)
+    VALUES (0, 'mantenimiento', 0, FALSE);
+
+CREATE TABLE IF NOT EXISTS Reporte (
+    idReporte INT AUTO_INCREMENT PRIMARY KEY,
+    idConcierto INT,
+    nombreConcierto VARCHAR(255),
+    tipo VARCHAR(50),
+    fechaGeneracion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    contenido VARCHAR(4000),
+    FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto) ON DELETE SET NULL
+);
 

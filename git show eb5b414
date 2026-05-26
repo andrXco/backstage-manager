@@ -1,0 +1,461 @@
+*   [33meb5b414[m[33m ([m[1;32mrespaldo-main-accidental[m[33m)[m Merge main into feature/nominaa
+[31m|[m[32m\[m  
+[31m|[m *   [33mf9044c6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #29 from andrXco/TipoObjetoBranch
+[31m|[m [33m|[m[34m\[m  
+[31m|[m [33m|[m * [33m9407ca1[m solucionado bug de inventarios, el problema fue el método personalizado para cargar conciertos por artista específico que no llamaba tambien a los horarios de los conciertos
+[31m|[m [33m|[m * [33m85a05b4[m solucionado bug de inventarios, el problema fue el método personalizado para cargar conciertos por artista específico que no llamaba tambien a los horarios de los conciertos
+[31m|[m [33m|[m * [33ma749034[m cambio de admin para ver mantenimiento
+[31m|[m [33m|[m * [33m6f7af79[m merge a main
+[31m|[m [33m|[m *   [33m309e147[m merge a main
+[31m|[m [33m|[m [35m|[m[33m\[m  
+[31m|[m [33m|[m [35m|[m[33m/[m  
+[31m|[m [33m|[m[33m/[m[35m|[m   
+[31m|[m * [35m|[m   [33me010b9a[m Merge pull request #47 from andrXco/46-eliminar-el-edicion-de-un-nombre-de-perfil
+[31m|[m [1;31m|[m[1;32m\[m [35m\[m  
+[31m|[m [1;31m|[m * [35m|[m [33m7c22c13[m Se hace imposible que se pueda cambiar el nombre del perfil, ya que se podian genera problemas
+[31m|[m * [1;32m|[m [35m|[m   [33m4477812[m Merge pull request #49 from andrXco/48-se-arregla-el-actualizar-contraseña
+[31m|[m [1;32m|[m[1;34m\[m [1;32m\[m [35m\[m  
+[31m|[m [1;32m|[m [1;34m|[m[1;32m/[m [35m/[m  
+[31m|[m [1;32m|[m[1;32m/[m[1;34m|[m [35m|[m   
+[31m|[m [1;32m|[m * [35m|[m [33m2a6140a[m Se acualiza el controlador de actualizar contraseña para que funcione
+[31m|[m [1;32m|[m[1;32m/[m [35m/[m  
+[31m|[m * [35m|[m   [33m1406431[m Merge pull request #22 from andrXco/DirectorioStaff
+[31m|[m [1;35m|[m[1;36m\[m [35m\[m  
+[31m|[m [1;35m|[m * [35m\[m   [33m7cdbabf[m merge>>>>>
+[31m|[m [1;35m|[m [31m|[m[1;35m\[m [35m\[m  
+[31m|[m [1;35m|[m [31m|[m[1;35m/[m [35m/[m  
+[31m|[m [1;35m|[m[1;35m/[m[31m|[m [35m|[m   
+[31m|[m [1;35m|[m * [35m|[m   [33md4859e6[m merge main
+[31m|[m [1;35m|[m [33m|[m[34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [34m\[m [35m\[m   [33me1c4401[m merge main
+[31m|[m [1;35m|[m [35m|[m[36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [36m|[m [34m|[m [35m|[m [33mb9b9f73[m tabla subrol agregada
+[31m|[m [1;35m|[m * [36m|[m [34m|[m [35m|[m   [33m5114c04[m merge main y modificacion para rol global
+[31m|[m [1;35m|[m [1;31m|[m[1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [1;32m|[m [36m|[m [34m|[m [35m|[m [33m5ec1b0a[m[33m ([m[1;31morigin/DirectorioStaff[m[33m)[m correccion errores
+[31m|[m [1;35m|[m * [1;32m|[m [36m|[m [34m|[m [35m|[m   [33m611ae8a[m merge main
+[31m|[m [1;35m|[m [1;33m|[m[1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m2176c18[m Ajusta schema para subrol
+[31m|[m [1;35m|[m * [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m   [33m63b3520[m Merge branch 'main' into DirectorioStaff
+[31m|[m [1;35m|[m [1;35m|[m[1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m2748e0e[m Correccion conflicto en H2
+[31m|[m [1;35m|[m * [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m29e4792[m Correccion DirectorioStaff tras merge
+[31m|[m [1;35m|[m * [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m   [33m61251b0[m merge main
+[31m|[m [1;35m|[m [31m|[m[32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33md3f6e33[m Correccion errores
+[31m|[m [1;35m|[m * [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m9cc7b80[m[33m ([m[1;32mDirectorioStaff[m[33m)[m Correccion error duplicados
+[31m|[m [1;35m|[m * [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33mba8a1d3[m ajustes DirectorioStaff
+[31m|[m [1;35m|[m * [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m   [33m44d77c2[m arreglo errores
+[31m|[m [1;35m|[m [33m|[m[34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m847ae93[m quite lo de Diego en esta rama
+[31m|[m [1;35m|[m * [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33mb106918[m Completado directorioStaff
+[31m|[m [1;35m|[m * [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m   [33m764b6ec[m merge de main
+[31m|[m [1;35m|[m [35m|[m[36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m7eb2ba8[m backup
+[31m|[m [1;35m|[m * [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m   [33mc04b66d[m merge main
+[31m|[m [1;35m|[m [1;31m|[m[1;32m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m [1;31m|[m * [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m   [33m0b97795[m Merge pull request #16 from andrXco/TipoObjetoBranch
+[31m|[m [1;35m|[m [1;31m|[m [1;33m|[m[1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [35m\[m  
+[31m|[m [1;35m|[m * [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m266b34a[m pruebas caso de uso staff
+[31m|[m [1;35m|[m * [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33mbc00866[m merge main
+[31m|[m [1;35m|[m [1;35m|[m[1;33m\[m[1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m 
+[31m|[m [1;35m|[m * [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33mf7a0065[m  Resolve conflicts
+[31m|[m [1;35m|[m * [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [35m|[m [33m7593505[m Se agrego consulta de staff asignado por concierto en repository y service
+[31m|[m [1;35m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m * [33m58aab9d[m añadido las odificaciones de visualizacion por rol
+[31m|[m [1;35m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m * [33mdc5ca78[m actualización de llamado de concierto service en el test de ConciertoServiceTest
+[31m|[m [1;35m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m *   [33mb9cbffa[m nuevo pull a main
+[31m|[m [1;35m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m[1;35m\[m  
+[31m|[m [1;35m|[m [1;36m|[m[1;35m_[m[1;33m|[m[1;35m_[m[1;34m|[m[1;35m_[m[36m|[m[1;35m_[m[34m|[m[1;35m_[m[32m|[m[1;35m_[m[1;36m|[m[1;35m_[m[1;34m|[m[1;35m_[m[1;32m|[m[1;35m_[m[36m|[m[1;35m_[m[34m|[m[1;35m_[m[31m|[m[1;35m/[m  
+[31m|[m [1;35m|[m[1;35m/[m[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m   
+[31m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m   [33m18b1c9a[m Merge pull request #44 from andrXco/TEST-GENERALES
+[31m|[m [33m|[m[34m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [31m\[m  
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m74619ac[m Se arregla la ruta del cli
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m1d7e6dd[m correccion para que solo se miren los test, en el workflow
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m9e698af[m correccion de error sintaxis, en los test
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33me46d4aa[m correccion de error sintaxis
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m   [33ma765bbe[m resolucion de conflictos
+[31m|[m [33m|[m [35m|[m[36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m [31m\[m  
+[31m|[m [33m|[m [35m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m85c5665[m arreglo cache pom
+[31m|[m [33m|[m [35m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m098d3d3[m ci
+[31m|[m [33m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m5d3cdf4[m Se inicia el test del conciertoService
+[31m|[m [33m|[m [36m|[m[36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [36m/[m [34m/[m [32m/[m [1;36m/[m [1;34m/[m [1;32m/[m [36m/[m [34m/[m [31m/[m  
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m8107854[m Cambio del jdk al 21 para realizar los workflows
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m022be0e[m Modificacion del CLI
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m8d8945c[m Modificacion del CLI
+[31m|[m [33m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [31m|[m [33m06e4df3[m Modificacion del CLI
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m *   [33mbb034aa[m Merge branch 'main' of https://github.com/andrXco/backstage-manager into TipoObjetoBranch
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [1;31m|[m[34m\[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [1;31m|[m[34m/[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m[34m/[m[1;31m|[m   
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m * [1;31m|[m [33m2cd52bb[m Modificacion pom
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m * [1;31m|[m [33mc7f63eb[m Modificacion cli otra vez XD
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;32m|[m *   [33mfc3c7af[m Merge branch 'main' of https://github.com/andrXco/backstage-manager into TipoObjetoBranch
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;32m|[m [1;33m|[m[1;32m\[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;32m|[m [1;33m|[m[1;32m/[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;32m|[m[1;32m/[m[1;33m|[m   
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m * [1;33m|[m [33mdce7bf9[m Modificacion cli
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m[36m/[m [1;33m/[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m *   [33me1d25c7[m cambio a menu controller
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;35m|[m[36m\[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [1;35m|[m[36m/[m  
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m[36m/[m[1;35m|[m   
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m * [1;35m|[m [33m36f7729[m Modificacion Jacoco ver
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m * [1;35m|[m [33m4751792[m Modificacion POM
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m * [1;35m|[m [33md34e96d[m Modificacion POM y workflow
+[31m|[m [33m|[m [36m|[m[33m_[m[1;36m|[m[33m_[m[1;33m|[m[33m_[m[1;34m|[m[33m_[m[36m|[m[33m_[m[34m|[m[33m_[m[32m|[m[33m_[m[1;36m|[m[33m_[m[1;34m|[m[33m_[m[1;32m|[m[33m/[m [1;35m/[m  
+[31m|[m [33m|[m[33m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [1;35m|[m   
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m *   [33m4b31d8f[m merge again
+[31m|[m [33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [31m|[m[33m\[m  
+[31m|[m [33m|[m [36m|[m[33m_[m[1;36m|[m[33m_[m[1;33m|[m[33m_[m[1;34m|[m[33m_[m[36m|[m[33m_[m[34m|[m[33m_[m[32m|[m[33m_[m[1;36m|[m[33m_[m[1;34m|[m[33m_[m[1;32m|[m[33m_[m[31m|[m[33m/[m  
+[31m|[m [33m|[m[33m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [31m|[m   
+[31m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [31m|[m [33mbfa084a[m Merge pull request #43 from andrXco/TEST-GENERALES
+[31m|[m [1;32m|[m[36m\[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [31m|[m 
+[31m|[m [1;32m|[m [36m|[m[1;32m_[m[1;36m|[m[1;32m_[m[1;33m|[m[1;32m_[m[1;34m|[m[1;32m_[m[36m|[m[1;32m_[m[34m|[m[1;32m_[m[32m|[m[1;32m_[m[1;36m|[m[1;32m_[m[1;34m|[m[1;32m/[m [31m/[m  
+[31m|[m [1;32m|[m[1;32m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m   
+[31m|[m [1;32m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m [33m9952830[m Modificacion de comentarios
+[31m|[m [1;32m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m [33m161ffb0[m Se agregan los datos de prueba
+[31m|[m [1;32m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m [33m7f46fbf[m[33m ([m[1;31morigin/TEST-GENERALES[m[33m)[m Se agregan comentarios en el .sql
+[31m|[m [1;32m|[m * [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m   [33md126ba4[m Merge remote-tracking branch 'origin/main' into TEST-GENERALES
+[31m|[m [1;32m|[m [35m|[m[36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [31m\[m  
+[31m|[m [1;32m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m [33mbad2260[m Se empieza a poner los datos de pruebas, se empiezan a entender los principios
+[31m|[m [1;32m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [31m|[m [33m3c29553[m Se hace posible que se puedan ejecutar las pruebas varias veces sin problema
+[31m|[m [1;32m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m *   [33m115b243[m merge
+[31m|[m [1;32m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;31m|[m[1;32m\[m  
+[31m|[m [1;32m|[m [36m|[m[1;32m_[m[36m|[m[1;32m_[m[1;36m|[m[1;32m_[m[1;33m|[m[1;32m_[m[1;34m|[m[1;32m_[m[36m|[m[1;32m_[m[34m|[m[1;32m_[m[32m|[m[1;32m_[m[1;36m|[m[1;32m_[m[1;34m|[m[1;32m_[m[1;31m|[m[1;32m/[m  
+[31m|[m [1;32m|[m[1;32m/[m[36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;31m|[m   
+[31m|[m * [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;31m|[m [33mc3b2d5c[m cambio start controller
+[31m|[m [36m|[m [36m|[m[36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [36m/[m [34m/[m [32m/[m [1;36m/[m [1;34m/[m [1;31m/[m  
+[31m|[m [36m|[m[36m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;31m|[m   
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33m1faccfb[m añadí verificaciones de fechas y horas al momento de crear mantenimientos, impidiendo que un mantenimiento tenga tiempo = 0, que tenga problemas de que finaliza en un a fecha anterio a la que inicia, y que si es el mismo día, inicie una hora posterior a la de finalización
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33me09fa10[m[33m ([m[1;31morigin/TipoObjetoBranch[m[33m)[m integraciones con el main, arreglo de bug al momento de cancelar conciertos y se restringió a que solo se pueden añadir inventarios a concierto ya aprobados, implementación de cambios (recibe horas en formato 1:00), se arregló la visualización al momento de ver conciertos programados, se evaluó lo de quitar objetos 'ocupados', pero se llego a la conclusión de que si todos los objetos están ocupados se llega a que no se muestra nungún objeto y puede llegar a confundir al momento de tratar de crear inventarios (se dejo un anuncio cuando se intenta agregar un objeto ocupado)
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33md2b6662[m cambio pequeño
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33mae0eca1[m integraciones con el main, arreglo de bug al momento de cancelar conciertos y se restringió a que solo se pueden añadir inventarios a concierto ya aprobados, implementación de cambios (recibe horas en formato 1:00), se arregló la visualización al momento de ver conciertos programados, se evaluó lo de quitar objetos 'ocupados', pero se llego a la conclusión de que si todos los objetos están ocupados se llega a que no se muestra nungún objeto y puede llegar a confundir al momento de tratar de crear inventarios (se dejo un anuncio cuando se intenta agregar un objeto ocupado)
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m *   [33me5a247c[m merge con main
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;33m|[m[36m\[m  
+[31m|[m [36m|[m [36m|[m[36m_[m[1;36m|[m[36m_[m[1;33m|[m[36m_[m[1;34m|[m[36m_[m[36m|[m[36m_[m[34m|[m[36m_[m[32m|[m[36m_[m[1;36m|[m[36m_[m[1;34m|[m[36m_[m[1;33m|[m[36m/[m  
+[31m|[m [36m|[m[36m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;33m|[m   
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33m482d12a[m push previo a pull main
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33mc2799e4[m eliminar inventarios e inventarios en mantenimiento implementados
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33m79e408a[m pequeños cambios
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33me96ef50[m eliminar inventario implementado
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33m8c15fed[m ultimos cambios en H2 y front de crear objeto}
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m * [33mffee59f[m[33m ([m[1;32mTipoObjetoBranch[m[33m)[m cambios solicitados, cambio al modelo de inventario y vinculaciòn a concierto
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m *   [33mb210879[m merge con main a rama local
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m[34m\[m  
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m[34m_[m[1;36m|[m[34m_[m[1;34m|[m[34m_[m[1;35m|[m[34m/[m  
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m[34m/[m[32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33ma591814[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/nominaa[m[33m, [m[1;31morigin/feature/nominaa[m[33m)[m Fix contrato conciertos y agregar horas extra en nomina
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m182dd30[m Implementacion detalle nomina y navegacion entre pantallas
+[31m|[m [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33mfbe12b5[m Agregado atributo rol en Nomina
+[31m|[m [36m|[m[31m_[m[36m|[m[31m_[m[1;36m|[m[31m_[m[1;33m|[m[31m_[m[1;34m|[m[31m_[m[36m|[m[31m_[m[34m|[m[31m_[m[32m|[m[31m_[m[1;36m|[m[31m_[m[1;34m|[m[31m_[m[1;35m|[m[31m/[m  
+[31m|[m[31m/[m[36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+* [36m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   [33mc3ba594[m Merge pull request #41 from andrXco/feature/nominaa
+[36m|[m[33m\[m [36m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;35m\[m  
+[36m|[m [33m|[m[36m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [36m/[m [34m/[m [32m/[m [1;36m/[m [1;34m/[m [1;35m/[m  
+[36m|[m[36m/[m[33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+[36m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   [33ma70b5dc[m Resolviendo conflictos con main
+[36m|[m [34m|[m[36m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;35m\[m  
+[36m|[m [34m|[m[36m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [36m/[m [34m/[m [32m/[m [1;36m/[m [1;34m/[m [1;35m/[m  
+[36m|[m[36m/[m[34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+[36m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m [33m5551fde[m Avance sistema de nomina y liquidacion de horas
+[36m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;35m|[m   [33mac8951a[m Resolve merge conflicts
+[36m|[m [36m|[m[32m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;35m\[m  
+[36m|[m [36m|[m [32m|[m [36m|[m[32m_[m[1;36m|[m[32m_[m[1;33m|[m[32m_[m[1;34m|[m[32m_[m[36m|[m[32m_[m[34m|[m[32m/[m [1;36m/[m [1;34m/[m [1;35m/[m  
+[36m|[m [36m|[m [32m|[m[32m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+[36m|[m * [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m   [33m08c537f[m Traer cambios de la rama principal
+[36m|[m [1;32m|[m[1;33m\[m [32m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [36m\[m [34m\[m [1;36m\[m [1;34m\[m [1;35m\[m  
+[36m|[m * [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [33m170cef5[m Modificacion archivos
+[36m|[m * [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [33ma442f98[m creacion de archivos
+[36m|[m [36m|[m [1;33m|[m[36m_[m[32m|[m[36m_[m[36m|[m[36m_[m[1;36m|[m[36m_[m[1;33m|[m[36m_[m[1;34m|[m[36m/[m [34m/[m [1;36m/[m [1;34m/[m [1;35m/[m  
+[36m|[m [36m|[m[36m/[m[1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m   
+[36m|[m [36m|[m [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m *   [33m43d6701[m[33m ([m[1;31morigin/FinanzasConcierto[m[33m)[m Traidos los cambios de main, resolucion de conflicto en menucontroller, de resto todo automerge
+[36m|[m [36m|[m [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m[36m\[m  
+[36m|[m [36m|[m[36m_[m[1;33m|[m[36m_[m[32m|[m[36m_[m[36m|[m[36m_[m[1;36m|[m[36m_[m[1;33m|[m[36m_[m[1;34m|[m[36m_[m[34m|[m[36m_[m[1;36m|[m[36m_[m[1;34m|[m[36m_[m[1;35m|[m[36m_[m[1;34m|[m[36m/[m  
+[36m|[m[36m/[m[36m|[m [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m   
+* [36m|[m [1;33m|[m [32m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m   [33me145eb3[m Merge pull request #33 from andrXco/VerificacionRoles
+[1;36m|[m[36m\[m [36m\[m [1;33m\[m [32m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;36m\[m [1;34m\[m [1;35m\[m [1;34m\[m  
+[1;36m|[m [36m|[m [36m|[m[36m_[m[1;33m|[m[36m_[m[32m|[m[36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;36m/[m [1;34m/[m [1;35m/[m [1;34m/[m  
+[1;36m|[m [36m|[m[36m/[m[36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m   
+[1;36m|[m * [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m [33m8da0c65[m[33m ([m[1;31morigin/VerificacionRoles[m[33m)[m Cambios en test (correcion)
+[1;36m|[m * [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m [33m78e8609[m Control de vistas por rol global y rol a concierto v2
+[1;36m|[m * [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m [33m2d25d99[m Alistamiento merge para cambios proximos
+[1;36m|[m * [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;34m|[m   [33mbcd3f54[m Merge con main actual 7/5/2026
+[1;36m|[m [32m|[m[1;34m\[m [36m\[m [1;33m\[m [32m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;36m\[m [1;34m\[m [1;35m\[m [1;34m\[m  
+[1;36m|[m [32m|[m [1;34m|[m [36m|[m[1;34m_[m[1;33m|[m[1;34m_[m[32m|[m[1;34m_[m[1;36m|[m[1;34m_[m[1;33m|[m[1;34m_[m[1;34m|[m[1;34m_[m[34m|[m[1;34m_[m[1;36m|[m[1;34m/[m [1;35m/[m [1;34m/[m  
+[1;36m|[m [32m|[m [1;34m|[m[1;34m/[m[36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m   
+[1;36m|[m * [1;34m|[m [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m [33mc1b6ca5[m Flujo completo de creacion de concierto y administracion de concierto con verifiacion de vistas
+[1;36m|[m * [1;34m|[m [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m [33mbfc7637[m Control de vistas para artista, crear solicitud artista y mejoras adicionales
+[1;36m|[m * [1;34m|[m [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m [33m870d368[m cambio menor en perfil controller para visualizar rol de la tabla usuario
+[1;36m|[m * [1;34m|[m [36m|[m [1;33m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m [33mc1cafb1[m Se agrega id rol dentro del la tabla usuario, se hacen los cambios correspondientes para la implementacion de un idrol global y asignacion desde administracion usuarios un markdown para confirma si se quiere agregar id global o no, ademas se asigna rol administrado al primer usuario registrado
+[1;36m|[m [1;33m|[m [1;34m|[m[1;33m_[m[36m|[m[1;33m/[m [32m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;36m/[m [1;35m/[m [1;34m/[m  
+[1;36m|[m [1;33m|[m[1;33m/[m[1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;34m|[m   
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m *   [33md635af3[m Cambios traidos del main, resolucion de conflictos hecha
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [34m|[m[1;36m\[m  
+[1;36m|[m [1;33m|[m[1;36m_[m[1;34m|[m[1;36m_[m[36m|[m[1;36m_[m[32m|[m[1;36m_[m[1;36m|[m[1;36m_[m[1;33m|[m[1;36m_[m[1;34m|[m[1;36m_[m[34m|[m[1;36m_[m[1;36m|[m[1;36m_[m[1;35m|[m[1;36m_[m[34m|[m[1;36m/[m  
+[1;36m|[m[1;36m/[m[1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [34m|[m   
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m3f6861a[m Crear Presupuesto y Consultar Presupuesto creados
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m3284946[m Solución de Error de Bug
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33mba39bac[m Se crearon los servicios de Boleteria, Gastos e Ingreso
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33me43517c[m Se crean los repos de boleteria, gastos e ingresos
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m789ee8b[m Schema modificado, agregadas nuevas tablas, se crean entidades gasto, ingreso y boleteria ademas
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m *   [33mb51ab2e[m Boton volver en el fxml cambiado, ademas se solucionaorn conflitctos con db
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [36m|[m[1;36m\[m  
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m[1;36m_[m[36m|[m[1;36m/[m  
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m[1;36m/[m[1;35m|[m [36m|[m   
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m *   [33m84b4994[m conflictos resueltos (lower case en las carpetas)
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;32m|[m[32m\[m  
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m[32m_[m[1;33m|[m[32m_[m[1;34m|[m[32m_[m[34m|[m[32m_[m[1;36m|[m[32m_[m[1;35m|[m[32m_[m[1;32m|[m[32m/[m  
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m[32m/[m[1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;32m|[m   
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33mb64431f[m Pantallas Funcionales
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m2aa438d[m Pantalla de Analisis Financiero Agregada y ya aparece la opción en el menú
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m1bf9745[m Controller AnalisisFinanciero creado, contextmanager modificado
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33mb49c639[m Se añadieron Analisis Financiero Service y Repository
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m1994a5a[m Base de datos modificada, se agregan los datos aprobado y precioBoleta en la tabla de AnalisisFinancier
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m26de4d8[m Entidad de Analisis Financiero Completada con sus contructores y getters y setters
+[1;36m|[m [1;33m|[m [1;34m|[m[1;33m_[m[36m|[m[1;33m_[m[32m|[m[1;33m_[m[1;36m|[m[1;33m_[m[1;33m|[m[1;33m_[m[1;34m|[m[1;33m_[m[34m|[m[1;33m_[m[1;36m|[m[1;33m_[m[1;35m|[m[1;33m/[m  
+[1;36m|[m [1;33m|[m[1;33m/[m[1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m   
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m * [33m22acdbd[m[33m ([m[1;31morigin/seg/notificaciones[m[33m)[m cache
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m *   [33m7750e52[m  errores
+[1;36m|[m [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m[1;36m\[m  
+[1;36m|[m [1;33m|[m[1;36m_[m[1;34m|[m[1;36m_[m[36m|[m[1;36m_[m[32m|[m[1;36m_[m[1;36m|[m[1;36m_[m[1;33m|[m[1;36m_[m[1;34m|[m[1;36m_[m[34m|[m[1;36m_[m[1;36m|[m[1;36m_[m[1;35m|[m[1;36m_[m[1;35m|[m[1;36m/[m  
+[1;36m|[m[1;36m/[m[1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m   
+* [1;33m|[m [1;34m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m [33m62699bb[m Add CI workflow for Java project validation pipeline
+[1;34m|[m [1;33m|[m[1;34m/[m [36m/[m [32m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;36m/[m [1;35m/[m [1;35m/[m  
+[1;34m|[m[1;34m/[m[1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m   
+* [1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m   [33mf0eb6e7[m Merge pull request #38 from andrXco/37-ejecucion-en-concurrente
+[31m|[m[32m\[m [1;33m\[m [36m\[m [32m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;36m\[m [1;35m\[m [1;35m\[m  
+[31m|[m * [1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;36m|[m [1;35m|[m [1;35m|[m [33mcae9ed7[m Se cambia minimanete el config de H2
+[31m|[m [1;36m|[m [1;33m|[m[1;36m_[m[36m|[m[1;36m_[m[32m|[m[1;36m_[m[1;36m|[m[1;36m_[m[1;33m|[m[1;36m_[m[1;34m|[m[1;36m_[m[34m|[m[1;36m/[m [1;35m/[m [1;35m/[m  
+[31m|[m [1;36m|[m[1;36m/[m[1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   
+* [1;36m/[m [1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m [33m15707dd[m Comentarios corregidos
+[1;36m|[m[1;36m/[m [1;33m/[m [36m/[m [32m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+* [1;33m|[m [36m|[m [32m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   [33m4456d27[m Merge pull request #36 from andrXco/35-archivo-sql
+[32m|[m[34m\[m [1;33m\[m [36m\[m [32m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;35m\[m [1;35m\[m  
+[32m|[m [34m|[m[32m_[m[1;33m|[m[32m_[m[36m|[m[32m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+[32m|[m[32m/[m[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   
+[32m|[m * [1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   [33m503b75c[m[33m ([m[1;31morigin/35-archivo-sql[m[33m)[m Merge remote-tracking branch 'origin/main' into 35-archivo-sql
+[32m|[m [35m|[m[32m\[m [1;33m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;35m\[m [1;35m\[m  
+[32m|[m [35m|[m[32m/[m [1;33m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+[32m|[m[32m/[m[35m|[m [1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   
+* [35m|[m [1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   [33m76c90ea[m Merge pull request #32 from andrXco/test
+[1;33m|[m[1;32m\[m [35m\[m [1;33m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;35m\[m [1;35m\[m  
+[1;33m|[m [1;32m|[m[1;33m_[m[35m|[m[1;33m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+[1;33m|[m[1;33m/[m[1;32m|[m [35m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m   
+[1;33m|[m * [35m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m [33m430d1c3[m[33m ([m[1;31morigin/test[m[33m)[m Se segmentan las pruebas y se verifica que funcionen
+[1;33m|[m * [35m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m [33m13b2cee[m mejoramiento de clase test y cambio de nombre
+[1;33m|[m * [35m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m [33m51c16bd[m cambio de nombres a minuscula
+[1;33m|[m * [35m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m [1;35m|[m [33mbf4fd4a[m test de startcontroller
+[1;33m|[m[1;33m/[m [35m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+[1;33m|[m * [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m [33m8c0a343[m Se agrega el archivo .sql y se realiza la actualizacion de la clase H2
+[1;33m|[m[1;33m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [34m/[m [1;35m/[m [1;35m/[m  
+[1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m * [33m9b6d0bc[m cambios de nombre archivo y controller
+[1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m * [33mbc7149a[m agregue carpeta de css
+[1;33m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m * [33med8aab4[m agregacion de notificaciones
+[1;33m|[m [36m|[m[1;33m_[m[1;36m|[m[1;33m_[m[1;33m|[m[1;33m_[m[1;34m|[m[1;33m_[m[34m|[m[1;33m_[m[1;35m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m   
+* [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [34m|[m [1;35m|[m   [33mc3256d0[m Merge pull request #31 from andrXco/ContraseñasCifradas
+[34m|[m[1;34m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [34m\[m [1;35m\[m  
+[34m|[m [1;34m|[m[34m_[m[36m|[m[34m_[m[1;36m|[m[34m_[m[1;33m|[m[34m_[m[1;34m|[m[34m/[m [1;35m/[m  
+[34m|[m[34m/[m[1;34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m   
+[34m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [33m938f0c6[m BCrypt aplicado
+[34m|[m[34m/[m [36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [1;35m/[m  
+[34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m *   [33ma37e167[m[33m ([m[1;31morigin/MejorasVisualizacion-TipoObjetoBranch[m[33m)[m Merge con main
+[34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m[34m\[m  
+[34m|[m [36m|[m[34m_[m[1;36m|[m[34m_[m[1;33m|[m[34m_[m[1;34m|[m[34m_[m[1;35m|[m[34m_[m[1;35m|[m[34m/[m  
+[34m|[m[34m/[m[36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m   
+* [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m   [33mbb87ea1[m Merge pull request #18 from andrXco/CreacionyConsultaContratos
+[31m|[m[32m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [1;35m\[m [1;35m\[m  
+[31m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33mb62169d[m[33m ([m[1;31morigin/CreacionyConsultaContratos[m[33m)[m Validacion y blindaje de fecha de contrato previa a la del concierto
+[31m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m284b8f9[m Se muestra el nombre del concierto en consultarsolicitudescontroller
+[31m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33me22a086[m Comentarios agregados
+[31m|[m * [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m   [33mcd6a5e9[m Conflictos Resueltos
+[31m|[m [33m|[m[34m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [1;35m\[m [1;35m\[m  
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m91ba6eb[m Solucion de bug en boton de agregar contrato bloqueado
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m1c1a42b[m Pantallas Actualizadas CrearConcierto y MenuConcierto
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m78a9fd7[m Funcionalidades totales resueltas, crear contrato y visualizar ya estan disponibles
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m175caf1[m La consulta de solicitudes de concierto ahora permite visualizar el contrato en una nueva pantalla
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m3cd8279[m Boton Bloqueado en Caso de que ya se haya rellenado un contrato previamente
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m9b245c6[m Controller Crear Concierto modificado
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m723b8d3[m Archivos Modificados en la logica de contratos y asigancion a conciertos
+[31m|[m * [34m|[m [36m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m   [33macfe2b8[m Merge remote-tracking branch 'origin/main' into CreacionyConsultaContratos
+[31m|[m [35m|[m[36m\[m [34m\[m [36m\[m [1;36m\[m [1;33m\[m [1;34m\[m [1;35m\[m [1;35m\[m  
+[31m|[m [35m|[m [36m|[m [34m|[m[36m/[m [1;36m/[m [1;33m/[m [1;34m/[m [1;35m/[m [1;35m/[m  
+[31m|[m [35m|[m [36m|[m[36m/[m[34m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m   
+[31m|[m * [36m|[m [34m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m8c5d240[m Se muestra ID del contrato al crearlo
+[31m|[m * [36m|[m [34m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33me230c47[m Creación y consulta de contratos (controllers, service, repository, vistas)
+[31m|[m * [36m|[m [34m|[m [1;36m|[m [1;33m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33m5c8617c[m menuconcierto.fxml  modificado
+[31m|[m [1;33m|[m [36m|[m[1;33m_[m[34m|[m[1;33m_[m[1;36m|[m[1;33m/[m [1;34m/[m [1;35m/[m [1;35m/[m  
+[31m|[m [1;33m|[m[1;33m/[m[36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;35m|[m   
+* [1;33m|[m [36m|[m [34m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;35m|[m   [33mdb753a2[m Merge pull request #26 from andrXco/AdministracionUsuarios
+[34m|[m[1;32m\[m [1;33m\[m [36m\[m [34m\[m [1;36m\[m [1;34m\[m [1;35m\[m [1;35m\[m  
+[34m|[m [1;32m|[m[34m_[m[1;33m|[m[34m_[m[36m|[m[34m/[m [1;36m/[m [1;34m/[m [1;35m/[m [1;35m/[m  
+[34m|[m[34m/[m[1;32m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;35m|[m   
+[34m|[m * [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;35m|[m [33med107da[m Copia inicial exacta de main
+[34m|[m[34m/[m [1;33m/[m [36m/[m [1;36m/[m [1;34m/[m [1;35m/[m [1;35m/[m  
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33me4c3ad7[m Implementacion parcial de Crear objeto
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33md257fbf[m Implementacion parcial de Crear objeto
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33mefb3843[m Se agrega la opcion de des-seleccionar el inventario que se esta administrando
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33mf67b317[m Se termina la pantalla de ver inventario en detalle y sus funcionalidades :D
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m4ad071d[m Se agrega la pantalla de ver el inventario en detalle, esta ya tiene una funcionalidad parcial
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m891e92b[m Se agrega la eliminacion en la pantalla de Inventarios
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33ma4acf2b[m Se agrega la pantalla de Gestion de Inventarios
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33md02da0c[m Se agrega el boton de gestion de inventario
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m753bd99[m Se eliminan las iterfaces anteriores
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m48b6ee8[m Se crear nuevos repositorios y servicios
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m19c08eb[m Se Realiza un re estructuracion, debido a que la gestion del inventario estaba imposible si la relacion objeto concierto y una buena definicion de como se crean los objetos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33mb73b2d5[m Se Realiza un re estructuracion, debido a que la gestion del inventario estaba imposible al no tener cantidades de los objetivos, y al no tener un relacion directa con los conciertos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m *   [33m5d2b213[m Se hace el merge de main para evitar los conflictos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;33m|[m[34m\[m  
+[34m|[m [1;33m|[m[34m_[m[36m|[m[34m_[m[1;36m|[m[34m_[m[1;34m|[m[34m_[m[1;35m|[m[34m_[m[1;33m|[m[34m/[m  
+[34m|[m[34m/[m[1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m [1;33m|[m   
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33m01f78f1[m Se eliminan clases duplicadas y se verifica que corre de forma correcta
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m * [33ma46ed75[m Se corrigen los nombres de los archivos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m[1;35m/[m  
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33mcaf4401[m cambios
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33m8e88953[m cambios solicitados
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33me23e8d3[m cambios
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33mf53edf8[m cambios solicitados
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33m9e1abcd[m cambios pedidos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33m0e5b7da[m implementados los cambios solicitados
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m *   [33m20ffadd[m Merge desde main usando version remota
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m [1;35m|[m[36m\[m  
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m[36m_[m[1;34m|[m[36m_[m[1;35m|[m[36m/[m  
+[34m|[m [1;33m|[m [36m|[m[36m/[m[1;36m|[m [1;34m|[m [1;35m|[m   
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33m01b48c0[m ?
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m * [33mfad043d[m que pasa?
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [1;34m|[m[1;34m/[m  
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m *   [33m3f245ed[m lo de inventario arreglado con le nuevo formato de horario e integrado con código de main
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [31m|[m[1;33m\[m  
+[34m|[m [1;33m|[m [36m|[m[1;33m_[m[1;36m|[m[1;33m_[m[31m|[m[1;33m/[m  
+[34m|[m [1;33m|[m[1;33m/[m[36m|[m [1;36m|[m [31m|[m   
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33me6dc3ea[m eliminé una clase que tenia de prueba que se me olvidó quitar
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33mce59b5f[m asignar inventarios terminado
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33mcd66e9e[m funcionalidad de agregar inventarios, objetos, y vincular inventario/horario, inventario/objetos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33m5dc0471[m codigo de funcionalidad completo, aún no es´ta totalmente probado, no integrar a main AUN
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33maeba128[m cambios a base de datos, back de funcionalidad terminado
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33m39098a5[m back de la creación de tipo de objeto creado
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33mdfcc707[m[33m ([m[1;31morigin/ObjetoHorario[m[33m)[m añadí varios objetos al modelo
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m * [33m37617c4[m creación horario
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [32m|[m * [33mcf254ab[m[33m ([m[1;31morigin/feature/nomina[m[33m)[m Arreglo en importantes archivos
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [32m|[m * [33ma2ae5b7[m feat: modulo nomina completo con interfaz programatica
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [32m|[m *   [33ma56ce11[m Merge remote-tracking branch 'origin/main' into feature/nomina # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
+[34m|[m [1;33m|[m [36m|[m [1;36m|[m [32m|[m [34m|[m[34m\[m  
+[34m|[m [1;33m|[m[34m_[m[36m|[m[34m_[m[1;36m|[m[34m_[m[32m|[m[34m_[m[34m|[m[34m/[m  
+[34m|[m[34m/[m[1;33m|[m [36m|[m [1;36m|[m [32m|[m [34m|[m   
+* [1;33m|[m [36m|[m [1;36m|[m [32m|[m [34m|[m   [33m5c8bc1b[m Merge pull request #24 from andrXco/23-mejora-validaciones-gestion-concierto
+[36m|[m[1;31m\[m [1;33m\[m [36m\[m [1;36m\[m [32m\[m [34m\[m  
+[36m|[m [1;31m|[m[36m_[m[1;33m|[m[36m/[m [1;36m/[m [32m/[m [34m/[m  
+[36m|[m[36m/[m[1;31m|[m [1;33m|[m [1;36m|[m [32m|[m [34m|[m   
+[36m|[m * [1;33m|[m [1;36m|[m [32m|[m [34m|[m [33mc4d6807[m Se corrige el bug de que se no se ve la fecha de inicio
+[36m|[m * [1;33m|[m [1;36m|[m [32m|[m [34m|[m [33m0d13527[m Se agrega el ojo para mostrar y oculatar contraseña
+[36m|[m * [1;33m|[m [1;36m|[m [32m|[m [34m|[m [33ma852d3d[m Se crea un nueva capa de verificacion para la creacion de conciertos
+[36m|[m[36m/[m [1;33m/[m [1;36m/[m [32m/[m [34m/[m  
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33m367da38[m feat: agregar navegación a liquidacionhoras en SceneManager
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33md827f0c[m feat: agregar NominaController
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33mda67698[m feat: agregar vista liquidacionhoras.fxml
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33m9de8ec2[m feat: agregar NominaService
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33ma09e37a[m feat: agregar NominaRepository
+[36m|[m [1;33m|[m [1;36m|[m [32m|[m * [33me1e8df7[m feat: agregar entidad Nomina
+[36m|[m [1;33m|[m[36m_[m[1;36m|[m[36m_[m[32m|[m[36m/[m  
+[36m|[m[36m/[m[1;33m|[m [1;36m|[m [32m|[m   
+* [1;33m|[m [1;36m|[m [32m|[m   [33m00c60cb[m Merge pull request #15 from andrXco/interfaces/usuario
+[1;32m|[m[1;33m\[m [1;33m\[m [1;36m\[m [32m\[m  
+[1;32m|[m * [1;33m|[m [1;36m|[m [32m|[m [33m5bd4ada[m[33m ([m[1;31morigin/interfaces/usuario[m[33m)[m  se elimino antiguos fxml
+[1;32m|[m * [1;33m|[m [1;36m|[m [32m|[m [33mc03387d[m Nuevos diseños para login, signup y menu
+[1;32m|[m [1;33m|[m[1;33m/[m [1;36m/[m [32m/[m  
+[1;32m|[m * [1;36m|[m [32m|[m   [33m6afc358[m Merge pull request #14 from andrXco/BranchJulian, correciones a consultas de conciertos y db
+[1;32m|[m [1;36m|[m[1;32m\[m [1;36m\[m [32m\[m  
+[1;32m|[m [1;36m|[m[1;32m/[m [1;36m/[m [32m/[m  
+[1;32m|[m[1;32m/[m[1;36m|[m [1;36m/[m [32m/[m   
+[1;32m|[m [1;36m|[m[1;36m/[m [32m/[m    
+* [1;36m|[m [32m|[m [33mc69893a[m[33m ([m[1;31morigin/BranchJulian[m[33m, [m[1;31morigin/AdministracionUsuarios[m[33m)[m Merge :D a main
+[1;36m|[m[1;36m\[m[1;36m|[m [32m|[m 
+[1;36m|[m * [32m|[m   [33m31dfbcb[m Merge pull request #11 from andrXco/Branch-Gestion-Concierto
+[1;36m|[m [32m|[m[33m\[m [32m\[m  
+[1;36m|[m [32m|[m * [32m|[m [33m665de07[m Se realizan las correciones: menu para la gestion del concierto y se resuelve el conflicto
+[1;36m|[m [32m|[m * [32m|[m [33m833fac1[m Se agrega el menu de gestion de conciertos
+[1;36m|[m [32m|[m * [32m|[m [33m22314d1[m Se agrega al horario la fecha fin y se hace el cambio tanto en la interfaces como en la base de datos
+[1;36m|[m [32m|[m * [32m|[m [33m7f54f7a[m Se agregan cometarios para mejorar la compresion del codigo
+[1;36m|[m [32m|[m * [32m|[m [33m798217d[m Se termina la pantalla de consultar conciertos programados, ademas de borrar el horario del concierto cuando este se elimina
+[1;36m|[m [32m|[m * [32m|[m [33m5bc1600[m Se hace la implementacion parcual de ver conciertos programados
+[1;36m|[m [32m|[m * [32m|[m [33m4f78020[m Se Crea la pantalla de crear concierto, en donde un usuario puede crear la solicitud de crear un concierto, para que despues sea aproada o denegada en la pantalla previamente creada de ver solicitudes de concierto, queda pendiente la pantalla de ver conciertos programados
+[1;36m|[m [32m|[m * [32m|[m [33m858b014[m Se Crea la pantalla de ver solicitudes de conciertos (osea conciertos a programar), ademas de su controlador
+[1;36m|[m [32m|[m * [32m|[m [33m5711204[m Se crean las clases ncesarias para crear un concierto, ademas se realiza una implementacion parcial del horario, y se verifica que todo funcione haciendo una instacia parcial de un concierto
+[1;36m|[m [32m|[m[32m/[m [32m/[m  
+[1;36m|[m * [32m|[m   [33m9bb16eb[m Merge pull request #13 from andrXco/feature/staff-module
+[1;36m|[m [34m|[m[35m\[m [32m\[m  
+[1;36m|[m [34m|[m * [32m|[m [33maae12a2[m[33m ([m[1;31morigin/feature/staff-module[m[33m, [m[1;32mfeature/staff-module[m[33m)[m StaffController.java, feat: agregar StaffController para gestión de empleados
+[1;36m|[m * [35m|[m [32m|[m   [33m052e129[m Merge pull request #10 from andrXco/BranchAndres
+[1;36m|[m [36m|[m[1;31m\[m [35m\[m [32m\[m  
+[1;36m|[m [36m|[m * [35m|[m [32m|[m [33m5fe25b1[m Validaciones de contraseña para crear usario
+[1;36m|[m [36m|[m * [35m|[m [32m|[m [33m782f3a6[m[33m ([m[1;31morigin/BranchAndres[m[33m)[m Agregación de el boton de actualizar contraseña en el perfil
+[1;36m|[m [36m|[m[36m/[m [35m/[m [32m/[m  
+* [36m|[m [35m|[m [32m|[m [33m78dd7e6[m se implemente roles en perfil desde RolConciertoUsuario para que se pueda visualizar desde el perfil correctamente
+* [36m|[m [35m|[m [32m|[m [33mef21ed0[m Se corrigen minimos detalles en la funcionalidad.
+* [36m|[m [35m|[m [32m|[m [33mae40c28[m Se implementa por completo la asignacion de concierto y rol en gestion de usuarios, se agrega una columna de nombre concierto para filtrar facilmente desde el dropdown que funciona de filtro en la tabla de gestion de usuarios, se hacen cambios en como obtener conciertos agregandose un metodo de obtener concierto sin tener en cuenta la relacion de usuario, rol y concierto para que si se agregan dos artistas a un concierto no hayan vistas donde se muestren conciertos duplicados con artista diferente ,evitando cambiar la base de datos agregando un id artista por el momento.
+* [36m|[m [35m|[m [32m|[m [33m0d46372[m Implementacion de asignacion de concierto en gestion de usuarios acompañado de asignacion de rol
+* [36m|[m [35m|[m [32m|[m [33m5b81583[m Se hacen correcciones en StaffService ya que el constructor estaba creando directamente en ese lugar los repositorios con h2 lo cual no era correcto para la arquitectura que se esta siguiendo
+* [36m|[m [35m|[m [32m|[m [33m3f79e1d[m Primer punto de control: Inicio de correccion idRol base de datos
+[1;31m|[m [36m|[m [35m|[m [32m|[m * [33m534aec6[m[33m ([m[1;31morigin/BranchSantiago[m[33m)[m Se agregan correciones de errores en el contructor del context manager
+[1;31m|[m [36m|[m [35m|[m [32m|[m * [33m4da8871[m Creación de Contratos y Consulta
+[1;31m|[m [36m|[m[1;31m_[m[35m|[m[1;31m_[m[32m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[36m|[m [35m|[m [32m|[m   
+* [36m|[m [35m|[m [32m|[m [33m696afae[m[33m ([m[1;31morigin/Branch-Gestion-Concierto[m[33m)[m Se agregan cometarios para mejorar la compresion del codigo
+* [36m|[m [35m|[m [32m|[m [33m9b4625c[m Se termina la pantalla de consultar conciertos programados, ademas de borrar el horario del concierto cuando este se elimina
+* [36m|[m [35m|[m [32m|[m [33mcc7e316[m Se hace la implementacion parcual de ver conciertos programados
+* [36m|[m [35m|[m [32m|[m [33m38032b0[m Se Crea la pantalla de crear concierto, en donde un usuario puede crear la solicitud de crear un concierto, para que despues sea aproada o denegada en la pantalla previamente creada de ver solicitudes de concierto, queda pendiente la pantalla de ver conciertos programados
+* [36m|[m [35m|[m [32m|[m [33me81965b[m Se Crea la pantalla de ver solicitudes de conciertos (osea conciertos a programar), ademas de su controlador
+* [36m|[m [35m|[m [32m|[m [33mad494fc[m Se crean las clases ncesarias para crear un concierto, ademas se realiza una implementacion parcial del horario, y se verifica que todo funcione haciendo una instacia parcial de un concierto
+[36m|[m[36m/[m [35m/[m [32m/[m  
+* [35m|[m [32m|[m   [33m4fab341[m Merge pull request #9 from andrXco/BranchMartin
+[1;33m|[m[1;34m\[m [35m\[m [32m\[m  
+[1;33m|[m * [35m|[m [32m|[m [33m77c52fc[m Se corrige el error que no se mostraba la pantalla de editar el perfil: se corrige la ruta del archivo en la clase de scene manager
+[1;33m|[m[1;33m/[m [35m/[m [32m/[m  
+* [35m|[m [32m|[m   [33m47fd2a4[m Merge pull request #6 from andrXco/AndresBranch
+[1;35m|[m[1;36m\[m [35m\[m [32m\[m  
+[1;35m|[m * [35m|[m [32m|[m [33m415ad78[m[33m ([m[1;31morigin/AndresBranch[m[33m)[m Se volvio a instanciar como principal en el starController
+[1;35m|[m * [35m|[m [32m|[m [33m220ed61[m Pantalla quedo con el tamaño definido y cambio de diseño
+[1;35m|[m * [35m|[m [32m|[m [33m19007b3[m quite los constructores de StarController, porque solo las puse en contextManager
+[1;35m|[m * [35m|[m [32m|[m [33mbe28077[m Agregar perfil y edicion de perfil
+* [1;36m|[m [35m|[m [32m|[m   [33m3b1046e[m Merge pull request #7 from andrXco/feature/staff-module
+[31m|[m[35m\[m [1;36m\[m [35m\[m [32m\[m  
+[31m|[m [35m|[m [1;36m|[m[35m/[m [32m/[m  
+[31m|[m [35m|[m[35m/[m[1;36m|[m [32m|[m   
+[31m|[m * [1;36m|[m [32m|[m [33me146bca[m Añadir repositorio y servicio para gestión de staff
+* [32m|[m [1;36m|[m [32m|[m [33m21e73a6[m Update CODEOWNERS
+* [32m|[m [1;36m|[m [32m|[m [33mb197027[m Create CODEOWNERS
+[32m|[m[32m/[m [1;36m/[m [32m/[m  
+* [1;36m|[m [32m|[m [33m3923a32[m[33m ([m[1;31morigin/Rama-JuanDiego[m[33m)[m Merge pull request #5 from andrXco/BranchJulian
+[33m|[m[1;36m\[m[1;36m|[m [32m|[m 
+[33m|[m * [32m|[m [33maf01cbb[m Cambios realizados: Recreacion de la pantalla menu que incluye boton de cerrar sesion implementado y administrar usuarios implementado, Pantalla de administracion de usuarios que incluye asignacion de roles funcional ya conectado con la base de datos, creacion de roles dentro de la base de datos y cambios minimos de mejora.
+[33m|[m * [32m|[m [33m020252e[m Cambios realizados: Recreacion de la pantalla menu que incluye boton de cerrar sesion implementado y administrar usuarios implementado, Pantalla de administracion de usuarios que incluye asignacion de roles funcional ya conectado con la base de datos, creacion de roles dentro de la base de datos y cambios minimos de mejora.
+[33m|[m[33m/[m [32m/[m  
+* [32m|[m   [33m1190562[m Merge pull request #2 from andrXco/BranchMartin
+[32m|[m[36m\[m [32m\[m  
+[32m|[m [36m|[m[32m/[m  
+[32m|[m[32m/[m[36m|[m   
+[32m|[m * [33m26698a3[m se realizan grandes cambios para mantener la estructura del programa, se crean nuevas clases y se modifican las que estaban por este mismo motivo
+[32m|[m[32m/[m  
+* [33m2255d1b[m Se agregaron pop ups para mostrar los mesajes de exito y error, se agrego una lable que muestra el nombre de usuario en la interfaz de menu y ahora se termina el programa cuando se cierra la interfaz grafica
+* [33ma794013[m Se agregaron comentarios
+* [33md8f1223[m se realizan cambios para la adaptacion de la DI, ver STARTCONTROLLER
+* [33m300d48f[m[33m ([m[1;31morigin/Develop[m[33m)[m Eliminar .idea del repositorio
+* [33m882a2c3[m Recuperar cambios desde Local History
+* [33mda2780d[m Ignorar base de datos local y archivos generados
+* [33m29d9099[m Recuperación pestaña de menu y configuraciond de base de datos con el correo
+* [33mf68beb9[m Crear usuario con contraseña con validación en la db y nueva escenario de menu despues de login verificando que los usuarios y las contraseñas sean iguales
+* [33m769bc8f[m Organización de carpetas
+* [33m8393f18[m H2 base de datos login y registro funcional v1: Julian Leon
+* [33md955bb3[m Login y registro en base de datos: Esta funcionando a simple vistazo
+* [33mba1943f[m Cambios en H2.java: creacion de tablas
+* [33maa66620[m Login rama martin funcional en rama julian
+*   [33m64701f9[m Merge con rama login-martin
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33m0efc2cb[m Se realiza el modelo por capas, las interfaces de login y sign up, ademas de la clase usuario, UsuarioRepository, AuntenticationService, LoginController, SignUpController, StartController
+* [33m962c821[m Add H2 configuration
+* [33m3a43b85[m Ignore IntelliJ .idea
+*   [33m532b57a[m Merge origin/main and keep local gitignore
+[1;33m|[m[1;34m\[m  
+[1;33m|[m * [33me333603[m Add .gitignore file with common exclusions for java
+[1;33m|[m * [33mcd3df0e[m[33m ([m[1;31morigin/hotFix[m[33m)[m Initial commit
+* [33maecf775[m Base proyecto Maven JavaFX

@@ -60,6 +60,8 @@ public class MenuController {
     @FXML
     private Button fid_bt_mantenimientoObjeto;
 
+    @FXML
+    private Button fid_bt_reportesGerenciales;
 
     @FXML
     public void initialize() {
@@ -77,6 +79,10 @@ public class MenuController {
 
             fid_bt_mantenimientoObjeto.setVisible(esAdmin || esManager);
             fid_bt_mantenimientoObjeto.setManaged(esAdmin || esManager);
+
+
+            fid_bt_reportesGerenciales.setVisible(esManager || esAdmin);
+            fid_bt_reportesGerenciales.setManaged(esManager || esAdmin);
 
             actualizarContadorBandeja();
         }
@@ -168,4 +174,15 @@ public class MenuController {
     void On_Directorio_Staff(ActionEvent event) throws IOException {
         sceneManager.showDirectorioStaff();
     }
+
+    @FXML
+    void On_LiquidacionHoras(ActionEvent event) throws IOException {
+        sceneManager.showLiquidacionHoras();
+    }
+
+    @FXML
+    void On_ReportesGerenciales(ActionEvent event) throws IOException {
+        sceneManager.showReportesGerenciales();
+    }
 }
+

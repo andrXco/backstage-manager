@@ -1,405 +1,209 @@
 package org.example.ax0006.controller;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.manager.SceneManager;
 import org.example.ax0006.manager.SesionManager;
-import org.example.ax0006.service.AnalisisFinancieroService;
 import org.example.ax0006.service.ConciertoService;
+import org.example.ax0006.service.AnalisisFinancieroService;
+import org.example.ax0006.service.ReporteService;
+import org.example.ax0006.dto.ReporteDashboardDTO;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class ReportesGerencialesController {
 
-    // =========================
-    // SERVICES
-    // =========================
-    private SceneManager sceneManager;
-    private SesionManager sesion;
-    private ConciertoService conciertoService;
-    private AnalisisFinancieroService analisisService;
+    private final SceneManager sceneManager;
+    private final SesionManager sesion;
+    private final ConciertoService conciertoService;
+    private final AnalisisFinancieroService analisisService;
+    private final ReporteService reporteService;
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
     public ReportesGerencialesController(
             SceneManager sceneManager,
             SesionManager sesion,
             ConciertoService conciertoService,
-            AnalisisFinancieroService analisisService
+            AnalisisFinancieroService analisisService,
+            ReporteService reporteService
     ) {
-
         this.sceneManager = sceneManager;
         this.sesion = sesion;
         this.conciertoService = conciertoService;
         this.analisisService = analisisService;
+        this.reporteService = reporteService;
     }
+    
+    // =========================
+    // UI
+    // =========================
+
+    @FXML private Button bt_exportar;
+    @FXML private Button bt_rendimiento;
+    @FXML private Button bt_generarReporte;
+    @FXML private Button bt_artistaRentable;
+    @FXML private Button bt_historial;
+    @FXML private Button bt_volver;
+
+    @FXML private ComboBox<Concierto> combo_eventos;
+
+    @FXML private TextArea txt_resumenEvento;
+
+    @FXML private Label lbl_ingresosTotales;
+    @FXML private Label lbl_eventosActivos;
+    @FXML private Label lbl_artistaRentable;
+    @FXML private Label lbl_reportesGenerados;
 
     // =========================
-    // KPI LABELS
+    // INIT
     // =========================
-    @FXML
-    private Label lbl_ingresosTotales;
 
-    @FXML
-    private Label lbl_eventosActivos;
-
-    @FXML
-    private Label lbl_artistaRentable;
-
-    @FXML
-    private Label lbl_reportesGenerados;
-
-    // =========================
-    // COMPONENTES
-    // =========================
-    @FXML
-    private ComboBox<Concierto> combo_eventos;
-
-    @FXML
-    private TextArea txt_resumenEvento;
-
-    // =========================
-    // BOTONES
-    // =========================
-    @FXML
-    private Button bt_exportar;
-
-    @FXML
-    private Button bt_rendimiento;
-
-    @FXML
-    private Button bt_generarReporte;
-
-    @FXML
-    private Button bt_artistaRentable;
-
-    @FXML
-    private Button bt_historial;
-
-    @FXML
-    private Button bt_volver;
-
-    // =========================
-    // INITIALIZE
-    // =========================
     @FXML
     public void initialize() {
 
-        cargarConciertos();
-        cargarKPIs();
+        List<Concierto> conciertos = conciertoService.listarConciertos();
+        combo_eventos.getItems().setAll(conciertos);
 
-        combo_eventos.setCellFactory(
-                lv -> new javafx.scene.control.ListCell<Concierto>() {
-
-                    @Override
-                    protected void updateItem(
-                            Concierto concierto,
-                            boolean empty
-                    ) {
-
-                        super.updateItem(concierto, empty);
-
-                        setText(
-                                empty || concierto == null
-                                        ? null
-                                        : concierto.getNombreConcierto()
-                        );
-                    }
-                }
-        );
-
-        combo_eventos.setButtonCell(
-                new javafx.scene.control.ListCell<Concierto>() {
-
-                    @Override
-                    protected void updateItem(
-                            Concierto concierto,
-                            boolean empty
-                    ) {
-
-                        super.updateItem(concierto, empty);
-
-                        setText(
-                                empty || concierto == null
-                                        ? null
-                                        : concierto.getNombreConcierto()
-                        );
-                    }
-                }
-        );
-    }
-
-    // =========================
-    // CARGAR KPIS
-    // =========================
-    private void cargarKPIs() {
-
-        try {
-
-            List<Concierto> conciertos =
-                    conciertoService.listarConciertos();
-
-            int eventosActivos = 0;
-
-            for (Concierto c : conciertos) {
-
-                if (c.isProgramado()) {
-                    eventosActivos++;
-                }
+        combo_eventos.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty || c == null ? null : c.getNombreConcierto());
             }
+        });
 
-            lbl_eventosActivos.setText(
-                    String.valueOf(eventosActivos)
-            );
+        combo_eventos.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty || c == null ? null : c.getNombreConcierto());
+            }
+        });
 
-            // Placeholder temporal
-            lbl_ingresosTotales.setText("USD 0.00");
-            lbl_artistaRentable.setText("N/A");
-            lbl_reportesGenerados.setText("0");
-
-        } catch (Exception e) {
-
-            mostrarError(
-                    "Error cargando indicadores"
-            );
-        }
+        cargarKPIs();
     }
 
     // =========================
-    // CARGAR CONCIERTOS
+    // KPIs
     // =========================
-    private void cargarConciertos() {
 
-        combo_eventos.setItems(
-                FXCollections.observableArrayList(
-                        conciertoService.listarConciertos()
-                )
-        );
+    private void cargarKPIs() {
+        ReporteDashboardDTO dashboard = reporteService.generarDashboard();
+
+        java.text.NumberFormat currencyFormatter = java.text.NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
+        currencyFormatter.setMaximumFractionDigits(0);
+        lbl_ingresosTotales.setText(currencyFormatter.format(dashboard.getIngresosTotales()));
+
+        lbl_eventosActivos.setText(String.valueOf(dashboard.getEventosActivos()));
+        lbl_artistaRentable.setText(dashboard.getArtistaMasRentable());
+        lbl_reportesGenerados.setText(String.valueOf(dashboard.getReportesGenerados()));
     }
 
     // =========================
-    // SELECCIONAR EVENTO
+    // EVENTOS
     // =========================
+
     @FXML
     public void On_seleccionarEvento() {
 
-        Concierto concierto =
-                combo_eventos.getValue();
+        Concierto c = combo_eventos.getValue();
 
-        if (concierto == null) {
+        if (c == null) {
+            txt_resumenEvento.clear();
             return;
         }
 
-        sesion.setConciertoActual(concierto);
+        String resumen =
+                reporteService.obtenerResumenEventoDetallado(c);
 
-        StringBuilder resumen =
-                new StringBuilder();
-
-        resumen.append("Evento: ")
-                .append(concierto.getNombreConcierto())
-                .append("\n\n");
-
-        resumen.append("ID: ")
-                .append(concierto.getIdConcierto())
-                .append("\n");
-
-        resumen.append("Aforo: ")
-                .append(concierto.getAforo())
-                .append("\n");
-
-        resumen.append("Estado: ")
-                .append(
-                        concierto.isProgramado()
-                                ? "Programado"
-                                : "Pendiente"
-                )
-                .append("\n");
-
-        if (concierto.getArtista() != null) {
-
-            resumen.append("Artista Responsable: ")
-                    .append(
-                            concierto.getArtista()
-                                    .getNombre()
-                    )
-                    .append("\n");
-        }
-
-        if (concierto.getHorario() != null) {
-
-            resumen.append("Horario asignado")
-                    .append("\n");
-        }
-
-        if (concierto.getAnalisis() != null) {
-
-            resumen.append("\nPresupuesto asociado: ")
-                    .append(
-                            concierto.getAnalisis()
-                                    .getPresupuesto()
-                    );
-
-        } else {
-
-            resumen.append(
-                    "\nNo posee análisis financiero."
-            );
-        }
-
-        txt_resumenEvento.setText(
-                resumen.toString()
-        );
+        txt_resumenEvento.setText(resumen);
     }
 
-    // =========================
-    // VER RENDIMIENTO
-    // =========================
     @FXML
     public void On_verRendimiento() {
+        Concierto c = combo_eventos.getValue();
 
-        Concierto concierto =
-                combo_eventos.getValue();
-
-        if (concierto == null) {
-
-            mostrarError(
-                    "Debe seleccionar un evento."
-            );
-
+        if (c == null) {
+            txt_resumenEvento.setText("Selecciona un evento primero.");
             return;
         }
 
-        if (concierto.getAnalisis() == null) {
-
-            mostrarError(
-                    "El concierto no tiene análisis financiero."
-            );
-
-            return;
-        }
-
-        try {
-
-            sceneManager.showAnalisisFinanciero(
-                    concierto.getAnalisis()
-                            .getIdAnalisisF()
-            );
-
-        } catch (IOException e) {
-
-            mostrarError(
-                    "No se pudo abrir el análisis."
-            );
-        }
+        String rendimiento = reporteService.obtenerRendimientoConcierto(c);
+        txt_resumenEvento.setText(rendimiento);
     }
 
-    // =========================
-    // GENERAR REPORTE
-    // =========================
     @FXML
     public void On_generarReporte() {
 
-        Concierto concierto =
-                combo_eventos.getValue();
+        Concierto c = combo_eventos.getValue();
 
-        if (concierto == null) {
-
-            mostrarError(
-                    "Seleccione un evento."
-            );
-
+        if (c == null) {
+            txt_resumenEvento.setText("Selecciona un evento primero.");
             return;
         }
 
-        mostrarExito(
-                "Reporte generado correctamente."
-        );
+        String emitidoPor = (sesion.getUsuarioActual() != null) ? sesion.getUsuarioActual().getNombre() : "Gerente de Eventos";
+        String reporte = reporteService.generarYGuardarReporte(c, emitidoPor);
+        txt_resumenEvento.setText(reporte);
+
+        cargarKPIs();
     }
 
-    // =========================
-    // ARTISTA RENTABLE
-    // =========================
     @FXML
     public void On_artistaRentable() {
-
-        mostrarExito(
-                "Funcionalidad en construcción."
-        );
+        String rentabilidad = reporteService.obtenerArtistasRentabilidad();
+        txt_resumenEvento.setText(rentabilidad);
     }
 
-    // =========================
-    // HISTORIAL
-    // =========================
     @FXML
-    public void On_historialReportes() {
-
-        mostrarExito(
-                "Historial disponible próximamente."
-        );
+    public void On_historial() {
+        String historial = reporteService.obtenerHistorialReportes();
+        txt_resumenEvento.setText(historial);
     }
 
-    // =========================
-    // EXPORTAR
-    // =========================
     @FXML
-    public void On_exportarReporte() {
+    public void On_exportar() {
+        String contenido = txt_resumenEvento.getText();
+        if (contenido == null || contenido.isBlank()) {
+            mostrarAlerta("Exportar Reporte", "No hay contenido para exportar en el resumen del evento.", Alert.AlertType.WARNING);
+            return;
+        }
 
-        mostrarExito(
-                "Reporte exportado exitosamente."
-        );
-    }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar Reporte");
+        fileChooser.setInitialFileName("reporte_gerencial.txt");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Texto (*.txt)", "*.txt"));
 
-    // =========================
-    // VOLVER
-    // =========================
-    @FXML
-    public void On_volver() {
+        Stage stage = (Stage) bt_exportar.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
 
-        try {
-
-            sceneManager.showMenu();
-
-        } catch (IOException e) {
-
-            mostrarError(
-                    "No se pudo volver al menú."
-            );
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(contenido);
+                mostrarAlerta("Exportar Reporte", "Reporte exportado exitosamente a:\n" + file.getAbsolutePath(), Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mostrarAlerta("Error al Exportar", "Ocurrió un error al guardar el archivo:\n" + e.getMessage(), Alert.AlertType.ERROR);
+            }
         }
     }
 
-    // =========================
-    // ALERTAS
-    // =========================
-    private void mostrarError(String mensaje) {
-
-        Alert alert =
-                new Alert(Alert.AlertType.ERROR);
-
-        alert.setTitle("Error");
-        alert.setHeaderText("Operación fallida");
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
         alert.setContentText(mensaje);
-
         alert.showAndWait();
     }
 
-    private void mostrarExito(String mensaje) {
-
-        Alert alert =
-                new Alert(Alert.AlertType.INFORMATION);
-
-        alert.setTitle("Éxito");
-        alert.setHeaderText("Operación completada");
-        alert.setContentText(mensaje);
-
-        alert.showAndWait();
+    @FXML
+    public void On_volver() throws IOException {
+        sceneManager.showMenu();
     }
 }

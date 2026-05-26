@@ -39,6 +39,19 @@ MERGE INTO Clausula (idClausula, clausula, idContrato) KEY (idClausula)
 
 ALTER TABLE Clausula ALTER COLUMN idClausula RESTART WITH 6;
 
+-- 5. ANALISIS FINANCIERO (Debe ir antes de conciertos para evitar violaciones de clave foránea)
+MERGE INTO AnalisisFinanciero (idAnalisisF, presupuesto, aprobado) KEY (idAnalisisF)
+    VALUES
+    (1, 50000, TRUE),
+    (2, 80000, TRUE);
+ALTER TABLE AnalisisFinanciero ALTER COLUMN idAnalisisF RESTART WITH 3;
+
+-- 6. CONCIERTOS (referenciando Horario, Contrato y Análisis Financiero existentes)
+MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado, idAnalisisF) KEY(idConcierto)
+    VALUES
+    (1, 'Fin del Mundo Loko', 1, 100001, 1, FALSE, 1),
+    (2, 'Vida loka', 2, 35000, 2, TRUE, 2);
+
 -- 5. CONCIERTOS (referenciando Horario y Contrato existentes)
 MERGE INTO Concierto (idConcierto, nombreConcierto, idHorario, aforo, idContrato, programado) KEY(idConcierto)
 VALUES
@@ -47,9 +60,36 @@ VALUES
 
 ALTER TABLE Concierto ALTER COLUMN idConcierto RESTART WITH 3;
 
--- 6. TABLAS INTERMEDIAS
+-- 7. TABLAS INTERMEDIAS
 -- 3 = Manager/Artista
 MERGE INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) KEY (idRol, idUsuario, idConcierto)
     VALUES
     (3, 2, 1), -- Asigna a Feid (Usuario 2) al Concierto 1 con Rol 3
     (3, 2, 2); -- Asigna a Feid (Usuario 2) al Concierto 2 con Rol 3
+
+-- 8. GASTOS
+MERGE INTO Gasto (idGasto, descripcion, valor, idAnalisisF) KEY (idGasto)
+    VALUES
+    (1, 'Alquiler de Sonido y Luces', 12000, 1),
+    (2, 'Seguridad y Logística', 5000, 1),
+    (3, 'Alquiler de Escenario', 15000, 2),
+    (4, 'Personal de Producción', 8000, 2);
+ALTER TABLE Gasto ALTER COLUMN idGasto RESTART WITH 5;
+
+-- 9. INGRESOS
+MERGE INTO Ingreso (idIngreso, descripcion, valor, idAnalisisF) KEY (idIngreso)
+    VALUES
+    (1, 'Patrocinio Oficial Pepsi', 20000, 1),
+    (2, 'Venta de Comida y Bebida', 8000, 1),
+    (3, 'Patrocinio Budweiser', 35000, 2),
+    (4, 'Venta de Souvenirs', 12000, 2);
+ALTER TABLE Ingreso ALTER COLUMN idIngreso RESTART WITH 5;
+
+-- 10. BOLETERIA
+MERGE INTO Boleteria (idBoleteria, seccion, cantidad, precioBoleta, ingresoTotal, idAnalisisF) KEY (idBoleteria)
+    VALUES
+    (1, 'VIP', 200, 150, 30000, 1),
+    (2, 'General', 1000, 50, 50000, 1),
+    (3, 'VIP Gold', 300, 200, 60000, 2),
+    (4, 'Preferencia', 1500, 60, 90000, 2);
+ALTER TABLE Boleteria ALTER COLUMN idBoleteria RESTART WITH 5;

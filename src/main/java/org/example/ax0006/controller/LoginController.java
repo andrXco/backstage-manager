@@ -120,6 +120,15 @@ public class LoginController {
 
         /* SE ASIGNA EL USUARIO LOGEADO AL USUARIO EN LA CLASE SESION */
         sesion.setUsuarioActual(usuarioLogin);
+        System.out.println(
+                "ROL GUARDADO EN SESION: " +
+                        sesion.getUsuarioActual().getIdRol()
+        );
+
+        System.out.println(
+                "ROL ACTUAL: " +
+                        usuarioLogin.getIdRol()
+        );
 
         /* REGISTRAR NOTIFICACION DE LOGIN */
         if (actividadService != null) {

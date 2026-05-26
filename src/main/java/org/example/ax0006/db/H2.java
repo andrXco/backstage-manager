@@ -78,6 +78,7 @@ public class H2 {
             System.out.println("Datos de prueba cargados para la interfaz gráfica.");
         } catch (Exception e) {
             System.out.println("Nota: No se cargaron datos de prueba o ya existían.");
+            e.printStackTrace();
         }
     }
 }
