@@ -70,7 +70,7 @@ public class StartController extends Application {
          InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
         ObjetoService objetoService = new ObjetoService(objetoRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
-        ReporteService reporteService = new ReporteService(conciertoService, ingresoService, boleteriaService, gastoService, reporteRepo);
+        ReporteService reporteService = new ReporteService(conciertoService, ingresoService, boleteriaService, gastoService, nominaService, reporteRepo);
 
 
 

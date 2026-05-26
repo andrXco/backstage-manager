@@ -31,6 +31,7 @@ class ReporteServiceTest {
     private IngresoRepository ingresoRepo;
     private BoleteriaRepository boleteriaRepo;
     private ReporteRepository reporteRepo;
+    private NominaRepository nominaRepo;
 
     private ContratoService contratoService;
     private InventarioService inventarioService;
@@ -39,6 +40,7 @@ class ReporteServiceTest {
     private IngresoService ingresoService;
     private BoleteriaService boleteriaService;
     private AnalisisFinancieroService analisisService;
+    private NominaService nominaService;
 
     private ReporteService reporteService;
 
@@ -58,6 +60,7 @@ class ReporteServiceTest {
         ingresoRepo = new IngresoRepository(h2);
         boleteriaRepo = new BoleteriaRepository(h2);
         reporteRepo = new ReporteRepository(h2);
+        nominaRepo = new NominaRepository(h2);
 
         contratoService = new ContratoService(contratoRepo);
         inventarioService = new InventarioService(inventarioRepo);
@@ -65,12 +68,13 @@ class ReporteServiceTest {
         ingresoService = new IngresoService(ingresoRepo);
         boleteriaService = new BoleteriaService(boleteriaRepo);
         analisisService = new AnalisisFinancieroService(analisisRepo);
+        nominaService = new NominaService(nominaRepo, conciertoRepo, asignacionStaffRepo);
 
         HorarioValidator hv = new HorarioValidator();
         ConciertoValidator cv = new ConciertoValidator(hv);
         conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, cv, contratoService, asignacionStaffRepo);
 
-        reporteService = new ReporteService(conciertoService, ingresoService, boleteriaService, gastoService, reporteRepo);
+        reporteService = new ReporteService(conciertoService, ingresoService, boleteriaService, gastoService, nominaService, reporteRepo);
     }
 
     @AfterEach

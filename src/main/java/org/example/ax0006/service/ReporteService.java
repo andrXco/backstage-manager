@@ -16,6 +16,7 @@ public class ReporteService {
     private final IngresoService ingresoService;
     private final BoleteriaService boleteriaService;
     private final GastoService gastoService;
+    private final NominaService nominaService;
     private final ReporteRepository reporteRepo;
     private final NumberFormat currencyFormatter;
 
@@ -23,11 +24,13 @@ public class ReporteService {
                           IngresoService ingresoService,
                           BoleteriaService boleteriaService,
                           GastoService gastoService,
+                          NominaService nominaService,
                           ReporteRepository reporteRepo) {
         this.conciertoService = conciertoService;
         this.ingresoService = ingresoService;
         this.boleteriaService = boleteriaService;
         this.gastoService = gastoService;
+        this.nominaService = nominaService;
         this.reporteRepo = reporteRepo;
         
         this.currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
@@ -116,8 +119,10 @@ public class ReporteService {
             totalGastos = gastoService.obtenerTotalGastos(idAnalisis);
         }
 
+        double totalNomina = nominaService.obtenerTotalGeneralEvento(c.getIdConcierto());
+        int cantidadRegistrosNomina = nominaService.obtenerNominasPorConcierto(c.getIdConcierto()).size();
         int totalIngresos = totalBoleteria + totalIngresosAdicionales;
-        int utilidad = totalIngresos - totalGastos;
+        double utilidad = totalIngresos - totalGastos - totalNomina;
         double margen = totalIngresos > 0 ? ((double) utilidad / totalIngresos) * 100 : 0.0;
         double ejecucionPresupuestal = presupuesto > 0 ? ((double) totalGastos / presupuesto) * 100 : 0.0;
 
@@ -136,9 +141,15 @@ public class ReporteService {
         sb.append("   RENDIMIENTO FINANCIERO DE EVENTO\n");
         sb.append("==================================================\n");
         sb.append("Concierto: ").append(c.getNombreConcierto()).append("\n");
+        sb.append("ID Evento: ").append(c.getIdConcierto()).append("\n");
         sb.append("Artista Principal: ").append(artista != null ? artista.getNombre() : "No asignado").append("\n");
         sb.append("Aforo Proyectado: ").append(c.getAforo()).append(" personas\n");
         sb.append("Estado Programa: ").append(c.isProgramado() ? "Programado" : "Pendiente").append("\n");
+        if (c.getHorario() != null) {
+            sb.append("Horario: ").append(c.getHorario().getFechaInicio()).append(" ").append(c.getHorario().getHoraInicio())
+                    .append(" - ").append(c.getHorario().getFechaFin()).append(" ").append(c.getHorario().getHoraFin()).append("\n");
+        }
+        sb.append("Contrato Asociado (ID): ").append(c.getIdContrato() > 0 ? c.getIdContrato() : "N/A").append("\n");
         sb.append("ID Análisis Financiero: ").append(idAnalisis > 0 ? idAnalisis : "N/A").append("\n");
         sb.append("--------------------------------------------------\n");
         sb.append("1. INGRESOS:\n");
@@ -149,10 +160,22 @@ public class ReporteService {
         sb.append("2. EGRESOS:\n");
         sb.append("   • Presupuesto Asignado:   ").append(formatCurrency(presupuesto)).append(" (Estado: ").append(aprobado ? "Aprobado" : "Pendiente").append(")\n");
         sb.append("   • Gastos Totales Realizados: ").append(formatCurrency(totalGastos)).append(" (").append(String.format("%.1f", ejecucionPresupuestal)).append("% del presupuesto)\n");
+        sb.append("   • Nómina Staff Total:     ").append(formatCurrency((int) Math.round(totalNomina))).append(" (").append(cantidadRegistrosNomina).append(" registros)\n");
         sb.append("\n");
         sb.append("3. RESULTADO NETO:\n");
-        sb.append("   • Utilidad Proyectada/Real: ").append(formatCurrency(utilidad)).append("\n");
+        sb.append("   • Utilidad Proyectada/Real: ").append(formatCurrency((int) Math.round(utilidad))).append("\n");
         sb.append("   • Margen de Ganancia Neto: ").append(String.format("%.2f", margen)).append("%\n");
+        sb.append("\n");
+        sb.append("4. RESUMEN DE NÓMINA POR ROL:\n");
+        List<NominaService.ResumenNomina> resumenNomina = nominaService.obtenerNominaGeneralPorEvento(c.getIdConcierto());
+        if (resumenNomina.isEmpty()) {
+            sb.append("   • Sin registros de nómina para este evento.\n");
+        } else {
+            for (NominaService.ResumenNomina r : resumenNomina) {
+                sb.append("   • ").append(r.rol).append(": ").append(r.cantidad)
+                        .append(" staff, total ").append(formatCurrency((int) Math.round(r.total))).append("\n");
+            }
+        }
         sb.append("==================================================\n");
 
         return sb.toString();
@@ -179,8 +202,10 @@ public class ReporteService {
             totalGastos = gastoService.obtenerTotalGastos(idAnalisis);
         }
 
+        double totalNomina = nominaService.obtenerTotalGeneralEvento(c.getIdConcierto());
+        int cantidadNominas = nominaService.obtenerNominasPorConcierto(c.getIdConcierto()).size();
         int totalIngresos = totalBoleteria + totalIngresosAdicionales;
-        int utilidad = totalIngresos - totalGastos;
+        double utilidad = totalIngresos - totalGastos - totalNomina;
         double margen = totalIngresos > 0 ? ((double) utilidad / totalIngresos) * 100 : 0.0;
 
         String fechaString = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -202,19 +227,39 @@ public class ReporteService {
         sb.append("   Emitido Por:   ").append(emitidoPor).append("\n");
         sb.append("==================================================\n\n");
         sb.append("1. INFORMACIÓN GENERAL DEL EVENTO\n");
+        sb.append("   - ID Evento:             ").append(c.getIdConcierto()).append("\n");
         sb.append("   - Nombre del Concierto: ").append(c.getNombreConcierto()).append("\n");
         sb.append("   - Artista Lider:        ").append(artista != null ? artista.getNombre() : "N/A").append("\n");
         sb.append("   - Aforo Planificado:    ").append(c.getAforo()).append(" asistentes\n");
         sb.append("   - Estado de Programación: ").append(c.isProgramado() ? "APROBADO/PROGRAMADO" : "PENDIENTE").append("\n\n");
+        if (c.getHorario() != null) {
+            sb.append("   - Inicio Evento:         ").append(c.getHorario().getFechaInicio()).append(" ").append(c.getHorario().getHoraInicio()).append("\n");
+            sb.append("   - Fin Evento:            ").append(c.getHorario().getFechaFin()).append(" ").append(c.getHorario().getHoraFin()).append("\n");
+        }
+        sb.append("   - Contrato Asociado ID:  ").append(c.getIdContrato() > 0 ? c.getIdContrato() : "N/A").append("\n");
+        sb.append("   - Análisis Financiero ID:").append(idAnalisis > 0 ? idAnalisis : "N/A").append("\n\n");
         sb.append("2. ANÁLISIS FINANCIERO Y CONTROL DE COSTOS\n");
         sb.append("   - Total Ingresos Boletería: ").append(formatCurrency(totalBoleteria)).append("\n");
         sb.append("   - Total Otros Ingresos:     ").append(formatCurrency(totalIngresosAdicionales)).append("\n");
         sb.append("   - INGRESO BRUTO TOTAL:      ").append(formatCurrency(totalIngresos)).append("\n");
         sb.append("   - GASTOS OPERATIVOS TOTALES:").append(formatCurrency(totalGastos)).append("\n");
+        sb.append("   - NÓMINA STAFF TOTAL:       ").append(formatCurrency((int) Math.round(totalNomina))).append(" (").append(cantidadNominas).append(" registros)\n");
         sb.append("   - Presupuesto Inicial:      ").append(formatCurrency(presupuesto)).append("\n");
-        sb.append("   - UTILIDAD CONSOLIDADA:     ").append(formatCurrency(utilidad)).append("\n");
+        sb.append("   - UTILIDAD CONSOLIDADA:     ").append(formatCurrency((int) Math.round(utilidad))).append("\n");
         sb.append("   - MARGEN DE RENTABILIDAD:   ").append(String.format("%.2f", margen)).append("%\n\n");
-        sb.append("3. CONCLUSIONES Y RECOMENDACIONES GERENCIALES\n");
+        sb.append("3. RESUMEN DE NÓMINA POR ROL\n");
+        List<NominaService.ResumenNomina> resumenNomina = nominaService.obtenerNominaGeneralPorEvento(c.getIdConcierto());
+        if (resumenNomina.isEmpty()) {
+            sb.append("   - No hay registros de nómina para este evento.\n\n");
+        } else {
+            for (NominaService.ResumenNomina r : resumenNomina) {
+                sb.append("   - Rol ").append(r.rol).append(": ")
+                        .append(r.cantidad).append(" personas, total ")
+                        .append(formatCurrency((int) Math.round(r.total))).append("\n");
+            }
+            sb.append("\n");
+        }
+        sb.append("4. CONCLUSIONES Y RECOMENDACIONES GERENCIALES\n");
         if (utilidad < 0) {
             sb.append("   [ALERTA RIESGO]: El concierto proyecta pérdidas. Se recomienda renegociar costos o incrementar la boletería.\n");
         } else if (margen < 20) {
@@ -324,6 +369,41 @@ public class ReporteService {
             }
         }
         sb.append("==================================================\n");
+        return sb.toString();
+    }
+
+    public String obtenerResumenEventoDetallado(Concierto c) {
+        if (c == null) {
+            return "Selecciona un evento primero.";
+        }
+
+        int idAnalisis = (c.getAnalisis() != null) ? c.getAnalisis().getIdAnalisisF() : 0;
+        int totalBoleteria = idAnalisis > 0 ? boleteriaService.obtenerTotalBoleteria(idAnalisis) : 0;
+        int totalIngresosAdicionales = idAnalisis > 0 ? ingresoService.obtenerTotalIngresos(idAnalisis) : 0;
+        int totalGastos = idAnalisis > 0 ? gastoService.obtenerTotalGastos(idAnalisis) : 0;
+        double totalNomina = nominaService.obtenerTotalGeneralEvento(c.getIdConcierto());
+        int totalIngresos = totalBoleteria + totalIngresosAdicionales;
+        double balance = totalIngresos - totalGastos - totalNomina;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Evento: ").append(c.getNombreConcierto()).append("\n");
+        sb.append("ID Evento: ").append(c.getIdConcierto()).append("\n");
+        sb.append("Aforo: ").append(c.getAforo()).append("\n");
+        sb.append("Programado: ").append(c.isProgramado() ? "Sí" : "No").append("\n");
+        if (c.getHorario() != null) {
+            sb.append("Fecha/Hora Inicio: ").append(c.getHorario().getFechaInicio()).append(" ").append(c.getHorario().getHoraInicio()).append("\n");
+            sb.append("Fecha/Hora Fin: ").append(c.getHorario().getFechaFin()).append(" ").append(c.getHorario().getHoraFin()).append("\n");
+        }
+        sb.append("Contrato ID: ").append(c.getIdContrato() > 0 ? c.getIdContrato() : "N/A").append("\n");
+        sb.append("Análisis ID: ").append(idAnalisis > 0 ? idAnalisis : "N/A").append("\n");
+        sb.append("\n");
+        sb.append("Resumen económico:\n");
+        sb.append("• Ingresos boletería: ").append(formatCurrency(totalBoleteria)).append("\n");
+        sb.append("• Otros ingresos: ").append(formatCurrency(totalIngresosAdicionales)).append("\n");
+        sb.append("• Gastos: ").append(formatCurrency(totalGastos)).append("\n");
+        sb.append("• Nómina staff: ").append(formatCurrency((int) Math.round(totalNomina))).append("\n");
+        sb.append("• Balance neto: ").append(formatCurrency((int) Math.round(balance))).append("\n");
+
         return sb.toString();
     }
 

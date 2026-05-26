@@ -120,9 +120,7 @@ public class ReportesGerencialesController {
         }
 
         String resumen =
-                "Evento: " + c.getNombreConcierto() + "\n" +
-                "Aforo: " + c.getAforo() + "\n" +
-                "Programado: " + (c.isProgramado() ? "Sí" : "No") + "\n";
+                reporteService.obtenerResumenEventoDetallado(c);
 
         txt_resumenEvento.setText(resumen);
     }
