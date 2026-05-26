@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -185,5 +186,145 @@ class ReporteServiceTest {
         String rentabilidad = reporteService.obtenerArtistasRentabilidad();
         assertTrue(rentabilidad.contains("Artista Test"));
         assertTrue(rentabilidad.contains("20.000")); // Net profit: 25000 - 5000 = 20000
+    }
+
+    @Test
+    void testCoberturaRamasAdicionalesReporteService() {
+        assertEquals("Selecciona un evento primero.", reporteService.obtenerRendimientoConcierto(null));
+        assertEquals("Selecciona un evento primero.", reporteService.generarYGuardarReporte(null, "x"));
+        assertEquals(0, reporteService.calcularIngresosConcierto(0));
+        assertEquals(0, reporteService.calcularGastosConcierto(0));
+
+        Usuario artista = new Usuario();
+        artista.setNombre("Artista Sin Analisis");
+        artista.setGmail("sin@analisis.com");
+        artista.setContrasena("pass");
+        artista.setIdRol(3);
+        usuarioRepo.guardar(artista);
+        artista = usuarioRepo.buscarPorNombre("Artista Sin Analisis");
+
+        Horario horario = new Horario();
+        horario.setFechaInicio(LocalDate.of(2026, 8, 10));
+        horario.setFechaFin(LocalDate.of(2026, 8, 10));
+        horario.setHoraInicio(LocalTime.of(18, 0));
+        horario.setHoraFin(LocalTime.of(20, 0));
+        int idHorario = horarioRepo.guardar(horario);
+        horario.setIdHorario(idHorario);
+
+        Contrato contrato = new Contrato();
+        contrato.setFecha(LocalDate.of(2026, 8, 1));
+        Clausula clausula = new Clausula();
+        clausula.setClausula("clausula base");
+        List<Clausula> clausulas = new ArrayList<>();
+        clausulas.add(clausula);
+        contrato.setClausulas(clausulas);
+        int idContrato = contratoService.crearContrato(contrato);
+
+        Concierto c = new Concierto();
+        c.setNombreConcierto("Evento Sin Analisis");
+        c.setAforo(1000);
+        c.setHorario(horario);
+        c.setArtista(artista);
+        c.setIdContrato(idContrato);
+        c.setProgramado(true);
+        conciertoService.crearConcierto(c);
+
+        Concierto guardado = conciertoService.obtenerConciertosSolos().stream()
+                .filter(x -> "Evento Sin Analisis".equals(x.getNombreConcierto()))
+                .findFirst()
+                .orElseThrow();
+
+        Concierto parcial = new Concierto();
+        parcial.setIdConcierto(guardado.getIdConcierto());
+        parcial.setNombreConcierto(guardado.getNombreConcierto());
+        parcial.setAforo(guardado.getAforo());
+        parcial.setHorario(guardado.getHorario());
+        parcial.setIdContrato(0);
+        parcial.setProgramado(false);
+
+        String rendimiento = reporteService.obtenerRendimientoConcierto(parcial);
+        assertTrue(rendimiento.contains("Artista Principal: Artista Sin Analisis"));
+        assertTrue(rendimiento.contains("Contrato Asociado (ID): N/A"));
+        assertTrue(rendimiento.contains("ID Análisis Financiero: N/A"));
+        assertTrue(rendimiento.contains("del presupuesto)"));
+        assertTrue(rendimiento.contains("Margen de Ganancia Neto:"));
+        assertTrue(rendimiento.contains("Sin registros de nómina"));
+
+        String reporte = reporteService.generarYGuardarReporte(parcial, "Gerente QA");
+        assertTrue(reporte.contains("Artista Lider:        Artista Sin Analisis"));
+        assertTrue(reporte.contains("Contrato Asociado ID:  N/A"));
+        assertTrue(reporte.contains("Análisis Financiero ID:N/A"));
+        assertTrue(reporte.contains("[RECOMENDACIÓN]"));
+
+        ReporteDashboardDTO dashboard = reporteService.generarDashboard();
+        assertTrue(dashboard.getEventosActivos() >= 1);
+
+        String resumenDetallado = reporteService.obtenerResumenEventoDetallado(parcial);
+        assertTrue(resumenDetallado.contains("Análisis ID: N/A"));
+        assertTrue(resumenDetallado.contains("Contrato ID: N/A"));
+    }
+
+    @Test
+    void testRentabilidadNoYHistorialSinFecha() throws Exception {
+        Usuario artista = new Usuario();
+        artista.setNombre("Artista Perdida");
+        artista.setGmail("perdida@test.com");
+        artista.setContrasena("pass");
+        artista.setIdRol(3);
+        usuarioRepo.guardar(artista);
+        artista = usuarioRepo.buscarPorNombre("Artista Perdida");
+
+        Horario horario = new Horario();
+        horario.setFechaInicio(LocalDate.of(2026, 9, 1));
+        horario.setFechaFin(LocalDate.of(2026, 9, 1));
+        horario.setHoraInicio(LocalTime.of(19, 0));
+        horario.setHoraFin(LocalTime.of(22, 0));
+        int idHorario = horarioRepo.guardar(horario);
+        horario.setIdHorario(idHorario);
+
+        Contrato contrato = new Contrato();
+        contrato.setFecha(LocalDate.of(2026, 8, 1));
+        Clausula cl = new Clausula();
+        cl.setClausula("cl");
+        contrato.setClausulas(List.of(cl));
+        int idContrato = contratoService.crearContrato(contrato);
+
+        Concierto c = new Concierto();
+        c.setNombreConcierto("Concierto Perdida");
+        c.setAforo(2000);
+        c.setHorario(horario);
+        c.setArtista(artista);
+        c.setIdContrato(idContrato);
+        conciertoService.crearConcierto(c);
+
+        Concierto guardado = conciertoService.obtenerConciertosSolos().stream()
+                .filter(x -> "Concierto Perdida".equals(x.getNombreConcierto()))
+                .findFirst()
+                .orElseThrow();
+
+        int idAnalisis = analisisService.crearPresupuesto(5000);
+        conciertoService.asignarPresupuesto(guardado.getIdConcierto(), idAnalisis);
+        gastoService.agregarGasto("tarima", 9000, idAnalisis);
+
+        String rentabilidad = reporteService.obtenerArtistasRentabilidad();
+        assertTrue(rentabilidad.contains("Artista Perdida"));
+        assertTrue(rentabilidad.contains("NO"));
+
+        Reporte r = new Reporte();
+        r.setIdConcierto(guardado.getIdConcierto());
+        r.setNombreConcierto("Manual");
+        r.setTipo("Gerencial");
+        r.setFechaGeneracion(new Timestamp(System.currentTimeMillis()));
+        r.setContenido("x");
+        int idReporte = reporteRepo.guardar(r);
+
+        try (Connection conn = h2.getConnection();
+             java.sql.PreparedStatement ps = conn.prepareStatement("UPDATE Reporte SET fechaGeneracion = NULL WHERE idReporte = ?")) {
+            ps.setInt(1, idReporte);
+            ps.executeUpdate();
+        }
+
+        String historial = reporteService.obtenerHistorialReportes();
+        assertTrue(historial.contains("Fecha desconocida"));
     }
 }

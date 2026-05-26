@@ -176,4 +176,10 @@ class ContratoServiceTest {
         Contrato resultado = contratoService.obtenerContratoCompleto(9999);
         assertNull(resultado);
     }
+
+    @Test
+    void aprobarYRechazarFirmaNoLanzanExcepcion() {
+        assertDoesNotThrow(() -> contratoService.aprobarFirma(1));
+        assertDoesNotThrow(() -> contratoService.rechazarFirma(1));
+    }
 }

@@ -571,6 +571,24 @@ class ConciertoServiceTest {
             assertNull(conciertoRecuperado, "es null");
 
         }
+
+        @Test
+        void eliminarConciertoSiFallaInventarioLanzaRuntimeException() {
+            InventarioService inventarioFalla = new InventarioService(inventarioRepo) {
+                @Override
+                public void EliminarHorarioInventario(int idHorario) {
+                    throw new IllegalStateException("fallo intencional");
+                }
+            };
+            ConciertoService serviceConFalla = new ConciertoService(
+                    conciertoRepo, inventarioFalla, horarioRepo, conciertoValidator, contratoService, asignacionStaffRepo
+            );
+
+            RuntimeException ex = assertThrows(RuntimeException.class, () ->
+                    serviceConFalla.eliminarConcierto(1, 1)
+            );
+            assertNotNull(ex.getCause());
+        }
     }
 
     @Nested
