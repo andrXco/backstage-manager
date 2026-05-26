@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS Usuario (
     FOREIGN KEY (idRol) REFERENCES Rol(idRol)
     );
 
-ALTER TABLE Usuario ADD COLUMN IF NOT EXISTS idRol INT DEFAULT 0;
+ALTER TABLE Usuario
+    ADD COLUMN IF NOT EXISTS idRol INT DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS Contrato (
                                         idContrato INT AUTO_INCREMENT PRIMARY KEY,
@@ -148,6 +149,30 @@ CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
     FOREIGN KEY (idConcierto) REFERENCES Concierto(idConcierto),
     FOREIGN KEY (idSubrol) REFERENCES Subrol(idSubrol)
+    );
+
+-- Tabla principal de actividades / notificaciones del sistema
+CREATE TABLE IF NOT EXISTS ActividadSistema (
+                                                idActividad INT AUTO_INCREMENT PRIMARY KEY,
+                                                tipo VARCHAR(50) NOT NULL,
+    modulo VARCHAR(100) NOT NULL,
+    origen VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(1000) NOT NULL,
+    fechaHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    idUsuarioActor INT,
+    rolDestino VARCHAR(255),
+    FOREIGN KEY (idUsuarioActor) REFERENCES Usuario(idUsuario)
+    );
+
+-- Estado individual de cada actividad para cada usuario
+CREATE TABLE IF NOT EXISTS EstadoActividadUsuario (
+                                                      idActividad INT NOT NULL,
+                                                      idUsuario INT NOT NULL,
+                                                      revisado BOOLEAN DEFAULT FALSE NOT NULL,
+                                                      fechaRevision TIMESTAMP,
+                                                      PRIMARY KEY (idActividad, idUsuario),
+    FOREIGN KEY (idActividad) REFERENCES ActividadSistema(idActividad) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS DocumentoInventario (

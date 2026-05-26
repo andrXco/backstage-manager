@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
 
@@ -25,14 +25,24 @@
                             </children>
                         </VBox>
 
-                        <VBox prefHeight="85.0" prefWidth="280.0" spacing="8.0">
+                        <VBox prefHeight="70.0" prefWidth="390.0" spacing="8.0">
                             <children>
                                 <Label fx:id="fid_Bienvenido" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;" text="Bienvenido, Usuario" />
-                                <Label fx:id="fid_lbl_concierto" style="-fx-font-size: 13px; -fx-text-fill: #555;" text="" />
                                 <HBox spacing="10.0">
                                     <children>
-                                        <Button fx:id="fid_bt_perfil" mnemonicParsing="false" onAction="#On_Perfil" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Perfil" />
-                                        <Button fx:id="fid_bt_volver" mnemonicParsing="false" onAction="#On_btvolver" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-font-weight: bold; -fx-background-radius: 10;" text="Cerrar sesión" />
+
+                                        <!-- BOTÓN TIPO NOTIFICACIÓN -->
+                                        <AnchorPane prefHeight="38.0" prefWidth="58.0">
+                                            <children>
+                                                <Button fx:id="fid_bt_bandeja" layoutY="-2.0" mnemonicParsing="false" onAction="#On_bandeja" prefHeight="38.0" prefWidth="46.0" style="-fx-background-color: #f97316; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(249,115,22,0.35), 10, 0, 0, 2);" text="🔔" />
+                                                <Label fx:id="fid_lbl_contador_bandeja" layoutX="32.0" layoutY="-5.0" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 3 7 3 7;" text="0" />
+                                            </children>
+                                        </AnchorPane>
+
+                                        <Button fx:id="fid_bt_perfil" mnemonicParsing="false" onAction="#On_Perfil" prefHeight="36.0" prefWidth="110.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Perfil" />
+
+                                        <Button fx:id="fid_bt_volver" mnemonicParsing="false" onAction="#On_btvolver" prefHeight="36.0" prefWidth="140.0" style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-font-weight: bold; -fx-background-radius: 10;" text="Cerrar sesión" />
+
                                     </children>
                                 </HBox>
                             </children>
@@ -41,7 +51,9 @@
                     </children>
                 </HBox>
 
-                <Separator layoutX="30.0" layoutY="125.0" prefWidth="1060.0" />
+                <Separator layoutX="30.0" layoutY="119.0" prefWidth="1060.0" />
+
+                <!-- ZONA CENTRAL DE ACCESOS -->
 
                 <HBox layoutX="85.0" layoutY="185.0" prefHeight="450.0" prefWidth="950.0" spacing="50.0">
                     <children>

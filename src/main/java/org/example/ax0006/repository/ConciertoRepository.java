@@ -637,7 +637,7 @@ public class ConciertoRepository {
     //Asignar análisis financiero
     public void asignarAnalisisFinanciero(
             int idConcierto,
-            int idAnalisisF
+            Integer idAnalisisF
     ) {
 
         String sql = """
@@ -648,12 +648,16 @@ public class ConciertoRepository {
 
         try (
                 Connection conn = h2.getConnection();
-
                 PreparedStatement stmt =
                         conn.prepareStatement(sql)
         ) {
 
-            stmt.setInt(1, idAnalisisF);
+            if (idAnalisisF == null || idAnalisisF == 0) {
+                stmt.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(1, idAnalisisF);
+            }
+
             stmt.setInt(2, idConcierto);
 
             stmt.executeUpdate();

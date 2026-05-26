@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-
 import org.example.ax0006.entity.Clausula;
 import org.example.ax0006.entity.Concierto;
 import org.example.ax0006.entity.Contrato;
@@ -45,9 +44,9 @@ public class CrearContratoController {
     // CONSTRUCTOR
     // =========================
     public CrearContratoController(SceneManager sceneManager, ContratoService contratoService, SesionManager sesion) {
-    this.sceneManager = sceneManager;
-    this.contratoService = contratoService;
-    this.sesion = sesion;
+        this.sceneManager = sceneManager;
+        this.contratoService = contratoService;
+        this.sesion = sesion;
     }
 
     // =========================
@@ -93,10 +92,10 @@ public class CrearContratoController {
             mostrarAlerta("Error", "Debe seleccionar una fecha");
             return;
         }
-        
-        if (conciertoTemp != null 
-        && conciertoTemp.getHorario() != null 
-        && conciertoTemp.getHorario().getFechaInicio() != null) {
+
+        if (conciertoTemp != null
+                && conciertoTemp.getHorario() != null
+                && conciertoTemp.getHorario().getFechaInicio() != null) {
             if (fecha.isAfter(conciertoTemp.getHorario().getFechaInicio())) {
                 mostrarAlerta("Error", "La fecha del contrato debe ser anterior a la del concierto");
                 return;
@@ -114,23 +113,21 @@ public class CrearContratoController {
         contrato.setClausulas(clausulas);
 
         int idContrato = contratoService.crearContrato(contrato);
-       
+
         if (idContrato != 0) {
+            sesion.setIdContratoTemporal(idContrato);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Contrato creado");
+            alert.setHeaderText("¡Registro exitoso!");
+            alert.setContentText("El ID del contrato es: " + idContrato);
+            alert.showAndWait();
 
-        sesion.setIdContratoTemporal(idContrato); 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Contrato creado");
-        alert.setHeaderText("¡Registro exitoso!");
-        alert.setContentText("El ID del contrato es: " + idContrato);
-        alert.showAndWait();
-
-        try {
-            sceneManager.showCrearConcierto(); 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-}
-        else {
+            try {
+                sceneManager.showCrearConcierto();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             mostrarAlerta("Error", "No se pudo crear el contrato");
         }
 

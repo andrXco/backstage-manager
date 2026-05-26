@@ -185,19 +185,39 @@ public class AnalisisFinancieroRepository {
     // =========================
     public void eliminar(int id) {
 
-        String sql = """
-            DELETE FROM AnalisisFinanciero
-            WHERE idAnalisisF = ?
-        """;
+        try (Connection conn = h2.getConnection()) {
 
-        try (
-                Connection conn = h2.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
+            conn.setAutoCommit(false);
 
-            stmt.setInt(1, id);
+            // 1. ELIMINAR GASTOS
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM Gasto WHERE idAnalisisF = ?")) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }
 
-            stmt.executeUpdate();
+            // 2. ELIMINAR INGRESOS
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM Ingreso WHERE idAnalisisF = ?")) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }
+
+            // 3. ELIMINAR BOLETERIA
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM Boleteria WHERE idAnalisisF = ?")) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }
+
+            // 4. ELIMINAR ANALISIS
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM AnalisisFinanciero WHERE idAnalisisF = ?")) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }
+
+            conn.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();

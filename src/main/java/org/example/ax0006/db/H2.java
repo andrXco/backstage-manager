@@ -45,13 +45,15 @@ public class H2 {
             RunScript.execute(conn, reader);
             System.out.println("Base de datos estructurada a partir de schema.sql");
 
-            // 2. Iniciar el servidor web de H2
+
+            // 4. Iniciar el servidor web de H2
             try {
                 Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
                 System.out.println("Consola web de H2 iniciada en el puerto 8082");
             } catch (SQLException e) {
                 System.out.println("No se pudo iniciar el servidor web H2. Puede que ya esté corriendo.");
             }
+
 
         } catch (Exception e) {
             System.err.println("Error crítico al inicializar la base de datos.");
