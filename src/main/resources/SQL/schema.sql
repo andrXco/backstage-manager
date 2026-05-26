@@ -151,6 +151,10 @@ CREATE TABLE IF NOT EXISTS RolConciertoUsuario (
     FOREIGN KEY (idSubrol) REFERENCES Subrol(idSubrol)
     );
 
+-- Migración para bases ya existentes que no tenían idSubrol
+ALTER TABLE RolConciertoUsuario
+    ADD COLUMN IF NOT EXISTS idSubrol INT;
+
 -- Tabla principal de actividades / notificaciones del sistema
 CREATE TABLE IF NOT EXISTS ActividadSistema (
                                                 idActividad INT AUTO_INCREMENT PRIMARY KEY,
