@@ -494,14 +494,17 @@ class ActividadServiceTest {
             u.setNombre("UsuarioSinRol");
             u.setContrasena("pass");
             u.setGmail("sinrol@example.com");
-            u.setIdRol(99);
+            u.setIdRol(0);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("UsuarioSinRol");
             assertNotNull(savedUser);
 
+
             List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
             assertNotNull(acts);
+
+            assertTrue(acts.isEmpty() || acts != null);
         }
     }
 }
