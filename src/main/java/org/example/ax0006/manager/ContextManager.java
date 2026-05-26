@@ -31,6 +31,8 @@ public class ContextManager {
     private GastoService gastoService;
     private IngresoService ingresoService;
     private BoleteriaService boleteriaService;
+    private NominaRepository nominaRepository;
+    private NominaService nominaService;
 
     public ContextManager(
             H2 h2,
@@ -54,10 +56,12 @@ public class ContextManager {
             ActividadService actividadService,
             AnalisisFinancieroService analisisService,
             AnalisisFinancieroRepository analisisRepo,
-            GastoService gastoService,
-            IngresoService ingresoService,
-            BoleteriaService boleteriaService
-    ) {
+             GastoService gastoService,
+             IngresoService ingresoService,
+             BoleteriaService boleteriaService,
+             NominaRepository nominaRepository,
+             NominaService nominaService
+     ) {
         this.h2 = h2;
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
@@ -78,10 +82,12 @@ public class ContextManager {
         this.actividadService = actividadService;
         this.analisisService = analisisService;
         this.analisisRepo = analisisRepo;
-        this.gastoService = gastoService;
-        this.ingresoService = ingresoService;
-        this.boleteriaService = boleteriaService;
-    }
+         this.gastoService = gastoService;
+         this.ingresoService = ingresoService;
+         this.boleteriaService = boleteriaService;
+         this.nominaRepository = nominaRepository;
+         this.nominaService = nominaService;
+     }
 
     public InventarioService getInventarioService() { return inventarioService; }
     public InventarioObjetoService getInventarioObjetoService() { return inventarioObjetoService; }
@@ -104,5 +110,6 @@ public class ContextManager {
     public GastoService getGastoService() { return gastoService;}
     public IngresoService getIngresoService() { return ingresoService;}
     public BoleteriaService getBoleteriaService() { return boleteriaService;}
-    public HorarioRepository getHorarioRepo() {return horarioRepo;}
+     public HorarioRepository getHorarioRepo() {return horarioRepo;}
+     public NominaService getNominaService() { return nominaService; }
 }

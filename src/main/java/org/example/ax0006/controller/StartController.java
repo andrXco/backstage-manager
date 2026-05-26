@@ -46,11 +46,12 @@ public class StartController extends Application {
         IngresoRepository ingresoRepo = new IngresoRepository(h2);
         BoleteriaRepository boleteriaRepo = new BoleteriaRepository(h2);
 
-        InventarioRepository inventarioRepo = new InventarioRepository(h2);
-        InventarioObjetoRepository inventarioObjetoRepo = new InventarioObjetoRepository(h2);
-        ObjetoRepository objetoRepo = new ObjetoRepository(h2);
+         InventarioRepository inventarioRepo = new InventarioRepository(h2);
+         InventarioObjetoRepository inventarioObjetoRepo = new InventarioObjetoRepository(h2);
+         ObjetoRepository objetoRepo = new ObjetoRepository(h2);
+         NominaRepository nominaRepo = new NominaRepository(h2);
 
-        // SERVICIOS
+         // SERVICIOS
         AutenticacionService autenService = new AutenticacionService(usuarioRepo,asignacionStaffRepo);
         ProfileService profileService = new ProfileService(usuarioRepo);
         RolService rolService = new RolService(rolRepo, usuarioRepo);
@@ -62,9 +63,10 @@ public class StartController extends Application {
         BoleteriaService boleteriaService = new BoleteriaService(boleteriaRepo);
         InventarioService inventarioService = new InventarioService(inventarioRepo);
 
-        StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
+         StaffService staffService = new StaffService(usuarioRepo, asignacionStaffRepo, conciertoRepo);
+         NominaService nominaService = new NominaService(nominaRepo, conciertoRepo, asignacionStaffRepo);
 
-        InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
+         InventarioObjetoService inventarioObjetoService = new InventarioObjetoService(inventarioObjetoRepo);
         ObjetoService objetoService = new ObjetoService(objetoRepo);
         ConciertoService conciertoService = new ConciertoService(conciertoRepo, inventarioService, horarioRepo, conciertoValidator, contratoService , asignacionStaffRepo);
 
@@ -92,10 +94,12 @@ public class StartController extends Application {
                 actividadService,
                 analisisService,
                 analisisRepo,
-                gastoService,
-                ingresoService,
-                boleteriaService
-        );
+                 gastoService,
+                 ingresoService,
+                 boleteriaService,
+                 nominaRepo,
+                 nominaService
+         );
 
 
         SceneManager sceneManager = new SceneManager(stage, context);

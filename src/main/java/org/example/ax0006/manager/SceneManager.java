@@ -281,21 +281,84 @@ public class SceneManager {
         loadScene("/org/example/ax0006/DetallesConcierto.fxml", controller);
     }
 
-        public void showSeleccionarConciertoFinanzas() throws IOException {
-    SeleccionarConciertoFinanzasController controller =
-            new SeleccionarConciertoFinanzasController(
-                    context.getConciertoService(),
-                    context.getAnalisisFinancieroService(),
-                    context.getSesion(),
-                    this
-            );
-    loadScene(
-            "/org/example/ax0006/asignarpresupuesto.fxml",
-            controller
-    );
-}
+         public void showSeleccionarConciertoFinanzas() throws IOException {
+     SeleccionarConciertoFinanzasController controller =
+             new SeleccionarConciertoFinanzasController(
+                     context.getConciertoService(),
+                     context.getAnalisisFinancieroService(),
+                     context.getSesion(),
+                     this
+             );
+     loadScene(
+             "/org/example/ax0006/asignarpresupuesto.fxml",
+             controller
+     );
+ }
 
-    /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
+     public void showNomina() throws IOException {
+         NominaController controller = new NominaController(
+                 this,
+                 context.getSesion(),
+                 context.getConciertoService(),
+                 context.getNominaService(),
+                 context.getStaffService()
+         );
+         loadScene("/org/example/ax0006/nomina.fxml", controller);
+     }
+
+     public void showDetalleNomina(org.example.ax0006.entity.Nomina nomina) throws IOException {
+         context.getSesion().setNominaSeleccionada(nomina);
+         DetalleNominaController controller = new DetalleNominaController(
+                 this,
+                 context.getSesion(),
+                 context.getStaffService()
+         );
+         loadScene("/org/example/ax0006/detallenomina.fxml", controller);
+         controller.cargarDatos();
+     }
+
+      public void showAsignarNomina(java.util.List<org.example.ax0006.entity.Nomina> nominas) throws IOException {
+          AsignarNominaController controller = new AsignarNominaController(
+                  this,
+                  context.getSesion(),
+                  context.getNominaService(),
+                  context.getStaffService()
+          );
+          loadScene("/org/example/ax0006/asignarnomina.fxml", controller);
+          controller.cargarNominas(nominas);
+      }
+
+      public void showLiquidacionHoras() throws IOException {
+          LiquidacionHorasController controller = new LiquidacionHorasController(
+                  this,
+                  context.getSesion(),
+                  context.getConciertoService(),
+                  context.getNominaService(),
+                  context.getStaffService()
+          );
+          loadScene("/org/example/ax0006/liquidacionhoras.fxml", controller);
+      }
+
+      public void showNominaGeneral(int idConcierto) throws IOException {
+          NominaGeneralController controller = new NominaGeneralController(
+                  context.getNominaService(),
+                  idConcierto
+          );
+
+          javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                  getClass().getResource("/org/example/ax0006/nominaGeneral.fxml")
+          );
+          loader.setController(controller);
+
+          javafx.scene.Scene scene = new javafx.scene.Scene(loader.load());
+          javafx.stage.Stage newStage = new javafx.stage.Stage();
+          newStage.setScene(scene);
+          newStage.setTitle("Nómina General");
+          newStage.initOwner(stage);
+          newStage.show();
+      }
+
+      /*METODO PARA NO REPETIR ESTO COMO MIL VECES Y HACER QUE EL CAMBIO DE ESCENA SE VEA MAS LIMPIO*/
     private void loadScene(String fxml, Object controller) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(
@@ -305,8 +368,7 @@ public class SceneManager {
         loader.setController(controller);
 
         Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-    }
+         stage.setScene(scene);
+     }
 
-
-}
+ }
