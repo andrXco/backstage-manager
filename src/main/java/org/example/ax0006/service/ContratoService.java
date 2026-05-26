@@ -15,21 +15,25 @@ public class ContratoService {
         this.contratoRepo = contratoRepo;
     }
 
-    // =========================================
-    // CREAR CONTRATO CON SUS CLAUSULAS
-    // =========================================
-    public int crearContrato(Contrato contrato) {
+     // =========================================
+     // CREAR CONTRATO CON SUS CLAUSULAS
+     // =========================================
+     public int crearContrato(Contrato contrato) {
 
-    if (contrato == null || contrato.getFecha() == null) {
-        return 0;
-    }
+     if (contrato == null || contrato.getFecha() == null) {
+         return 0;
+     }
 
-    if (contrato.getClausulas() == null || contrato.getClausulas().isEmpty()) {
-        return 0;
-    }
+     if (contrato.getClausulas() == null || contrato.getClausulas().isEmpty()) {
+         return 0;
+     }
 
-    // Guardar contrato
-    int idContrato = contratoRepo.guardar(contrato);
+     if (contrato.getEstadoFirma() == null) {
+         contrato.setEstadoFirma("PENDIENTE");
+     }
+
+     // Guardar contrato
+     int idContrato = contratoRepo.guardar(contrato);
 
     if (idContrato == 0) return 0;
 

@@ -25,8 +25,12 @@ ALTER TABLE Usuario
 
 CREATE TABLE IF NOT EXISTS Contrato (
                                         idContrato INT AUTO_INCREMENT PRIMARY KEY,
-                                        fecha DATE NOT NULL
+                                        fecha DATE NOT NULL,
+                                        estadoFirma VARCHAR(255) DEFAULT 'PENDIENTE'
 );
+
+ALTER TABLE Contrato
+    ADD COLUMN IF NOT EXISTS estadoFirma VARCHAR(255) DEFAULT 'PENDIENTE';
 
 CREATE TABLE IF NOT EXISTS Clausula (
                                         idClausula INT AUTO_INCREMENT PRIMARY KEY,
