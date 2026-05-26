@@ -28,7 +28,6 @@ class ActividadServiceTest {
     void prepararEscenario() {
         h2 = new H2();
         h2.inicializarDB();
-
         actividadRepository = new ActividadRepository(h2);
         usuarioRepository = new UsuarioRepository(h2);
         actividadService = new ActividadService(actividadRepository, usuarioRepository);
@@ -39,18 +38,15 @@ class ActividadServiceTest {
         H2 h2Final = new H2();
         try (Connection conn = h2Final.getConnection();
              Statement stmt = conn.createStatement()) {
-
             stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
             stmt.execute("DROP ALL OBJECTS");
             stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
-
         } catch (Exception e) {
             e.printStackTrace();
             fail("Falló la limpieza de la base de datos al final de la prueba");
         }
     }
 
-    // Helper para obtener todas las actividades de la base de datos directamente
     private List<Actividad> obtenerTodasLasActividades() throws Exception {
         List<Actividad> lista = new ArrayList<>();
         String sql = "SELECT * FROM ActividadSistema ORDER BY idActividad DESC";
@@ -73,19 +69,17 @@ class ActividadServiceTest {
         return lista;
     }
 
-    // Helper para asignar un rol de concierto a un usuario
     private void asignarRolAUsuario(int idUsuario, int idRol) throws Exception {
         try (Connection conn = h2.getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                      "INSERT INTO RolConciertoUsuario (idRol, idUsuario, idConcierto) VALUES (?, ?, ?)")) {
             stmt.setInt(1, idRol);
             stmt.setInt(2, idUsuario);
-            stmt.setInt(3, 0); // Concierto 0 (mantenimiento)
+            stmt.setInt(3, 0);
             stmt.executeUpdate();
         }
     }
 
-    // Helper para comprobar si una actividad está marcada como revisada
     private boolean isActividadRevisadaPorUsuario(int idActividad, int idUsuario) throws Exception {
         String sql = "SELECT revisado FROM EstadoActividadUsuario WHERE idActividad = ? AND idUsuario = ?";
         try (Connection conn = h2.getConnection();
@@ -112,7 +106,7 @@ class ActividadServiceTest {
             u.setNombre("Carlos");
             u.setContrasena("pass123");
             u.setGmail("carlos@example.com");
-            u.setIdRol(4); // Staff
+            u.setIdRol(4);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Carlos");
@@ -152,7 +146,7 @@ class ActividadServiceTest {
             u.setNombre("Diana");
             u.setContrasena("pass123");
             u.setGmail("diana@example.com");
-            u.setIdRol(2); // Tecnico
+            u.setIdRol(2);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Diana");
@@ -192,7 +186,7 @@ class ActividadServiceTest {
             u.setNombre("Enrique");
             u.setContrasena("pass123");
             u.setGmail("enrique@example.com");
-            u.setIdRol(3); // Manager
+            u.setIdRol(3);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Enrique");
@@ -248,37 +242,25 @@ class ActividadServiceTest {
             u.setNombre("Laura");
             u.setContrasena("pass123");
             u.setGmail("laura@example.com");
-            u.setIdRol(2); // Tecnico
+            u.setIdRol(2);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Laura");
             assertNotNull(savedUser);
-            // Asigna rol "Tecnico" en RolConciertoUsuario
             asignarRolAUsuario(savedUser.getIdUsuario(), 2);
 
-            // Actividad 1: Asignada a Tecnico (Visible)
             actividadRepository.registrarActividad("MODIFICAR", "CONCIERTO", "Sistema", "Cambio de aforo", null, "Tecnico");
-
-            // Actividad 2: Asignada a Administrador (Invisible para Laura)
             actividadRepository.registrarActividad("CREAR", "USUARIO", "Sistema", "Creado usuario nuevo", null, "Administrador");
-
-            // Actividad 3: Rol destino null pero Laura es la actriz (Visible)
             actividadRepository.registrarActividad("CREAR", "INVENTARIO", "Sistema", "Agregado micrófono", savedUser.getIdUsuario(), null);
-
-            // Actividad 4: Asignada a Manager (Invisible)
             actividadRepository.registrarActividad("APROBAR", "CONTRATO", "Sistema", "Contrato firmado", null, "Manager");
 
             List<Actividad> list = actividadService.listarParaUsuario(savedUser, "TODO");
-            
-            // Laura debe ver la Actividad 1 (su rol destino coincide) y la Actividad 3 (ella es el actor).
-            // No debe ver la Actividad 2 (Administrador) ni la Actividad 4 (Manager).
             assertEquals(2, list.size());
-            
+
             boolean tieneModificarConcierto = list.stream().anyMatch(a -> "MODIFICAR".equals(a.getTipo()) && "CONCIERTO".equals(a.getModulo()));
             boolean tieneCrearInventario = list.stream().anyMatch(a -> "CREAR".equals(a.getTipo()) && "INVENTARIO".equals(a.getModulo()));
-            
-            assertTrue(tieneModificarConcierto, "Debería incluir la actividad asignada a su rol 'Tecnico'");
-            assertTrue(tieneCrearInventario, "Debería incluir la actividad donde es el actor");
+            assertTrue(tieneModificarConcierto);
+            assertTrue(tieneCrearInventario);
         }
 
         @Test
@@ -288,7 +270,7 @@ class ActividadServiceTest {
             u.setNombre("Andres");
             u.setContrasena("pass123");
             u.setGmail("andres@example.com");
-            u.setIdRol(1); // Administrador
+            u.setIdRol(1);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Andres");
@@ -324,31 +306,24 @@ class ActividadServiceTest {
             u.setNombre("Felipe");
             u.setContrasena("pass123");
             u.setGmail("felipe@example.com");
-            u.setIdRol(4); // Staff
+            u.setIdRol(4);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Felipe");
             assertNotNull(savedUser);
-            asignarRolAUsuario(savedUser.getIdUsuario(), 4); // Staff
+            asignarRolAUsuario(savedUser.getIdUsuario(), 4);
 
-            // Registra dos actividades dirigidas a Staff
             actividadRepository.registrarActividad("ALERTA", "SISTEMA", "Sistema", "Alerta 1", null, "Staff");
             actividadRepository.registrarActividad("ALERTA", "SISTEMA", "Sistema", "Alerta 2", null, "Staff");
-
-            // Registra una actividad para Tecnico (no debe contar)
             actividadRepository.registrarActividad("ALERTA", "SISTEMA", "Sistema", "Alerta 3", null, "Tecnico");
 
-            // Inicialmente debe haber 2 pendientes para Felipe (las de rol Staff)
             assertEquals(2, actividadService.contarPendientes(savedUser));
 
-            // Marcamos una como revisada directamente en el repo
             List<Actividad> list = actividadService.listarParaUsuario(savedUser, "TODO");
             assertEquals(2, list.size());
             int idARevisar = list.get(0).getIdActividad();
-
             actividadRepository.marcarRevisado(idARevisar, savedUser.getIdUsuario());
 
-            // Ahora debe quedar 1 pendiente
             assertEquals(1, actividadService.contarPendientes(savedUser));
         }
     }
@@ -370,7 +345,7 @@ class ActividadServiceTest {
             u.setNombre("Maria");
             u.setContrasena("pass123");
             u.setGmail("maria@example.com");
-            u.setIdRol(1); // Administrador
+            u.setIdRol(1);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("Maria");
@@ -383,9 +358,7 @@ class ActividadServiceTest {
             int idActividad = list.get(0).getIdActividad();
 
             assertFalse(isActividadRevisadaPorUsuario(idActividad, savedUser.getIdUsuario()));
-
             actividadService.marcarRevisado(idActividad, savedUser);
-
             assertTrue(isActividadRevisadaPorUsuario(idActividad, savedUser.getIdUsuario()));
         }
     }
@@ -401,16 +374,14 @@ class ActividadServiceTest {
             u.setNombre("AdminGlobal");
             u.setContrasena("pass");
             u.setGmail("adminglobal@example.com");
-            u.setIdRol(1); // Administrador global
+            u.setIdRol(1);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario admin = usuarioRepository.buscarPorNombre("AdminGlobal");
             assertNotNull(admin);
 
-            // Insertemos una actividad dirigida a "Administrador"
             actividadRepository.registrarActividad("TIPO", "MODULO", "Sistema", "Solo Admin", null, "Administrador");
 
-            // Admin debe poder verla porque se resuelve su rol principal a "Administrador"
             List<Actividad> acts = actividadService.listarParaUsuario(admin, "TODO");
             assertFalse(acts.isEmpty());
         }
@@ -419,10 +390,10 @@ class ActividadServiceTest {
         @DisplayName("debe resolver a Administrador si el nombre del usuario es admin en cualquier caso")
         void resolverAdminPorNombre() throws Exception {
             Usuario u = new Usuario();
-            u.setNombre("admin"); // Nombre "admin" es verificado case-insensitively en obtenerRolPrincipal
+            u.setNombre("admin");
             u.setContrasena("pass");
             u.setGmail("admin_test@example.com");
-            u.setIdRol(0); // Sin rol
+            u.setIdRol(0);
             assertTrue(usuarioRepository.guardar(u));
 
             Usuario savedUser = usuarioRepository.buscarPorNombre("admin");
@@ -447,19 +418,13 @@ class ActividadServiceTest {
             Usuario savedUser = usuarioRepository.buscarPorNombre("Multiroles");
             assertNotNull(savedUser);
 
-            // Asignar rol "Staff" (4) y "Tecnico" (2) en RolConciertoUsuario
-            // Debería retornar el primero según el orden devuelto por la consulta sql.
-            asignarRolAUsuario(savedUser.getIdUsuario(), 4); // Staff
-            asignarRolAUsuario(savedUser.getIdUsuario(), 2); // Tecnico
+            asignarRolAUsuario(savedUser.getIdUsuario(), 4);
+            asignarRolAUsuario(savedUser.getIdUsuario(), 2);
 
-            // Como no es Administrador, obtenerRolPrincipal retornará el primer rol de la lista concatenada (ej. Staff)
-            // Registramos una actividad para Staff
             actividadRepository.registrarActividad("TIPO", "MODULO", "Sistema", "Alerta Staff", null, "Staff");
-            // Registramos una actividad para Tecnico
             actividadRepository.registrarActividad("TIPO", "MODULO", "Sistema", "Alerta Tecnico", null, "Tecnico");
 
             List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
-            // Debe poder listar al menos una de las actividades correspondientes a sus roles
             assertFalse(acts.isEmpty());
         }
 
@@ -476,19 +441,18 @@ class ActividadServiceTest {
             Usuario savedUser = usuarioRepository.buscarPorNombre("MultirolesAdmin");
             assertNotNull(savedUser);
 
-
             asignarRolAUsuario(savedUser.getIdUsuario(), 4);
             asignarRolAUsuario(savedUser.getIdUsuario(), 1);
 
             actividadRepository.registrarActividad("TIPO", "MODULO", "Sistema", "Alerta Admin", null, "Administrador");
 
             List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
-
             boolean tieneAlertaAdmin = acts.stream().anyMatch(a -> "Alerta Admin".equals(a.getDescripcion()));
             assertTrue(tieneAlertaAdmin);
         }
+
         @Test
-        @DisplayName("debe resolver a Sin rol para un idRol desconocido")
+        @DisplayName("debe resolver a Sin rol para un idRol=0 sin roles en concierto")
         void resolverSinRolParaIdDesconocido() throws Exception {
             Usuario u = new Usuario();
             u.setNombre("UsuarioSinRol");
@@ -500,11 +464,8 @@ class ActividadServiceTest {
             Usuario savedUser = usuarioRepository.buscarPorNombre("UsuarioSinRol");
             assertNotNull(savedUser);
 
-
             List<Actividad> acts = actividadService.listarParaUsuario(savedUser, "TODO");
             assertNotNull(acts);
-
-            assertTrue(acts.isEmpty() || acts != null);
         }
     }
 }
