@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableRow;
 import javafx.util.converter.DoubleStringConverter;
 
@@ -126,18 +127,37 @@ public class LiquidacionHorasController {
 
         tablaNominas.setEditable(esManager);
 
-        comboEvento.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                nominaService.generarNominaParaConcierto(newVal.getIdConcierto());
-                cargarNominas(newVal.getIdConcierto());
-            }
-        });
-
         List<Concierto> conciertos = conciertoService.obtenerConciertosSolos().stream()
                 .filter(Concierto::isProgramado)
                 .toList();
 
+        System.out.println("[LiquidacionHoras] Conciertos programados cargados: " + conciertos.size());
+
         comboEvento.setItems(FXCollections.observableArrayList(conciertos));
+
+        comboEvento.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNombreConcierto());
+                }
+            }
+        });
+
+        comboEvento.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Concierto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNombreConcierto());
+                }
+            }
+        });
 
         tablaNominas.setRowFactory(tv -> {
             TableRow<Nomina> row = new TableRow<>();
@@ -155,8 +175,29 @@ public class LiquidacionHorasController {
         });
     }
 
+    @FXML
+    void On_seleccionarEvento(ActionEvent event) {
+        Concierto seleccionado = comboEvento.getValue();
+        if (seleccionado == null) {
+            System.out.println("[LiquidacionHoras] Concierto null, limpiando tabla");
+            tablaNominas.getItems().clear();
+            lblTotalGeneral.setText("$0");
+            return;
+        }
+
+        int idConcierto = seleccionado.getIdConcierto();
+        System.out.println("[LiquidacionHoras] Seleccionado concierto ID: " + idConcierto + " - " + seleccionado.getNombreConcierto());
+
+        nominaService.generarNominaParaConcierto(idConcierto);
+        System.out.println("[LiquidacionHoras] Generación de nóminas ejecutada");
+
+        cargarNominas(idConcierto);
+        System.out.println("[LiquidacionHoras] Tabla cargada con " + tablaNominas.getItems().size() + " nóminas");
+    }
+
     private void cargarNominas(int idConcierto) {
         List<Nomina> nominas = nominaService.obtenerNominasPorConcierto(idConcierto);
+        System.out.println("[LiquidacionHoras] Nominas recuperadas de BD: " + nominas.size());
         tablaNominas.setItems(FXCollections.observableArrayList(nominas));
         double total = nominaService.calcularTotalGeneral(idConcierto);
         lblTotalGeneral.setText(String.format("$%,.0f", total));

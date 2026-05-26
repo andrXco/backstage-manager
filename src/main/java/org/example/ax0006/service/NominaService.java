@@ -24,10 +24,15 @@ public class NominaService {
     private double calcularHorasTrabajadas(Concierto concierto) {
         Horario horario = concierto.getHorario();
         if (horario == null) return 0;
+        if (horario.getFechaInicio() == null || horario.getFechaFin() == null
+                || horario.getHoraInicio() == null || horario.getHoraFin() == null) {
+            return 0;
+        }
         LocalDateTime inicio = LocalDateTime.of(horario.getFechaInicio(), horario.getHoraInicio());
         LocalDateTime fin = LocalDateTime.of(horario.getFechaFin(), horario.getHoraFin());
         Duration duration = Duration.between(inicio, fin);
-        return duration.toHours() + (duration.toMinutesPart() / 60.0);
+        double horas = duration.toHours() + (duration.toMinutesPart() / 60.0);
+        return horas > 0 ? horas : 0;
     }
 
     private double obtenerTarifaPorRol(String rol) {

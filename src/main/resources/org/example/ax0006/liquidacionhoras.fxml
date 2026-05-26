@@ -30,7 +30,7 @@
             <Separator />
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                 <Label style="-fx-font-weight: bold;" text="Seleccione evento:" />
-                <ComboBox fx:id="comboEvento" prefWidth="300.0" />
+                <ComboBox fx:id="comboEvento" prefWidth="300.0" onAction="#On_seleccionarEvento" />
                 <Button text="PAGAR"
                         onAction="#On_Aprobar"
                         style="-fx-background-color: #2ecc71; -fx-text-fill: white;" />
