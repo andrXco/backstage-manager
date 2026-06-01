@@ -428,7 +428,7 @@ Backstage Manager was developed by students from Pontificia Universidad Javerian
 
 | Contributor | Main Role / Area |
 |---|---|
-| **Andres** | Project Director/Manager; high-level product vision and structural decisions |
+| **Andres Cortes** | Project Director/Manager; high-level product vision and structural decisions |
 | **Martin Sanmiguel** | Scrum Master and general coordination; interfaces; reports |
 | **Andres Santiago** | Database design and persistence support |
 | **Julián** | Database design and persistence support |
